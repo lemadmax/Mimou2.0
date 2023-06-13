@@ -1,7 +1,5 @@
 #include <Mimou.h>
 
-#include <EntryPoint.h>
-
 class Sandbox : public Mimou::Application
 {
 public:
@@ -16,7 +14,12 @@ public:
 
 };
 
-Mimou::Application* CreateApplication()
+Mimou::Application* Mimou::CreateApplication()
 {
 	return new Sandbox();
+}
+
+int test_main()
+{
+	return 1;
 }

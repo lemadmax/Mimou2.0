@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Project Specification
+Mimou/Binaries/
+Mimou/Intermediate/
+Samples/Sandbox/Binaries/
+Samples/Sandbox/Intermediate/

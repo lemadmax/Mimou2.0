@@ -1,16 +1,17 @@
 #pragma once
-#include <Application.h>
 
 #ifdef ME_PLATFORM_WINDOWS
 
-extern Mimou::Application* Mimou::CreateApplication();
+//extern Mimou::Application* Mimou::CreateApplication();
+extern int test_main();
 
-int main(int argc, int** argv)
+int main(int argc, char* argv[])
 {
-	//printf("Mimou Engine start");
-	auto App = Mimou::CreateApplication();
+	/*auto App = Mimou::CreateApplication();
 	App->Run();
-	delete App;
+	delete App;*/
+	test_main();
+	return 0;
 }
 
 #endif
