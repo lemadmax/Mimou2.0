@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{569af9a9-a5c7-4aad-a02b-3f70660b69b9}</ProjectGuid>
+    <ProjectGuid>{565dd494-3ccf-4c0b-8553-60993a499db9}</ProjectGuid>
     <RootNamespace>Sandbox</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -44,21 +44,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(ProjectDir)Binaries\$(Platform)$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)Intermediate\$(Platform)$(Configuration)\</IntDir>
+    <IntDir>$(ProjectDir)Intermediate\$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)Binaries\$(Platform)-$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(ProjectDir)Binaries\$(Platform)$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)Intermediate\$(Platform)$(Configuration)\</IntDir>
+    <IntDir>$(ProjectDir)Intermediate\$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)Binaries\$(Platform)-$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ME_PLATFORM_WINDOWS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ME_PLATFORM_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Mimou\Source;$(SolutionDir)Mimou\Source\Mimou</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Mimou\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -71,10 +70,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ME_PLATFORM_WINDOWS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ME_PLATFORM_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Mimou\Source;$(SolutionDir)Mimou\Source\Mimou</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Mimou\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,8 +85,8 @@
     <ClCompile Include="Source\SandboxApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Mimou\Mimou.vcxproj">
-      <Project>{fc6d2645-a4c0-42ba-a7ed-33cac7e9b7a4}</Project>
+    <ProjectReference Include="..\Mimou\Mimou.vcxproj">
+      <Project>{f6e9114c-5673-4539-99df-3f215daf81d9}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

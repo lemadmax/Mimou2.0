@@ -2,6 +2,7 @@
 
 namespace Mimou
 {
+
 	Application::Application()
 	{
 	}
@@ -14,8 +15,7 @@ namespace Mimou
 	{
 		while (true)
 		{
-			//printf("Application Running");
+
 		}
 	}
-
 }

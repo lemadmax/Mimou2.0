@@ -11,15 +11,9 @@ public:
 	{
 
 	}
-
 };
 
 Mimou::Application* Mimou::CreateApplication()
 {
 	return new Sandbox();
-}
-
-int test_main()
-{
-	return 1;
 }

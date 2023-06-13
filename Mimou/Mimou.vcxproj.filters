@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Mimou\Core.h">
+    <ClInclude Include="Source\Mimou.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mimou.h">
+    <ClInclude Include="Source\Mimou\EntryPoint.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Application.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Core.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mimou\EntryPoint.h">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

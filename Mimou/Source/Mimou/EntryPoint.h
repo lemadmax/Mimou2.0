@@ -2,15 +2,13 @@
 
 #ifdef ME_PLATFORM_WINDOWS
 
-//extern Mimou::Application* Mimou::CreateApplication();
-extern int test_main();
+extern Mimou::Application* Mimou::CreateApplication();
 
-int main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
-	/*auto App = Mimou::CreateApplication();
+	auto App = Mimou::CreateApplication();
 	App->Run();
-	delete App;*/
-	test_main();
+	delete App;
 	return 0;
 }
 
