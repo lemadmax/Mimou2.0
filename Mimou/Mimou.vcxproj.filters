@@ -27,9 +27,15 @@
     <ClInclude Include="Source\Mimou\Core.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Logging.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Logging.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
