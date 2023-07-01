@@ -1,3 +1,3 @@
-[submodule "Mimou/Source/Vendors/spdlog"]
-	path = Mimou/Source/Vendors/spdlog
+[submodule "Mimou/Vendors/spdlog"]
+	path = Mimou/Vendors/spdlog
 	url = https://github.com/gabime/spdlog.git

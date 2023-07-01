@@ -17,12 +17,14 @@ project "Mimou"
 	location "Mimou"
 	cppdialect "C++20"
 
-	targetdir ("%{prj.name}/Binaries" .. outputdir)
-	objdir ("%{prj.name}/Intermediate" .. outputdir)
+	targetdir ("%{prj.name}/Binaries/" .. outputdir)
+	objdir ("%{prj.name}/Intermediate/" .. outputdir)
 
 	files {
 		"%{prj.name}/Source/**.h",
-		"%{prj.name}/Source/**.cpp"
+		"%{prj.name}/Source/**.cpp",
+		"%{prj.name}/Source/**.hpp",
+		"%{prj.name}/Source/**.c"
 	}
 
 	defines {
@@ -31,7 +33,7 @@ project "Mimou"
 
 	includedirs {
 		"%{prj.name}/Source",
-		"%{prj.name}/Source/Vendors/spdlog/include"
+		"%{prj.name}/Vendors/spdlog/include"
 	}
 
 	filter "system:windows"
@@ -48,7 +50,7 @@ project "Mimou"
 
 		filter "configurations:Debug"
 			defines "ME_BUILD_DEBUG"
-			buildoptions "/MTd"
+			buildoptions "/MDd"
 			symbols "on"
 
 		filter "configurations:Release"
@@ -68,12 +70,14 @@ project "Sandbox"
 	location "Sandbox"
 	cppdialect "C++20"
 
-	targetdir ("%{prj.name}/Binaries" .. outputdir)
-	objdir ("%{prj.name}/Intermediate" .. outputdir)
+	targetdir ("%{prj.name}/Binaries/" .. outputdir)
+	objdir ("%{prj.name}/Intermediate/" .. outputdir)
 
 	files {
 		"%{prj.name}/Source/**.h",
-		"%{prj.name}/Source/**.cpp"
+		"%{prj.name}/Source/**.cpp",
+		"%{prj.name}/Source/**.hpp",
+		"%{prj.name}/Source/**.c"
 	}
 
 	defines {
@@ -82,7 +86,8 @@ project "Sandbox"
 
 	includedirs {
 		"%{prj.name}/Source",
-		"Mimou/Source"
+		"Mimou/Source",
+		"Mimou/Vendors/spdlog/include"
 	}
 
 	links {
@@ -98,7 +103,7 @@ project "Sandbox"
 
 		filter "configurations:Debug"
 			defines "ME_BUILD_DEBUG"
-			buildoptions "/MTd"
+			buildoptions "/MDd"
 			symbols "on"
 
 		filter "configurations:Release"
