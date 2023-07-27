@@ -19,6 +19,7 @@
     <ClInclude Include="Source\Mimou\Logging.h">
       <Filter>Mimou</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Event\EventBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
