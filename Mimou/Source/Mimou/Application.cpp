@@ -1,3 +1,5 @@
+#include "mepch.h"
+
 #include "Application.h"
 
 namespace Mimou

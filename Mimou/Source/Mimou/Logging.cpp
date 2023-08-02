@@ -1,3 +1,5 @@
+#include "mepch.h"
+
 #include "Logging.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/stdout_sinks.h"
@@ -28,15 +30,5 @@ namespace Mimou
 		ClientLogger = std::make_shared<spdlog::logger>("ClientLogger", begin(sinks), end(sinks));
 
 		EngineLogger->info(LogFileName);
-	}
-
-	inline std::shared_ptr<spdlog::logger> Logging::GetEngineLogger()
-	{
-		return EngineLogger;
-	}
-
-	inline std::shared_ptr<spdlog::logger> Logging::GetClientLogger()
-	{
-		return ClientLogger;
 	}
 }

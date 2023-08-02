@@ -14,11 +14,18 @@ namespace Mimou
 	public:
 		static void Init();
 
-		static inline std::shared_ptr<spdlog::logger> GetEngineLogger();
-		static inline std::shared_ptr<spdlog::logger> GetClientLogger();
+		static inline Reference<spdlog::logger> GetEngineLogger()
+		{
+			return EngineLogger;
+		}
+		static inline Reference<spdlog::logger> GetClientLogger()
+		{
+			return ClientLogger;
+		}
 
-		static std::shared_ptr<spdlog::logger> EngineLogger;
-		static std::shared_ptr<spdlog::logger> ClientLogger;
+	private:
+		static Reference<spdlog::logger> EngineLogger;
+		static Reference<spdlog::logger> ClientLogger;
 	};
 
 }

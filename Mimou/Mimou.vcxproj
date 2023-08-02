@@ -23,19 +23,19 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
@@ -54,34 +54,33 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>Binaries\Debug-windows-x86_64\</OutDir>
     <IntDir>Intermediate\Debug-windows-x86_64\</IntDir>
     <TargetName>Mimou</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>Binaries\Release-windows-x86_64\</OutDir>
     <IntDir>Intermediate\Release-windows-x86_64\</IntDir>
     <TargetName>Mimou</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>Binaries\Dist-windows-x86_64\</OutDir>
     <IntDir>Intermediate\Dist-windows-x86_64\</IntDir>
     <TargetName>Mimou</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -89,20 +88,24 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>Binaries\Debug-windows-x86_64\Mimou.lib</ImportLibrary>
     </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST Binaries\Debug-windows-x86_64\Mimou.dll\ (xcopy /Q /E /Y /I Binaries\Debug-windows-x86_64\Mimou.dll ..\Sandbox\Binaries\Debug-windows-x86_64 &gt; nul) ELSE (xcopy /Q /Y /I Binaries\Debug-windows-x86_64\Mimou.dll ..\Sandbox\Binaries\Debug-windows-x86_64 &gt; nul)</Command>
+      <Command>IF EXIST Binaries\Debug-windows-x86_64\Mimou.lib\ (xcopy /Q /E /Y /I Binaries\Debug-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Debug-windows-x86_64 &gt; nul) ELSE (xcopy /Q /Y /I Binaries\Debug-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Debug-windows-x86_64 &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -110,20 +113,24 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>Binaries\Release-windows-x86_64\Mimou.lib</ImportLibrary>
     </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST Binaries\Release-windows-x86_64\Mimou.dll\ (xcopy /Q /E /Y /I Binaries\Release-windows-x86_64\Mimou.dll ..\Sandbox\Binaries\Release-windows-x86_64 &gt; nul) ELSE (xcopy /Q /Y /I Binaries\Release-windows-x86_64\Mimou.dll ..\Sandbox\Binaries\Release-windows-x86_64 &gt; nul)</Command>
+      <Command>IF EXIST Binaries\Release-windows-x86_64\Mimou.lib\ (xcopy /Q /E /Y /I Binaries\Release-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Release-windows-x86_64 &gt; nul) ELSE (xcopy /Q /Y /I Binaries\Release-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Release-windows-x86_64 &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -131,23 +138,36 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>Binaries\Dist-windows-x86_64\Mimou.lib</ImportLibrary>
     </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST Binaries\Dist-windows-x86_64\Mimou.dll\ (xcopy /Q /E /Y /I Binaries\Dist-windows-x86_64\Mimou.dll ..\Sandbox\Binaries\Dist-windows-x86_64 &gt; nul) ELSE (xcopy /Q /Y /I Binaries\Dist-windows-x86_64\Mimou.dll ..\Sandbox\Binaries\Dist-windows-x86_64 &gt; nul)</Command>
+      <Command>IF EXIST Binaries\Dist-windows-x86_64\Mimou.lib\ (xcopy /Q /E /Y /I Binaries\Dist-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Dist-windows-x86_64 &gt; nul) ELSE (xcopy /Q /Y /I Binaries\Dist-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Dist-windows-x86_64 &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Event\EventBase.h" />
     <ClInclude Include="Source\Mimou.h" />
     <ClInclude Include="Source\Mimou\Application.h" />
     <ClInclude Include="Source\Mimou\Core.h" />
     <ClInclude Include="Source\Mimou\EntryPoint.h" />
+    <ClInclude Include="Source\Mimou\Event\EventBase.h" />
+    <ClInclude Include="Source\Mimou\Event\KeyCodes.h" />
+    <ClInclude Include="Source\Mimou\Event\KeyEvent.h" />
     <ClInclude Include="Source\Mimou\Logging.h" />
+    <ClInclude Include="Source\mepch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp" />
     <ClCompile Include="Source\Mimou\Logging.cpp" />
+    <ClCompile Include="Source\mepch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Vendors\GLFW\GLFW.vcxproj">
+      <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,15 +10,22 @@ workspace "Mimou2.0"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
+IncludeDir["GLFW"] = "Mimou/Vendors/GLFW/include"
+
+include "Mimou/Vendors/GLFW"
 
 project "Mimou"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
 	location "Mimou"
 	cppdialect "C++20"
+	staticruntime "on"
 
 	targetdir ("%{prj.name}/Binaries/" .. outputdir)
 	objdir ("%{prj.name}/Intermediate/" .. outputdir)
+
+	pchheader "mepch.h"
+	pchsource "Mimou/Source/mepch.cpp"
 
 	files {
 		"%{prj.name}/Source/**.h",
@@ -33,7 +40,13 @@ project "Mimou"
 
 	includedirs {
 		"%{prj.name}/Source",
-		"%{prj.name}/Vendors/spdlog/include"
+		"%{prj.name}/Vendors/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links {
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -69,6 +82,7 @@ project "Sandbox"
 	language "C++"
 	location "Sandbox"
 	cppdialect "C++20"
+	staticruntime "on"
 
 	targetdir ("%{prj.name}/Binaries/" .. outputdir)
 	objdir ("%{prj.name}/Intermediate/" .. outputdir)
