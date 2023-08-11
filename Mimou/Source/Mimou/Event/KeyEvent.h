@@ -26,11 +26,39 @@ namespace Mimou {
 
 		std::string ToString() const override {
 			std::stringstream ss;
-			ss << "KeyPressedEvent -- [KeyCode:" << KeyCode << ", repeats:" << m_RepeatCount << "]";
+			ss << "KeyPressedEvent -- [KeyCode:" << m_KeyCode << ", repeats:" << m_RepeatCount << "]";
 			return ss.str();
 		}
 
 	private:
 		int m_RepeatCount;
+	};
+
+	class ME_API KeyReleasedEvent : public KeyEvent
+	{
+		EVENT_TYPE(KeyReleased)
+	public:
+		KeyReleasedEvent(int KeyCode)
+			: KeyEvent(KeyCode) {}
+
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "KeyReleasedEvent -- [KeyCode:" << m_KeyCode << "]";
+			return ss.str();
+		}
+	};
+
+	class ME_API KeyTypedEvent : public KeyEvent
+	{
+		EVENT_TYPE(KeyTyped)
+	public:
+		KeyTypedEvent(int KeyCode)
+			: KeyEvent(KeyCode) {}
+
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "KeyTypedEvent -- [KeyCode:" << m_KeyCode << "]";
+			return ss.str();
+		}
 	};
 }

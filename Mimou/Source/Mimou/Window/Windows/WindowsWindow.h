@@ -32,7 +32,7 @@ namespace Mimou
 		{
 			std::string Title;
 			UINT32 Width, Height;
-			bool bSync;
+			bool bVSync;
 
 			EventCallbackFn EventCallback;
 		};

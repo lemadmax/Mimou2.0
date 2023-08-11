@@ -9,9 +9,15 @@ namespace Mimou {
 		None = 0,
 		KeyPressed,
 		KeyReleased,
-		KeyRepeat,
-		LeftMousePressed,
-		RightMousePressed
+		KeyTyped,
+		MouseButtonPressed,
+		MouseButtonReleased,
+		MouseMoved,
+		MouseScrolled,
+		WindowClose,
+		WindowResize,
+		WindowFocus,
+		WindowMoved,
 	};
 
 	enum EEventCategory
@@ -63,7 +69,7 @@ namespace Mimou {
 		{
 			if (m_Event.GetEventType() == T::StaticType())
 			{
-				m_Event.Handled = func(*(T*)&Event);
+				m_Event.bHandled = func(*(T*)&m_Event);
 				return true;
 			}
 			return false;

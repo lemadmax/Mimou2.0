@@ -7,6 +7,12 @@
     <Filter Include="Mimou\Event">
       <UniqueIdentifier>{7D834C5B-E938-C550-722D-BF27DEE1BB54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mimou\Window">
+      <UniqueIdentifier>{9354F3ED-7FB7-8292-283D-BB48147F4E15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mimou\Window\Windows">
+      <UniqueIdentifier>{CDE1896F-B970-1339-628F-27344EFD23DF}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Mimou.h" />
@@ -31,6 +37,12 @@
     <ClInclude Include="Source\Mimou\Logging.h">
       <Filter>Mimou</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Window\Window.h">
+      <Filter>Mimou\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Window\Windows\WindowsWindow.h">
+      <Filter>Mimou\Window\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="Source\mepch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +51,9 @@
     </ClCompile>
     <ClCompile Include="Source\Mimou\Logging.cpp">
       <Filter>Mimou</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Window\Windows\WindowsWindow.cpp">
+      <Filter>Mimou\Window\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\mepch.cpp" />
   </ItemGroup>

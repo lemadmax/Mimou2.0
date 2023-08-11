@@ -30,11 +30,20 @@ namespace Mimou
 
 	void WindowsWindow::SetVSync(bool Enabled)
 	{
+		if (Enabled)
+		{
+			glfwSwapInterval(1);
+		}
+		else
+		{
+			glfwSwapInterval(0);
+		}
+		m_Data.bVSync = Enabled;
 	}
 
 	bool WindowsWindow::IsVSync() const
 	{
-		return false;
+		return m_Data.bVSync;
 	}
 
 	void WindowsWindow::Init(const WindowProps& Props)
@@ -47,8 +56,17 @@ namespace Mimou
 
 		if (!bIsGLFWInitialized)
 		{
-
+			int Success = glfwInit();
+			ME_ENGINE_ASSERT(Success, "Could not initialize GLFW");
+			glfwSetErrorCallback(GLFWErrorCallback);
+			bIsGLFWInitialized = true;
 		}
+
+		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+
+		SetVSync(true);
+
+		//glfwSetWindowSizeCallback(m_Window, )
 	}
 
 	void WindowsWindow::Shutdown()

@@ -31,11 +31,6 @@
 
 #define BIT(x) (1<<x)
 
-typedef int INT32;
-typedef unsigned int UINT32;
-typedef long INT64;
-typedef unsigned long long UINT64;
-
 namespace Mimou
 {
 	template<typename T>

@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "Window/Window.h"
 
 namespace Mimou
 {
@@ -11,6 +12,14 @@ namespace Mimou
 		virtual ~Application();
 
 		void Run();
+
+		void OnEvent(EventBase& Event);
+
+	private:
+		std::unique_ptr<Window> m_Window;
+
+	private:
+		static Application* s_Instance;
 	};
 
 	Application* CreateApplication();
