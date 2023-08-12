@@ -41,6 +41,7 @@ project "Mimou"
 	includedirs {
 		"%{prj.name}/Source",
 		"%{prj.name}/Vendors/spdlog/include",
+		"%{prj.name}/Vendors/GLM",
 		"%{IncludeDir.GLFW}"
 	}
 
@@ -101,7 +102,8 @@ project "Sandbox"
 	includedirs {
 		"%{prj.name}/Source",
 		"Mimou/Source",
-		"Mimou/Vendors/spdlog/include"
+		"Mimou/Vendors/spdlog/include",
+		"Mimou/Vendors/GLM"
 	}
 
 	links {

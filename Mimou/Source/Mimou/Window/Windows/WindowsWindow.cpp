@@ -2,6 +2,7 @@
 #include "WindowsWindow.h"
 #include "Mimou/Event/AppEvent.h"
 #include "Mimou/Event/KeyEvent.h"
+#include "Mimou/Event/MouseEvent.h"
 
 namespace Mimou
 {
@@ -137,17 +138,36 @@ namespace Mimou
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* Window, INT32 Button, INT32 Action, INT32 Mods)
 			{
-
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
+				switch (Action)
+				{
+				case GLFW_PRESS:
+				{
+					MouseButtonPressedEvent Event(Button);
+					Data.EventCallback(Event);
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					MouseButtonReleasedEvent Event(Button);
+					Data.EventCallback(Event);
+					break;
+				}
+				}
 			});
 
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
 			{
-
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(window);
+				MouseMoveEvent Event(xPos, yPos);
+				Data.EventCallback(Event);
 			});
 		
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
 			{
-
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(window);
+				MouseScrollEvent Event(xOffset, yOffset);
+				Data.EventCallback(Event);
 			});
 	}
 

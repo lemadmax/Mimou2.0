@@ -25,6 +25,9 @@
     <ClInclude Include="Source\Mimou\EntryPoint.h">
       <Filter>Mimou</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Event\AppEvent.h">
+      <Filter>Mimou\Event</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Event\EventBase.h">
       <Filter>Mimou\Event</Filter>
     </ClInclude>
@@ -32,6 +35,9 @@
       <Filter>Mimou\Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Event\KeyEvent.h">
+      <Filter>Mimou\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Event\MouseEvent.h">
       <Filter>Mimou\Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Logging.h">
@@ -44,7 +50,6 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\mepch.h" />
-    <ClInclude Include="Source\Mimou\Event\AppEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">

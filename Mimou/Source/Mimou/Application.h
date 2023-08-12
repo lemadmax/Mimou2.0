@@ -28,6 +28,8 @@ namespace Mimou
 	private:
 		std::unique_ptr<Window> m_Window;
 
+		bool bIsRunning = false;
+
 	private:
 		static Application* s_Instance;
 	};

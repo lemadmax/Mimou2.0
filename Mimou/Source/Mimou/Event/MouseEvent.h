@@ -44,7 +44,7 @@ namespace Mimou
 	class ME_API MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
-		EVENT_TYPE(MousePressed)
+		EVENT_TYPE(MouseButtonPressed)
 	public:
 		MouseButtonPressedEvent(INT32 Button)
 			: MouseButtonEvent(Button) {}
@@ -53,7 +53,7 @@ namespace Mimou
 	class ME_API MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
-		EVENT_TYPE(MousePressed)
+		EVENT_TYPE(MouseButtonReleased)
 	public:
 		MouseButtonReleasedEvent(INT32 Button)
 			: MouseButtonEvent(Button) {}
