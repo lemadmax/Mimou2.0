@@ -151,6 +151,7 @@
     <ClInclude Include="Source\Mimou\Application.h" />
     <ClInclude Include="Source\Mimou\Core.h" />
     <ClInclude Include="Source\Mimou\EntryPoint.h" />
+    <ClInclude Include="Source\Mimou\Event\AppEvent.h" />
     <ClInclude Include="Source\Mimou\Event\EventBase.h" />
     <ClInclude Include="Source\Mimou\Event\KeyCodes.h" />
     <ClInclude Include="Source\Mimou\Event\KeyEvent.h" />

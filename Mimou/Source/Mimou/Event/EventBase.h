@@ -40,8 +40,8 @@ namespace Mimou {
 	class ME_API EventBase
 	{
 	public:
-		EventBase();
-		virtual ~EventBase();
+		EventBase() {}
+		virtual ~EventBase() {}
 
 	public:
 		virtual EEventType GetEventType() const = 0;

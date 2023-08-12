@@ -7,8 +7,8 @@ namespace Mimou
 
 	class ME_API AppEvent : public EventBase
 	{
-		EVENT_CATEGORY(EEventCategory::EventCategoryApplication)
 	public:
+		EVENT_CATEGORY(EEventCategory::EventCategoryApplication)
 		AppEvent(std::string Title)
 		{
 			m_Title = Title;
@@ -27,8 +27,8 @@ namespace Mimou
 
 	class ME_API WindowCloseEvent : public AppEvent
 	{
-		EVENT_TYPE(WindowClose)
 	public:
+		EVENT_TYPE(WindowClose)
 		WindowCloseEvent(std::string Title)
 			: AppEvent(Title) {}
 
@@ -41,8 +41,8 @@ namespace Mimou
 
 	class ME_API WindowResizeEvent : public AppEvent
 	{
-		EVENT_TYPE(WindowResize)
 	public:
+		EVENT_TYPE(WindowResize)
 		WindowResizeEvent(std::string Title, UINT32 Width, UINT32 Height)
 			: AppEvent(Title), m_Width(Width), m_Height(Height) {}
 
@@ -57,8 +57,33 @@ namespace Mimou
 
 	class ME_API WindowFocusEvent : public AppEvent
 	{
-		EVENT_TYPE(WindowFocus)
 	public:
-		//WindowFocusEvent(std::string Title, )
+		EVENT_TYPE(WindowFocus)
+		WindowFocusEvent(std::string Title, INT32 Focused)
+			: AppEvent(Title), m_Focused(Focused) {}
+
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "WindowFocusEvent [Title:" << m_Title << ", Focused: " << m_Focused << "]";
+			return ss.str();
+		}
+	private:
+		bool m_Focused;
+	};
+
+	class ME_API WindowMoveEvent : public AppEvent
+	{
+	public:
+		EVENT_TYPE(WindowMoved)
+		WindowMoveEvent(std::string Title, INT32 PosX, INT32 PosY)
+			: AppEvent(Title), m_PosX(PosX), m_PosY(PosY) {}
+
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "WindowMoveEvent [Title:" << m_Title << ", PosX:" << m_PosX << ", PosY:" << m_PosY << "]";
+			return ss.str();
+		}
+	private:
+		INT32 m_PosX, m_PosY;
 	};
 }

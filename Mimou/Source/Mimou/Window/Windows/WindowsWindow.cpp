@@ -1,5 +1,7 @@
 #include "mepch.h"
 #include "WindowsWindow.h"
+#include "Mimou/Event/AppEvent.h"
+#include "Mimou/Event/KeyEvent.h"
 
 namespace Mimou
 {
@@ -26,6 +28,7 @@ namespace Mimou
 
 	void WindowsWindow::OnUpdate()
 	{
+		glfwPollEvents();
 	}
 
 	void WindowsWindow::SetVSync(bool Enabled)
@@ -64,9 +67,88 @@ namespace Mimou
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 
-		SetVSync(true);
+		glfwSetWindowUserPointer(m_Window, &m_Data);
+		//SetVSync(true);
 
-		//glfwSetWindowSizeCallback(m_Window, )
+		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* Window, INT32 Width, INT32 Height)
+			{
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
+				Data.Width = Width;
+				Data.Height = Height;
+
+				WindowResizeEvent Event(Data.Title, Width, Height);
+				Data.EventCallback(Event);
+			});
+
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* Window)
+			{
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
+			
+				WindowCloseEvent Event(Data.Title);
+				Data.EventCallback(Event);
+			});
+
+		glfwSetWindowFocusCallback(m_Window, [](GLFWwindow* Window, INT32 Focused)
+			{
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
+				WindowFocusEvent Event(Data.Title, Focused);
+				Data.EventCallback(Event);
+			});
+
+		glfwSetWindowPosCallback(m_Window, [](GLFWwindow* Window, INT32 PosX, INT32 PosY)
+			{
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
+				WindowMoveEvent Event(Data.Title, PosX, PosY);
+				Data.EventCallback(Event);
+			});
+
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* Window, INT32 KeyCode, INT32 ScanCode, INT32 Action, INT32 Mods)
+			{
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
+				switch (Action)
+				{
+					case GLFW_PRESS:
+					{
+						KeyPressedEvent Event(KeyCode, 0);
+						Data.EventCallback(Event);
+						break;
+					}
+					case GLFW_REPEAT:
+					{
+						KeyPressedEvent Event(KeyCode, 1);
+						Data.EventCallback(Event);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						KeyReleasedEvent Event(KeyCode);
+						Data.EventCallback(Event);
+						break;
+					}
+				}
+			});
+
+		glfwSetCharCallback(m_Window, [](GLFWwindow* Window, UINT32 KeyCode)
+			{
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
+				KeyTypedEvent Event(KeyCode);
+				Data.EventCallback(Event);
+			});
+
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* Window, INT32 Button, INT32 Action, INT32 Mods)
+			{
+
+			});
+
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+			{
+
+			});
+		
+		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
+			{
+
+			});
 	}
 
 	void WindowsWindow::Shutdown()

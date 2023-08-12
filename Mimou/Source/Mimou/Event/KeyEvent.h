@@ -6,8 +6,8 @@ namespace Mimou {
 
 	class ME_API KeyEvent : public EventBase
 	{
-		EVENT_CATEGORY(EEventCategory::EventCategoryKeyboard | EEventCategory::EventCategoryInput)
 	public:
+		EVENT_CATEGORY(EEventCategory::EventCategoryKeyboard | EEventCategory::EventCategoryInput)
 		inline int GetKeyCode() { return m_KeyCode; }
 
 	protected:
@@ -17,8 +17,8 @@ namespace Mimou {
 
 	class ME_API KeyPressedEvent : public KeyEvent
 	{
-		EVENT_TYPE(KeyPressed)
 	public:
+		EVENT_TYPE(KeyPressed)
 		KeyPressedEvent(int KeyCode, int RepeatCount)
 			: KeyEvent(KeyCode), m_RepeatCount(RepeatCount) {}
 
@@ -36,8 +36,8 @@ namespace Mimou {
 
 	class ME_API KeyReleasedEvent : public KeyEvent
 	{
-		EVENT_TYPE(KeyReleased)
 	public:
+		EVENT_TYPE(KeyReleased)
 		KeyReleasedEvent(int KeyCode)
 			: KeyEvent(KeyCode) {}
 
@@ -50,8 +50,8 @@ namespace Mimou {
 
 	class ME_API KeyTypedEvent : public KeyEvent
 	{
-		EVENT_TYPE(KeyTyped)
 	public:
+		EVENT_TYPE(KeyTyped)
 		KeyTypedEvent(int KeyCode)
 			: KeyEvent(KeyCode) {}
 
