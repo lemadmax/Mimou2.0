@@ -12,6 +12,12 @@ namespace Mimou
 	public:
 		MouseMoveEvent(double PosX, double PosY)
 			: m_PosX(PosX), m_PosY(PosY) {}
+
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "MouseMoveEvent -- [Positon:(" << m_PosX << "," << m_PosY << ")]";
+			return ss.str();
+		}
 		
 	private:
 		double m_PosX, m_PosY;
@@ -26,6 +32,12 @@ namespace Mimou
 		MouseScrollEvent(double OffsetX, double OffsetY)
 			: m_OffsetX(OffsetX), m_OffsetY(OffsetY) {}
 
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "MouseScrollEvent -- [Offset:(" << m_OffsetX << "," << m_OffsetY << ")]";
+			return ss.str();
+		}
+
 	private:
 		double m_OffsetX, m_OffsetY;
 	};
@@ -37,7 +49,8 @@ namespace Mimou
 	public:
 		MouseButtonEvent(INT32 Button)
 			: m_Button(Button) {}
-	private:
+
+	protected:
 		INT32 m_Button;
 	};
 
@@ -48,6 +61,12 @@ namespace Mimou
 	public:
 		MouseButtonPressedEvent(INT32 Button)
 			: MouseButtonEvent(Button) {}
+
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "MouseButtonPressed -- [Button:" << m_Button << "]";
+			return ss.str();
+		}
 	};
 
 	class ME_API MouseButtonReleasedEvent : public MouseButtonEvent
@@ -57,6 +76,12 @@ namespace Mimou
 	public:
 		MouseButtonReleasedEvent(INT32 Button)
 			: MouseButtonEvent(Button) {}
+
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "MouseButtonReleased -- [Button:" << m_Button << "]";
+			return ss.str();
+		}
 	};
 
 }

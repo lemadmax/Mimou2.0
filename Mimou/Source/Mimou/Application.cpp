@@ -1,6 +1,7 @@
 #include "mepch.h"
 
 #include "Application.h"
+#include "Input.h"
 
 namespace Mimou
 {
@@ -27,6 +28,20 @@ namespace Mimou
 		while (bIsRunning)
 		{
 			m_Window->OnUpdate();
+			if (Input::IsKeyPressed(ME_KEY_A))
+			{
+				ME_LOG("KeyPressed: A");
+			}
+			if (Input::IsMouseButtonPressed(0))
+			{
+				ME_LOG("MousePressed: Left");
+			}
+			if (Input::IsMouseButtonPressed(1))
+			{
+				ME_LOG("MousePressed: Right");
+				std::pair<float, float> MousePosition = Input::GetMousePosition();
+				ME_LOG("MousePosition: ({},{})", MousePosition.first, MousePosition.second);
+			}
 		}
 	}
 
@@ -40,30 +55,25 @@ namespace Mimou
 
 
 	}
-
 	bool Application::OnWindowResized(WindowResizeEvent& Event)
 	{
 		//ME_LOG("Application::OnWindowResized: {}", Event.ToString());
 		return false;
 	}
-
 	bool Application::OnWindowClosed(WindowCloseEvent& Event)
 	{
 		//ME_LOG("Application::OnWindowClosed: {}", Event.ToString());
 		bIsRunning = false;
 		return true;
 	}
-
 	bool Application::OnWindowFocused(WindowFocusEvent& Event)
 	{
 		//ME_LOG("Application::OnWindowFocused: {}", Event.ToString());
 		return false;
 	}
-
 	bool Application::OnWindowMoved(WindowMoveEvent& Event)
 	{
 		//ME_LOG("Application::OnWindowMoved: {}", Event.ToString());
 		return false;
 	}
-
 }

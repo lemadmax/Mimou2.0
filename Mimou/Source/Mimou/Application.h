@@ -14,6 +14,13 @@ namespace Mimou
 
 		void Run();
 
+	public:
+		inline static Application* GetInstance() { return s_Instance; }
+
+		inline Window& GetWindow() { return *m_Window; }
+
+	private:
+
 		void OnEvent(EventBase& Event);
 
 	private:

@@ -138,34 +138,39 @@ namespace Mimou
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* Window, INT32 Button, INT32 Action, INT32 Mods)
 			{
+
+
+
 				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
 				switch (Action)
 				{
-				case GLFW_PRESS:
-				{
-					MouseButtonPressedEvent Event(Button);
-					Data.EventCallback(Event);
-					break;
-				}
-				case GLFW_RELEASE:
-				{
-					MouseButtonReleasedEvent Event(Button);
-					Data.EventCallback(Event);
-					break;
-				}
+					case GLFW_PRESS:
+					{
+						MouseButtonPressedEvent Event(Button);
+						Data.EventCallback(Event);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						MouseButtonReleasedEvent Event(Button);
+						Data.EventCallback(Event);
+						break;
+					}
 				}
 			});
 
-		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* Window, double xPos, double yPos)
 			{
-				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
 				MouseMoveEvent Event(xPos, yPos);
 				Data.EventCallback(Event);
 			});
 		
-		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
+		glfwSetScrollCallback(m_Window, [](GLFWwindow* Window, double xOffset, double yOffset)
 			{
-				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				WindowData& Data = *(WindowData*)glfwGetWindowUserPointer(Window);
 				MouseScrollEvent Event(xOffset, yOffset);
 				Data.EventCallback(Event);
 			});
