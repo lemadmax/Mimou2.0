@@ -2,6 +2,7 @@
 #include "Core.h"
 #include "Window/Window.h"
 #include "Event/AppEvent.h"
+#include "Mimou/LayerStack.h"
 
 namespace Mimou
 {
@@ -19,6 +20,10 @@ namespace Mimou
 
 		inline Window& GetWindow() { return *m_Window; }
 
+		void PushLayer(Layer* Layer);
+
+		void PushOverlay(Layer* Overlay);
+
 	private:
 
 		void OnEvent(EventBase& Event);
@@ -34,8 +39,11 @@ namespace Mimou
 
 	private:
 		std::unique_ptr<Window> m_Window;
+		LayerStack m_LayerStack;
 
 		bool bIsRunning = false;
+
+		float m_LastFrameTime = 0.f;
 
 	private:
 		static Application* s_Instance;

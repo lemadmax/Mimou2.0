@@ -5,6 +5,7 @@
 #include<utility>
 #include<algorithm>
 #include<functional>
+#include<vector>
 
 #include "Mimou/Logging.h"
 

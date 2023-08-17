@@ -3,6 +3,8 @@
 #include "Application.h"
 #include "Input.h"
 
+#include "GLFW/glfw3.h"
+
 namespace Mimou
 {
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
@@ -27,22 +29,43 @@ namespace Mimou
 	{
 		while (bIsRunning)
 		{
+			float Time = (float)glfwGetTime();
+			Timestep Timestep = Time - m_LastFrameTime;
+			m_LastFrameTime = Time;
+
+			for (Layer* Layer : m_LayerStack)
+			{
+				Layer->OnUpdate(Timestep);
+			}
 			m_Window->OnUpdate();
-			if (Input::IsKeyPressed(ME_KEY_A))
-			{
-				ME_LOG("KeyPressed: A");
-			}
-			if (Input::IsMouseButtonPressed(0))
-			{
-				ME_LOG("MousePressed: Left");
-			}
-			if (Input::IsMouseButtonPressed(1))
-			{
-				ME_LOG("MousePressed: Right");
-				std::pair<float, float> MousePosition = Input::GetMousePosition();
-				ME_LOG("MousePosition: ({},{})", MousePosition.first, MousePosition.second);
-			}
+
+			//if (Input::IsKeyPressed(ME_KEY_A))
+			//{
+			//	ME_LOG("KeyPressed: A");
+			//}
+			//if (Input::IsMouseButtonPressed(0))
+			//{
+			//	ME_LOG("MousePressed: Left");
+			//}
+			//if (Input::IsMouseButtonPressed(1))
+			//{
+			//	ME_LOG("MousePressed: Right");
+			//	std::pair<float, float> MousePosition = Input::GetMousePosition();
+			//	ME_LOG("MousePosition: ({},{})", MousePosition.first, MousePosition.second);
+			//}
 		}
+	}
+
+	void Application::PushLayer(Layer* Layer)
+	{
+		m_LayerStack.PushLayer(Layer);
+		Layer->OnAttach();
+	}
+
+	void Application::PushOverlay(Layer* Overlay)
+	{
+		m_LayerStack.PushOverlay(Overlay);
+		Overlay->OnAttach();
 	}
 
 	void Application::OnEvent(EventBase& Event)
@@ -53,7 +76,11 @@ namespace Mimou
 		Dispatcher.Dispatch<WindowFocusEvent>(BIND_EVENT_FN(Application::OnWindowFocused));
 		Dispatcher.Dispatch<WindowMoveEvent>(BIND_EVENT_FN(Application::OnWindowMoved));
 
-
+		for (auto It = m_LayerStack.end(); It != m_LayerStack.begin();)
+		{
+			(*--It)->OnEvent(Event);
+			if (Event.bHandled) break;
+		}
 	}
 	bool Application::OnWindowResized(WindowResizeEvent& Event)
 	{

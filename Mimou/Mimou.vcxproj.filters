@@ -56,6 +56,9 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\mepch.h" />
+    <ClInclude Include="Source\Mimou\Layer.h" />
+    <ClInclude Include="Source\Mimou\Timestep.h" />
+    <ClInclude Include="Source\Mimou\LayerStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -71,5 +74,6 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\mepch.cpp" />
+    <ClCompile Include="Source\Mimou\LayerStack.cpp" />
   </ItemGroup>
 </Project>

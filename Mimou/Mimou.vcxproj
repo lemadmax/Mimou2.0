@@ -157,7 +157,10 @@
     <ClInclude Include="Source\Mimou\Event\KeyEvent.h" />
     <ClInclude Include="Source\Mimou\Event\MouseEvent.h" />
     <ClInclude Include="Source\Mimou\Input.h" />
+    <ClInclude Include="Source\Mimou\Layer.h" />
+    <ClInclude Include="Source\Mimou\LayerStack.h" />
     <ClInclude Include="Source\Mimou\Logging.h" />
+    <ClInclude Include="Source\Mimou\Timestep.h" />
     <ClInclude Include="Source\Mimou\Window\Window.h" />
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsInput.h" />
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsWindow.h" />
@@ -165,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp" />
+    <ClCompile Include="Source\Mimou\LayerStack.cpp" />
     <ClCompile Include="Source\Mimou\Logging.cpp" />
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsWindow.cpp" />
