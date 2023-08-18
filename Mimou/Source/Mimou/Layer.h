@@ -15,7 +15,7 @@ namespace Mimou
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 		virtual void OnUpdate(Timestep Ts) {}
-		virtual void OnImGuiRender() {}
+		virtual void OnImGUIRender() {}
 		virtual void OnEvent(EventBase& Event) {}
 
 	protected:

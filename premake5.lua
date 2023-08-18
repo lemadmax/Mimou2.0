@@ -11,8 +11,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Mimou/Vendors/GLFW/include"
+IncludeDir["ImGUI"] = "Mimou/Vendors/ImGUI"
 
 include "Mimou/Vendors/GLFW"
+include "Mimou/Vendors/ImGUI"
 
 project "Mimou"
 	kind "StaticLib"
@@ -42,10 +44,12 @@ project "Mimou"
 		"%{prj.name}/Source",
 		"%{prj.name}/Vendors/spdlog/include",
 		"%{prj.name}/Vendors/GLM",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.ImGUI}"
 	}
 
 	links {
+		"ImGUI",
 		"GLFW",
 		"opengl32.lib"
 	}
@@ -103,7 +107,8 @@ project "Sandbox"
 		"%{prj.name}/Source",
 		"Mimou/Source",
 		"Mimou/Vendors/spdlog/include",
-		"Mimou/Vendors/GLM"
+		"Mimou/Vendors/GLM",
+		"%{IncludeDir.ImGUI}"
 	}
 
 	links {

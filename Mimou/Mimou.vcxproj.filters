@@ -7,6 +7,9 @@
     <Filter Include="Mimou\Event">
       <UniqueIdentifier>{7D834C5B-E938-C550-722D-BF27DEE1BB54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mimou\ImGUI">
+      <UniqueIdentifier>{16738F5B-8228-0851-0B1D-022877D1FE54}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Mimou\Window">
       <UniqueIdentifier>{9354F3ED-7FB7-8292-283D-BB48147F4E15}</UniqueIdentifier>
     </Filter>
@@ -40,10 +43,22 @@
     <ClInclude Include="Source\Mimou\Event\MouseEvent.h">
       <Filter>Mimou\Event</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\ImGUI\ImGUILayer.h">
+      <Filter>Mimou\ImGUI</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Input.h">
       <Filter>Mimou</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Layer.h">
+      <Filter>Mimou</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\LayerStack.h">
+      <Filter>Mimou</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Logging.h">
+      <Filter>Mimou</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Timestep.h">
       <Filter>Mimou</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Window\Window.h">
@@ -56,12 +71,15 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\mepch.h" />
-    <ClInclude Include="Source\Mimou\Layer.h" />
-    <ClInclude Include="Source\Mimou\Timestep.h" />
-    <ClInclude Include="Source\Mimou\LayerStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
+      <Filter>Mimou</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ImGUI\ImGUILayer.cpp">
+      <Filter>Mimou\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\LayerStack.cpp">
       <Filter>Mimou</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Logging.cpp">
@@ -74,6 +92,5 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\mepch.cpp" />
-    <ClCompile Include="Source\Mimou\LayerStack.cpp" />
   </ItemGroup>
 </Project>
