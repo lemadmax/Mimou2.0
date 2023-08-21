@@ -30,7 +30,7 @@ public:
 	{
 	}
 
-	virtual void OnImGuiRender() override
+	virtual void OnImGUIRender() override
 	{
 
 	}

@@ -75,11 +75,11 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_IMGUI_WIN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;..\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
@@ -91,11 +91,11 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_IMGUI_WIN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;..\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
@@ -107,11 +107,11 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_IMGUI_WIN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;..\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
@@ -120,125 +120,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="backends\imgui_impl_allegro5.h" />
-    <ClInclude Include="backends\imgui_impl_android.h" />
-    <ClInclude Include="backends\imgui_impl_dx10.h" />
-    <ClInclude Include="backends\imgui_impl_dx11.h" />
-    <ClInclude Include="backends\imgui_impl_dx12.h" />
-    <ClInclude Include="backends\imgui_impl_dx9.h" />
-    <ClInclude Include="backends\imgui_impl_glfw.h" />
-    <ClInclude Include="backends\imgui_impl_glut.h" />
-    <ClInclude Include="backends\imgui_impl_metal.h" />
-    <ClInclude Include="backends\imgui_impl_opengl2.h" />
-    <ClInclude Include="backends\imgui_impl_opengl3.h" />
-    <ClInclude Include="backends\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="backends\imgui_impl_osx.h" />
-    <ClInclude Include="backends\imgui_impl_sdl2.h" />
-    <ClInclude Include="backends\imgui_impl_sdl3.h" />
-    <ClInclude Include="backends\imgui_impl_sdlrenderer2.h" />
-    <ClInclude Include="backends\imgui_impl_sdlrenderer3.h" />
-    <ClInclude Include="backends\imgui_impl_vulkan.h" />
-    <ClInclude Include="backends\imgui_impl_wgpu.h" />
-    <ClInclude Include="backends\imgui_impl_win32.h" />
-    <ClInclude Include="examples\example_allegro5\imconfig_allegro5.h" />
-    <ClInclude Include="examples\libs\emscripten\emscripten_mainloop_stub.h" />
-    <ClInclude Include="examples\libs\glfw\include\GLFW\glfw3.h" />
-    <ClInclude Include="examples\libs\glfw\include\GLFW\glfw3native.h" />
-    <ClInclude Include="examples\libs\usynergy\uSynergy.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_internal.h" />
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
-    <ClInclude Include="misc\cpp\imgui_stdlib.h" />
-    <ClInclude Include="misc\freetype\imgui_freetype.h" />
-    <ClInclude Include="misc\single_file\imgui_single_file.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="backends\imgui_impl_allegro5.cpp" />
-    <ClCompile Include="backends\imgui_impl_android.cpp" />
-    <ClCompile Include="backends\imgui_impl_dx10.cpp" />
-    <ClCompile Include="backends\imgui_impl_dx11.cpp" />
-    <ClCompile Include="backends\imgui_impl_dx12.cpp" />
-    <ClCompile Include="backends\imgui_impl_dx9.cpp" />
-    <ClCompile Include="backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="backends\imgui_impl_glut.cpp" />
-    <ClCompile Include="backends\imgui_impl_opengl2.cpp" />
-    <ClCompile Include="backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="backends\imgui_impl_sdl2.cpp" />
-    <ClCompile Include="backends\imgui_impl_sdl3.cpp" />
-    <ClCompile Include="backends\imgui_impl_sdlrenderer2.cpp" />
-    <ClCompile Include="backends\imgui_impl_sdlrenderer3.cpp" />
-    <ClCompile Include="backends\imgui_impl_vulkan.cpp" />
-    <ClCompile Include="backends\imgui_impl_wgpu.cpp" />
-    <ClCompile Include="backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="examples\example_allegro5\main.cpp" />
-    <ClCompile Include="examples\example_android_opengl3\main.cpp">
-      <ObjectFileName>$(IntDir)\main1.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_emscripten_wgpu\main.cpp">
-      <ObjectFileName>$(IntDir)\main2.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_glfw_opengl2\main.cpp">
-      <ObjectFileName>$(IntDir)\main3.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_glfw_opengl3\main.cpp">
-      <ObjectFileName>$(IntDir)\main4.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_glfw_vulkan\main.cpp">
-      <ObjectFileName>$(IntDir)\main5.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_glut_opengl2\main.cpp">
-      <ObjectFileName>$(IntDir)\main6.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_null\main.cpp">
-      <ObjectFileName>$(IntDir)\main7.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_sdl2_directx11\main.cpp">
-      <ObjectFileName>$(IntDir)\main8.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_sdl2_opengl2\main.cpp">
-      <ObjectFileName>$(IntDir)\main9.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_sdl2_opengl3\main.cpp">
-      <ObjectFileName>$(IntDir)\main10.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_sdl2_sdlrenderer2\main.cpp">
-      <ObjectFileName>$(IntDir)\main11.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_sdl2_vulkan\main.cpp">
-      <ObjectFileName>$(IntDir)\main12.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_sdl3_opengl3\main.cpp">
-      <ObjectFileName>$(IntDir)\main13.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_sdl3_sdlrenderer3\main.cpp">
-      <ObjectFileName>$(IntDir)\main14.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_win32_directx10\main.cpp">
-      <ObjectFileName>$(IntDir)\main15.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_win32_directx11\main.cpp">
-      <ObjectFileName>$(IntDir)\main16.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_win32_directx12\main.cpp">
-      <ObjectFileName>$(IntDir)\main17.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_win32_directx9\main.cpp">
-      <ObjectFileName>$(IntDir)\main18.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="examples\example_win32_opengl3\main.cpp">
-      <ObjectFileName>$(IntDir)\main19.obj</ObjectFileName>
-    </ClCompile>
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
-    <ClCompile Include="misc\cpp\imgui_stdlib.cpp" />
-    <ClCompile Include="misc\fonts\binary_to_compressed_c.cpp" />
-    <ClCompile Include="misc\freetype\imgui_freetype.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
