@@ -3,6 +3,7 @@
 #include "Window/Window.h"
 #include "Event/AppEvent.h"
 #include "Mimou/LayerStack.h"
+#include "Mimou/ImGUI/ImGUILayer.h"
 
 namespace Mimou
 {
@@ -40,6 +41,8 @@ namespace Mimou
 	private:
 		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
+
+		std::unique_ptr<ImGUILayer> m_ImGUILayer;
 
 		bool bIsRunning = false;
 

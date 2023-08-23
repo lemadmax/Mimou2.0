@@ -76,6 +76,9 @@
     <ClCompile Include="Source\Mimou\Application.cpp">
       <Filter>Mimou</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mimou\ImGUI\ImGUIBuild.cpp">
+      <Filter>Mimou\ImGUI</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Mimou\ImGUI\ImGUILayer.cpp">
       <Filter>Mimou\ImGUI</Filter>
     </ClCompile>

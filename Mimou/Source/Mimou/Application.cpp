@@ -19,6 +19,9 @@ namespace Mimou
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+
+		m_ImGUILayer = std::unique_ptr<ImGUILayer>(new ImGUILayer());
+		PushOverlay(m_ImGUILayer.get());
 	}
 
 	Application::~Application()
@@ -37,6 +40,13 @@ namespace Mimou
 			{
 				Layer->OnUpdate(Timestep);
 			}
+
+			m_ImGUILayer->Begin();
+			for (Layer* Layer : m_LayerStack)
+			{
+				Layer->OnImGUIRender();
+			}
+			m_ImGUILayer->End();
 			m_Window->OnUpdate();
 
 			//if (Input::IsKeyPressed(ME_KEY_A))

@@ -169,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp" />
+    <ClCompile Include="Source\Mimou\ImGUI\ImGUIBuild.cpp" />
     <ClCompile Include="Source\Mimou\ImGUI\ImGUILayer.cpp" />
     <ClCompile Include="Source\Mimou\LayerStack.cpp" />
     <ClCompile Include="Source\Mimou\Logging.cpp" />
