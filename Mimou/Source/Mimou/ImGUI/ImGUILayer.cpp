@@ -2,9 +2,11 @@
 #include "ImGUILayer.h"
 #include "Mimou/Application.h"
 
+#include "imgui.h"
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
-#include "GLFW/glfw3.h"
 
 namespace Mimou
 {
@@ -12,11 +14,13 @@ namespace Mimou
 	{
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGuiIO& IO = ImGui::GetIO();
+		ImGuiIO& IO = ImGui::GetIO(); (void)IO;
 		IO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 		IO.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+		IO.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
 		ImGui::StyleColorsDark();
+		//ImGui::StyleColorsLight();
 
 		ImGuiStyle& Style = ImGui::GetStyle();
 		if (IO.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -29,7 +33,7 @@ namespace Mimou
 		GLFWwindow* Window = static_cast<GLFWwindow*>(App->GetWindow().GetNativeWindow());
 
 		ImGui_ImplGlfw_InitForOpenGL(Window, true);
-		ImGui_ImplOpenGL3_Init("#version 410");
+		ImGui_ImplOpenGL3_Init();
 	}
 
 	void ImGUILayer::OnDetach()
@@ -51,7 +55,9 @@ namespace Mimou
 
 	void ImGUILayer::OnImGUIRender()
 	{
-		
+		ImGui::Begin("DemoWindow");
+		ImGui::ShowDemoWindow();
+		ImGui::End();
 	}
 
 	void ImGUILayer::Begin()
@@ -59,6 +65,7 @@ namespace Mimou
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void ImGUILayer::End()

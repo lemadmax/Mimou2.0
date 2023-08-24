@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -102,7 +102,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -127,7 +127,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -155,12 +155,18 @@
     <ClInclude Include="Source\Mimou\Event\EventBase.h" />
     <ClInclude Include="Source\Mimou\Event\KeyCodes.h" />
     <ClInclude Include="Source\Mimou\Event\KeyEvent.h" />
+    <ClInclude Include="Source\Mimou\Event\MouseButtonCodes.h" />
     <ClInclude Include="Source\Mimou\Event\MouseEvent.h" />
     <ClInclude Include="Source\Mimou\ImGUI\ImGUILayer.h" />
     <ClInclude Include="Source\Mimou\Input.h" />
     <ClInclude Include="Source\Mimou\Layer.h" />
     <ClInclude Include="Source\Mimou\LayerStack.h" />
     <ClInclude Include="Source\Mimou\Logging.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Buffer.h" />
+    <ClInclude Include="Source\Mimou\Renderer\RenderCommand.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Renderer.h" />
+    <ClInclude Include="Source\Mimou\Renderer\RendererAPI.h" />
+    <ClInclude Include="Source\Mimou\Renderer\VertexArray.h" />
     <ClInclude Include="Source\Mimou\Timestep.h" />
     <ClInclude Include="Source\Mimou\Window\Window.h" />
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsInput.h" />
@@ -173,6 +179,11 @@
     <ClCompile Include="Source\Mimou\ImGUI\ImGUILayer.cpp" />
     <ClCompile Include="Source\Mimou\LayerStack.cpp" />
     <ClCompile Include="Source\Mimou\Logging.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Buffer.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Renderer.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\VertexArray.cpp" />
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsWindow.cpp" />
     <ClCompile Include="Source\mepch.cpp">
@@ -180,6 +191,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Vendors\Glad\Glad.vcxproj">
+      <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
+    </ProjectReference>
     <ProjectReference Include="Vendors\ImGUI\ImGUI.vcxproj">
       <Project>{80FB640D-EC0F-8DBE-B591-301E216589EF}</Project>
     </ProjectReference>

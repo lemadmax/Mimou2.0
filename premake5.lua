@@ -10,9 +10,11 @@ workspace "Mimou2.0"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
+IncludeDir["Glad"] = "Mimou/Vendors/Glad/include"
 IncludeDir["GLFW"] = "Mimou/Vendors/GLFW/include"
 IncludeDir["ImGUI"] = "Mimou/Vendors/ImGUI"
 
+include "Mimou/Vendors/Glad"
 include "Mimou/Vendors/GLFW"
 include "Mimou/Vendors/ImGUI"
 
@@ -45,10 +47,12 @@ project "Mimou"
 		"%{prj.name}/Vendors/spdlog/include",
 		"%{prj.name}/Vendors/GLM",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.ImGUI}"
+		"%{IncludeDir.ImGUI}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links {
+		"Glad",
 		"ImGUI",
 		"GLFW",
 		"opengl32.lib"
@@ -108,7 +112,8 @@ project "Sandbox"
 		"Mimou/Source",
 		"Mimou/Vendors/spdlog/include",
 		"Mimou/Vendors/GLM",
-		"%{IncludeDir.ImGUI}"
+		"%{IncludeDir.ImGUI}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links {

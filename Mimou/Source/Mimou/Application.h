@@ -42,7 +42,7 @@ namespace Mimou
 		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
 
-		std::unique_ptr<ImGUILayer> m_ImGUILayer;
+		ImGUILayer* m_ImGUILayer;
 
 		bool bIsRunning = false;
 

@@ -30,6 +30,8 @@ namespace Mimou
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
+		glfwSwapBuffers(m_Window);
+		
 	}
 
 	void WindowsWindow::SetVSync(bool Enabled)
@@ -68,8 +70,12 @@ namespace Mimou
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 
+		glfwMakeContextCurrent(m_Window);
+		int Status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		ME_ASSERT(Status, "Failed to initialize Glad!");
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
-		//SetVSync(true);
+		SetVSync(true);
 
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* Window, INT32 Width, INT32 Height)
 			{

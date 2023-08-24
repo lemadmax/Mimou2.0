@@ -19,9 +19,10 @@ namespace Mimou
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+		m_Window->SetVSync(1);
 
-		m_ImGUILayer = std::unique_ptr<ImGUILayer>(new ImGUILayer());
-		PushOverlay(m_ImGUILayer.get());
+		m_ImGUILayer = new ImGUILayer();
+		PushOverlay(m_ImGUILayer);
 	}
 
 	Application::~Application()

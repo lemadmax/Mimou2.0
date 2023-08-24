@@ -71,6 +71,12 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\mepch.h" />
+    <ClInclude Include="Source\Mimou\Event\MouseButtonCodes.h" />
+    <ClInclude Include="Source\Mimou\Renderer\RenderCommand.h" />
+    <ClInclude Include="Source\Mimou\Renderer\RendererAPI.h" />
+    <ClInclude Include="Source\Mimou\Renderer\VertexArray.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Buffer.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -95,5 +101,10 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\mepch.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\VertexArray.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Buffer.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Renderer.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\RenderCommand.cpp" />
   </ItemGroup>
 </Project>
