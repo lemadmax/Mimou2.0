@@ -3,6 +3,7 @@
 #include "Mimou/Event/AppEvent.h"
 #include "Mimou/Event/KeyEvent.h"
 #include "Mimou/Event/MouseEvent.h"
+#include "Mimou/Renderer/OpenGL/OpenGLContext.h"
 
 namespace Mimou
 {
@@ -30,8 +31,7 @@ namespace Mimou
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
-		
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool Enabled)
@@ -70,9 +70,8 @@ namespace Mimou
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 
-		glfwMakeContextCurrent(m_Window);
-		int Status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		ME_ASSERT(Status, "Failed to initialize Glad!");
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);

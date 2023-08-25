@@ -77,6 +77,8 @@
     <ClInclude Include="Source\Mimou\Renderer\VertexArray.h" />
     <ClInclude Include="Source\Mimou\Renderer\Buffer.h" />
     <ClInclude Include="Source\Mimou\Renderer\Renderer.h" />
+    <ClInclude Include="Source\Mimou\Renderer\GraphicsContext.h" />
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -106,5 +108,6 @@
     <ClCompile Include="Source\Mimou\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Renderer.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.cpp" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Mimou/Window/Window.h"
+#include "Mimou/Renderer/GraphicsContext.h"
+
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
@@ -28,6 +30,7 @@ namespace Mimou
 
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{
