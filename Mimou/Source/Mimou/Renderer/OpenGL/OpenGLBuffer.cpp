@@ -29,7 +29,7 @@ namespace Mimou
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	OpenGLIndexBuffer::OpenGLIndexBuffer(float* Indices, uint32_t Count)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* Indices, uint32_t Count)
 		: m_Count(Count)
 	{
 		glCreateBuffers(1, &m_RendererID);

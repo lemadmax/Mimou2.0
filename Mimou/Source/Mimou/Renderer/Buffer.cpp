@@ -2,6 +2,7 @@
 
 #include "Buffer.h"
 #include "Renderer.h"
+#include "OpenGL/OpenGLBuffer.h"
 
 namespace Mimou
 {
@@ -16,6 +17,7 @@ namespace Mimou
 		}
 		case RendererAPI::API::OpenGL:
 		{
+			return std::make_shared<OpenGLVertexBuffer>(Vertices, Size);
 		}
 		}
 		ME_ENGINE_ASSERT(false, "Failed to create renderer API");
@@ -33,6 +35,7 @@ namespace Mimou
 		}
 		case RendererAPI::API::OpenGL:
 		{
+			return std::make_shared<OpenGLIndexBuffer>(Indices, Size);
 		}
 		}
 		ME_ENGINE_ASSERT(false, "Failed to create renderer API");

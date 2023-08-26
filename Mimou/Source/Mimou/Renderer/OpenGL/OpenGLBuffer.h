@@ -24,7 +24,7 @@ namespace Mimou
 	class OpenGLIndexBuffer : public IndexBuffer
 	{
 	public:
-		OpenGLIndexBuffer(float* Indices, uint32_t Count);
+		OpenGLIndexBuffer(uint32_t* Indices, uint32_t Count);
 		virtual ~OpenGLIndexBuffer();
 
 		virtual void Bind() const override;

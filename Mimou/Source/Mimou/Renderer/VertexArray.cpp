@@ -2,6 +2,7 @@
 
 #include "VertexArray.h"
 #include "RendererAPI.h"
+#include "OpenGL/OpenGLVertexArray.h"
 
 namespace Mimou
 {
@@ -16,7 +17,7 @@ namespace Mimou
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			
+			return std::make_shared<OpenGLVertexArray>();
 		}
 		}
 		ME_ENGINE_ASSERT(false, "Failed to create renderer API");
