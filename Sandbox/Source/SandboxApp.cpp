@@ -11,6 +11,7 @@ public:
 		: Layer("Example")
 	{
 		TestRenderer();
+		//TestTriangle();
 	}
 
 	~ExampleLayer()
@@ -31,7 +32,7 @@ public:
 	virtual void OnUpdate(Mimou::Timestep Ts) override
 	{
 
-		RenderCommand::SetClearColor({ 0.5f, 0.5f, 0.1f, 1 });
+		RenderCommand::SetClearColor({ 0.8f, 0.8f, 0.8f, 1 });
 		RenderCommand::Clear();
 		glUseProgram(Program);
 		std::string Name = "u_Transform";
@@ -39,6 +40,9 @@ public:
 		GLint location = glGetUniformLocation(Program, Name.c_str());
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(Matrix));
 		Renderer::Submit(TriangleVertices);
+		//glUseProgram(TriangleProgram);
+		//glBindVertexArray(VertexArray);
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 
 	virtual void OnImGUIRender() override
@@ -48,6 +52,95 @@ public:
 
 	virtual void OnEvent(Mimou::EventBase& Event) override
 	{
+
+	}
+
+	void TestTriangle()
+	{
+		VertexArray;
+		glGenVertexArrays(1, &VertexArray);
+		glBindVertexArray(VertexArray);
+
+		float Vertices[] = {
+			-0.5f, -0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f,
+			 0.0f,  0.5f, 0.0f
+		};
+		
+		uint32_t VBuffers;
+		glGenBuffers(1, &VBuffers);
+		glBindBuffer(GL_ARRAY_BUFFER, VBuffers);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+
+		std::string VertexSrc = R"(
+			#version 330 core
+			layout (location = 0) in vec3 aPos;
+
+			void main()
+			{
+				gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+			}	
+		)";
+
+		uint32_t VertexShader;
+		VertexShader = glCreateShader(GL_VERTEX_SHADER);
+		const char* VertexSrcCStr = (const char*)VertexSrc.c_str();
+		glShaderSource(VertexShader, 1, &VertexSrcCStr, NULL);
+		glCompileShader(VertexShader);
+
+		int  success;
+		char infoLog[512];
+		glGetShaderiv(VertexShader, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(VertexShader, 512, NULL, infoLog);
+			ME_LOG("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n");
+		}
+
+		std::string FragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 Color;
+			
+			in vec4 v_Color;
+			
+			void main()
+			{
+				Color = vec4(v_Color);
+			}
+		)";
+		uint32_t FragmentShader;
+		FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		const char* FragSrcCStr = (const char*)FragmentSrc.c_str();
+		glShaderSource(FragmentShader, 1, &FragSrcCStr, NULL);
+		glCompileShader(FragmentShader);
+
+		glGetShaderiv(FragmentShader, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(FragmentShader, 512, NULL, infoLog);
+			ME_LOG("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n");
+		}
+
+		uint32_t ShaderProgram;
+		ShaderProgram = glCreateProgram();
+		glAttachShader(ShaderProgram, VertexShader);
+		glAttachShader(ShaderProgram, FragmentShader);
+		glLinkProgram(ShaderProgram);
+
+		glGetProgramiv(ShaderProgram, GL_LINK_STATUS, &success);
+		if (!success)
+		{
+			glGetProgramInfoLog(ShaderProgram, 512, NULL, infoLog);
+			ME_LOG("ERROR::SHADER::PROGRAM::LINKERROR\n");
+		}
+
+		//glDeleteShader(VertexShader);
+		//glDeleteShader(FragmentShader);
+		TriangleProgram = ShaderProgram;
 
 	}
 
@@ -82,7 +175,7 @@ public:
 		TriangleVertices->AddIndexBuffer(IndexBuffer);
 
 		std::string VertexSrc = R"(
-			#version 460 core
+			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
@@ -95,12 +188,12 @@ public:
 			void main()
 			{
 				v_Color = a_Color;
-				gl_Position = u_Transform * vec4(a_Position, 1.0);
+				gl_Position = vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
 			}	
 		)";
 
 		std::string FragmentSrc = R"(
-			#version 460 core
+			#version 330 core
 			
 			layout(location = 0) out vec4 Color;
 			
@@ -149,6 +242,8 @@ public:
 private:
 	Reference<VertexArray> TriangleVertices;
 	GLenum Program = 0;
+	GLenum VertexArray = 0;
+	GLenum TriangleProgram = 0;
 };
 
 class Sandbox : public Mimou::Application

@@ -30,8 +30,8 @@ namespace Mimou
 
 	void WindowsWindow::OnUpdate()
 	{
-		glfwPollEvents();
 		m_Context->SwapBuffers();
+		glfwPollEvents();
 	}
 
 	void WindowsWindow::SetVSync(bool Enabled)

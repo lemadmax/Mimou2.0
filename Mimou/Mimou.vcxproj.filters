@@ -10,6 +10,12 @@
     <Filter Include="Mimou\ImGUI">
       <UniqueIdentifier>{16738F5B-8228-0851-0B1D-022877D1FE54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mimou\Renderer">
+      <UniqueIdentifier>{5226E366-3EF4-D66C-2788-479313F5B2D1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mimou\Renderer\OpenGL">
+      <UniqueIdentifier>{463F8FBE-B2AB-4AB9-7B9F-E216E7CA6C21}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Mimou\Window">
       <UniqueIdentifier>{9354F3ED-7FB7-8292-283D-BB48147F4E15}</UniqueIdentifier>
     </Filter>
@@ -40,6 +46,9 @@
     <ClInclude Include="Source\Mimou\Event\KeyEvent.h">
       <Filter>Mimou\Event</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Event\MouseButtonCodes.h">
+      <Filter>Mimou\Event</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Event\MouseEvent.h">
       <Filter>Mimou\Event</Filter>
     </ClInclude>
@@ -58,6 +67,36 @@
     <ClInclude Include="Source\Mimou\Logging.h">
       <Filter>Mimou</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\Buffer.h">
+      <Filter>Mimou\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\GraphicsContext.h">
+      <Filter>Mimou\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLBuffer.h">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.h">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.h">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.h">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\RenderCommand.h">
+      <Filter>Mimou\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\Renderer.h">
+      <Filter>Mimou\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\RendererAPI.h">
+      <Filter>Mimou\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\VertexArray.h">
+      <Filter>Mimou\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Timestep.h">
       <Filter>Mimou</Filter>
     </ClInclude>
@@ -71,17 +110,6 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\mepch.h" />
-    <ClInclude Include="Source\Mimou\Event\MouseButtonCodes.h" />
-    <ClInclude Include="Source\Mimou\Renderer\RenderCommand.h" />
-    <ClInclude Include="Source\Mimou\Renderer\RendererAPI.h" />
-    <ClInclude Include="Source\Mimou\Renderer\VertexArray.h" />
-    <ClInclude Include="Source\Mimou\Renderer\Buffer.h" />
-    <ClInclude Include="Source\Mimou\Renderer\Renderer.h" />
-    <ClInclude Include="Source\Mimou\Renderer\GraphicsContext.h" />
-    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLBuffer.h" />
-    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.h" />
-    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -99,6 +127,33 @@
     <ClCompile Include="Source\Mimou\Logging.cpp">
       <Filter>Mimou</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\Buffer.cpp">
+      <Filter>Mimou\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLBuffer.cpp">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.cpp">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\RenderCommand.cpp">
+      <Filter>Mimou\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\Renderer.cpp">
+      <Filter>Mimou\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\RendererAPI.cpp">
+      <Filter>Mimou\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\VertexArray.cpp">
+      <Filter>Mimou\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsInput.cpp">
       <Filter>Mimou\Window\Windows</Filter>
     </ClCompile>
@@ -106,14 +161,5 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\mepch.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\VertexArray.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\Buffer.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\Renderer.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\RenderCommand.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLBuffer.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.cpp" />
   </ItemGroup>
 </Project>

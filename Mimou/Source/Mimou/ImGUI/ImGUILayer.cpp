@@ -55,8 +55,13 @@ namespace Mimou
 
 	void ImGUILayer::OnImGUIRender()
 	{
-		ImGui::Begin("DemoWindow");
 		ImGui::ShowDemoWindow();
+		ImGui::Begin("DemoWindow");
+		float color[3] =
+		{
+			1.0f, 0.0f, 0.0f
+		};
+		ImGui::ColorPicker3("Color picker test", color);
 		ImGui::End();
 	}
 
@@ -65,7 +70,7 @@ namespace Mimou
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void ImGUILayer::End()
