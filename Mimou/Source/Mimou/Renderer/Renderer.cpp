@@ -26,8 +26,9 @@ namespace Mimou
 
 	}
 
-	void Renderer::Submit(const Reference<VertexArray>& VertexArray, const glm::mat4& Transfrom)
+	void Renderer::Submit(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader, const glm::mat4& Transfrom)
 	{
+		Shader->Bind();
 		VertexArray->Bind();
 		RenderCommand::DrawIndexed(VertexArray);
 	}

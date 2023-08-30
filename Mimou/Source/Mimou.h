@@ -10,6 +10,8 @@
 #include "Mimou/Renderer/Buffer.h"
 #include "Mimou/Renderer/Renderer.h"
 
+#include "Mimou/Utils/FileUtils/FileHelper.h"
+
 #include "imgui.h"
 
 #include "Mimou/EntryPoint.h"

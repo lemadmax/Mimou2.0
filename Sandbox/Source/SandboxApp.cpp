@@ -39,10 +39,7 @@ public:
 		glm::mat4 Matrix(1.0f);
 		GLint location = glGetUniformLocation(Program, Name.c_str());
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(Matrix));
-		Renderer::Submit(TriangleVertices);
-		//glUseProgram(TriangleProgram);
-		//glBindVertexArray(VertexArray);
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		Renderer::Submit(TriangleVertices, TriangleShader);
 	}
 
 	virtual void OnImGUIRender() override
@@ -205,38 +202,39 @@ public:
 			}
 		)";
 
-		Program = glCreateProgram();
-		GLuint VertexShader = glCreateShader(GL_VERTEX_SHADER);
-		GLuint FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		TriangleShader = Shader::Create("TriangleShader", VertexSrc, FragmentSrc);
+		//Program = glCreateProgram();
+		//GLuint VertexShader = glCreateShader(GL_VERTEX_SHADER);
+		//GLuint FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-		const GLchar* VertexSrcCStr = (const GLchar*)VertexSrc.c_str();
-		glShaderSource(VertexShader, 1, &VertexSrcCStr, 0);
-		const GLchar* FramentSrcCStr = (const GLchar*)FragmentSrc.c_str();
-		glShaderSource(FragmentShader, 1, &FramentSrcCStr, 0);
+		//const GLchar* VertexSrcCStr = (const GLchar*)VertexSrc.c_str();
+		//glShaderSource(VertexShader, 1, &VertexSrcCStr, 0);
+		//const GLchar* FramentSrcCStr = (const GLchar*)FragmentSrc.c_str();
+		//glShaderSource(FragmentShader, 1, &FramentSrcCStr, 0);
 
-		glCompileShader(VertexShader);
-		glCompileShader(FragmentShader);
-		GLint IsCompiled = 0;
-		glGetShaderiv(VertexShader, GL_COMPILE_STATUS, &IsCompiled);
-		if (IsCompiled == GL_FALSE)
-		{
-			ME_LOG("Failed to compile vertex shader");
-			return;
-		}
-		glGetShaderiv(FragmentShader, GL_COMPILE_STATUS, &IsCompiled);
-		if (IsCompiled == GL_FALSE)
-		{
-			ME_LOG("Failed to compile fragment shader");
-			return;
-		}
+		//glCompileShader(VertexShader);
+		//glCompileShader(FragmentShader);
+		//GLint IsCompiled = 0;
+		//glGetShaderiv(VertexShader, GL_COMPILE_STATUS, &IsCompiled);
+		//if (IsCompiled == GL_FALSE)
+		//{
+		//	ME_LOG("Failed to compile vertex shader");
+		//	return;
+		//}
+		//glGetShaderiv(FragmentShader, GL_COMPILE_STATUS, &IsCompiled);
+		//if (IsCompiled == GL_FALSE)
+		//{
+		//	ME_LOG("Failed to compile fragment shader");
+		//	return;
+		//}
 
-		glAttachShader(Program, VertexShader);
-		glAttachShader(Program, FragmentShader);
+		//glAttachShader(Program, VertexShader);
+		//glAttachShader(Program, FragmentShader);
 
-		glDeleteShader(VertexShader);
-		glDeleteShader(FragmentShader);
+		//glDeleteShader(VertexShader);
+		//glDeleteShader(FragmentShader);
 
-		glUseProgram(Program);
+		//glUseProgram(Program);
 	}
 
 private:
@@ -244,6 +242,8 @@ private:
 	GLenum Program = 0;
 	GLenum VertexArray = 0;
 	GLenum TriangleProgram = 0;
+
+	Reference<Shader> TriangleShader;
 };
 
 class Sandbox : public Mimou::Application

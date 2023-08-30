@@ -3,6 +3,7 @@
 #include "RenderCommand.h"
 
 #include "VertexArray.h"
+#include "Shader.h"
 
 #include <glm/glm.hpp>
 
@@ -17,7 +18,7 @@ namespace Mimou
 		static void BeginScene();
 		static void EndScene();
 
-		static void Submit(const Reference<VertexArray>& VertexArray, const glm::mat4& Transform = glm::mat4(1.0f));
+		static void Submit(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader, const glm::mat4& Transform = glm::mat4(1.0f));
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:

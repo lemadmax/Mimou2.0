@@ -110,6 +110,9 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\mepch.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Shader.h" />
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="Source\Mimou\Utils\FileUtils\FileHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -161,5 +164,8 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\mepch.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Shader.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="Source\Mimou\Utils\FileUtils\FileHelper.cpp" />
   </ItemGroup>
 </Project>
