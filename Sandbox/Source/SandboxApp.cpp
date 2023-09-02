@@ -11,7 +11,6 @@ public:
 		: Layer("Example")
 	{
 		TestRenderer();
-		//TestTriangle();
 	}
 
 	~ExampleLayer()
@@ -49,95 +48,6 @@ public:
 
 	virtual void OnEvent(Mimou::EventBase& Event) override
 	{
-
-	}
-
-	void TestTriangle()
-	{
-		VertexArray;
-		glGenVertexArrays(1, &VertexArray);
-		glBindVertexArray(VertexArray);
-
-		float Vertices[] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f
-		};
-		
-		uint32_t VBuffers;
-		glGenBuffers(1, &VBuffers);
-		glBindBuffer(GL_ARRAY_BUFFER, VBuffers);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-
-		std::string VertexSrc = R"(
-			#version 330 core
-			layout (location = 0) in vec3 aPos;
-
-			void main()
-			{
-				gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-			}	
-		)";
-
-		uint32_t VertexShader;
-		VertexShader = glCreateShader(GL_VERTEX_SHADER);
-		const char* VertexSrcCStr = (const char*)VertexSrc.c_str();
-		glShaderSource(VertexShader, 1, &VertexSrcCStr, NULL);
-		glCompileShader(VertexShader);
-
-		int  success;
-		char infoLog[512];
-		glGetShaderiv(VertexShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(VertexShader, 512, NULL, infoLog);
-			ME_LOG("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n");
-		}
-
-		std::string FragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 Color;
-			
-			in vec4 v_Color;
-			
-			void main()
-			{
-				Color = vec4(v_Color);
-			}
-		)";
-		uint32_t FragmentShader;
-		FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-		const char* FragSrcCStr = (const char*)FragmentSrc.c_str();
-		glShaderSource(FragmentShader, 1, &FragSrcCStr, NULL);
-		glCompileShader(FragmentShader);
-
-		glGetShaderiv(FragmentShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(FragmentShader, 512, NULL, infoLog);
-			ME_LOG("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n");
-		}
-
-		uint32_t ShaderProgram;
-		ShaderProgram = glCreateProgram();
-		glAttachShader(ShaderProgram, VertexShader);
-		glAttachShader(ShaderProgram, FragmentShader);
-		glLinkProgram(ShaderProgram);
-
-		glGetProgramiv(ShaderProgram, GL_LINK_STATUS, &success);
-		if (!success)
-		{
-			glGetProgramInfoLog(ShaderProgram, 512, NULL, infoLog);
-			ME_LOG("ERROR::SHADER::PROGRAM::LINKERROR\n");
-		}
-
-		//glDeleteShader(VertexShader);
-		//glDeleteShader(FragmentShader);
-		TriangleProgram = ShaderProgram;
 
 	}
 
@@ -202,7 +112,8 @@ public:
 			}
 		)";
 
-		TriangleShader = Shader::Create("TriangleShader", VertexSrc, FragmentSrc);
+		//TriangleShader = Shader::Create("TriangleShader", VertexSrc, FragmentSrc);
+		TriangleShader = Shader::Create("Assets/Shaders/TestShader.glsl");
 		//Program = glCreateProgram();
 		//GLuint VertexShader = glCreateShader(GL_VERTEX_SHADER);
 		//GLuint FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);

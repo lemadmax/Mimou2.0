@@ -16,6 +16,12 @@
     <Filter Include="Mimou\Renderer\OpenGL">
       <UniqueIdentifier>{463F8FBE-B2AB-4AB9-7B9F-E216E7CA6C21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mimou\Utils">
+      <UniqueIdentifier>{8C036D5C-F8B8-E551-81AD-DF28ED61DC55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mimou\Utils\FileUtils">
+      <UniqueIdentifier>{ECF2E577-585F-A172-2153-39D08D7EC3DA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Mimou\Window">
       <UniqueIdentifier>{9354F3ED-7FB7-8292-283D-BB48147F4E15}</UniqueIdentifier>
     </Filter>
@@ -82,6 +88,9 @@
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.h">
       <Filter>Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.h">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.h">
       <Filter>Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
@@ -94,11 +103,17 @@
     <ClInclude Include="Source\Mimou\Renderer\RendererAPI.h">
       <Filter>Mimou\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\Shader.h">
+      <Filter>Mimou\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\VertexArray.h">
       <Filter>Mimou\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Timestep.h">
       <Filter>Mimou</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Utils\FileUtils\FileHelper.h">
+      <Filter>Mimou\Utils\FileUtils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Window\Window.h">
       <Filter>Mimou\Window</Filter>
@@ -110,9 +125,6 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\mepch.h" />
-    <ClInclude Include="Source\Mimou\Renderer\Shader.h" />
-    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.h" />
-    <ClInclude Include="Source\Mimou\Utils\FileUtils\FileHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -142,6 +154,9 @@
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.cpp">
       <Filter>Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.cpp">
+      <Filter>Mimou\Renderer\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.cpp">
       <Filter>Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
@@ -154,8 +169,14 @@
     <ClCompile Include="Source\Mimou\Renderer\RendererAPI.cpp">
       <Filter>Mimou\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\Shader.cpp">
+      <Filter>Mimou\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\VertexArray.cpp">
       <Filter>Mimou\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Utils\FileUtils\FileHelper.cpp">
+      <Filter>Mimou\Utils\FileUtils</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsInput.cpp">
       <Filter>Mimou\Window\Windows</Filter>
@@ -164,8 +185,5 @@
       <Filter>Mimou\Window\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\mepch.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\Shader.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.cpp" />
-    <ClCompile Include="Source\Mimou\Utils\FileUtils\FileHelper.cpp" />
   </ItemGroup>
 </Project>

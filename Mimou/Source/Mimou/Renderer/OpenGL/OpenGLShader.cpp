@@ -113,8 +113,27 @@ namespace Mimou
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::Preprocess(const std::string& Source)
 	{
-		return std::unordered_map<GLenum, std::string>();
+		std::unordered_map<GLenum, std::string> ShaderSources;
+
+		const char* TypeToken = "#type";
+		size_t TypeTokenLen = strlen(TypeToken);
+		size_t Pos = Source.find(TypeToken, 0);
+		while (Pos != std::string::npos)
+		{
+			size_t EOL = Source.find_first_of("\r\n", Pos);
+			ME_ENGINE_ASSERT(EOL != std::string::npos, "OpenGLSHader::Preprocess: Syntax error");
+			size_t Begin = Pos + TypeTokenLen + 1;
+			std::string Type = Source.substr(Begin, EOL - Begin);
+			ME_ENGINE_ASSERT(ShaderTypeFromString(Type), "OpenGLShader::Preprocess: Invalid shader type specified");
+			
+			size_t NextLinePos = Source.find_first_not_of("\r\n", EOL);
+			Pos = Source.find(TypeToken, NextLinePos);
+			ShaderSources[ShaderTypeFromString(Type)] = Source.substr(NextLinePos, Pos - (NextLinePos == std::string::npos ? Source.size() - 1 : NextLinePos));
+		}
+
+		return ShaderSources;
 	}
+
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& ShaderSources)
 	{
 		GLuint Program = glCreateProgram();
@@ -147,7 +166,7 @@ namespace Mimou
 				glDeleteShader(Shader);
 
 				// Use the infoLog as you see fit.
-				ME_ENGINE_ERROR("{}", InfoLog.data());
+				ME_ENGINE_ERROR("OpenGLShader::Compile {}", InfoLog.data());
 				ME_ENGINE_ASSERT(false, "Shader compilation failure!");
 				return;
 			}
