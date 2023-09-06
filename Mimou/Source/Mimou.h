@@ -14,6 +14,5 @@
 
 #include "imgui.h"
 
-#include "Mimou/EntryPoint.h"
 
 using namespace Mimou;

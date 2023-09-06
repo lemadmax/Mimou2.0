@@ -46,6 +46,9 @@ namespace Mimou
 		WindowResizeEvent(std::string Title, UINT32 Width, UINT32 Height)
 			: AppEvent(Title), m_Width(Width), m_Height(Height) {}
 
+		inline UINT32 GetWidth() const { return m_Width; }
+		inline UINT32 GetHeight() const { return m_Height; }
+
 		std::string ToString() const override {
 			std::stringstream ss;
 			ss << "WindowResizeEvent [Title:" << m_Title << ", Width: " << m_Width << ", Height: " << m_Height << "]";

@@ -1,7 +1,7 @@
 #pragma once
 #include "Mimou.h"
 
-class ShaderEgLayer : Layer
+class ShaderEgLayer : public Layer
 {
 public:
 	ShaderEgLayer();
@@ -15,4 +15,5 @@ public:
 	virtual void OnEvent(EventBase& Event) override;
 private:
 	Reference<Shader> SunShader;
+	Reference<VertexArray> SunVertices;
 };

@@ -129,12 +129,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Examples\ShaderExamples.cpp" />
     <ClCompile Include="Source\SandboxApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mimou\Mimou.vcxproj">
       <Project>{2CD1AB0D-98E5-D3BE-6167-771ECD3AD0EF}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Examples\ShaderExamples.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

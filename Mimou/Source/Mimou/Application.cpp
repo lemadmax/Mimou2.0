@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "Input.h"
+#include "Renderer/Renderer.h"
 
 #include "GLFW/glfw3.h"
 
@@ -96,6 +97,7 @@ namespace Mimou
 	bool Application::OnWindowResized(WindowResizeEvent& Event)
 	{
 		//ME_LOG("Application::OnWindowResized: {}", Event.ToString());
+		Renderer::OnWindowResize(Event.GetWidth(), Event.GetHeight());
 		return false;
 	}
 	bool Application::OnWindowClosed(WindowCloseEvent& Event)

@@ -1,8 +1,11 @@
 #include <Mimou.h>
+#include "Mimou/EntryPoint.h"
 
 #include "glm/vec3.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "glad/glad.h"
+
+#include "Examples/ShaderExamples.h"
 
 class ExampleLayer : public Mimou::Layer
 {
@@ -162,7 +165,7 @@ class Sandbox : public Mimou::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		PushLayer(new ShaderEgLayer());
 	}
 	~Sandbox()
 	{

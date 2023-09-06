@@ -3,7 +3,7 @@
 
 layout(location = 0) in vec3 a_Position;
 
-out vec4 v_Position;
+out vec3 v_Position;
 
 void main()
 {
@@ -36,9 +36,14 @@ float noise(vec3 point)
 
 uniform float uTime;
 
-in vec4 v_Position;
+layout(location = 0) out vec4 Color;
+
+in vec3 v_Position;
 
 void main()
 {
-    Color = vec4(v_Color);
+    Color = vec4(1.0,  1.0, 1.0, 1.0);
+    Color.x = sin(v_Position.x) * sin(v_Position.x) - cos(v_Position.x) * cos(v_Position.x);
+    Color.y = sin(v_Position.y) * sin(v_Position.y) - cos(v_Position.y) * cos(v_Position.y);
+    Color.z = sin(v_Position.z) * sin(v_Position.z) - cos(v_Position.z) * cos(v_Position.z);
 }
