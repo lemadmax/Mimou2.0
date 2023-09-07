@@ -16,4 +16,5 @@ public:
 private:
 	Reference<Shader> SunShader;
 	Reference<VertexArray> SunVertices;
+	Reference<VertexArray> SphereVertices;
 };

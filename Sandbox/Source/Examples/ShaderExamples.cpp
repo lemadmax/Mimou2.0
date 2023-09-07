@@ -4,31 +4,43 @@ ShaderEgLayer::ShaderEgLayer()
 {
 	SunShader = Shader::Create("Assets/Shaders/SunShader.glsl");
 
-	SunVertices = VertexArray::Create();
+	//SunVertices = VertexArray::Create();
 
-	float Vertices[3 * 4] =
-	{
-		-1, 1, 0,
-		1, 1, 0,
-		-1, -1, 0,
-		1, -1, 0
-	};
+	//float Vertices[3 * 4] =
+	//{
+	//	-1, 1, 0,
+	//	1, 1, 0,
+	//	-1, -1, 0,
+	//	1, -1, 0
+	//};
+	//BufferLayout Layout =
+	//{
+	//	{ "a_Position", ShaderDataType::Float3 }
+	//};
+	//uint32_t Indices[6] =
+	//{
+	//	0, 1, 2, 2, 3, 1
+	//};
+
+	//Reference<VertexBuffer> VertexBuffer = VertexBuffer::Create(Vertices, sizeof(Vertices));
+	//VertexBuffer->SetLayout(Layout);
+
+	//Reference<IndexBuffer> IndexBuffer = IndexBuffer::Create(Indices, 6);
+	//SunVertices->AddVertexBuffer(VertexBuffer);
+
+	//SunVertices->AddIndexBuffer(IndexBuffer);
+
+	Reference<StaticMesh> SphereMesh = StaticMeshLibrary::CreateSphere(32, 16);
+	SphereVertices = VertexArray::Create();
+
 	BufferLayout Layout =
 	{
 		{ "a_Position", ShaderDataType::Float3 }
 	};
-	uint32_t Indices[6] =
-	{
-		0, 1, 2, 2, 3, 1
-	};
 
-	Reference<VertexBuffer> VertexBuffer = VertexBuffer::Create(Vertices, sizeof(Vertices));
-	VertexBuffer->SetLayout(Layout);
-
-	Reference<IndexBuffer> IndexBuffer = IndexBuffer::Create(Indices, 6);
-	SunVertices->AddVertexBuffer(VertexBuffer);
-
-	SunVertices->AddIndexBuffer(IndexBuffer);
+	std::vector<float> Vertices = SphereMesh->GetVerticesVec();
+	float* V_Arr = &Vertices[0];
+	Reference<VertexBuffer> VertexBuffer = VertexBuffer::Create(V_Arr, sizeof(Vertices));
 }
 
 ShaderEgLayer::~ShaderEgLayer()

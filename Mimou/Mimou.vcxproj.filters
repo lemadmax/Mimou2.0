@@ -126,6 +126,7 @@
     </ClInclude>
     <ClInclude Include="Source\mepch.h" />
     <ClInclude Include="Source\Mimou\Renderer\Texture.h" />
+    <ClInclude Include="Source\Mimou\Mesh\StaticMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -187,5 +188,6 @@
     </ClCompile>
     <ClCompile Include="Source\mepch.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Texture.cpp" />
+    <ClCompile Include="Source\Mimou\Mesh\StaticMesh.cpp" />
   </ItemGroup>
 </Project>

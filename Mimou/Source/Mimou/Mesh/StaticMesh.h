@@ -17,6 +17,7 @@ namespace Mimou
 		~StaticMesh();
 		
 		inline MeshType GetMeshType() const { return m_Type; }
+		inline std::vector<float> GetVerticesVec() const { return m_Vertices; }
 		inline const float* GetVertices() const { return m_Vertices.data(); }
 		inline uint32_t GetSize() const { return m_Vertices.size(); }
 
