@@ -14,11 +14,11 @@ namespace Mimou
 		{
 			for (float u = 0; u <= 1; u += 1 / NU)
 			{
-				Vertices.push_back(Func(u, v, Data));
-				Vertices.push_back(Func(u, v + 1 / NV, Data));
+				Vertices.push_back(Func(u, v, Data...));
+				Vertices.push_back(Func(u, v + 1 / NV, Data...));
 			}
-			Vertices.push_back(Func(1, v, Data));
-			Vertices.push_back(Func(0, v + 1 / NV, Data));
+			Vertices.push_back(Func(1, v, Data...));
+			Vertices.push_back(Func(0, v + 1 / NV, Data...));
 		}
 		return Vertices;
 	}
