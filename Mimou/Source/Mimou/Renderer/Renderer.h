@@ -20,6 +20,8 @@ namespace Mimou
 
 		static void Submit(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader, const glm::mat4& Transform = glm::mat4(1.0f));
 
+		static void SubmitArrays(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader);
+
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:
 		struct SceneData

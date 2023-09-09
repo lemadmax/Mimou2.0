@@ -13,6 +13,7 @@ namespace Mimou
 		virtual void Clear() override;
 
 		virtual void DrawIndexed(const Reference<VertexArray>& VertexArray) override;
+		virtual void DrawArrays(const Reference<VertexArray>& VertexArray) override;
 
 	};
 }

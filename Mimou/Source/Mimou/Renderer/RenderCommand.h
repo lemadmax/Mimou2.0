@@ -27,6 +27,11 @@ namespace Mimou
 			s_RendererAPI->DrawIndexed(VertexArray);
 		}
 
+		inline static void DrawArrays(const Reference<VertexArray>& VertexArray)
+		{
+			s_RendererAPI->DrawArrays(VertexArray);
+		}
+
 		inline static void SetViewport(uint32_t X, uint32_t Y, uint32_t Width, uint32_t Height)
 		{
 			s_RendererAPI->SetViewport(X, Y, Width, Height);

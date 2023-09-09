@@ -24,6 +24,7 @@ namespace Mimou
 		virtual void Clear() = 0;
 
 		virtual void DrawIndexed(const Reference<VertexArray>& VertexArray) = 0;
+		virtual void DrawArrays(const Reference<VertexArray>& VertexArray) = 0;
 
 		inline static API GetAPI() { return s_RendererAPI; }
 	private:

@@ -13,6 +13,8 @@ public:
 	virtual void OnDetach() override;
 	virtual void OnImGUIRender() override;
 	virtual void OnEvent(EventBase& Event) override;
+
+	void TestSun();
 private:
 	Reference<Shader> SunShader;
 	Reference<VertexArray> SunVertices;

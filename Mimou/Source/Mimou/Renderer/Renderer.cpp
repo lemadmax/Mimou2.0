@@ -32,4 +32,11 @@ namespace Mimou
 		VertexArray->Bind();
 		RenderCommand::DrawIndexed(VertexArray);
 	}
+
+	void Renderer::SubmitArrays(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader)
+	{
+		Shader->Bind();
+		VertexArray->Bind();
+		RenderCommand::DrawArrays(VertexArray);
+	}
 }

@@ -8,6 +8,7 @@ namespace Mimou
 {
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* Vertices, uint32_t Size)
+		: m_Size(Size)
 	{
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);

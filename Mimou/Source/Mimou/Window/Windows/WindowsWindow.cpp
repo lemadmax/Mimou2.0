@@ -75,6 +75,9 @@ namespace Mimou
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
+		//glEnable(GL_DEPTH_TEST);
+		//glDepthFunc(GL_LEQUAL);
+		//glClearDepth(-1);
 
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* Window, INT32 Width, INT32 Height)
 			{

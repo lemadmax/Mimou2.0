@@ -13,18 +13,28 @@ namespace Mimou
 		};
 
 	public:
-		StaticMesh(MeshType Type, std::vector<float> Vertices);
+		StaticMesh(MeshType Type, uint32_t NU, uint32_t NV);
 		~StaticMesh();
 		
 		inline MeshType GetMeshType() const { return m_Type; }
-		inline std::vector<float> GetVerticesVec() const { return m_Vertices; }
-		inline const float* GetVertices() const { return m_Vertices.data(); }
-		inline uint32_t GetSize() const { return m_Vertices.size(); }
+		inline uint32_t GetSize() const { return Cnt; }
+		inline float* GetVertices()
+		{ 
+			if (m_Vertices == nullptr)
+			{
+				GenerateVertices();
+			}
+			return m_Vertices; 
+		}
+
+		void GenerateVertices();
 
 	private:
 		MeshType m_Type;
+		uint32_t m_NU, m_NV;
 
-		std::vector<float> m_Vertices;
+		float* m_Vertices = nullptr;
+		uint32_t Cnt = 0;
 	};
 
 	class StaticMeshLibrary

@@ -166,6 +166,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ShaderEgLayer());
+		//PushLayer(new ExampleLayer());
 	}
 	~Sandbox()
 	{

@@ -118,6 +118,8 @@ namespace Mimou
 
 		virtual void SetLayout(const BufferLayout& Layout) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
+
+		virtual uint32_t GetSize() const = 0;
 		
 		static Reference<VertexBuffer> Create(float* Vertices, uint32_t Size);
 	};
