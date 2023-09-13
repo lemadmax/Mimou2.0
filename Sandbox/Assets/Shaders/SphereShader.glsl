@@ -47,7 +47,14 @@ layout(location = 0) out vec4 Color;
 in vec3 v_Position;
 in vec3 v_Normal;
 
+vec3 lightDir = vec3(-1.0, -1.0, -1.0);
+vec4 lightColor = vec4(0.6, 0.3, 0.8, 1.0);
+vec4 ambient = vec4(0.3, 0.1, 0.2, 1.0);
+vec3 eyePos = vec3(0.0, 0.0, 5.0);
+
+
 void main()
 {
-    Color = vec4(1.0, 1.0, 1.0, 1.0);
+    vec3 outDir = normalize(lightDir + dot(-lightDir, v_Normal) * 2 * v_Normal);
+    Color = dot(outDir, normalize(eyePos - v_Position)) * lightColor + ambient;
 }
