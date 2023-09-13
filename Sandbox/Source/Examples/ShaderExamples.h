@@ -22,4 +22,6 @@ private:
 
 	Reference<Shader> SphereShader;
 	Reference<VertexArray> SphereVertices;
+
+	PerspectiveCameraController m_CameraController;
 };

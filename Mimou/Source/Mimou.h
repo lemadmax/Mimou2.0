@@ -9,7 +9,9 @@
 #include "Mimou/Renderer/VertexArray.h"
 #include "Mimou/Renderer/Buffer.h"
 #include "Mimou/Renderer/Renderer.h"
+#include "Mimou/Renderer/Camera/PerspectiveCameraController.h"
 #include "Mimou/Mesh/StaticMesh.h"
+
 
 #include "Mimou/Utils/FileUtils/FileHelper.h"
 

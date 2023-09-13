@@ -1,8 +1,12 @@
 #include "ShaderExamples.h"
 
 ShaderEgLayer::ShaderEgLayer()
+	: m_CameraController(glm::radians(70.0f), 3.0f/2.0f)
 {
 	//TestSun();
+	float Width = (float)Application::GetInstance()->GetWindow().GetWidth();
+	float Height = (float)Application::GetInstance()->GetWindow().GetHeight();
+	m_CameraController.SetAspect(Width / Height);
 
 	SphereShader = Shader::Create("Assets/Shaders/SphereShader.glsl");
 
@@ -27,10 +31,15 @@ ShaderEgLayer::~ShaderEgLayer()
 
 void ShaderEgLayer::OnUpdate(Timestep Ts)
 {
+	Renderer::BeginScene(m_CameraController.GetCamera());
+	m_CameraController.OnUpdate(Ts);
+
 	RenderCommand::SetClearColor({ 0.4f, 0.4f, 0.4f, 1 });
 	RenderCommand::Clear();
 	//Renderer::Submit(SunVertices, SunShader);
 	Renderer::SubmitArrays(SphereVertices, SphereShader);
+
+	Renderer::EndScene();
 }
 
 void ShaderEgLayer::OnAttach()
@@ -47,6 +56,7 @@ void ShaderEgLayer::OnImGUIRender()
 
 void ShaderEgLayer::OnEvent(EventBase& Event)
 {
+	m_CameraController.OnEvent(Event);
 }
 
 void ShaderEgLayer::TestSun()

@@ -16,9 +16,9 @@ namespace Mimou
 		RenderCommand::SetViewport(0, 0, Width, Height);
 	}
 
-	void Renderer::BeginScene()
+	void Renderer::BeginScene(PerspectiveCamera Camera)
 	{
-
+		m_SceneData->ViewProjectionMatrix = Camera.GetViewProjectionMatix();
 	}
 
 	void Renderer::EndScene()
@@ -29,14 +29,20 @@ namespace Mimou
 	void Renderer::Submit(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader, const glm::mat4& Transfrom)
 	{
 		Shader->Bind();
+		Shader->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+		Shader->SetMat4("u_Transform", Transfrom);
 		VertexArray->Bind();
+
 		RenderCommand::DrawIndexed(VertexArray);
 	}
 
-	void Renderer::SubmitArrays(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader)
+	void Renderer::SubmitArrays(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader, const glm::mat4& Transfrom)
 	{
 		Shader->Bind();
+		Shader->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+		Shader->SetMat4("u_Transform", Transfrom);
 		VertexArray->Bind();
+
 		RenderCommand::DrawArrays(VertexArray);
 	}
 }

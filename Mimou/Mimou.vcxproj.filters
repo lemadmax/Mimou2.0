@@ -127,6 +127,9 @@
     <ClInclude Include="Source\mepch.h" />
     <ClInclude Include="Source\Mimou\Renderer\Texture.h" />
     <ClInclude Include="Source\Mimou\Mesh\StaticMesh.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Camera\Camera.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -189,5 +192,7 @@
     <ClCompile Include="Source\mepch.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Texture.cpp" />
     <ClCompile Include="Source\Mimou\Mesh\StaticMesh.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.cpp" />
   </ItemGroup>
 </Project>

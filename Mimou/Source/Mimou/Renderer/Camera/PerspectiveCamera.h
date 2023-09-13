@@ -6,6 +6,7 @@ namespace Mimou
 	class PerspectiveCamera : public Camera
 	{
 	public:
+		PerspectiveCamera();
 		PerspectiveCamera(float FOV, float Aspect, glm::vec3 Position, glm::vec3 LookAt, glm::vec3 CameraUp);
 
 		void SetProjection(float FOV, float Aspect, float zNear, float zFar);
