@@ -54,6 +54,11 @@ namespace Mimou
 		UploadUniformInt(Name, Value);
 	}
 
+	void OpenGLShader::SetFloat(const std::string& Name, float Value)
+	{
+		UploadUniformFloat(Name, Value);
+	}
+
 	void OpenGLShader::SetFloat3(const std::string& Name, const glm::vec3& Value)
 	{
 		UploadUniformFloat3(Name, Value);
