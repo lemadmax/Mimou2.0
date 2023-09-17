@@ -1,5 +1,8 @@
 #pragma once
 #include "Mimou/Renderer/Shader.h"
+
+#include "Mimou/Renderer/Lighting/Light.h"
+
 #include "glm/glm.hpp"
 
 namespace Mimou
@@ -10,7 +13,7 @@ namespace Mimou
 		Material(glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec4 Specular, float Transparency, Reference<Shader> Shader);
 
 		virtual void Bind();
-		//virtual void ApplyLighting();
+		virtual void ApplyLighting(Reference<Light> Light);
 
 		inline void SetAmbient(glm::vec3 Ambient) { m_Ambient = Ambient; }
 		inline void SetDiffuse(glm::vec3 Diffuse) { m_Diffuse = Diffuse; }
