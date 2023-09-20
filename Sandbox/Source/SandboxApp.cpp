@@ -65,7 +65,7 @@ public:
 			0.0f,  0.5f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f
 		};
 
-		Reference<VertexBuffer> VertexBuffer = VertexBuffer::Create(Vertices, sizeof(Vertices));
+		Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(Vertices, sizeof(Vertices));
 
 		BufferLayout Layout =
 		{
@@ -80,7 +80,7 @@ public:
 		{
 			0, 1, 2
 		};
-		Reference<IndexBuffer> IndexBuffer;
+		Ref<IndexBuffer> IndexBuffer;
 		IndexBuffer = IndexBuffer::Create(Indices, 3);
 		TriangleVertices->AddIndexBuffer(IndexBuffer);
 
@@ -152,12 +152,12 @@ public:
 	}
 
 private:
-	Reference<VertexArray> TriangleVertices;
+	Ref<VertexArray> TriangleVertices;
 	GLenum Program = 0;
 	GLenum VertexArray = 0;
 	GLenum TriangleProgram = 0;
 
-	Reference<Shader> TriangleShader;
+	Ref<Shader> TriangleShader;
 };
 
 class Sandbox : public Mimou::Application

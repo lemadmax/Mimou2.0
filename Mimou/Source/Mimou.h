@@ -10,6 +10,8 @@
 #include "Mimou/Renderer/Buffer.h"
 #include "Mimou/Renderer/Renderer.h"
 #include "Mimou/Renderer/Camera/PerspectiveCameraController.h"
+#include "Mimou/Renderer/Material/Material.h"
+#include "Mimou/Renderer/Lighting/Light.h"
 #include "Mimou/Mesh/StaticMesh.h"
 
 

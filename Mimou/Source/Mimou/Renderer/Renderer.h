@@ -5,6 +5,8 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "Mimou/Renderer/Camera/PerspectiveCamera.h"
+#include "Mimou/Renderer/Material/Material.h"
+#include "Mimou/Renderer/Lighting/Light.h"
 
 #include <glm/glm.hpp>
 
@@ -19,9 +21,11 @@ namespace Mimou
 		static void BeginScene(PerspectiveCamera Camera);
 		static void EndScene();
 
-		static void Submit(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader, const glm::mat4& Transform = glm::mat4(1.0f));
+		static void Submit(const Ref<VertexArray>& VertexArray, const Ref<Shader>& Shader, const glm::mat4& Transform = glm::mat4(1.0f));
 
-		static void SubmitArrays(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader, const glm::mat4& Transform = glm::mat4(1.0f));
+		static void SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Shader>& Shader, const glm::mat4& Transform = glm::mat4(1.0f));
+
+		static void SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Material>& Material, const Ref<Light>& Light);
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:

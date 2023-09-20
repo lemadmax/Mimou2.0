@@ -16,12 +16,15 @@ public:
 
 	void TestSun();
 private:
-	Reference<Shader> SunShader;
-	Reference<VertexArray> SunVertices;
+	Ref<Shader> SunShader;
+	Ref<VertexArray> SunVertices;
 
 
-	Reference<Shader> SphereShader;
-	Reference<VertexArray> SphereVertices;
+	Ref<Shader> SphereShader;
+	Ref<VertexArray> SphereVertices;
+
+	Ref<StaticMesh> SphereMesh;
+	Ref<Light> DirectionalLight;
 
 	PerspectiveCameraController m_CameraController;
 };

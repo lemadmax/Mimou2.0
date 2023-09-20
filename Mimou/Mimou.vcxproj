@@ -168,6 +168,8 @@
     <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.h" />
     <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.h" />
     <ClInclude Include="Source\Mimou\Renderer\GraphicsContext.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Lighting\Light.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Material\Material.h" />
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.h" />
@@ -196,6 +198,8 @@
     <ClCompile Include="Source\Mimou\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Lighting\Light.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Material\Material.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.cpp" />

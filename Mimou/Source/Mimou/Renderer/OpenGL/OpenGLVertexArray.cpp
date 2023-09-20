@@ -44,7 +44,7 @@ namespace Mimou
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(const Reference<VertexBuffer>& VertexBuffer)
+	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& VertexBuffer)
 	{
 		ME_ENGINE_ASSERT(VertexBuffer->GetLayout().GetElements().size(), "Vertex buffer is empty!");
 		glBindVertexArray(m_RendererID);
@@ -67,7 +67,7 @@ namespace Mimou
 		m_VertexBuffers.push_back(VertexBuffer);
 	}
 
-	void OpenGLVertexArray::AddIndexBuffer(const Reference<IndexBuffer>& IndexBuffer)
+	void OpenGLVertexArray::AddIndexBuffer(const Ref<IndexBuffer>& IndexBuffer)
 	{
 		glBindVertexArray(m_RendererID);
 		IndexBuffer->Bind();

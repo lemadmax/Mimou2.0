@@ -121,7 +121,7 @@ namespace Mimou
 
 		virtual uint32_t GetSize() const = 0;
 		
-		static Reference<VertexBuffer> Create(float* Vertices, uint32_t Size);
+		static Ref<VertexBuffer> Create(float* Vertices, uint32_t Size);
 	};
 
 	class IndexBuffer
@@ -134,6 +134,6 @@ namespace Mimou
 
 		virtual uint32_t GetCount() const = 0;
 
-		static Reference<IndexBuffer> Create(uint32_t* Indices, uint32_t Size);
+		static Ref<IndexBuffer> Create(uint32_t* Indices, uint32_t Size);
 	};
 }

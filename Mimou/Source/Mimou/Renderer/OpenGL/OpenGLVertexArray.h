@@ -12,14 +12,14 @@ namespace Mimou
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
-		virtual void AddVertexBuffer(const Reference<VertexBuffer>& VertexBuffer) override;
-		virtual void AddIndexBuffer(const Reference<IndexBuffer>& IndexBuffer) override;
+		virtual void AddVertexBuffer(const Ref<VertexBuffer>& VertexBuffer) override;
+		virtual void AddIndexBuffer(const Ref<IndexBuffer>& IndexBuffer) override;
 
-		virtual const std::vector<Reference<VertexBuffer>>& GetVertexBuffers() const override { return m_VertexBuffers; }
-		virtual const Reference<IndexBuffer>& GetIndexBuffer() const override { return m_IndexBuffer; }
+		virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const override { return m_VertexBuffers; }
+		virtual const Ref<IndexBuffer>& GetIndexBuffer() const override { return m_IndexBuffer; }
 	private:
-		std::vector<Reference<VertexBuffer>> m_VertexBuffers;
-		Reference<IndexBuffer> m_IndexBuffer;
+		std::vector<Ref<VertexBuffer>> m_VertexBuffers;
+		Ref<IndexBuffer> m_IndexBuffer;
 
 		uint32_t m_RendererID;
 	};

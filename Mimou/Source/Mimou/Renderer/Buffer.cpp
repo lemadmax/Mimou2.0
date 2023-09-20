@@ -6,7 +6,7 @@
 
 namespace Mimou
 {
-	Reference<VertexBuffer> VertexBuffer::Create(float* Vertices, uint32_t Size)
+	Ref<VertexBuffer> VertexBuffer::Create(float* Vertices, uint32_t Size)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -17,14 +17,14 @@ namespace Mimou
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return std::make_shared<OpenGLVertexBuffer>(Vertices, Size);
+			return CreateRef<OpenGLVertexBuffer>(Vertices, Size);
 		}
 		}
 		ME_ENGINE_ASSERT(false, "Failed to create renderer API");
 		return nullptr;
 	}
 
-	Reference<IndexBuffer> IndexBuffer::Create(uint32_t* Indices, uint32_t Size)
+	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* Indices, uint32_t Size)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -35,7 +35,7 @@ namespace Mimou
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return std::make_shared<OpenGLIndexBuffer>(Indices, Size);
+			return CreateRef<OpenGLIndexBuffer>(Indices, Size);
 		}
 		}
 		ME_ENGINE_ASSERT(false, "Failed to create renderer API");

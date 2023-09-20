@@ -6,7 +6,7 @@
 
 namespace Mimou
 {
-	Reference<Shader> Shader::Create(const std::string& FilePath)
+	Ref<Shader> Shader::Create(const std::string& FilePath)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -17,14 +17,14 @@ namespace Mimou
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return std::make_shared<OpenGLShader>(FilePath);
+			return CreateRef<OpenGLShader>(FilePath);
 		}
 		}
 		ME_ENGINE_ASSERT(false, "Failed to create renderer API");
 		return nullptr;
 	}
 
-	Reference<Shader> Shader::Create(const std::string& Name, const std::string& VertexSrc, const std::string& FragmentSrc)
+	Ref<Shader> Shader::Create(const std::string& Name, const std::string& VertexSrc, const std::string& FragmentSrc)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -35,40 +35,40 @@ namespace Mimou
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return std::make_shared<OpenGLShader>(Name, VertexSrc, FragmentSrc);
+			return CreateRef<OpenGLShader>(Name, VertexSrc, FragmentSrc);
 		}
 		}
 		ME_ENGINE_ASSERT(false, "Failed to create renderer API");
 		return nullptr;
 	}
 
-	void ShaderLibrary::Add(const Reference<Shader>& Shader)
+	void ShaderLibrary::Add(const Ref<Shader>& Shader)
 	{
 		const std::string& Name = Shader->GetName();
 		Add(Name, Shader);
 	}
 
-	void ShaderLibrary::Add(const std::string& Name, const Reference<Shader>& Shader)
+	void ShaderLibrary::Add(const std::string& Name, const Ref<Shader>& Shader)
 	{
 		ME_ENGINE_ASSERT(m_Shaders.find(Name) == m_Shaders.end(), "Shader already exists!");
 		m_Shaders[Name] = Shader;
 	}
 
-	Reference<Shader> ShaderLibrary::Load(const std::string& FilePath)
+	Ref<Shader> ShaderLibrary::Load(const std::string& FilePath)
 	{
-		Reference<Shader> Shader = Shader::Create(FilePath);
+		Ref<Shader> Shader = Shader::Create(FilePath);
 		Add(Shader);
 		return Shader;
 	}
 
-	Reference<Shader> ShaderLibrary::Load(const std::string& Name, const std::string& FilePath)
+	Ref<Shader> ShaderLibrary::Load(const std::string& Name, const std::string& FilePath)
 	{
-		Reference<Shader> Shader = Shader::Create(FilePath);
+		Ref<Shader> Shader = Shader::Create(FilePath);
 		Add(Name, Shader);
 		return Shader;
 	}
 
-	Reference<Shader> ShaderLibrary::Get(const std::string& Name)
+	Ref<Shader> ShaderLibrary::Get(const std::string& Name)
 	{
 		ME_ENGINE_ASSERT(m_Shaders.find(Name) != m_Shaders.end(), "Shader not found!");
 		return m_Shaders[Name];

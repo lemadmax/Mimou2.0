@@ -6,7 +6,7 @@
 
 namespace Mimou
 {
-	Reference<VertexArray> VertexArray::Create()
+	Ref<VertexArray> VertexArray::Create()
 	{
 		switch (RendererAPI::GetAPI())
 		{
@@ -17,7 +17,7 @@ namespace Mimou
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return std::make_shared<OpenGLVertexArray>();
+			return CreateRef<OpenGLVertexArray>();
 		}
 		}
 		ME_ENGINE_ASSERT(false, "Failed to create renderer API");

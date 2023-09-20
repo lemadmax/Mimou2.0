@@ -14,18 +14,18 @@ namespace Mimou
 	public:
 		static void Init();
 
-		static inline Reference<spdlog::logger> GetEngineLogger()
+		static inline Ref<spdlog::logger> GetEngineLogger()
 		{
 			return EngineLogger;
 		}
-		static inline Reference<spdlog::logger> GetClientLogger()
+		static inline Ref<spdlog::logger> GetClientLogger()
 		{
 			return ClientLogger;
 		}
 
 	private:
-		static Reference<spdlog::logger> EngineLogger;
-		static Reference<spdlog::logger> ClientLogger;
+		static Ref<spdlog::logger> EngineLogger;
+		static Ref<spdlog::logger> ClientLogger;
 	};
 
 }

@@ -19,22 +19,22 @@ namespace Mimou
 
 		virtual const std::string& GetName() const = 0;
 
-		static Reference<Shader> Create(const std::string& FilePath);
-		static Reference<Shader> Create(const std::string& Name, const std::string& VertexSrc, const std::string& FragmentSrc);
+		static Ref<Shader> Create(const std::string& FilePath);
+		static Ref<Shader> Create(const std::string& Name, const std::string& VertexSrc, const std::string& FragmentSrc);
 	};
 
 	class ShaderLibrary
 	{
 	public:
-		void Add(const Reference<Shader>& Shader);
-		void Add(const std::string& Name, const Reference<Shader>& Shader);
-		Reference<Shader> Load(const std::string& FilePath);
-		Reference<Shader> Load(const std::string& Name, const std::string& FilePath);
+		void Add(const Ref<Shader>& Shader);
+		void Add(const std::string& Name, const Ref<Shader>& Shader);
+		Ref<Shader> Load(const std::string& FilePath);
+		Ref<Shader> Load(const std::string& Name, const std::string& FilePath);
 
-		Reference<Shader> Get(const std::string& Name);
+		Ref<Shader> Get(const std::string& Name);
 
 		bool Exists(const std::string& Name) const;
 	private:
-		std::unordered_map<std::string, Reference<Shader>> m_Shaders;
+		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
 	};
 }

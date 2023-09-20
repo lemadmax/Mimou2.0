@@ -11,8 +11,9 @@ namespace Mimou
 	}
 
 	PerspectiveCamera::PerspectiveCamera(float FOV, float Aspect, glm::vec3 Position, glm::vec3 LookAt, glm::vec3 CameraUp)
-		: m_FOV(FOV), m_Aspect(Aspect), m_Position(Position), m_LookAt(LookAt), m_CameraUp(CameraUp)
+		: m_FOV(FOV), m_Aspect(Aspect), m_LookAt(LookAt), m_CameraUp(CameraUp)
 	{
+		m_Position = Position;
 		m_ViewMatrix = glm::lookAt(m_Position, m_LookAt, m_CameraUp);
 		m_ProjectionMatrix = glm::perspective<float>(FOV, Aspect, 0.1f, 100.0f);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;

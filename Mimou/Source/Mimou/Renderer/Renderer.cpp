@@ -26,7 +26,7 @@ namespace Mimou
 
 	}
 
-	void Renderer::Submit(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader, const glm::mat4& Transfrom)
+	void Renderer::Submit(const Ref<VertexArray>& VertexArray, const Ref<Shader>& Shader, const glm::mat4& Transfrom)
 	{
 		Shader->Bind();
 		Shader->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
@@ -36,13 +36,24 @@ namespace Mimou
 		RenderCommand::DrawIndexed(VertexArray);
 	}
 
-	void Renderer::SubmitArrays(const Reference<VertexArray>& VertexArray, const Reference<Shader>& Shader, const glm::mat4& Transfrom)
+	void Renderer::SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Shader>& Shader, const glm::mat4& Transfrom)
 	{
 		Shader->Bind();
 		Shader->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
 		Shader->SetMat4("u_Transform", Transfrom);
 		VertexArray->Bind();
 
+		RenderCommand::DrawArrays(VertexArray);
+	}
+
+	void Renderer::SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Material>& Material, const Ref<Light>& Light)
+	{
+		Material->Bind();
+		Material->ApplyLighting(Light);
+		Material->GetShader()->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+		Material->GetShader()->SetMat4("u_Transform", glm::mat4(1.0f));
+
+		VertexArray->Bind();
 		RenderCommand::DrawArrays(VertexArray);
 	}
 }

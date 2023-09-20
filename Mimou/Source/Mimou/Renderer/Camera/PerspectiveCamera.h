@@ -17,7 +17,6 @@ namespace Mimou
 	private:
 		float m_FOV = 70.0f;
 		float m_Aspect = 1.5f;
-		glm::vec3 m_Position = glm::vec3(0.0f, 0.0f, 1.0);
 		glm::vec3 m_LookAt = glm::vec3(0.0f);
 		glm::vec3 m_CameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	};

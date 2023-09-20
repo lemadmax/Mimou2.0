@@ -1,5 +1,6 @@
 #include "mepch.h"
 #include "StaticMesh.h"
+#include "Mimou/Renderer/Buffer.h"
 
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
@@ -36,13 +37,13 @@ namespace Mimou
 		Vertices.insert(Vertices.end(), Points.begin(), Points.end());
 	}
 
-	Reference<StaticMesh> StaticMeshLibrary::CreateSphere(uint32_t NU, uint32_t NV)
+	Ref<StaticMesh> StaticMeshLibrary::CreateSphere(uint32_t NU, uint32_t NV)
 	{
-		return std::make_shared<StaticMesh>(StaticMesh::MeshType::Sphere, NU, NV);
+		return CreateRef<StaticMesh>(StaticMesh::MeshType::Sphere, NU, NV);
 	}
-	Reference<StaticMesh> StaticMeshLibrary::CreateCube(uint32_t NU, uint32_t NV)
+	Ref<StaticMesh> StaticMeshLibrary::CreateCube(uint32_t NU, uint32_t NV)
 	{
-		return Reference<StaticMesh>();
+		return Ref<StaticMesh>();
 	}
 
 	StaticMesh::StaticMesh(MeshType Type, uint32_t NU, uint32_t NV)
@@ -54,6 +55,11 @@ namespace Mimou
 	StaticMesh::~StaticMesh()
 	{
 		delete m_Vertices;
+	}
+
+	void StaticMesh::Draw()
+	{
+
 	}
 
 	void StaticMesh::GenerateVertices()
@@ -77,6 +83,16 @@ namespace Mimou
 			m_Vertices = new float[Vertices.size()];
 			memcpy(m_Vertices, &Vertices[0], Vertices.size() * sizeof(float));
 			Cnt = Vertices.size();
+
+			m_VertexArray = VertexArray::Create();
+			BufferLayout Layout =
+			{
+				{ "a_Position", ShaderDataType::Float3 },
+				{ "a_Normal", ShaderDataType::Float3 }
+			};
+			Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(m_Vertices, Cnt * sizeof(float));
+			VertexBuffer->SetLayout(Layout);
+			m_VertexArray->AddVertexBuffer(VertexBuffer);
 			break;
 		}
 		default:

@@ -26,6 +26,10 @@ namespace Mimou
 
 	void PerspectiveCameraController::OnUpdate(Timestep Ts)
 	{
+		glm::vec3 CameraPos = m_PerspectiveCamera.GetPosition();
+		float Angle = glm::atan(CameraPos.x / CameraPos.z) + Ts.GetSecond();
+		CameraPos = glm::vec3(5.0 * glm::sin(Angle), 0.0f, 5.0 * glm::cos(Angle));
+		m_PerspectiveCamera.SetPosition(CameraPos);
 	}
 
 	void PerspectiveCameraController::OnEvent(EventBase& Event)

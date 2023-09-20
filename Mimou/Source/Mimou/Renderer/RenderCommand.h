@@ -22,12 +22,12 @@ namespace Mimou
 			s_RendererAPI->Clear();
 		}
 
-		inline static void DrawIndexed(const Reference<VertexArray>& VertexArray)
+		inline static void DrawIndexed(const Ref<VertexArray>& VertexArray)
 		{
 			s_RendererAPI->DrawIndexed(VertexArray);
 		}
 
-		inline static void DrawArrays(const Reference<VertexArray>& VertexArray)
+		inline static void DrawArrays(const Ref<VertexArray>& VertexArray)
 		{
 			s_RendererAPI->DrawArrays(VertexArray);
 		}
