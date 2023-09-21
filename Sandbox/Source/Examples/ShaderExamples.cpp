@@ -8,7 +8,7 @@ ShaderEgLayer::ShaderEgLayer()
 	float Height = (float)Application::GetInstance()->GetWindow().GetHeight();
 	m_CameraController.SetAspect(Width / Height);
 
-	DirectionalLight = CreateRef<Light>(glm::vec3(), glm::vec3(0.7, 0.6, 0.6), glm::vec3(-1.0, -1.0, -1.0), 10.0f);
+	DirectionalLight = CreateRef<Light>(glm::vec3(), glm::vec3(0.7, 0.6, 0.6), glm::vec3(1.0, 1.0, 1.0), 1.0f);
 
 	//SphereShader = Shader::Create("Assets/Shaders/SphereShader.glsl");
 
@@ -26,7 +26,7 @@ ShaderEgLayer::ShaderEgLayer()
 	//VertexBuffer->SetLayout(Layout);
 	//SphereVertices->AddVertexBuffer(VertexBuffer);
 	Ref<Shader> LambertShader = Shader::Create("Assets/Shaders/LambertShader.glsl");
-	Ref<Material> LambertMat = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 10.0), 1.0f, LambertShader);
+	Ref<Material> LambertMat = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, LambertShader);
 	SphereMesh = StaticMeshLibrary::CreateSphere(32, 16);
 	SphereMesh->SetMaterial(LambertMat);
 }

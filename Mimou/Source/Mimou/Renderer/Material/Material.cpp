@@ -28,6 +28,6 @@ namespace Mimou
 		ME_ENGINE_ASSERT(m_Shader, "Error when applying lighting, shader is null");
 
 		m_Shader->SetFloat4("u_LightColor", glm::vec4(Light->GetColor(), Light->GetIntensity()));
-		m_Shader->SetFloat3("u_LightDir", Light->GetDirection());
+		m_Shader->SetFloat3("u_LightDir", -Light->GetDirection());
 	}
 }

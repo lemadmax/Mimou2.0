@@ -23,7 +23,7 @@ void main()
 
 layout(location = 0) out vec4 Color;
 
-uniform vec4 u_Ambient;
+uniform vec3 u_Ambient;
 uniform vec4 u_LightColor;
 uniform vec3 u_LightDir;
 uniform vec3 u_CameraPos;
@@ -34,6 +34,11 @@ in vec3 v_Normal;
 
 void main()
 {
-    vec3 LambertDiffuse = u_Ambient.rgb * u_Ambient.w;
-    Color = vec4(LambertDiffuse + u_LightColor.w * u_LightColor.rgb * dot(v_Normal, u_LightDir), u_Transparency);
+    vec3 OutColor = u_Ambient;
+    float Theta = dot(u_LightDir, v_Normal);
+    if (Theta > 0.)
+    {
+        OutColor += u_LightColor.w * u_LightColor.rgb * Theta;
+    }
+    Color = vec4(sqrt(OutColor), u_Transparency);
 }

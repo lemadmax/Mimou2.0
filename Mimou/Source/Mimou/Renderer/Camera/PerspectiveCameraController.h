@@ -13,7 +13,7 @@ namespace Mimou
 		PerspectiveCameraController(
 			float FOV, 
 			float Aspect, 
-			glm::vec3 Position = glm::vec3(0.0f, 0.0f, 5.0f),
+			glm::vec3 Position = glm::vec3(-2.0f, 0.0f, -2.0f),
 			glm::vec3 LookAt = glm::vec3(0.0f, 0.0f, 0.0f),
 			glm::vec3 CameraUp = glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -42,5 +42,7 @@ namespace Mimou
 		float m_zNear = 0.1f, m_zFar = 100.0f;
 		float MoveSpeed = 100;
 		float RotateSpeed = 100;
+
+		float TestTime = 0.0f;
 	};
 }
