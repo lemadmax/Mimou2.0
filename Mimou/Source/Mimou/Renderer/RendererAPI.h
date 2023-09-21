@@ -22,6 +22,8 @@ namespace Mimou
 
 		virtual void SetClearColor(const glm::vec4& Color) = 0;
 		virtual void Clear() = 0;
+		virtual void EnableDepthTest() = 0;
+		virtual void ClearDepth() = 0;
 
 		virtual void DrawIndexed(const Ref<VertexArray>& VertexArray) = 0;
 		virtual void DrawArrays(const Ref<VertexArray>& VertexArray) = 0;

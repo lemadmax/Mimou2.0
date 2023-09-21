@@ -22,6 +22,16 @@ namespace Mimou
 			s_RendererAPI->Clear();
 		}
 
+		inline static void EnableDepthTest()
+		{
+			s_RendererAPI->EnableDepthTest();
+		}
+
+		inline static void ClearDepth()
+		{
+			s_RendererAPI->ClearDepth();
+		}
+
 		inline static void DrawIndexed(const Ref<VertexArray>& VertexArray)
 		{
 			s_RendererAPI->DrawIndexed(VertexArray);

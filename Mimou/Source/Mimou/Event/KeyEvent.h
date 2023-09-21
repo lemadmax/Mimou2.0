@@ -8,7 +8,7 @@ namespace Mimou {
 	{
 	public:
 		EVENT_CATEGORY(EEventCategory::EventCategoryKeyboard | EEventCategory::EventCategoryInput)
-		inline int GetKeyCode() { return m_KeyCode; }
+		inline const int GetKeyCode() const { return m_KeyCode; }
 
 	protected:
 		KeyEvent(int KeyCode) : m_KeyCode(KeyCode) {}

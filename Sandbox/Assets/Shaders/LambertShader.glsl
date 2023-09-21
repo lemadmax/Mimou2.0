@@ -34,11 +34,6 @@ in vec3 v_Normal;
 
 void main()
 {
-    vec3 OutColor = u_Ambient;
-    float Theta = dot(u_LightDir, v_Normal);
-    if (Theta > 0.)
-    {
-        OutColor += u_LightColor.w * u_LightColor.rgb * Theta;
-    }
+    vec3 OutColor = u_Ambient + u_LightColor.w * u_LightColor.rgb * max(0., dot(u_LightDir, v_Normal));
     Color = vec4(sqrt(OutColor), u_Transparency);
 }

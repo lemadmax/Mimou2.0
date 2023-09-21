@@ -13,7 +13,7 @@ namespace Mimou
 		PerspectiveCameraController(
 			float FOV, 
 			float Aspect, 
-			glm::vec3 Position = glm::vec3(-2.0f, 0.0f, -2.0f),
+			glm::vec3 Position = glm::vec3(0.0f, 0.0f, 5.0f),
 			glm::vec3 LookAt = glm::vec3(0.0f, 0.0f, 0.0f),
 			glm::vec3 CameraUp = glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -35,13 +35,15 @@ namespace Mimou
 	private:
 		float m_FOV;
 		float m_Aspect;
+		glm::vec3 EulerAngles = glm::vec3(0.0f);
+		glm::vec3 m_CameraPosition;
+
 		PerspectiveCamera m_PerspectiveCamera;
 
-		glm::vec3 EulerAngles = glm::vec3(0.0f);
 
 		float m_zNear = 0.1f, m_zFar = 100.0f;
-		float MoveSpeed = 100;
-		float RotateSpeed = 100;
+		float MoveSpeed = 1;
+		float RotateSpeed = 1;
 
 		float TestTime = 0.0f;
 	};

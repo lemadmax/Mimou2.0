@@ -3,12 +3,16 @@
 ShaderEgLayer::ShaderEgLayer()
 	: m_CameraController(glm::radians(70.0f), 3.0f/2.0f)
 {
+	
 	//TestSun();
 	float Width = (float)Application::GetInstance()->GetWindow().GetWidth();
 	float Height = (float)Application::GetInstance()->GetWindow().GetHeight();
 	m_CameraController.SetAspect(Width / Height);
 
 	DirectionalLight = CreateRef<Light>(glm::vec3(), glm::vec3(0.7, 0.6, 0.6), glm::vec3(1.0, 1.0, 1.0), 1.0f);
+
+	RenderCommand::EnableDepthTest();
+	RenderCommand::ClearDepth();
 
 	//SphereShader = Shader::Create("Assets/Shaders/SphereShader.glsl");
 
@@ -41,7 +45,7 @@ void ShaderEgLayer::OnUpdate(Timestep Ts)
 
 	Renderer::BeginScene(m_CameraController.GetCamera());
 
-	RenderCommand::SetClearColor({ 0.4f, 0.4f, 0.4f, 1 });
+	RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 	RenderCommand::Clear();
 	//Renderer::Submit(SunVertices, SunShader);
 	//Renderer::SubmitArrays(SphereVertices, SphereShader);

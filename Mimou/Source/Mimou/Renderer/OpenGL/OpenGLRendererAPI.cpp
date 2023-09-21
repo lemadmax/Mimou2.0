@@ -29,6 +29,17 @@ namespace Mimou
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
+	void OpenGLRendererAPI::EnableDepthTest()
+	{
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+	}
+
+	void OpenGLRendererAPI::ClearDepth()
+	{
+		glClearDepth(1);
+	}
+
 	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& VertexArray)
 	{
 		glDrawElements(GL_TRIANGLES, VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
