@@ -150,6 +150,7 @@
     <ClInclude Include="Source\Mimou.h" />
     <ClInclude Include="Source\Mimou\Application.h" />
     <ClInclude Include="Source\Mimou\Core.h" />
+    <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h" />
     <ClInclude Include="Source\Mimou\EntryPoint.h" />
     <ClInclude Include="Source\Mimou\Event\AppEvent.h" />
     <ClInclude Include="Source\Mimou\Event\EventBase.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Source\Mimou\Renderer\Texture.h" />
     <ClInclude Include="Source\Mimou\Renderer\VertexArray.h" />
     <ClInclude Include="Source\Mimou\Timestep.h" />
+    <ClInclude Include="Source\Mimou\Transform\Transform.h" />
     <ClInclude Include="Source\Mimou\Utils\FileUtils\FileHelper.h" />
     <ClInclude Include="Source\Mimou\Window\Window.h" />
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsInput.h" />
@@ -190,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp" />
+    <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp" />
     <ClCompile Include="Source\Mimou\ImGUI\ImGUIBuild.cpp" />
     <ClCompile Include="Source\Mimou\ImGUI\ImGUILayer.cpp" />
     <ClCompile Include="Source\Mimou\LayerStack.cpp" />
@@ -211,6 +214,7 @@
     <ClCompile Include="Source\Mimou\Renderer\Shader.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Texture.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\VertexArray.cpp" />
+    <ClCompile Include="Source\Mimou\Transform\Transform.cpp" />
     <ClCompile Include="Source\Mimou\Utils\FileUtils\FileHelper.cpp" />
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsWindow.cpp" />

@@ -75,6 +75,7 @@ namespace Mimou
 			m_PerspectiveCamera.SetPosition(NewPos);
 			m_PerspectiveCamera.SetLookAt(NewLookAt);
 		}
+
 	}
 
 	void PerspectiveCameraController::OnEvent(EventBase& Event)
