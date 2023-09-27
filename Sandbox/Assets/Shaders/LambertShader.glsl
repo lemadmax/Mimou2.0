@@ -26,7 +26,6 @@ layout(location = 0) out vec4 Color;
 uniform vec3 u_Ambient;
 uniform vec4 u_LightColor;
 uniform vec3 u_LightDir;
-uniform vec3 u_CameraPos;
 uniform float u_Transparency;
 
 in vec3 v_Position;

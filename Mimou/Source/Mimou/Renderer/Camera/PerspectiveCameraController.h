@@ -14,8 +14,7 @@ namespace Mimou
 			float FOV, 
 			float Aspect, 
 			glm::vec3 Position = glm::vec3(0.0f, 0.0f, 5.0f),
-			glm::vec3 LookAt = glm::vec3(0.0f, 0.0f, 0.0f),
-			glm::vec3 CameraUp = glm::vec3(0.0f, 1.0f, 0.0f));
+			glm::vec3 Rotation = glm::vec3(0.0f, 0.0f, 0.0f));
 
 		void SetFOV(float FOV);
 		void SetAspect(float Aspect);
@@ -33,10 +32,10 @@ namespace Mimou
 		bool OnWindowResized(WindowResizeEvent& Event);
 
 	private:
-		float m_FOV;
-		float m_Aspect;
+		float m_FOV = 70.0f;
+		float m_Aspect = 1.5f;
 		glm::vec3 EulerAngles = glm::vec3(0.0f);
-		glm::vec3 m_CameraPosition;
+		glm::vec3 m_CameraPosition = glm::vec3(0.0f);
 
 		PerspectiveCamera m_PerspectiveCamera;
 

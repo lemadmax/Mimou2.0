@@ -3,6 +3,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtx/transform.hpp"
 
+#define MARK_DIRTY(x) { IsDirty = x; }
+
 namespace Mimou
 {
 	class Transform
@@ -12,23 +14,32 @@ namespace Mimou
 		Transform(const glm::vec3& Translation, const glm::vec3& Rotation, const glm::vec3& Scale);
 		Transform(const glm::mat4& Matrix);
 
-		inline glm::vec3 Position() const { return m_Translation; }
+		glm::mat4 GetTransform();
+
+		inline glm::vec3 Translation() const { return m_Translation; }
 		inline glm::vec3 Rotation() const { return m_Rotation; }
 		inline glm::vec3 Scale() const { return m_Scale; }
 
-		void SetTranslation(const glm::vec3& m_Translation);
-		void SetRotation(const glm::vec3& Rotation);
-		void SetScale(const glm::vec3& Scale);
+		inline void SetTranslation(const glm::vec3& Translation) { m_Translation = Translation; MARK_DIRTY(true) }
+		inline void SetRotation(const glm::vec3& Rotation) { m_Rotation = Rotation; MARK_DIRTY(true) }
+		inline void SetScale(const glm::vec3& Scale) { m_Scale = Scale; MARK_DIRTY(true) }
+
+		inline void SetPitch(float Pitch) { m_Rotation.x = Pitch; MARK_DIRTY(true) }
+		inline void SetYaw(float Yaw) { m_Rotation.y = Yaw; MARK_DIRTY(true) }
+		inline void SetRoll(float Roll) { m_Rotation.z = Roll; MARK_DIRTY(true) }
+
+		inline float GetPitch() const { return m_Rotation.x; }
+		inline float GetYaw() const { return m_Rotation.y; }
+		inline float GetRoll() const { return m_Rotation.z; }
 
 		glm::quat GetQuaternion();
-
-	private:
-		void RecalculateMatrix();
 
 	private:
 		glm::vec3 m_Translation;
 		glm::vec3 m_Rotation;
 		glm::vec3 m_Scale;
 		glm::mat4 m_Matrix;
+
+		bool IsDirty;
 	};
 }

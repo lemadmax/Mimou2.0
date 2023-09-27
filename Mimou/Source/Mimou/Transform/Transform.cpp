@@ -11,12 +11,13 @@ namespace Mimou
 		m_Translation = glm::vec3(1.0f);
 		m_Rotation = glm::vec3(0.0f);
 		m_Scale = glm::vec3(1.0f);
+		IsDirty = true;
 	}
 
 	Transform::Transform(const glm::vec3& Translation, const glm::vec3& Rotation, const glm::vec3& Scale)
 		: m_Translation(Translation), m_Rotation(Rotation), m_Scale(Scale)
 	{
-		RecalculateMatrix();
+		IsDirty = true;
 	}
 
 	Transform::Transform(const glm::mat4& Matrix)
@@ -32,32 +33,22 @@ namespace Mimou
 		m_Scale = Scale;
 	}
 
-	void Transform::SetTranslation(const glm::vec3& Translation)
+	glm::mat4 Transform::GetTransform()
 	{
-		m_Translation = Translation;
-		RecalculateMatrix();
-	}
-
-	void Transform::SetRotation(const glm::vec3& Rotation)
-	{
-		m_Rotation = Rotation;
-		RecalculateMatrix();
-	}
-
-	void Transform::SetScale(const glm::vec3& Scale)
-	{
-		m_Scale = Scale;
-		RecalculateMatrix();
+		if (IsDirty)
+		{
+			m_Matrix = glm::translate(m_Translation) *
+				glm::rotate(glm::radians(m_Rotation.z), glm::vec3(0, 0, 1)) *
+				glm::rotate(glm::radians(m_Rotation.y), glm::vec3(0, 1, 0)) *
+				glm::rotate(glm::radians(m_Rotation.x), glm::vec3(1, 0, 0)) *
+				glm::scale(m_Scale);
+		}
+		return m_Matrix;
 	}
 
 	glm::quat Transform::GetQuaternion()
 	{
 		return glm::quat(m_Rotation);
-	}
-
-	void Transform::RecalculateMatrix()
-	{
-		m_Matrix = glm::translate(m_Translation) * glm::rotate(0.0f, m_Rotation) * glm::scale(m_Scale);
 	}
 
 }

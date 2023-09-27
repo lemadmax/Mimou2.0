@@ -11,10 +11,11 @@ namespace Mimou
 
 	PerspectiveCameraController::PerspectiveCameraController()
 	{
+
 	}
 
-	PerspectiveCameraController::PerspectiveCameraController(float FOV, float Aspect, glm::vec3 Position, glm::vec3 LookAt, glm::vec3 CameraUp)
-		: m_FOV(FOV), m_Aspect(Aspect), m_CameraPosition(Position), m_PerspectiveCamera(FOV, Aspect, Position, LookAt, CameraUp)
+	PerspectiveCameraController::PerspectiveCameraController(float FOV, float Aspect, glm::vec3 Position, glm::vec3 Rotation)
+		: m_FOV(FOV), m_Aspect(Aspect), m_CameraPosition(Position), m_PerspectiveCamera(FOV, Aspect, Position, Rotation)
 	{
 	}
 
@@ -39,41 +40,15 @@ namespace Mimou
 		//m_PerspectiveCamera.SetPosition(CameraPos);
 		if (Input::IsKeyPressed(Key::A))
 		{
-			glm::vec3 CameraForward = m_PerspectiveCamera.GetCameraForward();
-			glm::vec3 CameraRight = m_PerspectiveCamera.GetCameraRight();
-			glm::vec3 CameraPos = m_PerspectiveCamera.GetPosition();
-			glm::vec3 NewPos = CameraPos - glm::normalize(CameraRight) * MoveSpeed * Ts.GetSecond();
-			glm::vec3 NewLookAt = NewPos + CameraForward;
-			m_PerspectiveCamera.SetPosition(NewPos);
-			m_PerspectiveCamera.SetLookAt(NewLookAt);
 		}
 		if (Input::IsKeyPressed(Key::D))
 		{
-			glm::vec3 CameraForward = m_PerspectiveCamera.GetCameraForward();
-			glm::vec3 CameraRight = m_PerspectiveCamera.GetCameraRight();
-			glm::vec3 CameraPos = m_PerspectiveCamera.GetPosition();
-			glm::vec3 NewPos = CameraPos + glm::normalize(CameraRight) * MoveSpeed * Ts.GetSecond();
-			glm::vec3 NewLookAt = NewPos + CameraForward;
-			m_PerspectiveCamera.SetPosition(NewPos);
-			m_PerspectiveCamera.SetLookAt(NewLookAt);
 		}
 		if (Input::IsKeyPressed(Key::W))
 		{
-			glm::vec3 CameraForward = m_PerspectiveCamera.GetCameraForward();
-			glm::vec3 CameraPos = m_PerspectiveCamera.GetPosition();
-			glm::vec3 NewPos = CameraPos + glm::normalize(CameraForward) * MoveSpeed * Ts.GetSecond();
-			glm::vec3 NewLookAt = NewPos + CameraForward;
-			m_PerspectiveCamera.SetPosition(NewPos);
-			m_PerspectiveCamera.SetLookAt(NewLookAt);
 		}
 		if (Input::IsKeyPressed(Key::S))
 		{
-			glm::vec3 CameraForward = m_PerspectiveCamera.GetCameraForward();
-			glm::vec3 CameraPos = m_PerspectiveCamera.GetPosition();
-			glm::vec3 NewPos = CameraPos - glm::normalize(CameraForward) * MoveSpeed * Ts.GetSecond();
-			glm::vec3 NewLookAt = NewPos + CameraForward;
-			m_PerspectiveCamera.SetPosition(NewPos);
-			m_PerspectiveCamera.SetLookAt(NewLookAt);
 		}
 
 	}

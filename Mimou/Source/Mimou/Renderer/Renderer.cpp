@@ -18,7 +18,7 @@ namespace Mimou
 
 	void Renderer::BeginScene(PerspectiveCamera Camera)
 	{
-		m_SceneData->ViewProjectionMatrix = Camera.GetViewProjectionMatix();
+		m_SceneData->ViewProjectionMatrix = Camera.GetViewProjectionMatrix();
 	}
 
 	void Renderer::EndScene()

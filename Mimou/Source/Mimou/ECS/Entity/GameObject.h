@@ -1,4 +1,5 @@
 #pragma once
+#include "Mimou/Transform/Transform.h"
 
 namespace Mimou
 {
@@ -6,9 +7,14 @@ namespace Mimou
 	{
 	public:
 		GameObject();
-		virtual ~GameObject();
+		//virtual ~GameObject();
 
-	protected:
+		GameObject(const Transform& Transform);
 
+		inline void SetTransform(const Transform& Transform) { m_Transform = Transform; }
+		inline Transform GetTransform() const { return m_Transform; }
+
+	public:
+		Transform m_Transform;
 	};
 }
