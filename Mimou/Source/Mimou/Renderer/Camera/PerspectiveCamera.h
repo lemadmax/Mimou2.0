@@ -17,6 +17,7 @@ namespace Mimou
 		void SetProjection(float FOV, float Aspect, float zNear, float zFar);
 
 	private:
+		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewProjectionMatrix;
 

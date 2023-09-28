@@ -9,10 +9,10 @@ namespace Mimou
 		GameObject();
 		//virtual ~GameObject();
 
-		GameObject(const Transform& Transform);
+		GameObject(const Transform& InTransform);
 
-		inline void SetTransform(const Transform& Transform) { m_Transform = Transform; }
-		inline Transform GetTransform() const { return m_Transform; }
+		inline void SetTransform(const Transform& InTransform) { m_Transform = InTransform; }
+		inline const Transform& GetTransform() const { return m_Transform; }
 
 	public:
 		Transform m_Transform;

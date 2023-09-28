@@ -13,3 +13,17 @@
 #define MM_MOUSE_BUTTON_LEFT      MM_MOUSE_BUTTON_1
 #define MM_MOUSE_BUTTON_RIGHT     MM_MOUSE_BUTTON_2
 #define MM_MOUSE_BUTTON_MIDDLE    MM_MOUSE_BUTTON_3
+
+namespace Mimou
+{
+	using MouseCode = uint16_t;
+
+	namespace Mouse
+	{
+		enum : MouseCode
+		{
+			LeftButton = 0,
+			RightButton = 1
+		};
+	}
+}

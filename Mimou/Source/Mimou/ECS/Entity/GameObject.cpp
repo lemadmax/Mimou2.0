@@ -5,14 +5,12 @@ namespace Mimou
 {
 	GameObject::GameObject()
 	{
+
 	}
 
-	//GameObject::~GameObject()
-	//{
-	//}
-
-	GameObject::GameObject(const Transform& Transform)
-		: m_Transform(Transform)
+	GameObject::GameObject(const Transform& InTransform)
+		: m_Transform(InTransform)
 	{
 	}
+
 }

@@ -2,6 +2,7 @@
 #include "mepch.h"
 #include "Core.h"
 #include "Event/KeyCodes.h"
+#include "Event/MouseButtonCodes.h"
 
 namespace Mimou
 {

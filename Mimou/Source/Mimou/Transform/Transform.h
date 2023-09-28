@@ -16,10 +16,12 @@ namespace Mimou
 
 		glm::mat4 GetTransform();
 
+		inline glm::vec3 Position() const { return m_Translation; }
 		inline glm::vec3 Translation() const { return m_Translation; }
 		inline glm::vec3 Rotation() const { return m_Rotation; }
 		inline glm::vec3 Scale() const { return m_Scale; }
 
+		inline void SetPosition(glm::vec3 Position) { m_Translation = Position; MARK_DIRTY(true) }
 		inline void SetTranslation(const glm::vec3& Translation) { m_Translation = Translation; MARK_DIRTY(true) }
 		inline void SetRotation(const glm::vec3& Rotation) { m_Rotation = Rotation; MARK_DIRTY(true) }
 		inline void SetScale(const glm::vec3& Scale) { m_Scale = Scale; MARK_DIRTY(true) }
@@ -31,6 +33,10 @@ namespace Mimou
 		inline float GetPitch() const { return m_Rotation.x; }
 		inline float GetYaw() const { return m_Rotation.y; }
 		inline float GetRoll() const { return m_Rotation.z; }
+
+		glm::vec3 GetForward();
+		glm::vec3 GetLeft();
+		glm::vec3 GetUp();
 
 		glm::quat GetQuaternion();
 

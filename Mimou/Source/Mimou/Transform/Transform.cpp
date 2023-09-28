@@ -46,6 +46,24 @@ namespace Mimou
 		return m_Matrix;
 	}
 
+	glm::vec3 Transform::GetForward()
+	{
+		if (IsDirty) GetTransform();
+		return glm::vec3(m_Matrix[0][2], m_Matrix[1][2], m_Matrix[2][2]);
+	}
+
+	glm::vec3 Transform::GetLeft()
+	{
+		if (IsDirty) GetTransform();
+		return glm::vec3(m_Matrix[0][0], m_Matrix[1][0], m_Matrix[2][0]);
+	}
+
+	glm::vec3 Transform::GetUp()
+	{
+		if (IsDirty) GetTransform();
+		return glm::vec3(m_Matrix[0][1], m_Matrix[1][1], m_Matrix[2][1]);
+	}
+
 	glm::quat Transform::GetQuaternion()
 	{
 		return glm::quat(m_Rotation);

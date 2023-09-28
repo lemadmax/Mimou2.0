@@ -42,7 +42,9 @@ namespace Mimou
 
 		float m_zNear = 0.1f, m_zFar = 100.0f;
 		float MoveSpeed = 1;
-		float RotateSpeed = 1;
+		float RotateSpeed = 7;
+		bool bIsMousePressMoving = false;
+		std::pair<float, float> MousePosition;
 
 		float TestTime = 0.0f;
 	};
