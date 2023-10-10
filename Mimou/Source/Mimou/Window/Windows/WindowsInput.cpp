@@ -20,6 +20,13 @@ namespace Mimou
         return ButtonStatus == GLFW_PRESS;
     }
 
+    bool Mimou::WindowsInput::IsMouseButtonReleased_Implement(INT32 Button)
+    {
+        GLFWwindow* Window = static_cast<GLFWwindow*>(Application::GetInstance()->GetWindow().GetNativeWindow());
+        INT32 ButtonStatus = glfwGetMouseButton(Window, Button);
+        return ButtonStatus == GLFW_RELEASE;
+    }
+
     std::pair<float, float> Mimou::WindowsInput::GetMousePosition_Implement()
     {
         double PosX, PosY;

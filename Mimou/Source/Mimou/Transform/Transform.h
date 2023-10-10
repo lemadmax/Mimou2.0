@@ -40,6 +40,8 @@ namespace Mimou
 
 		glm::quat GetQuaternion();
 
+		void DebugPrint();
+
 	private:
 		glm::vec3 m_Translation;
 		glm::vec3 m_Rotation;

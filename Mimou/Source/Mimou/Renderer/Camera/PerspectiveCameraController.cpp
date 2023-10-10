@@ -41,14 +41,15 @@ namespace Mimou
 		if (Input::IsKeyPressed(Key::A))
 		{
 			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
-			glm::vec3 Forward = m_PerspectiveCamera.m_Transform.GetForward();
-			CameraPos += MoveSpeed * Ts.GetSecond() * Forward;
+			glm::vec3 CameraLeft = m_PerspectiveCamera.m_Transform.GetLeft();
+			CameraPos += MoveSpeed * Ts.GetSecond() * CameraLeft;
 			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
 		}
 		if (Input::IsKeyPressed(Key::D))
 		{
 			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
-			CameraPos.x += MoveSpeed * Ts.GetSecond();
+			glm::vec3 CameraLeft = m_PerspectiveCamera.m_Transform.GetLeft();
+			CameraPos -= MoveSpeed * Ts.GetSecond() * CameraLeft;
 			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
 		}
 		if (Input::IsKeyPressed(Key::W))
@@ -98,7 +99,10 @@ namespace Mimou
 		}
 		if (Input::IsMouseButtonPressed(Mouse::RightButton))
 		{
-			//ME_ENGINE_LOG("Right mouse button pressed");
+			m_PerspectiveCamera.m_Transform.DebugPrint();
+		}
+		if (Input::IsMouseButtonReleased(Mouse::RightButton))
+		{
 		}
 
 	}

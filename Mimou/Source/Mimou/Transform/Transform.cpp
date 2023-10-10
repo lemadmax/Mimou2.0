@@ -42,6 +42,7 @@ namespace Mimou
 				glm::rotate(glm::radians(m_Rotation.y), glm::vec3(0, 1, 0)) *
 				glm::rotate(glm::radians(m_Rotation.x), glm::vec3(1, 0, 0)) *
 				glm::scale(m_Scale);
+			IsDirty = false;
 		}
 		return m_Matrix;
 	}
@@ -67,6 +68,17 @@ namespace Mimou
 	glm::quat Transform::GetQuaternion()
 	{
 		return glm::quat(m_Rotation);
+	}
+
+	void Transform::DebugPrint()
+	{
+		//GetTransform();
+		ME_ENGINE_LOG("-------------- Matrix Start ----------------");
+		ME_ENGINE_LOG("|{0:08.3f}, {1:08.3f}, {2:08.3f}, {3:08.3f}|", m_Matrix[0][0], m_Matrix[0][1], m_Matrix[0][2], m_Matrix[0][3]);
+		ME_ENGINE_LOG("|{0:08.3f}, {1:08.3f}, {2:08.3f}, {3:08.3f}|", m_Matrix[1][0], m_Matrix[1][1], m_Matrix[1][2], m_Matrix[1][3]);
+		ME_ENGINE_LOG("|{0:08.3f}, {1:08.3f}, {2:08.3f}, {3:08.3f}|", m_Matrix[2][0], m_Matrix[2][1], m_Matrix[2][2], m_Matrix[2][3]);
+		ME_ENGINE_LOG("|{0:08.3f}, {1:08.3f}, {2:08.3f}, {3:08.3f}|", m_Matrix[3][0], m_Matrix[3][1], m_Matrix[3][2], m_Matrix[3][3]);
+		ME_ENGINE_LOG("-------------- Matrix End   ----------------");
 	}
 
 }
