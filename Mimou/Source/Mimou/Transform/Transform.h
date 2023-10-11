@@ -14,7 +14,7 @@ namespace Mimou
 		Transform(const glm::vec3& Translation, const glm::vec3& Rotation, const glm::vec3& Scale);
 		Transform(const glm::mat4& Matrix);
 
-		glm::mat4 GetTransform();
+		glm::mat4 GetTransformMatrix();
 
 		inline glm::vec3 Position() const { return m_Translation; }
 		inline glm::vec3 Translation() const { return m_Translation; }

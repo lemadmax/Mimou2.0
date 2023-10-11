@@ -33,7 +33,7 @@ namespace Mimou
 		m_Scale = Scale;
 	}
 
-	glm::mat4 Transform::GetTransform()
+	glm::mat4 Transform::GetTransformMatrix()
 	{
 		if (IsDirty)
 		{
@@ -49,19 +49,19 @@ namespace Mimou
 
 	glm::vec3 Transform::GetForward()
 	{
-		if (IsDirty) GetTransform();
+		if (IsDirty) GetTransformMatrix();
 		return glm::vec3(m_Matrix[0][2], m_Matrix[1][2], m_Matrix[2][2]);
 	}
 
 	glm::vec3 Transform::GetLeft()
 	{
-		if (IsDirty) GetTransform();
+		if (IsDirty) GetTransformMatrix();
 		return glm::vec3(m_Matrix[0][0], m_Matrix[1][0], m_Matrix[2][0]);
 	}
 
 	glm::vec3 Transform::GetUp()
 	{
-		if (IsDirty) GetTransform();
+		if (IsDirty) GetTransformMatrix();
 		return glm::vec3(m_Matrix[0][1], m_Matrix[1][1], m_Matrix[2][1]);
 	}
 
@@ -72,7 +72,7 @@ namespace Mimou
 
 	void Transform::DebugPrint()
 	{
-		//GetTransform();
+		GetTransformMatrix();
 		ME_ENGINE_LOG("-------------- Matrix Start ----------------");
 		ME_ENGINE_LOG("|{0:08.3f}, {1:08.3f}, {2:08.3f}, {3:08.3f}|", m_Matrix[0][0], m_Matrix[0][1], m_Matrix[0][2], m_Matrix[0][3]);
 		ME_ENGINE_LOG("|{0:08.3f}, {1:08.3f}, {2:08.3f}, {3:08.3f}|", m_Matrix[1][0], m_Matrix[1][1], m_Matrix[1][2], m_Matrix[1][3]);

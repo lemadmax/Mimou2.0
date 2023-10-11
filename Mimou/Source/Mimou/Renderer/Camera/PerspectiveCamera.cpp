@@ -29,7 +29,7 @@ namespace Mimou
 
 	const glm::mat4& PerspectiveCamera::GetViewMatrix()
 	{
-		glm::mat4 TransformMatrix = m_Transform.GetTransform();
+		glm::mat4 TransformMatrix = m_Transform.GetTransformMatrix();
 		m_ViewMatrix = glm::inverse(TransformMatrix);
 		return m_ViewMatrix;
 	}
