@@ -16,7 +16,7 @@ namespace Mimou
 		RenderCommand::SetViewport(0, 0, Width, Height);
 	}
 
-	void Renderer::BeginScene(PerspectiveCamera Camera)
+	void Renderer::BeginScene(PerspectiveCamera& Camera)
 	{
 		m_SceneData->ViewProjectionMatrix = Camera.GetViewProjectionMatrix();
 	}

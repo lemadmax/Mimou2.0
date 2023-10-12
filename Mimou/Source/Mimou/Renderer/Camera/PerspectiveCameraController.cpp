@@ -42,28 +42,28 @@ namespace Mimou
 		{
 			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
 			glm::vec3 CameraLeft = m_PerspectiveCamera.m_Transform.GetLeft();
-			CameraPos += MoveSpeed * Ts.GetSecond() * CameraLeft;
+			CameraPos -= MoveSpeed * Ts.GetSecond() * CameraLeft;
 			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
 		}
 		if (Input::IsKeyPressed(Key::D))
 		{
 			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
 			glm::vec3 CameraLeft = m_PerspectiveCamera.m_Transform.GetLeft();
-			CameraPos -= MoveSpeed * Ts.GetSecond() * CameraLeft;
+			CameraPos += MoveSpeed * Ts.GetSecond() * CameraLeft;
 			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
 		}
 		if (Input::IsKeyPressed(Key::W))
 		{
 			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
 			glm::vec3 Forward = m_PerspectiveCamera.m_Transform.GetForward();
-			CameraPos -= MoveSpeed * Ts.GetSecond() * Forward;
+			CameraPos += MoveSpeed * Ts.GetSecond() * Forward;
 			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
 		}
 		if (Input::IsKeyPressed(Key::S))
 		{
 			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
 			glm::vec3 Forward = m_PerspectiveCamera.m_Transform.GetForward();
-			CameraPos += MoveSpeed * Ts.GetSecond() * Forward;
+			CameraPos -= MoveSpeed * Ts.GetSecond() * Forward;
 			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
 		}
 		if (Input::IsMouseButtonPressed(Mouse::LeftButton))

@@ -50,19 +50,19 @@ namespace Mimou
 	glm::vec3 Transform::GetForward()
 	{
 		if (IsDirty) GetTransformMatrix();
-		return glm::vec3(m_Matrix[0][2], m_Matrix[1][2], m_Matrix[2][2]);
+		return -glm::vec3(m_Matrix[2][0], m_Matrix[2][1], m_Matrix[2][2]);
 	}
 
 	glm::vec3 Transform::GetLeft()
 	{
 		if (IsDirty) GetTransformMatrix();
-		return glm::vec3(m_Matrix[0][0], m_Matrix[1][0], m_Matrix[2][0]);
+		return glm::vec3(m_Matrix[0][0], m_Matrix[0][1], m_Matrix[0][2]);
 	}
 
 	glm::vec3 Transform::GetUp()
 	{
 		if (IsDirty) GetTransformMatrix();
-		return glm::vec3(m_Matrix[0][1], m_Matrix[1][1], m_Matrix[2][1]);
+		return glm::vec3(m_Matrix[1][0], m_Matrix[1][1], m_Matrix[1][2]);
 	}
 
 	glm::quat Transform::GetQuaternion()

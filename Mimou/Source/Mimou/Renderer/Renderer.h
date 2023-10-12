@@ -18,7 +18,7 @@ namespace Mimou
 		static void Init();
 		static void OnWindowResize(uint32_t Width, uint32_t Height);
 
-		static void BeginScene(PerspectiveCamera Camera);
+		static void BeginScene(PerspectiveCamera& Camera);
 		static void EndScene();
 
 		static void Submit(const Ref<VertexArray>& VertexArray, const Ref<Shader>& Shader, const glm::mat4& Transform = glm::mat4(1.0f));
