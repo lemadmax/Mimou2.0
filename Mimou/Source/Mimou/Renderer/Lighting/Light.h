@@ -1,22 +1,23 @@
 #pragma once
+#include "Mimou/ECS/Entity/GameObject.h"
 #include "glm/glm.hpp"
 
 namespace Mimou
 {
-	class Light
+	class Light : public GameObject
 	{
 	public:
-		Light(glm::vec3 Position, glm::vec3 Color, glm::vec3 Direction, float Intensity);
+		Light(glm::vec3 Position, glm::vec3 Rotation, glm::vec3 Color, float Intensity);
 
-		inline glm::vec3 GetPosition() const { return m_Position; }
 		inline glm::vec3 GetColor() const { return m_Color; }
-		inline glm::vec3 GetDirection() const { return m_Direction; }
 		inline float GetIntensity() const { return m_Intensity; }
+
+		glm::vec3 GetPosition();
+		glm::vec3 GetDirection();
 
 	private:
 		glm::vec3 m_Position;
 		glm::vec3 m_Color;
-		glm::vec3 m_Direction;
 
 		float m_Intensity;
 	};

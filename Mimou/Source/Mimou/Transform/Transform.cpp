@@ -50,7 +50,7 @@ namespace Mimou
 	glm::vec3 Transform::GetForward()
 	{
 		if (IsDirty) GetTransformMatrix();
-		return -glm::vec3(m_Matrix[2][0], m_Matrix[2][1], m_Matrix[2][2]);
+		return glm::vec3(m_Matrix[2][0], m_Matrix[2][1], m_Matrix[2][2]);
 	}
 
 	glm::vec3 Transform::GetLeft()

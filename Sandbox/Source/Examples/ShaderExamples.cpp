@@ -9,7 +9,7 @@ ShaderEgLayer::ShaderEgLayer()
 	float Height = (float)Application::GetInstance()->GetWindow().GetHeight();
 	m_CameraController.SetAspect(Width / Height);
 
-	DirectionalLight = CreateRef<Light>(glm::vec3(), glm::vec3(0.7, 0.6, 0.6), glm::vec3(1.0, 1.0, 1.0), 1.0f);
+	DirectionalLight = CreateRef<Light>(glm::vec3(), glm::vec3(45.0, 135.0, 0), glm::vec3(0.7, 0.6, 0.6), 1.0f);
 
 	RenderCommand::EnableDepthTest();
 	RenderCommand::ClearDepth();

@@ -133,6 +133,10 @@
     <ClInclude Include="Source\Mimou\Renderer\Lighting\Light.h" />
     <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h" />
     <ClInclude Include="Source\Mimou\Transform\Transform.h" />
+    <ClInclude Include="Source\Mimou\ECS\Component\StaticMeshComponent.h" />
+    <ClInclude Include="Source\Mimou\ECS\Component\ComponentBase.h" />
+    <ClInclude Include="Source\Mimou\ECS\System\SystemBase.h" />
+    <ClInclude Include="Source\Mimou\ECS\System\StaticMeshSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -201,5 +205,9 @@
     <ClCompile Include="Source\Mimou\Renderer\Lighting\Light.cpp" />
     <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp" />
     <ClCompile Include="Source\Mimou\Transform\Transform.cpp" />
+    <ClCompile Include="Source\Mimou\ECS\Component\StaticMeshComponent.cpp" />
+    <ClCompile Include="Source\Mimou\ECS\Component\ComponentBase.cpp" />
+    <ClCompile Include="Source\Mimou\ECS\System\SystemBase.cpp" />
+    <ClCompile Include="Source\Mimou\ECS\System\StaticMeshSystem.cpp" />
   </ItemGroup>
 </Project>

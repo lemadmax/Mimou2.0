@@ -56,14 +56,14 @@ namespace Mimou
 		{
 			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
 			glm::vec3 Forward = m_PerspectiveCamera.m_Transform.GetForward();
-			CameraPos += MoveSpeed * Ts.GetSecond() * Forward;
+			CameraPos -= MoveSpeed * Ts.GetSecond() * Forward;
 			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
 		}
 		if (Input::IsKeyPressed(Key::S))
 		{
 			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
 			glm::vec3 Forward = m_PerspectiveCamera.m_Transform.GetForward();
-			CameraPos -= MoveSpeed * Ts.GetSecond() * Forward;
+			CameraPos += MoveSpeed * Ts.GetSecond() * Forward;
 			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
 		}
 		if (Input::IsMouseButtonPressed(Mouse::LeftButton))
@@ -87,7 +87,7 @@ namespace Mimou
 					m_PerspectiveCamera.m_Transform.SetYaw(CameraYaw);
 					//ME_ENGINE_LOG("Mouse press moving ({},{})", OffsetX, OffsetY);
 					glm::vec3 CameraRot = m_PerspectiveCamera.m_Transform.Rotation();
-					ME_ENGINE_LOG("Camera rotation: ({},{},{})", CameraRot.x, CameraRot.y, CameraRot.z);
+					//ME_ENGINE_LOG("Camera rotation: ({},{},{})", CameraRot.x, CameraRot.y, CameraRot.z);
 				}
 			}
 			MousePosition = CurMousePosition;
