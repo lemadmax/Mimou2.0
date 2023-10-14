@@ -31,8 +31,35 @@ ShaderEgLayer::ShaderEgLayer()
 	//SphereVertices->AddVertexBuffer(VertexBuffer);
 	Ref<Shader> LambertShader = Shader::Create("Assets/Shaders/LambertShader.glsl");
 	Ref<Material> LambertMat = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, LambertShader);
-	SphereMesh = StaticMeshLibrary::CreateSphere(32, 16);
-	SphereMesh->SetMaterial(LambertMat);
+	//SphereMesh = StaticMeshLibrary::CreateSphere(32, 16);
+	//SphereMesh->SetMaterial(LambertMat);
+	Renderer::AddLight(DirectionalLight);
+
+	Ref<GameObject> SphereObject = CreateRef<GameObject>();
+	Ref<StaticMeshComponent> SMComp = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
+	SMComp->GetStaticMesh()->SetMaterial(LambertMat);
+	SphereObject->AddComponent(SMComp);
+	SphereObject->m_Transform.SetPosition(glm::vec3(-3, 0, 0));
+	GameObjects.push_back(SphereObject);
+
+	Ref<GameObject> SphereObject1 = CreateRef<GameObject>();
+	Ref<Shader> PhongShader = Shader::Create("Assets/Shaders/PhongShader.glsl");
+	Ref<Material> PhongMat = CreateRef<Material>(glm::vec3(0.2, 0.2, 0.2), glm::vec3(1, 1, 1), glm::vec4(0.9, 0.9, 0.9, 10.0), 1.0f, PhongShader);
+	Ref<StaticMeshComponent> SMComp1 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
+	SMComp1->GetStaticMesh()->SetMaterial(PhongMat);
+	SphereObject1->AddComponent(SMComp1);
+	SphereObject1->m_Transform.SetPosition(glm::vec3(0, 0, 0));
+	GameObjects.push_back(SphereObject1);
+
+	Ref<GameObject> SphereEar1 = CreateRef<GameObject>();
+	Ref<Material> PhongMat1 = CreateRef<Material>(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.1, 0.1, 0.1, 10.0), 1.0f, PhongShader);
+	Ref<StaticMeshComponent> SMComp2 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
+	SMComp2->GetStaticMesh()->SetMaterial(PhongMat1);
+	SphereEar1->AddComponent(SMComp2);
+	SphereEar1->m_Transform.SetPosition(glm::vec3(1, 1, 0));
+	SphereEar1->m_Transform.SetScale(glm::vec3(1, 1, 0.4));
+	GameObjects.push_back(SphereEar1);
+	SphereObject1->AddChild(SphereEar1.get());
 }
 
 ShaderEgLayer::~ShaderEgLayer()
@@ -47,9 +74,20 @@ void ShaderEgLayer::OnUpdate(Timestep Ts)
 
 	RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 	RenderCommand::Clear();
+
 	//Renderer::Submit(SunVertices, SunShader);
 	//Renderer::SubmitArrays(SphereVertices, SphereShader);
-	Renderer::SubmitArrays(SphereMesh->GetVertexArray(), SphereMesh->GetMaterial(), DirectionalLight);
+	//Renderer::SubmitArrays(SphereMesh->GetVertexArray(), SphereMesh->GetMaterial(), DirectionalLight);
+
+	GameObjects[0]->m_Transform.SetPosition(glm::vec3(-3.0f, 3.0f * glm::abs(glm::sin(uTime)), 0.0f));
+	GameObjects[1]->m_Transform.SetPosition(glm::vec3(0.0f, 4.0f * glm::abs(glm::cos(uTime)), 0.0f));
+
+	uTime += Ts;
+
+	for (Ref<GameObject> GameObject : GameObjects)
+	{
+		GameObject->OnUpdate(Ts);
+	}
 
 	Renderer::EndScene();
 }

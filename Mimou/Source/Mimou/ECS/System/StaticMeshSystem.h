@@ -13,7 +13,7 @@ namespace Mimou
 		static StaticMeshSystem* GetInstance();
 
 	public:
-		virtual void React(Ref<GameObject> Entity) override;
+		virtual void React(GameObject* Entity) override;
 
 	};
 }

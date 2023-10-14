@@ -13,6 +13,7 @@
 #include "Mimou/Renderer/Material/Material.h"
 #include "Mimou/Renderer/Lighting/Light.h"
 #include "Mimou/Mesh/StaticMesh.h"
+#include "Mimou/ECS/Component/StaticMeshComponent.h"
 
 
 #include "Mimou/Utils/FileUtils/FileHelper.h"

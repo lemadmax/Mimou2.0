@@ -16,6 +16,7 @@ public:
 
 	void TestSun();
 private:
+	float uTime = 0.0f;
 	Ref<Shader> SunShader;
 	Ref<VertexArray> SunVertices;
 
@@ -25,6 +26,8 @@ private:
 
 	Ref<StaticMesh> SphereMesh;
 	Ref<Light> DirectionalLight;
+
+	std::vector<Ref<GameObject>> GameObjects;
 
 	PerspectiveCameraController m_CameraController;
 };

@@ -9,12 +9,15 @@ namespace Mimou
 	class ComponentBase
 	{
 	public:
-		ComponentBase(Ref<GameObject> GameObject, const std::string& Name);
+		ComponentBase(const std::string& Name);
 
 		virtual void OnUpdate(Timestep Ts) = 0;
 
-	private:
+		inline std::string GetName() const { return m_Name; }
+		inline void SetOwner(GameObject* Owner) { m_Owner = Owner; }
+
+	protected:
 		std::string m_Name;
-		Ref<GameObject> m_Owner;
+		GameObject* m_Owner;
 	};
 }

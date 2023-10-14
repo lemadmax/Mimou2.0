@@ -18,8 +18,10 @@ namespace Mimou
 
 	OpenGLShader::OpenGLShader(const std::string& FilePath)
 	{
+		ME_ENGINE_LOG("Reading shader file: {}", FilePath);
 		std::string Source = FileHelper::Get()->ReadFile(FilePath);
 		std::unordered_map<GLenum, std::string> ShaderSources = Preprocess(Source);
+		ME_ENGINE_LOG("Compiling shader: {}", FilePath);
 		Compile(ShaderSources);
 
 		m_Name = FileHelper::Get()->GetFileNameFromPath(FilePath);

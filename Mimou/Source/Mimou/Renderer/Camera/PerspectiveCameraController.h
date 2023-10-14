@@ -13,7 +13,7 @@ namespace Mimou
 		PerspectiveCameraController(
 			float FOV, 
 			float Aspect, 
-			glm::vec3 Position = glm::vec3(0.0f, 0.0f, 5.0f),
+			glm::vec3 Position = glm::vec3(0.0f, 0.0f, 10.0f),
 			glm::vec3 Rotation = glm::vec3(0.0f, 0.0f, 0.0f));
 
 		void SetFOV(float FOV);

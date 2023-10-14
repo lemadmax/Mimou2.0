@@ -1,5 +1,7 @@
 #include "mepch.h"
 #include "StaticMeshSystem.h"
+#include "Mimou/ECS/Component/StaticMeshComponent.h"
+#include "Mimou/Renderer/Renderer.h"
 
 namespace Mimou
 {
@@ -13,9 +15,12 @@ namespace Mimou
 		return s_Instance;
 	}
 
-	void StaticMeshSystem::React(Ref<GameObject> Entity)
+	void StaticMeshSystem::React(GameObject* Entity)
 	{
-
+		Transform WorldTransform = Entity->GetWorldTransform();
+		Ref<StaticMeshComponent> Comp = static_pointer_cast<StaticMeshComponent>(Entity->GetComponentByName("Static Mesh"));
+		Ref<StaticMesh> StaticMesh = Comp->GetStaticMesh();
+		Renderer::SubmitArrays(StaticMesh->GetVertexArray(), StaticMesh->GetMaterial(), WorldTransform.GetTransformMatrix());
 	}
 
 	StaticMeshSystem::StaticMeshSystem()

@@ -4,9 +4,9 @@
 
 namespace Mimou
 {
-	ComponentBase::ComponentBase(Ref<GameObject> GameObject, const std::string& Name)
-		: m_Name(Name), m_Owner(GameObject)
+	ComponentBase::ComponentBase(const std::string& Name)
+		: m_Name(Name)
 	{
-
+		m_Owner = nullptr;
 	}
 }

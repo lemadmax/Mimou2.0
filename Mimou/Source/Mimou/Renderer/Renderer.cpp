@@ -21,6 +21,11 @@ namespace Mimou
 		m_SceneData->ViewProjectionMatrix = Camera.GetViewProjectionMatrix();
 	}
 
+	void Renderer::AddLight(Ref<Light> Light)
+	{
+		m_SceneData->Lights.push_back(Light);
+	}
+
 	void Renderer::EndScene()
 	{
 
@@ -30,17 +35,33 @@ namespace Mimou
 	{
 		Shader->Bind();
 		Shader->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
-		Shader->SetMat4("u_Transform", Transfrom);
+		Shader->SetMat4("u_TransformMatrix", Transfrom);
 		VertexArray->Bind();
 
 		RenderCommand::DrawIndexed(VertexArray);
 	}
 
-	void Renderer::SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Shader>& Shader, const glm::mat4& Transfrom)
+	void Renderer::SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Material>& Material, const glm::mat4& Transform)
+	{
+		Material->Bind();
+		for (int i = 0; i < m_SceneData->Lights.size(); i++)
+		{
+			Material->ApplyLighting(i, m_SceneData->Lights[i]);
+		}
+		Material->GetShader()->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+		Material->GetShader()->SetMat4("u_TransformMatrix", Transform);
+		glm::mat4 InverseMatrix = glm::inverse(Transform);
+		Material->GetShader()->SetMat4("u_InverseMatrix", InverseMatrix);
+		VertexArray->Bind();
+		RenderCommand::DrawArrays(VertexArray);
+	}
+
+	void Renderer::SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Shader>& Shader, const glm::mat4& Transform)
 	{
 		Shader->Bind();
 		Shader->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
-		Shader->SetMat4("u_Transform", Transfrom);
+		Shader->SetMat4("u_TransformMatrix", Transform);
+		Shader->SetMat4("u_InverseMatrix", glm::inverse(Transform));
 		VertexArray->Bind();
 
 		RenderCommand::DrawArrays(VertexArray);
@@ -49,9 +70,10 @@ namespace Mimou
 	void Renderer::SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Material>& Material, const Ref<Light>& Light)
 	{
 		Material->Bind();
-		Material->ApplyLighting(Light);
+		Material->ApplyLighting(0, Light);
 		Material->GetShader()->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
-		Material->GetShader()->SetMat4("u_Transform", glm::mat4(1.0f));
+		Material->GetShader()->SetMat4("u_TransformMatrix", glm::mat4(1.0f));
+		Material->GetShader()->SetMat4("u_InverseMatrix", glm::inverse(glm::mat4(1.0f)));
 
 		VertexArray->Bind();
 		RenderCommand::DrawArrays(VertexArray);

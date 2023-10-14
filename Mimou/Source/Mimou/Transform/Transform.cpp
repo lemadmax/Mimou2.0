@@ -8,7 +8,7 @@ namespace Mimou
 
 	Transform::Transform()
 	{
-		m_Translation = glm::vec3(1.0f);
+		m_Translation = glm::vec3(0.0f);
 		m_Rotation = glm::vec3(0.0f);
 		m_Scale = glm::vec3(1.0f);
 		IsDirty = true;
@@ -22,15 +22,7 @@ namespace Mimou
 
 	Transform::Transform(const glm::mat4& Matrix)
 	{
-		glm::vec3 Scale;
-		glm::quat Rotation;
-		glm::vec3 Translation;
-		glm::vec3 Skew;
-		glm::vec4 Perspective;
-		glm::decompose(Matrix, Scale, Rotation, Translation, Skew, Perspective);
-		m_Translation = Translation;
-		m_Rotation = glm::eulerAngles(glm::conjugate(Rotation));
-		m_Scale = Scale;
+		SetTransformMatrix(Matrix);
 	}
 
 	glm::mat4 Transform::GetTransformMatrix()
@@ -45,6 +37,23 @@ namespace Mimou
 			IsDirty = false;
 		}
 		return m_Matrix;
+	}
+
+	void Transform::SetTransformMatrix(const glm::mat4& Matrix)
+	{
+		glm::vec3 Scale;
+		glm::quat Rotation;
+		glm::vec3 Translation;
+		glm::vec3 Skew;
+		glm::vec4 Perspective;
+		glm::decompose(Matrix, Scale, Rotation, Translation, Skew, Perspective);
+		m_Translation = Translation;
+		m_Rotation = glm::eulerAngles(glm::conjugate(Rotation));
+		m_Scale = Scale;
+	}
+
+	void Transform::Translate(const glm::vec3& Amount)
+	{
 	}
 
 	glm::vec3 Transform::GetForward()

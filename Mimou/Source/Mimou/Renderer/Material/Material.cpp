@@ -18,16 +18,17 @@ namespace Mimou
 		}
 		m_Shader->Bind();
 		m_Shader->SetFloat3("u_Ambient", m_Ambient);
-		//m_Shader->SetFloat3("u_Diffuse", m_Diffuse);
-		//m_Shader->SetFloat4("u_Specular", m_Specular);
+		m_Shader->SetFloat3("u_Diffuse", m_Diffuse);
+		m_Shader->SetFloat4("u_Specular", m_Specular);
 		m_Shader->SetFloat("u_Transparency", m_Transparency);
 	}
 
-	void Material::ApplyLighting(Ref<Light> Light)
+	void Material::ApplyLighting(int index, Ref<Light> Light)
 	{
 		ME_ENGINE_ASSERT(m_Shader, "Error when applying lighting, shader is null");
 
-		m_Shader->SetFloat4("u_LightColor", glm::vec4(Light->GetColor(), Light->GetIntensity()));
-		m_Shader->SetFloat3("u_LightDir", Light->GetDirection());
+		m_Shader->SetFloat4("Lights[" + std::to_string(index) + "].u_LightColor", glm::vec4(Light->GetColor(), Light->GetIntensity()));
+		m_Shader->SetFloat3("Lights[" + std::to_string(index) + "].u_LightDir", -Light->GetDirection());
+		m_Shader->SetInt("nl", index + 1);
 	}
 }

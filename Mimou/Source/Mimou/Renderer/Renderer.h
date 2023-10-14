@@ -19,9 +19,12 @@ namespace Mimou
 		static void OnWindowResize(uint32_t Width, uint32_t Height);
 
 		static void BeginScene(PerspectiveCamera& Camera);
+		static void AddLight(Ref<Light> Light);
 		static void EndScene();
 
 		static void Submit(const Ref<VertexArray>& VertexArray, const Ref<Shader>& Shader, const glm::mat4& Transform = glm::mat4(1.0f));
+
+		static void SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Material>& Material, const glm::mat4& Transform = glm::mat4(1.0f));
 
 		static void SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Shader>& Shader, const glm::mat4& Transform = glm::mat4(1.0f));
 
@@ -32,6 +35,7 @@ namespace Mimou
 		struct SceneData
 		{
 			glm::mat4 ViewProjectionMatrix;
+			std::vector<Ref<Light>> Lights;
 		};
 
 		static SceneData* m_SceneData;

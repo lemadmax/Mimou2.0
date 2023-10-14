@@ -8,7 +8,7 @@ namespace Mimou
 	protected:
 		SystemBase(const std::string& Name);
 
-		virtual void React(Ref<GameObject> Entity) = 0;
+		virtual void React(GameObject* Entity) = 0;
 
 	private:
 		std::string m_Name;
