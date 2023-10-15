@@ -13,11 +13,12 @@ out vec3 v_Normal;
 
 void main()
 {
-    v_Position = a_Position;
-
+    vec4 Pos = u_ViewProjection * u_TransformMatrix * vec4(a_Position, 1.0);
     vec4 Nor = vec4(a_Normal, 0.) * u_InverseMatrix;
+
+    gl_Position = Pos;
+    v_Position = Pos.xyz;
     v_Normal = Nor.xyz;
-    gl_Position = u_ViewProjection * u_TransformMatrix * vec4(a_Position, 1.0);
 }	
 
 
@@ -26,27 +27,36 @@ void main()
 
 #define MAX_LIGHTS 128
 
-layout(location = 0) out vec4 Color;
+layout(location = 0) out vec4 FragColor;
 
 struct SceneLight
 {
-    vec4 u_LightColor;
-    vec3 u_LightDir;
+    vec3 LightColor;
+    vec3 LightDir;
+    float Intensity;
 };
 
-uniform int nl;
-uniform SceneLight Lights[MAX_LIGHTS];
+uniform int u_nl;
+uniform SceneLight u_Lights[MAX_LIGHTS];
 
 uniform vec3 u_Ambient;
 uniform vec3 u_Diffuse;
 uniform vec4 u_Specular;
 uniform float u_Transparency;
+uniform float u_IrradiPerp;
 
 in vec3 v_Position;
 in vec3 v_Normal;
 
 void main()
 {
-    vec3 OutColor = u_Ambient + Lights[0].u_LightColor.w * Lights[0].u_LightColor.rgb * max(0., dot(Lights[0].u_LightDir, v_Normal));
-    Color = vec4(sqrt(OutColor), u_Transparency);
+    vec3 N = normalize(v_Normal);
+    vec3 OutColor = u_Ambient;
+    for (int i = 0; i < u_nl; i++)
+    {
+        vec3 L = -u_Lights[i].LightDir;
+        OutColor += u_Lights[i].LightColor * u_Lights[i].Intensity * max(0., dot(L, N));
+    }
+    OutColor = pow(OutColor, vec3(1.0 / 2.2)); // Gamma correction
+    FragColor = vec4(OutColor, u_Transparency);
 }

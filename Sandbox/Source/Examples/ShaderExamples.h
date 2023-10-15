@@ -26,6 +26,7 @@ private:
 
 	Ref<StaticMesh> SphereMesh;
 	Ref<Light> DirectionalLight;
+	Ref<Light> MovingLight;
 
 	std::vector<Ref<GameObject>> GameObjects;
 

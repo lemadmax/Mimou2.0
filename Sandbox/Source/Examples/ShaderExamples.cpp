@@ -10,6 +10,7 @@ ShaderEgLayer::ShaderEgLayer()
 	m_CameraController.SetAspect(Width / Height);
 
 	DirectionalLight = CreateRef<Light>(glm::vec3(), glm::vec3(45.0, 135.0, 0), glm::vec3(0.7, 0.6, 0.6), 1.0f);
+	MovingLight = CreateRef<Light>(glm::vec3(), glm::vec3(0, 180, 0), glm::vec3(0.5, 0.4, 0.4), 1.0f);
 
 	RenderCommand::EnableDepthTest();
 	RenderCommand::ClearDepth();
@@ -34,6 +35,7 @@ ShaderEgLayer::ShaderEgLayer()
 	//SphereMesh = StaticMeshLibrary::CreateSphere(32, 16);
 	//SphereMesh->SetMaterial(LambertMat);
 	Renderer::AddLight(DirectionalLight);
+	Renderer::AddLight(MovingLight);
 
 	Ref<GameObject> SphereObject = CreateRef<GameObject>();
 	Ref<StaticMeshComponent> SMComp = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
@@ -78,6 +80,7 @@ void ShaderEgLayer::OnUpdate(Timestep Ts)
 	//Renderer::Submit(SunVertices, SunShader);
 	//Renderer::SubmitArrays(SphereVertices, SphereShader);
 	//Renderer::SubmitArrays(SphereMesh->GetVertexArray(), SphereMesh->GetMaterial(), DirectionalLight);
+	MovingLight->m_Transform.SetYaw(MovingLight->m_Transform.GetYaw() + Ts.GetSecond() * 100);
 
 	GameObjects[0]->m_Transform.SetPosition(glm::vec3(-3.0f, 3.0f * glm::abs(glm::sin(uTime)), 0.0f));
 	GameObjects[1]->m_Transform.SetPosition(glm::vec3(0.0f, 4.0f * glm::abs(glm::cos(uTime)), 0.0f));
