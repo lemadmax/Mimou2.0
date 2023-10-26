@@ -62,6 +62,24 @@ ShaderEgLayer::ShaderEgLayer()
 	SphereEar1->m_Transform.SetScale(glm::vec3(1, 1, 0.4));
 	GameObjects.push_back(SphereEar1);
 	SphereObject1->AddChild(SphereEar1.get());
+
+	Ref<GameObject> SphereObject2 = CreateRef<GameObject>();
+	Ref<Shader> BlinnPhongShader = Shader::Create("Assets/Shaders/BlinnPhongShader.glsl");
+	Ref<Material> BlinnPhongMat = CreateRef<Material>(glm::vec3(0.2, 0.2, 0.2), glm::vec3(1, 1, 1), glm::vec4(0.9, 0.9, 0.9, 10.0), 1.0f, BlinnPhongShader);
+	Ref<StaticMeshComponent> SMComp3 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
+	SMComp3->GetStaticMesh()->SetMaterial(BlinnPhongMat);
+	SphereObject2->AddComponent(SMComp3);
+	SphereObject2->m_Transform.SetPosition(glm::vec3(4, 1, 0));
+	GameObjects.push_back(SphereObject2);
+
+	Ref<GameObject> SquareObject = CreateRef<GameObject>();
+	Ref<StaticMeshComponent> SMComp4 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSquare(2, 0));
+	SMComp4->GetStaticMesh()->SetMaterial(LambertMat);
+	SquareObject->AddComponent(SMComp4);
+	SquareObject->m_Transform.SetScale(glm::vec3(100, 100, 1));
+	SquareObject->m_Transform.SetRotation(glm::vec3(0, 0, 0));
+	SquareObject->m_Transform.SetPosition(glm::vec3(0, 0, 0));
+	GameObjects.push_back(SquareObject);
 }
 
 ShaderEgLayer::~ShaderEgLayer()
@@ -84,6 +102,7 @@ void ShaderEgLayer::OnUpdate(Timestep Ts)
 
 	GameObjects[0]->m_Transform.SetPosition(glm::vec3(-3.0f, 3.0f * glm::abs(glm::sin(uTime)), 0.0f));
 	GameObjects[1]->m_Transform.SetPosition(glm::vec3(0.0f, 4.0f * glm::abs(glm::cos(uTime)), 0.0f));
+	GameObjects[3]->m_Transform.SetPosition(glm::vec3(4.0f, 3.0f * glm::abs(glm::sin(uTime)), 0.0f));
 
 	uTime += Ts;
 

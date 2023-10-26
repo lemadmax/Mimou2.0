@@ -150,6 +150,7 @@
     <ClInclude Include="Source\Mimou.h" />
     <ClInclude Include="Source\Mimou\Application.h" />
     <ClInclude Include="Source\Mimou\Core.h" />
+    <ClInclude Include="Source\Mimou\Debug\Instrumentor.h" />
     <ClInclude Include="Source\Mimou\ECS\Component\ComponentBase.h" />
     <ClInclude Include="Source\Mimou\ECS\Component\StaticMeshComponent.h" />
     <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h" />

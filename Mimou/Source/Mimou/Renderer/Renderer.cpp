@@ -43,6 +43,7 @@ namespace Mimou
 
 	void Renderer::SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Material>& Material, const glm::mat4& Transform)
 	{
+		ME_PROFILE_SCOPE("Renderer::SubmitArrays");
 		Material->Bind();
 		for (int i = 0; i < m_SceneData->Lights.size(); i++)
 		{

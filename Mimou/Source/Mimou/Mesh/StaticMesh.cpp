@@ -25,6 +25,27 @@ namespace Mimou
 		return Vertices;
 	}
 
+	// i: the coordinate where z defines
+	// z: the value of the const coordinate
+	std::vector<float> CreateSquareMesh(uint32_t i, uint32_t z)
+	{
+		const uint32_t N = 6;
+		std::vector<float> Vertices(4 * N);
+		uint32_t j = z < 0 ? (i + 2) % 3 : (i + 1) % 3; // Right hand rule
+		uint32_t k = z < 0 ? (i + 1) % 3 : (i + 2) % 3;
+
+		// (-1, 1) (1, 1) (-1, -1) (1, -1)
+		Vertices[i] = Vertices[1 * N + i] = Vertices[2 * N + i] = Vertices[3 * N + i] = z;
+		Vertices[j] = Vertices[2 * N + j] = Vertices[2 * N + k] = Vertices[3 * N + k] = -1;
+		Vertices[k] = Vertices[1 * N + j] = Vertices[1 * N + k] = Vertices[3 * N + j] = 1;
+
+		Vertices[i + 3] = Vertices[1 * N + i + 3] = Vertices[2 * N + i + 3] = Vertices[3 * N + i + 3] = z < 0 ? -1 : 1;
+		Vertices[j + 3] = Vertices[1 * N + j + 3] = Vertices[2 * N + j + 3] = Vertices[3 * N + j + 3] = 0;
+		Vertices[k + 3] = Vertices[1 * N + k + 3] = Vertices[2 * N + k + 3] = Vertices[3 * N + k + 3] = 0;
+
+		return Vertices;
+	}
+
 	void UVToSphere(std::vector<float>& Vertices, float U, float V)
 	{
 		float Theta = 2 * glm::pi<float>() * U;
@@ -44,6 +65,11 @@ namespace Mimou
 	Ref<StaticMesh> StaticMeshLibrary::CreateCube(uint32_t NU, uint32_t NV)
 	{
 		return Ref<StaticMesh>();
+	}
+
+	Ref<StaticMesh> StaticMeshLibrary::CreateSquare(uint32_t i, uint32_t z)
+	{
+		return CreateRef<StaticMesh>(StaticMesh::MeshType::Square, i, z);
 	}
 
 	StaticMesh::StaticMesh(MeshType Type, uint32_t NU, uint32_t NV)
@@ -77,7 +103,30 @@ namespace Mimou
 			std::vector<float> Vertices = CreateMesh(m_NU, m_NV, Fn);
 			if (Vertices.empty())
 			{
-				ME_ENGINE_WARN("CreateMesh: Failed to create mesh");
+				ME_ENGINE_WARN("CreateMesh: Failed to create sphere mesh");
+				return;
+			}
+			m_Vertices = new float[Vertices.size()];
+			memcpy(m_Vertices, &Vertices[0], Vertices.size() * sizeof(float));
+			Cnt = Vertices.size();
+
+			m_VertexArray = VertexArray::Create();
+			BufferLayout Layout =
+			{
+				{ "a_Position", ShaderDataType::Float3 },
+				{ "a_Normal", ShaderDataType::Float3 }
+			};
+			Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(m_Vertices, Cnt * sizeof(float));
+			VertexBuffer->SetLayout(Layout);
+			m_VertexArray->AddVertexBuffer(VertexBuffer);
+			break;
+		}
+		case StaticMesh::MeshType::Square:
+		{
+			std::vector<float> Vertices = CreateSquareMesh(m_NU, m_NV);
+			if (Vertices.empty())
+			{
+				ME_ENGINE_WARN("CreateMesh: Failed to create square mesh");
 				return;
 			}
 			m_Vertices = new float[Vertices.size()];

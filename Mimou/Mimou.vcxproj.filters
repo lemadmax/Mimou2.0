@@ -137,6 +137,7 @@
     <ClInclude Include="Source\Mimou\ECS\Component\ComponentBase.h" />
     <ClInclude Include="Source\Mimou\ECS\System\SystemBase.h" />
     <ClInclude Include="Source\Mimou\ECS\System\StaticMeshSystem.h" />
+    <ClInclude Include="Source\Mimou\Debug\Instrumentor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">

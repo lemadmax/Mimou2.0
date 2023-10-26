@@ -139,6 +139,7 @@ namespace Mimou
 
 	class InstrumentationTimer
 	{
+	public:
 		InstrumentationTimer(const char* Name)
 			: m_Name(Name), m_Stopped(false)
 		{
@@ -182,7 +183,43 @@ namespace Mimou
 		template <size_t N, size_t K>
 		constexpr auto CleanupOutputString(const char(&expr)[N], const char(&remove)[K])
 		{
+			ChangeResult<N> Result = {};
 
+			size_t SrcIndex = 0;
+			size_t DstIndex = 0;
+			while (SrcIndex < N)
+			{
+				size_t MatchIndex = 0;
+				while (MatchIndex < K - 1 && SrcIndex + MatchIndex < N - 1 && expr[SrcIndex + MatchIndex] == remove[MatchIndex])
+					MatchIndex++;
+				if (MatchIndex == K - 1)
+					SrcIndex += MatchIndex;
+				Result.Data[DstIndex++] = expr[SrcIndex] == '"' ? '\'' : expr[SrcIndex];
+				SrcIndex++;
+			}
+			return Result;
 		}
 	}
 }
+
+#define ME_PROFILE 1
+#if ME_PROFILE
+
+#define ME_PROFILE_BEGIN_SESSION(name, filepath) ::Mimou::Instrumentor::Get().BeginSession(name, filepath)
+#define ME_PROFILE_END_SESSION() ::Mimou::Instrumentor::Get().EndSession()
+// constexpr works the same as const, but allows initialization at compile stage
+#define ME_PROFILE_SCOPE_LINE2(name, line) constexpr auto fixedName##line = ::Mimou::InstrumentorUtils::CleanupOutputString(name, "__cdecl ");\
+											::Mimou::InstrumentationTimer timer##line(fixedName##line.Data)
+#define ME_PROFILE_SCOPE_LINE(name, line) ME_PROFILE_SCOPE_LINE2(name, line)
+#define ME_PROFILE_SCOPE(name) ME_PROFILE_SCOPE_LINE(name, __LINE__)
+#define ME_PROFILE_FUNCTION() ME_PROFILE_SCOPE(__FUNCSIG__)
+
+
+#else
+
+#define ME_PROFILE_BEGIN_SESSION(name, filepath)
+#define ME_PROFILE_END_SESSION()
+#define ME_PROFILE_SCOPE(name)
+#define ME_PROFILE_FUNCTION()
+
+#endif
