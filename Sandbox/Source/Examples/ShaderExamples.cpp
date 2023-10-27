@@ -73,11 +73,16 @@ ShaderEgLayer::ShaderEgLayer()
 	GameObjects.push_back(SphereObject2);
 
 	Ref<GameObject> SquareObject = CreateRef<GameObject>();
+
+	Ref<Shader> TextureShader = Shader::Create("Assets/Shaders/Texture.glsl");
+	Ref<Texture> GridTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
+	Ref<Material> TextureMat = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, TextureShader);
+	TextureMat->SetTexture(GridTexture);
 	Ref<StaticMeshComponent> SMComp4 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSquare(2, 0));
-	SMComp4->GetStaticMesh()->SetMaterial(LambertMat);
+	SMComp4->GetStaticMesh()->SetMaterial(TextureMat);
 	SquareObject->AddComponent(SMComp4);
 	SquareObject->m_Transform.SetScale(glm::vec3(100, 100, 1));
-	SquareObject->m_Transform.SetRotation(glm::vec3(0, 0, 0));
+	SquareObject->m_Transform.SetRotation(glm::vec3(-90, 0, 0));
 	SquareObject->m_Transform.SetPosition(glm::vec3(0, 0, 0));
 	GameObjects.push_back(SquareObject);
 }

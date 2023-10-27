@@ -1,214 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Mimou">
-      <UniqueIdentifier>{2CD1AB0D-98E5-D3BE-6167-771ECD3AD0EF}</UniqueIdentifier>
+    <Filter Include="Source">
+      <UniqueIdentifier>{56EB95D1-428D-C0A7-2B48-D4FB178947F8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mimou\Event">
-      <UniqueIdentifier>{7D834C5B-E938-C550-722D-BF27DEE1BB54}</UniqueIdentifier>
+    <Filter Include="Source\Mimou">
+      <UniqueIdentifier>{6CDA79F2-583D-0997-01C3-414DED04D519}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mimou\ImGUI">
-      <UniqueIdentifier>{16738F5B-8228-0851-0B1D-022877D1FE54}</UniqueIdentifier>
+    <Filter Include="Source\Mimou\Debug">
+      <UniqueIdentifier>{E205312D-CEE9-F182-374A-ECD5234DDC04}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mimou\Renderer">
-      <UniqueIdentifier>{5226E366-3EF4-D66C-2788-479313F5B2D1}</UniqueIdentifier>
+    <Filter Include="Source\Mimou\ECS">
+      <UniqueIdentifier>{B62494F7-A21D-B349-CB4F-98CEB7A79255}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mimou\Renderer\OpenGL">
-      <UniqueIdentifier>{463F8FBE-B2AB-4AB9-7B9F-E216E7CA6C21}</UniqueIdentifier>
+    <Filter Include="Source\Mimou\ECS\Component">
+      <UniqueIdentifier>{98D8EBD8-84E8-97A9-EDA1-FCC7D9D08642}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mimou\Utils">
-      <UniqueIdentifier>{8C036D5C-F8B8-E551-81AD-DF28ED61DC55}</UniqueIdentifier>
+    <Filter Include="Source\Mimou\ECS\Entity">
+      <UniqueIdentifier>{4208BE2C-AE3F-06C4-B749-6AE723002DBD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mimou\Utils\FileUtils">
-      <UniqueIdentifier>{ECF2E577-585F-A172-2153-39D08D7EC3DA}</UniqueIdentifier>
+    <Filter Include="Source\Mimou\ECS\System">
+      <UniqueIdentifier>{0AEF2C4E-7626-75E5-7F30-D908EBE69BDE}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mimou\Window">
-      <UniqueIdentifier>{9354F3ED-7FB7-8292-283D-BB48147F4E15}</UniqueIdentifier>
+    <Filter Include="Source\Mimou\Event">
+      <UniqueIdentifier>{BD7C4C2D-A960-0D83-12C1-07D6FEC3F704}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mimou\Window\Windows">
-      <UniqueIdentifier>{CDE1896F-B970-1339-628F-27344EFD23DF}</UniqueIdentifier>
+    <Filter Include="Source\Mimou\ImGUI">
+      <UniqueIdentifier>{566C8F2D-4250-5083-ABB0-4AD697B33A05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Mesh">
+      <UniqueIdentifier>{A8B31DEA-14CA-1B80-5D41-A7A1C996EC07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Renderer">
+      <UniqueIdentifier>{92972FF5-FE03-EBEF-C7F7-824D33230D58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Renderer\Camera">
+      <UniqueIdentifier>{CAB3BEC1-B66E-AE6D-5F26-27B84BC0F8FD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Renderer\Lighting">
+      <UniqueIdentifier>{57CF95D4-43F5-5F3B-2C3B-E50618008507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Renderer\Material">
+      <UniqueIdentifier>{706A2177-5C90-EBDD-45D6-70A9319B10AA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Renderer\OpenGL">
+      <UniqueIdentifier>{86C8C7DE-7283-B78A-1B3B-30D507D5011B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Transform">
+      <UniqueIdentifier>{37A908B3-23A3-3105-0C10-C815F8A89771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Utils">
+      <UniqueIdentifier>{CCFC6C2E-B8E0-2D84-2141-28D70D441806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Utils\FileUtils">
+      <UniqueIdentifier>{2C7C1E98-1837-0E44-C1EE-868EAD8858D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Window">
+      <UniqueIdentifier>{D375F2FF-3FD7-CF0D-C844-16C034A506CD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mimou\Window\Windows">
+      <UniqueIdentifier>{0D43363A-7950-6420-0237-600B6E4330D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors">
+      <UniqueIdentifier>{665268D3-D231-E76E-DB49-724547A84DD0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\stb_image">
+      <UniqueIdentifier>{80BA2187-ECD0-1F1D-3548-AB3EA19DF0A4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Mimou.h" />
+    <ClInclude Include="Source\Mimou.h">
+      <Filter>Source</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Application.h">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Core.h">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Debug\Instrumentor.h">
+      <Filter>Source\Mimou\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\Component\ComponentBase.h">
+      <Filter>Source\Mimou\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\Component\StaticMeshComponent.h">
+      <Filter>Source\Mimou\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h">
+      <Filter>Source\Mimou\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\System\StaticMeshSystem.h">
+      <Filter>Source\Mimou\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\System\SystemBase.h">
+      <Filter>Source\Mimou\ECS\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\EntryPoint.h">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Event\AppEvent.h">
-      <Filter>Mimou\Event</Filter>
+      <Filter>Source\Mimou\Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Event\EventBase.h">
-      <Filter>Mimou\Event</Filter>
+      <Filter>Source\Mimou\Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Event\KeyCodes.h">
-      <Filter>Mimou\Event</Filter>
+      <Filter>Source\Mimou\Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Event\KeyEvent.h">
-      <Filter>Mimou\Event</Filter>
+      <Filter>Source\Mimou\Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Event\MouseButtonCodes.h">
-      <Filter>Mimou\Event</Filter>
+      <Filter>Source\Mimou\Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Event\MouseEvent.h">
-      <Filter>Mimou\Event</Filter>
+      <Filter>Source\Mimou\Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\ImGUI\ImGUILayer.h">
-      <Filter>Mimou\ImGUI</Filter>
+      <Filter>Source\Mimou\ImGUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Input.h">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Layer.h">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\LayerStack.h">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Logging.h">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Mesh\StaticMesh.h">
+      <Filter>Source\Mimou\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\Buffer.h">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.h">
+      <Filter>Source\Mimou\Renderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.h">
+      <Filter>Source\Mimou\Renderer\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\GraphicsContext.h">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\Lighting\Light.h">
+      <Filter>Source\Mimou\Renderer\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\Material\Material.h">
+      <Filter>Source\Mimou\Renderer\Material</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLBuffer.h">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.h">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.h">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.h">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.h">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\RenderCommand.h">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\Renderer.h">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\RendererAPI.h">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\Shader.h">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\Texture.h">
+      <Filter>Source\Mimou\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\VertexArray.h">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Timestep.h">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Transform\Transform.h">
+      <Filter>Source\Mimou\Transform</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Utils\FileUtils\FileHelper.h">
-      <Filter>Mimou\Utils\FileUtils</Filter>
+      <Filter>Source\Mimou\Utils\FileUtils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Window\Window.h">
-      <Filter>Mimou\Window</Filter>
+      <Filter>Source\Mimou\Window</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsInput.h">
-      <Filter>Mimou\Window\Windows</Filter>
+      <Filter>Source\Mimou\Window\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsWindow.h">
-      <Filter>Mimou\Window\Windows</Filter>
+      <Filter>Source\Mimou\Window\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Source\mepch.h" />
-    <ClInclude Include="Source\Mimou\Renderer\Texture.h" />
-    <ClInclude Include="Source\Mimou\Mesh\StaticMesh.h" />
-    <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.h" />
-    <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.h" />
-    <ClInclude Include="Source\Mimou\Renderer\Material\Material.h" />
-    <ClInclude Include="Source\Mimou\Renderer\Lighting\Light.h" />
-    <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h" />
-    <ClInclude Include="Source\Mimou\Transform\Transform.h" />
-    <ClInclude Include="Source\Mimou\ECS\Component\StaticMeshComponent.h" />
-    <ClInclude Include="Source\Mimou\ECS\Component\ComponentBase.h" />
-    <ClInclude Include="Source\Mimou\ECS\System\SystemBase.h" />
-    <ClInclude Include="Source\Mimou\ECS\System\StaticMeshSystem.h" />
-    <ClInclude Include="Source\Mimou\Debug\Instrumentor.h" />
+    <ClInclude Include="Source\mepch.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendors\stb_image\stb_image.h">
+      <Filter>Vendors\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\Component\ComponentBase.cpp">
+      <Filter>Source\Mimou\ECS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\Component\StaticMeshComponent.cpp">
+      <Filter>Source\Mimou\ECS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp">
+      <Filter>Source\Mimou\ECS\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\System\StaticMeshSystem.cpp">
+      <Filter>Source\Mimou\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\System\SystemBase.cpp">
+      <Filter>Source\Mimou\ECS\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\ImGUI\ImGUIBuild.cpp">
-      <Filter>Mimou\ImGUI</Filter>
+      <Filter>Source\Mimou\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\ImGUI\ImGUILayer.cpp">
-      <Filter>Mimou\ImGUI</Filter>
+      <Filter>Source\Mimou\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\LayerStack.cpp">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Logging.cpp">
-      <Filter>Mimou</Filter>
+      <Filter>Source\Mimou</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Mesh\StaticMesh.cpp">
+      <Filter>Source\Mimou\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\Buffer.cpp">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.cpp">
+      <Filter>Source\Mimou\Renderer\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.cpp">
+      <Filter>Source\Mimou\Renderer\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\Lighting\Light.cpp">
+      <Filter>Source\Mimou\Renderer\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\Material\Material.cpp">
+      <Filter>Source\Mimou\Renderer\Material</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLBuffer.cpp">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.cpp">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.cpp">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.cpp">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.cpp">
-      <Filter>Mimou\Renderer\OpenGL</Filter>
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\RenderCommand.cpp">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\Renderer.cpp">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\RendererAPI.cpp">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\Shader.cpp">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\Texture.cpp">
+      <Filter>Source\Mimou\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\VertexArray.cpp">
-      <Filter>Mimou\Renderer</Filter>
+      <Filter>Source\Mimou\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Transform\Transform.cpp">
+      <Filter>Source\Mimou\Transform</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Utils\FileUtils\FileHelper.cpp">
-      <Filter>Mimou\Utils\FileUtils</Filter>
+      <Filter>Source\Mimou\Utils\FileUtils</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsInput.cpp">
-      <Filter>Mimou\Window\Windows</Filter>
+      <Filter>Source\Mimou\Window\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsWindow.cpp">
-      <Filter>Mimou\Window\Windows</Filter>
+      <Filter>Source\Mimou\Window\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="Source\mepch.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\Texture.cpp" />
-    <ClCompile Include="Source\Mimou\Mesh\StaticMesh.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\Material\Material.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\Lighting\Light.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp" />
-    <ClCompile Include="Source\Mimou\Transform\Transform.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\Component\StaticMeshComponent.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\Component\ComponentBase.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\System\SystemBase.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\System\StaticMeshSystem.cpp" />
+    <ClCompile Include="Source\mepch.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendors\stb_image\stb_image.cpp">
+      <Filter>Vendors\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLTexture.cpp" />
   </ItemGroup>
 </Project>

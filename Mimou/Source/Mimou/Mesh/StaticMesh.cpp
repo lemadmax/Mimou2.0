@@ -29,7 +29,7 @@ namespace Mimou
 	// z: the value of the const coordinate
 	std::vector<float> CreateSquareMesh(uint32_t i, uint32_t z)
 	{
-		const uint32_t N = 6;
+		const uint32_t N = 8;
 		std::vector<float> Vertices(4 * N);
 		uint32_t j = z < 0 ? (i + 2) % 3 : (i + 1) % 3; // Right hand rule
 		uint32_t k = z < 0 ? (i + 1) % 3 : (i + 2) % 3;
@@ -42,6 +42,10 @@ namespace Mimou
 		Vertices[i + 3] = Vertices[1 * N + i + 3] = Vertices[2 * N + i + 3] = Vertices[3 * N + i + 3] = z < 0 ? -1 : 1;
 		Vertices[j + 3] = Vertices[1 * N + j + 3] = Vertices[2 * N + j + 3] = Vertices[3 * N + j + 3] = 0;
 		Vertices[k + 3] = Vertices[1 * N + k + 3] = Vertices[2 * N + k + 3] = Vertices[3 * N + k + 3] = 0;
+
+		// Texture coordinates
+		Vertices[N - 1] = Vertices[3 * N - 1] = Vertices[3 * N - 2] = Vertices[4 * N - 2] = 0;
+		Vertices[N - 2] = Vertices[2 * N - 1] = Vertices[2 * N - 2] = Vertices[4 * N - 1] = 1;
 
 		return Vertices;
 	}
@@ -137,7 +141,8 @@ namespace Mimou
 			BufferLayout Layout =
 			{
 				{ "a_Position", ShaderDataType::Float3 },
-				{ "a_Normal", ShaderDataType::Float3 }
+				{ "a_Normal", ShaderDataType::Float3 },
+				{ "a_TexCoord", ShaderDataType::Float2 }
 			};
 			Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(m_Vertices, Cnt * sizeof(float));
 			VertexBuffer->SetLayout(Layout);

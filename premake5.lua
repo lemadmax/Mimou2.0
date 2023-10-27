@@ -13,6 +13,7 @@ IncludeDir = {}
 IncludeDir["Glad"] = "Mimou/Vendors/Glad/include"
 IncludeDir["GLFW"] = "Mimou/Vendors/GLFW/include"
 IncludeDir["ImGUI"] = "Mimou/Vendors/ImGUI"
+IncludeDir["stb_image"] = "Mimou/Vendors/stb_image"
 
 include "Mimou/Vendors/Glad"
 include "Mimou/Vendors/GLFW"
@@ -35,7 +36,9 @@ project "Mimou"
 		"%{prj.name}/Source/**.h",
 		"%{prj.name}/Source/**.cpp",
 		"%{prj.name}/Source/**.hpp",
-		"%{prj.name}/Source/**.c"
+		"%{prj.name}/Source/**.c",
+		"%{prj.name}/Vendors/stb_image/**.h",
+		"%{prj.name}/Vendors/stb_image/**.cpp"
 	}
 
 	defines {
@@ -48,7 +51,8 @@ project "Mimou"
 		"%{prj.name}/Vendors/GLM",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.ImGUI}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links {
@@ -114,7 +118,8 @@ project "Sandbox"
 		"Mimou/Vendors/GLM",
 		"%{IncludeDir.ImGUI}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links {

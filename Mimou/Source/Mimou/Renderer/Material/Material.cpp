@@ -22,6 +22,10 @@ namespace Mimou
 		m_Shader->SetFloat4("u_Specular", m_Specular);
 		m_Shader->SetFloat("u_Transparency", m_Transparency);
 		m_Shader->SetFloat("u_IrradiPerp", 1.0f);
+		if (m_Texture)
+		{
+			m_Texture->Bind();
+		}
 	}
 
 	void Material::ApplyLighting(int index, Ref<Light> Light)

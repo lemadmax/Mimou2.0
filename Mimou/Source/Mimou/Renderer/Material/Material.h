@@ -2,6 +2,7 @@
 #include "Mimou/Renderer/Shader.h"
 
 #include "Mimou/Renderer/Lighting/Light.h"
+#include "Mimou/Renderer/Texture.h"
 
 #include "glm/glm.hpp"
 
@@ -15,6 +16,7 @@ namespace Mimou
 		virtual void Bind();
 		virtual void ApplyLighting(int index, Ref<Light> Light);
 
+		inline void SetTexture(Ref<Texture> Texture) { m_Texture = Texture; }
 		inline void SetAmbient(glm::vec3 Ambient) { m_Ambient = Ambient; }
 		inline void SetDiffuse(glm::vec3 Diffuse) { m_Diffuse = Diffuse; }
 		inline void SetSpecular(glm::vec4 Specular) { m_Specular = Specular; }
@@ -33,5 +35,7 @@ namespace Mimou
 		float m_Transparency;
 
 		Ref<Shader> m_Shader;
+
+		Ref<Texture> m_Texture;
 	};
 }
