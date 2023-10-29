@@ -24,7 +24,7 @@ namespace Mimou
 		m_Shader->SetFloat("u_IrradiPerp", 1.0f);
 		if (m_Texture)
 		{
-			m_Texture->Bind();
+			m_Texture->Bind(); 
 		}
 	}
 

@@ -30,22 +30,29 @@ namespace Mimou
 	std::vector<float> CreateSquareMesh(uint32_t i, uint32_t z)
 	{
 		const uint32_t N = 8;
-		std::vector<float> Vertices(4 * N);
-		uint32_t j = z < 0 ? (i + 2) % 3 : (i + 1) % 3; // Right hand rule
-		uint32_t k = z < 0 ? (i + 1) % 3 : (i + 2) % 3;
+		//std::vector<float> Vertices(4 * N);
+		//uint32_t j = z < 0 ? (i + 2) % 3 : (i + 1) % 3; // Right hand rule
+		//uint32_t k = z < 0 ? (i + 1) % 3 : (i + 2) % 3;
 
-		// (-1, 1) (1, 1) (-1, -1) (1, -1)
-		Vertices[i] = Vertices[1 * N + i] = Vertices[2 * N + i] = Vertices[3 * N + i] = z;
-		Vertices[j] = Vertices[2 * N + j] = Vertices[2 * N + k] = Vertices[3 * N + k] = -1;
-		Vertices[k] = Vertices[1 * N + j] = Vertices[1 * N + k] = Vertices[3 * N + j] = 1;
+		//// (-1, 1) (1, 1) (-1, -1) (1, -1)
+		//Vertices[i] = Vertices[1 * N + i] = Vertices[2 * N + i] = Vertices[3 * N + i] = z;
+		//Vertices[j] = Vertices[2 * N + j] = Vertices[2 * N + k] = Vertices[3 * N + k] = -1;
+		//Vertices[k] = Vertices[1 * N + j] = Vertices[1 * N + k] = Vertices[3 * N + j] = 1;
 
-		Vertices[i + 3] = Vertices[1 * N + i + 3] = Vertices[2 * N + i + 3] = Vertices[3 * N + i + 3] = z < 0 ? -1 : 1;
-		Vertices[j + 3] = Vertices[1 * N + j + 3] = Vertices[2 * N + j + 3] = Vertices[3 * N + j + 3] = 0;
-		Vertices[k + 3] = Vertices[1 * N + k + 3] = Vertices[2 * N + k + 3] = Vertices[3 * N + k + 3] = 0;
+		//Vertices[i + 3] = Vertices[1 * N + i + 3] = Vertices[2 * N + i + 3] = Vertices[3 * N + i + 3] = z < 0 ? -1 : 1;
+		//Vertices[j + 3] = Vertices[1 * N + j + 3] = Vertices[2 * N + j + 3] = Vertices[3 * N + j + 3] = 0;
+		//Vertices[k + 3] = Vertices[1 * N + k + 3] = Vertices[2 * N + k + 3] = Vertices[3 * N + k + 3] = 0;
 
-		// Texture coordinates
-		Vertices[N - 1] = Vertices[3 * N - 1] = Vertices[3 * N - 2] = Vertices[4 * N - 2] = 0;
-		Vertices[N - 2] = Vertices[2 * N - 1] = Vertices[2 * N - 2] = Vertices[4 * N - 1] = 1;
+		//// Texture coordinates
+		//Vertices[N - 1] = Vertices[2 * N - 1] = Vertices[2 * N - 2] = Vertices[3 * N - 2] = 1;
+		//Vertices[N - 2] = Vertices[3 * N - 1] = Vertices[4 * N - 1] = Vertices[4 * N - 2] = 0;
+		std::vector<float> Vertices = {
+			// positions          // colors           // texture coords
+			 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+			 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+			-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+			-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+		};
 
 		return Vertices;
 	}

@@ -82,7 +82,7 @@ ShaderEgLayer::ShaderEgLayer()
 	SMComp4->GetStaticMesh()->SetMaterial(TextureMat);
 	SquareObject->AddComponent(SMComp4);
 	SquareObject->m_Transform.SetScale(glm::vec3(100, 100, 1));
-	SquareObject->m_Transform.SetRotation(glm::vec3(-90, 0, 0));
+	SquareObject->m_Transform.SetRotation(glm::vec3(0, 0, 0));
 	SquareObject->m_Transform.SetPosition(glm::vec3(0, 0, 0));
 	GameObjects.push_back(SquareObject);
 }
