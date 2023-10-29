@@ -3,7 +3,7 @@
 
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec3 a_Normal;
-layout(location = 3) in vec2 a_TexCoord;
+layout(location = 2) in vec2 a_TexCoord;
 
 uniform mat4 u_ViewProjection;
 uniform mat4 u_TransformMatrix;
@@ -67,5 +67,7 @@ void main()
 
     // FragColor = vec4(OutColor, u_Transparency);
     FragColor = texture(u_Texture, v_TexCoord);
+    // FragColor = vec4(v_TexCoord.x, v_TexCoord.y, 0, 1.0);
+    // FragColor = vec4(v_Normal.x, v_Normal.y, v_Normal.z, 1.0);
     // FragColor = vec4(OutColor, u_Transparency) * texture(u_Texture, v_TexCoord);
 }

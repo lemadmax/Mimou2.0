@@ -165,6 +165,9 @@
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.h">
       <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLTexture.h">
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.h">
       <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
@@ -210,7 +213,6 @@
     <ClInclude Include="Vendors\stb_image\stb_image.h">
       <Filter>Vendors\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -273,6 +275,9 @@
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLShader.cpp">
       <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLTexture.cpp">
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLVertexArray.cpp">
       <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
@@ -312,6 +317,5 @@
     <ClCompile Include="Vendors\stb_image\stb_image.cpp">
       <Filter>Vendors\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLTexture.cpp" />
   </ItemGroup>
 </Project>

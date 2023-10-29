@@ -28,6 +28,8 @@ namespace Mimou
 				InternalFormat = GL_RGBA;
 				DataFormat = GL_RGBA;
 			}
+			m_Width = Width;
+			m_Height = Height;
 			m_InternalFormat = InternalFormat;
 			m_DataFormat = DataFormat;
 			glGenTextures(1, &m_RendererID);
@@ -56,6 +58,7 @@ namespace Mimou
 
 	void OpenGLTexture2D::Bind(uint32_t Slot) const
 	{
+		//glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_RendererID);
 	}
 }

@@ -49,7 +49,8 @@ namespace Mimou
 	void OpenGLRendererAPI::DrawArrays(const Ref<VertexArray>& VertexArray)
 	{
 		uint32_t VertexCnt = VertexArray->GetVertexBuffers()[0]->GetSize() / sizeof(float);
-		uint32_t VertexSize = 6;
+		uint32_t VertexSize = VertexArray->GetVertexBuffers()[0]->GetLayout().GetStride() / sizeof(float);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, VertexCnt / VertexSize);
+		//glBindTexture(GL_TEXTURE_2D, 1);
 	}
 }
