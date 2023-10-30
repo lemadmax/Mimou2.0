@@ -61,7 +61,7 @@ namespace Mimou
 	public:
 		static Ref<StaticMesh> CreateSphere(uint32_t NU, uint32_t NV);
 
-		static Ref<StaticMesh> CreateCube(uint32_t NU, uint32_t NV);
+		static Ref<StaticMesh> CreateCube();
 
 		static Ref<StaticMesh> CreateSquare(uint32_t i, uint32_t z);
 	};

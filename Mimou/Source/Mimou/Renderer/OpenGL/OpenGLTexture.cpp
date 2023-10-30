@@ -12,6 +12,7 @@ namespace Mimou
 
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& Path)
 	{
+		stbi_set_flip_vertically_on_load(true);
 		int Width, Height, Channels;
 		unsigned char* Data = stbi_load(Path.c_str(), &Width, &Height, &Channels, 0);
 
@@ -58,7 +59,7 @@ namespace Mimou
 
 	void OpenGLTexture2D::Bind(uint32_t Slot) const
 	{
-		//glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_RendererID);
 	}
 }

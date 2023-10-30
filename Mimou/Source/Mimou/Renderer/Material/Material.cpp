@@ -25,7 +25,7 @@ namespace Mimou
 		if (m_Texture)
 		{
 			m_Texture->Bind(); 
-			m_Shader->SetInt("u_Texture", 1);
+			m_Shader->SetInt("u_Texture", 0);
 		}
 	}
 
