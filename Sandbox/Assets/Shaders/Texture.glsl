@@ -65,9 +65,5 @@ void main()
     }
     OutColor = pow(OutColor, vec3(1.0 / 2.2)); // Gamma correction
 
-    // FragColor = vec4(OutColor, u_Transparency);
-    FragColor = texture(u_Texture, v_TexCoord);
-    // FragColor = vec4(v_TexCoord.x, v_TexCoord.y, 0, 1.0);
-    // FragColor = vec4(v_Normal.x, v_Normal.y, v_Normal.z, 1.0);
-    // FragColor = vec4(OutColor, u_Transparency) * texture(u_Texture, v_TexCoord);
+    FragColor = vec4(OutColor, u_Transparency) * texture(u_Texture, v_TexCoord);
 }

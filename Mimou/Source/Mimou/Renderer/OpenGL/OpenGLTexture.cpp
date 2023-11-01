@@ -21,24 +21,30 @@ namespace Mimou
 			GLenum InternalFormat, DataFormat;
 			if (Channels == 3)
 			{
-				InternalFormat = GL_RGB;
+				InternalFormat = GL_RGB8;
 				DataFormat = GL_RGB;
 			}
 			else if (Channels == 4)
 			{
-				InternalFormat = GL_RGBA;
+				InternalFormat = GL_RGBA8;
 				DataFormat = GL_RGBA;
 			}
 			m_Width = Width;
 			m_Height = Height;
 			m_InternalFormat = InternalFormat;
 			m_DataFormat = DataFormat;
-			glGenTextures(1, &m_RendererID);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, Width, Height, 0, DataFormat, GL_UNSIGNED_BYTE, Data);
+			glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+
+			glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
+
+			glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+			glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, Data);
+
 			glGenerateMipmap(GL_TEXTURE_2D);
 
 			stbi_image_free(Data);
@@ -51,6 +57,7 @@ namespace Mimou
 
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
+		glDeleteTextures(1, &m_RendererID);
 	}
 
 	void OpenGLTexture2D::SetData(void* Data, uint32_t Size)
@@ -59,7 +66,6 @@ namespace Mimou
 
 	void OpenGLTexture2D::Bind(uint32_t Slot) const
 	{
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, m_RendererID);
+		glBindTextureUnit(Slot, m_RendererID);
 	}
 }
