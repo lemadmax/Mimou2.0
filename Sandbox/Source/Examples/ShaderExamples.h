@@ -20,6 +20,9 @@ private:
 	Ref<Shader> SunShader;
 	Ref<VertexArray> SunVertices;
 
+	Ref<VertexArray> EditorGridVA;
+	Ref<Shader> EditorGridShader;
+
 
 	Ref<Shader> SphereShader;
 	Ref<VertexArray> SphereVertices;

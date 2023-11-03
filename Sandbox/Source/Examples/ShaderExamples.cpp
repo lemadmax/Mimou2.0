@@ -95,6 +95,16 @@ ShaderEgLayer::ShaderEgLayer()
 	CubeObject->AddComponent(SMComp5);
 	CubeObject->m_Transform.SetPosition(glm::vec3(0, -4, 0));
 	GameObjects.push_back(CubeObject);
+
+	EditorGridShader = Shader::Create("Assets/Shaders/EditorGrid.glsl"); 
+	EditorGridVA = VertexArray::Create();
+	uint32_t Indices[6] =
+	{
+		0, 1, 2, 1, 2, 3
+	};
+	Ref<IndexBuffer> IndexBuffer;
+	IndexBuffer = IndexBuffer::Create(Indices, 6);
+	EditorGridVA->AddIndexBuffer(IndexBuffer);
 }
 
 ShaderEgLayer::~ShaderEgLayer()
@@ -127,6 +137,8 @@ void ShaderEgLayer::OnUpdate(Timestep Ts)
 	{
 		GameObject->OnUpdate(Ts);
 	}
+
+	Renderer::Submit(EditorGridVA, EditorGridShader);
 
 	Renderer::EndScene();
 }
