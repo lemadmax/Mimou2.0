@@ -32,6 +32,11 @@ namespace Mimou
 			s_RendererAPI->ClearDepth();
 		}
 
+		inline static void EnableBlend()
+		{
+			s_RendererAPI->EnableBlend();
+		}
+
 		inline static void DrawIndexed(const Ref<VertexArray>& VertexArray)
 		{
 			s_RendererAPI->DrawIndexed(VertexArray);

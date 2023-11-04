@@ -13,6 +13,7 @@ ShaderEgLayer::ShaderEgLayer()
 	MovingLight = CreateRef<Light>(glm::vec3(), glm::vec3(0, 180, 0), glm::vec3(0.5, 0.4, 0.4), 1.0f);
 
 	RenderCommand::EnableDepthTest();
+	RenderCommand::EnableBlend();
 	RenderCommand::ClearDepth();
 
 	//SphereShader = Shader::Create("Assets/Shaders/SphereShader.glsl");
@@ -78,11 +79,11 @@ ShaderEgLayer::ShaderEgLayer()
 	Ref<Texture> GridTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
 	Ref<Material> TextureMat = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, TextureShader);
 	TextureMat->SetTexture(GridTexture);
-	Ref<StaticMeshComponent> SMComp4 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSquare(2, 0));
+	Ref<StaticMeshComponent> SMComp4 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSquare(2, 1));
 	SMComp4->GetStaticMesh()->SetMaterial(TextureMat);
 	SquareObject->AddComponent(SMComp4);
 	//SquareObject->m_Transform.SetScale(glm::vec3(100, 100, 1));
-	SquareObject->m_Transform.SetRotation(glm::vec3(-90, 0, 0));
+	SquareObject->m_Transform.SetRotation(glm::vec3(0, 0, 0));
 	SquareObject->m_Transform.SetPosition(glm::vec3(0, -8, 0));
 	GameObjects.push_back(SquareObject);
 
@@ -100,7 +101,7 @@ ShaderEgLayer::ShaderEgLayer()
 	EditorGridVA = VertexArray::Create();
 	uint32_t Indices[6] =
 	{
-		0, 1, 2, 1, 2, 3
+		0, 1, 2, 1, 0, 3
 	};
 	Ref<IndexBuffer> IndexBuffer;
 	IndexBuffer = IndexBuffer::Create(Indices, 6);
@@ -138,7 +139,15 @@ void ShaderEgLayer::OnUpdate(Timestep Ts)
 		GameObject->OnUpdate(Ts);
 	}
 
-	Renderer::Submit(EditorGridVA, EditorGridShader);
+	//Renderer::Submit(EditorGridVA, EditorGridShader);
+	EditorGridShader->Bind();
+	EditorGridShader->SetMat4("u_ViewProjection", m_CameraController.GetCamera().GetViewProjectionMatrix());
+	EditorGridShader->SetMat4("u_ViewMat", m_CameraController.GetCamera().GetViewMatrix());
+	EditorGridShader->SetMat4("u_ProjMat", m_CameraController.GetCamera().GetProjectionMatrix());
+	//EditorGridShader->SetMat4("u_TransformMatrix", Transfrom);
+	EditorGridVA->Bind();
+
+	RenderCommand::DrawIndexed(EditorGridVA);
 
 	Renderer::EndScene();
 }

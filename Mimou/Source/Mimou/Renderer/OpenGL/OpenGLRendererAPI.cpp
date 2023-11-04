@@ -40,6 +40,12 @@ namespace Mimou
 		glClearDepth(1);
 	}
 
+	void OpenGLRendererAPI::EnableBlend()
+	{
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+	}
+
 	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& VertexArray)
 	{
 		glDrawElements(GL_TRIANGLES, VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
