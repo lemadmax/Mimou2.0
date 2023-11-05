@@ -144,6 +144,8 @@ void ShaderEgLayer::OnUpdate(Timestep Ts)
 	EditorGridShader->SetMat4("u_ViewProjection", m_CameraController.GetCamera().GetViewProjectionMatrix());
 	EditorGridShader->SetMat4("u_ViewMat", m_CameraController.GetCamera().GetViewMatrix());
 	EditorGridShader->SetMat4("u_ProjMat", m_CameraController.GetCamera().GetProjectionMatrix());
+	EditorGridShader->SetFloat("u_zNear", m_CameraController.GetZNear());
+	EditorGridShader->SetFloat("u_zFar", m_CameraController.GetZFar());
 	//EditorGridShader->SetMat4("u_TransformMatrix", Transfrom);
 	EditorGridVA->Bind();
 
