@@ -102,17 +102,28 @@ void EditorLayer::OnImGUIRender()
 		ImGui::SetNextWindowPos(Viewport->Pos);
 		ImGui::SetNextWindowSize(Viewport->Size);
 		ImGui::SetNextWindowViewport(Viewport->ID);
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 5.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 		WindowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-		//WindowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		WindowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 	}
 
-	//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	if (DockspaceFlags & ImGuiDockNodeFlags_PassthruCentralNode)
+		WindowFlags |= ImGuiWindowFlags_NoBackground;
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("Mimou Editor", &DockspaceOpen, WindowFlags);
-	//ImGui::PopStyleVar();
+	ImGui::PopStyleVar();
 
 	if (OptFullScreen)
-		ImGui::PopStyleVar();
+		ImGui::PopStyleVar(2);
+
+	ImGuiIO& IO = ImGui::GetIO();
+	if (IO.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+	{
+		ImGuiID DockspaceID = ImGui::GetID("MimouDockspace");
+		ImGui::DockSpace(DockspaceID, ImVec2(0.0f, 0.0f), DockspaceFlags);
+	}
 
 	ImGui::ShowDemoWindow();
 	ImGui::End();
