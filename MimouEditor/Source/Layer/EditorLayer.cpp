@@ -98,6 +98,11 @@ void EditorLayer::OnImGUIRender()
 	ImGuiWindowFlags WindowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 	if (OptFullScreen)
 	{
+		ImGuiViewport* Viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(Viewport->Pos);
+		ImGui::SetNextWindowSize(Viewport->Size);
+		ImGui::SetNextWindowViewport(Viewport->ID);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 5.0f);
 		WindowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 		//WindowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 	}
@@ -105,6 +110,10 @@ void EditorLayer::OnImGUIRender()
 	//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("Mimou Editor", &DockspaceOpen, WindowFlags);
 	//ImGui::PopStyleVar();
+
+	if (OptFullScreen)
+		ImGui::PopStyleVar();
+
 	ImGui::ShowDemoWindow();
 	ImGui::End();
 }
