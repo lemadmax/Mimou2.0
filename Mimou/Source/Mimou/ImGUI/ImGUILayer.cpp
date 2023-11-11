@@ -55,14 +55,6 @@ namespace Mimou
 
 	void ImGUILayer::OnImGUIRender()
 	{
-		ImGui::ShowDemoWindow();
-		ImGui::Begin("DemoWindow");
-		float color[3] =
-		{
-			1.0f, 0.0f, 0.0f
-		};
-		ImGui::ColorPicker3("Color picker test", color);
-		ImGui::End();
 	}
 
 	void ImGUILayer::Begin()

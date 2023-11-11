@@ -13,12 +13,18 @@ namespace Mimou
 
 	Application::Application()
 	{
+		Application("Mimou Engine");
+	}
+
+	Application::Application(const std::string& AppName)
+		: m_AppName(AppName)
+	{
 		ME_ASSERT(!s_Instance, "Application already exists");
 		s_Instance = this;
 
 		bIsRunning = true;
 
-		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window = Scope<Window>(Window::Create({ AppName, 1280, 720 }));
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 		m_Window->SetVSync(1);
 
@@ -50,22 +56,13 @@ namespace Mimou
 			}
 			m_ImGUILayer->End();
 			m_Window->OnUpdate();
-
-			//if (Input::IsKeyPressed(ME_KEY_A))
-			//{
-			//	ME_LOG("KeyPressed: A");
-			//}
-			//if (Input::IsMouseButtonPressed(0))
-			//{
-			//	ME_LOG("MousePressed: Left");
-			//}
-			//if (Input::IsMouseButtonPressed(1))
-			//{
-			//	ME_LOG("MousePressed: Right");
-			//	std::pair<float, float> MousePosition = Input::GetMousePosition();
-			//	ME_LOG("MousePosition: ({},{})", MousePosition.first, MousePosition.second);
-			//}
 		}
+	}
+
+	void Application::Close()
+	{
+		ME_ENGINE_LOG("Engine close");
+		bIsRunning = false;
 	}
 
 	void Application::PushLayer(Layer* Layer)

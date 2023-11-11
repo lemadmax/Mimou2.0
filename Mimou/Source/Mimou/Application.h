@@ -12,9 +12,12 @@ namespace Mimou
 	{
 	public:
 		Application();
+		Application(const std::string& AppName);
 		virtual ~Application();
 
 		void Run();
+
+		void Close();
 
 	public:
 		inline static Application* GetInstance() { return s_Instance; }
@@ -39,6 +42,7 @@ namespace Mimou
 		bool OnWindowMoved(WindowMoveEvent& Event);
 
 	private:
+		std::string m_AppName;
 		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
 
