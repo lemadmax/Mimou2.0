@@ -15,7 +15,8 @@ public:
 	virtual void OnEvent(EventBase& Event) override;
 
 private:
-	void ShowMenebar();
+	void ShowMenuBar();
+	void ShowViewport();
 
 private:
 	float uTime = 0.0f;
@@ -34,4 +35,7 @@ private:
 	std::vector<Ref<GameObject>> GameObjects;
 
 	PerspectiveCameraController m_CameraController;
+
+	glm::vec2 m_ViewportSize;
+	Ref<Texture> m_TestTexture;
 };

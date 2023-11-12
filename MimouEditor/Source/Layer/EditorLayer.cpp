@@ -18,6 +18,8 @@ EditorLayer::EditorLayer()
 	RenderCommand::EnableBlend();
 	RenderCommand::ClearDepth();
 
+	m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
+
 	Ref<Shader> TextureShader = Shader::Create("Assets/Shaders/Texture.glsl");
 
 	Ref<GameObject> CubeObject = CreateRef<GameObject>();
@@ -125,6 +127,9 @@ void EditorLayer::OnImGUIRender()
 		ImGui::DockSpace(DockspaceID, ImVec2(0.0f, 0.0f), DockspaceFlags);
 	}
 
+	ShowMenuBar();
+	ShowViewport();
+
 	ImGui::ShowDemoWindow();
 	ImGui::End();
 }
@@ -134,7 +139,7 @@ void EditorLayer::OnEvent(EventBase& Event)
 	m_CameraController.OnEvent(Event);
 }
 
-void EditorLayer::ShowMenebar()
+void EditorLayer::ShowMenuBar()
 {
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -219,4 +224,14 @@ void EditorLayer::ShowMenebar()
 		}
 		ImGui::EndMainMenuBar();
 	}
+}
+
+void EditorLayer::ShowViewport()
+{
+	ImGui::Begin("Viewport");
+
+	ImVec2 ViewportPanelSize = ImGui::GetContentRegionAvail();
+	m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
+	ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::End();
 }

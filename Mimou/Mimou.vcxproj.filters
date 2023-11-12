@@ -213,6 +213,8 @@
     <ClInclude Include="Vendors\stb_image\stb_image.h">
       <Filter>Vendors\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\FrameBuffer.h" />
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -317,5 +319,7 @@
     <ClCompile Include="Vendors\stb_image\stb_image.cpp">
       <Filter>Vendors\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\FrameBuffer.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
 </Project>
