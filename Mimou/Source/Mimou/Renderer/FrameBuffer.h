@@ -18,6 +18,8 @@ namespace Mimou
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
 
+		virtual uint32_t GetColorAttachmentTexID() const = 0;
+
 		static Ref<FrameBuffer> Create(const FrameBufferSpecification& Spec);
 	};
 }

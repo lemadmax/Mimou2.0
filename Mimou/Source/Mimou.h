@@ -12,6 +12,7 @@
 #include "Mimou/Renderer/Camera/PerspectiveCameraController.h"
 #include "Mimou/Renderer/Material/Material.h"
 #include "Mimou/Renderer/Lighting/Light.h"
+#include "Mimou/Renderer/FrameBuffer.h"
 #include "Mimou/Mesh/StaticMesh.h"
 #include "Mimou/ECS/Component/StaticMeshComponent.h"
 

@@ -41,6 +41,7 @@ EditorLayer::EditorLayer()
 	Ref<IndexBuffer> IndexBuffer;
 	IndexBuffer = IndexBuffer::Create(Indices, 6);
 	EditorGridVA->AddIndexBuffer(IndexBuffer);
+
 }
 
 EditorLayer::~EditorLayer()
@@ -53,6 +54,7 @@ void EditorLayer::OnUpdate(Timestep Ts)
 
 	Renderer::BeginScene(m_CameraController.GetCamera());
 
+	m_FrameBuffer->Bind();
 	RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 	RenderCommand::Clear();
 
@@ -78,10 +80,15 @@ void EditorLayer::OnUpdate(Timestep Ts)
 	RenderCommand::DrawIndexed(EditorGridVA);
 
 	Renderer::EndScene();
+
+	m_FrameBuffer->UnBind();
 }
 
 void EditorLayer::OnAttach()
 {
+	uint32_t Width = Application::GetInstance()->GetWindow().GetWidth();
+	uint32_t Height = Application::GetInstance()->GetWindow().GetHeight();
+	m_FrameBuffer = FrameBuffer::Create({ Width , Height });
 }
 
 void EditorLayer::OnDetach()
@@ -232,6 +239,7 @@ void EditorLayer::ShowViewport()
 
 	ImVec2 ViewportPanelSize = ImGui::GetContentRegionAvail();
 	m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
-	ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetColorAttachmentTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+	//ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::End();
 }

@@ -21,6 +21,8 @@ private:
 private:
 	float uTime = 0.0f;
 
+	Ref<FrameBuffer> m_FrameBuffer;
+
 	Ref<VertexArray> EditorGridVA;
 	Ref<Shader> EditorGridShader;
 
