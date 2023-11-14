@@ -54,7 +54,16 @@ void EditorLayer::OnUpdate(Timestep Ts)
 
 	Renderer::BeginScene(m_CameraController.GetCamera());
 
+	if (m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f)
+	{
+		float AspectRatio = m_ViewportSize.x / m_ViewportSize.y;
+		if (AspectRatio != m_CameraController.GetAspect())
+		{
+			m_CameraController.SetAspect(AspectRatio);
+		}
+	}
 	m_FrameBuffer->Bind();
+	m_FrameBuffer->OnUpdate(m_ViewportSize.x, m_ViewportSize.y);
 	RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 	RenderCommand::Clear();
 

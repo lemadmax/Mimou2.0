@@ -20,6 +20,9 @@ namespace Mimou
 
 		virtual uint32_t GetColorAttachmentTexID() const = 0;
 
+		virtual void OnUpdate(uint32_t Width, uint32_t Height) = 0;
+		virtual void Resize(uint32_t Width, uint32_t Height) = 0;
+
 		static Ref<FrameBuffer> Create(const FrameBufferSpecification& Spec);
 	};
 }

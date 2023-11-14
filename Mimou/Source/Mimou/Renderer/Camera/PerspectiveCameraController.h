@@ -28,6 +28,7 @@ namespace Mimou
 		const PerspectiveCamera& GetCamera() const { return m_PerspectiveCamera; }
 		float GetZNear() const { return m_zNear; }
 		float GetZFar() const { return m_zFar; }
+		float GetAspect() const { return m_Aspect; }
 
 	private:
 		bool OnMouseScrolled(MouseScrollEvent& Event);
