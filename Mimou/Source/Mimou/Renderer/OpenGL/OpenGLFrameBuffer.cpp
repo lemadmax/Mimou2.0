@@ -67,6 +67,13 @@ namespace Mimou
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorAttachmentTex, 0);
+
+		glGenTextures(1, &m_DepthStencilAttachTex);
+		glBindTexture(GL_TEXTURE_2D, m_DepthStencilAttachTex);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, m_Spec.Width, m_Spec.Height, 0, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_DepthStencilAttachTex, 0);
 	}
 
 	void OpenGLFrameBuffer::ResizeInternal(uint32_t Width, uint32_t Height)

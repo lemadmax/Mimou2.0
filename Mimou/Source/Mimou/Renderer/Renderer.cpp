@@ -18,6 +18,7 @@ namespace Mimou
 
 	void Renderer::BeginScene(PerspectiveCamera& Camera)
 	{
+		//RenderCommand::ClearDepth();
 		m_SceneData->ViewProjectionMatrix = Camera.GetViewProjectionMatrix();
 	}
 

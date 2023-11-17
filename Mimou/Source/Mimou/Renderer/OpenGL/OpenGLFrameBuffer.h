@@ -25,6 +25,7 @@ namespace Mimou
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_ColorAttachmentTex;
+		uint32_t m_DepthStencilAttachTex;
 
 		FrameBufferSpecification m_Spec;
 	};
