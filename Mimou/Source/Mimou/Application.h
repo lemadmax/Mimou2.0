@@ -28,6 +28,8 @@ namespace Mimou
 
 		void PushOverlay(Layer* Overlay);
 
+		ImGUILayer* GetImGuiLayer() const { return m_ImGUILayer; }
+
 	private:
 
 		void OnEvent(EventBase& Event);

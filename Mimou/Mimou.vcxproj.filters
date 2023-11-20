@@ -144,6 +144,9 @@
     <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.h">
       <Filter>Source\Mimou\Renderer\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\FrameBuffer.h">
+      <Filter>Source\Mimou\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\GraphicsContext.h">
       <Filter>Source\Mimou\Renderer</Filter>
     </ClInclude>
@@ -157,6 +160,9 @@
       <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.h">
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLFrameBuffer.h">
       <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.h">
@@ -213,8 +219,6 @@
     <ClInclude Include="Vendors\stb_image\stb_image.h">
       <Filter>Vendors\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mimou\Renderer\FrameBuffer.h" />
-    <ClInclude Include="Source\Mimou\Renderer\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -259,6 +263,9 @@
     <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.cpp">
       <Filter>Source\Mimou\Renderer\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\FrameBuffer.cpp">
+      <Filter>Source\Mimou\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\Lighting\Light.cpp">
       <Filter>Source\Mimou\Renderer\Lighting</Filter>
     </ClCompile>
@@ -269,6 +276,9 @@
       <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLContext.cpp">
+      <Filter>Source\Mimou\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLFrameBuffer.cpp">
       <Filter>Source\Mimou\Renderer\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLRendererAPI.cpp">
@@ -319,7 +329,5 @@
     <ClCompile Include="Vendors\stb_image\stb_image.cpp">
       <Filter>Vendors\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mimou\Renderer\FrameBuffer.cpp" />
-    <ClCompile Include="Source\Mimou\Renderer\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
 </Project>

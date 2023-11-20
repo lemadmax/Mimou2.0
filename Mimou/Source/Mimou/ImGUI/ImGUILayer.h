@@ -19,8 +19,10 @@ namespace Mimou
 
 		void Begin();
 		void End();
+
+		void BlockEvents(bool IsBlock) { m_BlockEvent = IsBlock; }
 	private:
 		float m_Time = 0.f;
-		bool m_EventBlocked = false;
+		bool m_BlockEvent = true;
 	};
 }

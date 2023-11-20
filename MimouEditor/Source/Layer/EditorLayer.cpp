@@ -145,6 +145,7 @@ void EditorLayer::OnImGUIRender()
 
 	ShowMenuBar();
 	ShowViewport();
+	ShowSettingPanel();
 
 	ImGui::ShowDemoWindow();
 	ImGui::End();
@@ -244,11 +245,29 @@ void EditorLayer::ShowMenuBar()
 
 void EditorLayer::ShowViewport()
 {
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 	ImGui::Begin("Viewport");
 
+	m_IsViewportFocused = ImGui::IsWindowFocused();
+	m_IsViewportHovered = ImGui::IsWindowHovered();
+
+	Application::GetInstance()->GetImGuiLayer()->BlockEvents(!m_IsViewportHovered);
+	Input::EnableInput(m_IsViewportHovered);
+	
 	ImVec2 ViewportPanelSize = ImGui::GetContentRegionAvail();
 	m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
 	ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetColorAttachmentTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 	//ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::End();
+	ImGui::PopStyleVar();
+}
+
+void EditorLayer::ShowSettingPanel()
+{
+	bool IsPOpen = false;
+	ImGui::Begin("Setting" , &IsPOpen, ImGuiWindowFlags_HorizontalScrollbar);
+
+	ImGui::ColorEdit3("Test Color section", TmpColor, ImGuiColorEditFlags_InputRGB);
+	
 	ImGui::End();
 }

@@ -17,6 +17,7 @@ public:
 private:
 	void ShowMenuBar();
 	void ShowViewport();
+	void ShowSettingPanel();
 
 private:
 	float uTime = 0.0f;
@@ -38,6 +39,12 @@ private:
 
 	PerspectiveCameraController m_CameraController;
 
+	bool m_IsViewportFocused;
+	bool m_IsViewportHovered;
 	glm::vec2 m_ViewportSize;
 	Ref<Texture> m_TestTexture;
+
+private:
+	// temporary variables
+	float TmpColor[3];
 };

@@ -4,6 +4,7 @@
 #include "Mimou/Logging.h"
 #include "Mimou/Layer.h"
 #include "Mimou/ImGUI/ImGUILayer.h"
+#include "Mimou/Input.h"
 #include "Mimou/Timestep.h"
 #include "Mimou/Renderer/RenderCommand.h"
 #include "Mimou/Renderer/VertexArray.h"

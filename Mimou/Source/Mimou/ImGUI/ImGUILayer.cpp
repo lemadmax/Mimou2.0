@@ -45,7 +45,7 @@ namespace Mimou
 
 	void ImGUILayer::OnEvent(EventBase& Event)
 	{
-		if (!m_EventBlocked)
+		if (m_BlockEvent)
 		{
 			ImGuiIO& IO = ImGui::GetIO();
 			Event.bHandled |= Event.IsInCategory(EventCategoryMouse) & IO.WantCaptureMouse;
