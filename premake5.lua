@@ -14,6 +14,7 @@ IncludeDir["Glad"] = "Mimou/Vendors/Glad/include"
 IncludeDir["GLFW"] = "Mimou/Vendors/GLFW/include"
 IncludeDir["ImGUI"] = "Mimou/Vendors/ImGUI"
 IncludeDir["stb_image"] = "Mimou/Vendors/stb_image"
+IncludeDir["EnTT"] = "Mimou/Vendors/EnTT/single_include"
 
 include "Mimou/Vendors/Glad"
 include "Mimou/Vendors/GLFW"
@@ -52,7 +53,8 @@ project "Mimou"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.ImGUI}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.EnTT}",
 	}
 
 	links {
@@ -119,7 +121,8 @@ includedirs {
 	"%{IncludeDir.ImGUI}",
 	"%{IncludeDir.Glad}",
 	"%{IncludeDir.GLFW}",
-	"%{IncludeDir.stb_image}"
+	"%{IncludeDir.stb_image}",
+	"%{IncludeDir.EnTT}",
 }
 
 links {
@@ -178,7 +181,8 @@ project "MimouEditor"
 		"%{IncludeDir.ImGUI}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.EnTT}",
 	}
 
 	links {
