@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\EnTT\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -102,7 +102,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\EnTT\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -127,7 +127,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\EnTT\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -151,6 +151,7 @@
     <ClInclude Include="Source\Mimou\Application.h" />
     <ClInclude Include="Source\Mimou\Core.h" />
     <ClInclude Include="Source\Mimou\Debug\Instrumentor.h" />
+    <ClInclude Include="Source\Mimou\ECS\Component\BasicComponents.h" />
     <ClInclude Include="Source\Mimou\ECS\Component\ComponentBase.h" />
     <ClInclude Include="Source\Mimou\ECS\Component\StaticMeshComponent.h" />
     <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h" />
