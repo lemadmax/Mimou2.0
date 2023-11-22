@@ -12,7 +12,7 @@ EditorLayer::EditorLayer()
 	DirectionalLight = CreateRef<Light>(glm::vec3(), glm::vec3(45.0, 135.0, 0), glm::vec3(0.7, 0.6, 0.6), 1.0f);
 	MovingLight = CreateRef<Light>(glm::vec3(), glm::vec3(0, 180, 0), glm::vec3(0.5, 0.4, 0.4), 1.0f);
 	Renderer::AddLight(DirectionalLight);
-	Renderer::AddLight(MovingLight);
+	//Renderer::AddLight(MovingLight);
 
 	RenderCommand::EnableDepthTest();
 	RenderCommand::EnableBlend();
@@ -22,15 +22,15 @@ EditorLayer::EditorLayer()
 
 	Ref<Shader> TextureShader = Shader::Create("Assets/Shaders/Texture.glsl");
 
-	Ref<GameObject> CubeObject = CreateRef<GameObject>();
-	Ref<Texture> GridTexture1 = Texture2D::Create("Assets/Textures/duxin.jpg");
-	Ref<Material> TextureMat1 = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, TextureShader);
-	TextureMat1->SetTexture(GridTexture1);
-	Ref<StaticMeshComponent> SMComp5 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateCube());
-	SMComp5->GetStaticMesh()->SetMaterial(TextureMat1);
-	CubeObject->AddComponent(SMComp5);
-	CubeObject->m_Transform.SetPosition(glm::vec3(0, 3, 0));
-	GameObjects.push_back(CubeObject);
+	//Ref<GameObject> CubeObject = CreateRef<GameObject>();
+	//Ref<Texture> GridTexture1 = Texture2D::Create("Assets/Textures/duxin.jpg");
+	//Ref<Material> TextureMat1 = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, TextureShader);
+	//TextureMat1->SetTexture(GridTexture1);
+	//Ref<StaticMeshComponent> SMComp5 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateCube());
+	//SMComp5->GetStaticMesh()->SetMaterial(TextureMat1);
+	//CubeObject->AddComponent(SMComp5);
+	//CubeObject->m_Transform.SetPosition(glm::vec3(0, 3, 0));
+	//GameObjects.push_back(CubeObject);
 
 	EditorGridShader = Shader::Create("Assets/Shaders/EditorGrid.glsl"); 
 	EditorGridVA = VertexArray::Create();
@@ -67,16 +67,16 @@ void EditorLayer::OnUpdate(Timestep Ts)
 	RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 	RenderCommand::Clear();
 
-	MovingLight->m_Transform.SetYaw(MovingLight->m_Transform.GetYaw() + Ts.GetSecond() * 100);
+	//MovingLight->m_Transform.SetYaw(MovingLight->m_Transform.GetYaw() + Ts.GetSecond() * 100);
 
-	GameObjects[0]->m_Transform.SetRotation(glm::vec3(0.0f, 50.0f * uTime, 0.0f));
+	//GameObjects[0]->m_Transform.SetRotation(glm::vec3(0.0f, 50.0f * uTime, 0.0f));
 
 	uTime += Ts;
 
-	for (Ref<GameObject> GameObject : GameObjects)
-	{
-		GameObject->OnUpdate(Ts);
-	}
+	//for (Ref<GameObject> GameObject : GameObjects)
+	//{
+	//	GameObject->OnUpdate(Ts);
+	//}
 
 	EditorGridShader->Bind();
 	EditorGridShader->SetMat4("u_ViewProjection", m_CameraController.GetCamera().GetViewProjectionMatrix());

@@ -31,7 +31,7 @@ private:
 	Ref<Light> DirectionalLight;
 	Ref<Light> MovingLight;
 
-	std::vector<Ref<GameObject>> GameObjects;
+	//std::vector<Ref<GameObject>> GameObjects;
 
 	PerspectiveCameraController m_CameraController;
 };

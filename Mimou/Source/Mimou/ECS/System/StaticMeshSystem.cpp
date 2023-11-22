@@ -17,10 +17,10 @@ namespace Mimou
 
 	void StaticMeshSystem::React(GameObject* Entity)
 	{
-		Transform WorldTransform = Entity->GetWorldTransform();
-		Ref<StaticMeshComponent> Comp = static_pointer_cast<StaticMeshComponent>(Entity->GetComponentByName("Static Mesh"));
-		Ref<StaticMesh> StaticMesh = Comp->GetStaticMesh();
-		Renderer::SubmitArrays(StaticMesh->GetVertexArray(), StaticMesh->GetMaterial(), WorldTransform.GetTransformMatrix());
+		//Transform WorldTransform = Entity->GetWorldTransform();
+		//Ref<StaticMeshComponent> Comp = static_pointer_cast<StaticMeshComponent>(Entity->GetComponentByName("Static Mesh"));
+		//Ref<StaticMesh> StaticMesh = Comp->GetStaticMesh();
+		//Renderer::SubmitArrays(StaticMesh->GetVertexArray(), StaticMesh->GetMaterial(), WorldTransform.GetTransformMatrix());
 	}
 
 	StaticMeshSystem::StaticMeshSystem()

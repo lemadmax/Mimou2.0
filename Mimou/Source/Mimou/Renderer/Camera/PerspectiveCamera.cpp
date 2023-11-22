@@ -11,13 +11,13 @@ namespace Mimou
 	}
 
 	PerspectiveCamera::PerspectiveCamera(float FOV, float Aspect, const glm::vec3& Position, const glm::vec3& Rotation)
-		: m_FOV(FOV), m_Aspect(Aspect), GameObject(Transform(Position, Rotation, glm::vec3(1.0)))
+		: m_FOV(FOV), m_Aspect(Aspect)
 	{
 		m_ProjectionMatrix = glm::perspective<float>(FOV, Aspect, 0.1f, 100.0f);
 	}
 
 	PerspectiveCamera::PerspectiveCamera(float FOV, float Aspect, const Transform& Transform)
-		: m_FOV(FOV), m_Aspect(Aspect), GameObject(Transform)
+		: m_FOV(FOV), m_Aspect(Aspect)
 	{
 		m_ProjectionMatrix = glm::perspective<float>(FOV, Aspect, 0.1f, 100.0f);
 	}
@@ -29,8 +29,8 @@ namespace Mimou
 
 	const glm::mat4& PerspectiveCamera::GetViewMatrix()
 	{
-		glm::mat4 TransformMatrix = m_Transform.GetTransformMatrix();
-		m_ViewMatrix = glm::inverse(TransformMatrix);
+		//glm::mat4 TransformMatrix = m_Transform.GetTransformMatrix();
+		//m_ViewMatrix = glm::inverse(TransformMatrix);
 		return m_ViewMatrix;
 	}
 

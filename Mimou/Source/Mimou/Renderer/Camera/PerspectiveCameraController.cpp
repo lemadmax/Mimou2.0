@@ -38,77 +38,77 @@ namespace Mimou
 		//CameraPos = glm::vec3(5.0 * glm::sin(TestTime), 0.0f, 5.0 * glm::cos(TestTime));
 		////ME_LOG("Camera Position: ({},{},{})", CameraPos.x, CameraPos.y, CameraPos.z);
 		//m_PerspectiveCamera.SetPosition(CameraPos);
-		float ActualMoveSpeed = MoveSpeed;
-		if (Input::IsKeyPressed(Key::LeftShift))
-		{
-			ActualMoveSpeed = MoveSpeed * 5;
-		}
-		if (Input::IsKeyPressed(Key::A))
-		{
-			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
-			glm::vec3 CameraLeft = m_PerspectiveCamera.m_Transform.GetLeft();
-			CameraPos -= ActualMoveSpeed * Ts.GetSecond() * CameraLeft;
-			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
-		}
-		if (Input::IsKeyPressed(Key::D))
-		{
-			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
-			glm::vec3 CameraLeft = m_PerspectiveCamera.m_Transform.GetLeft();
-			CameraPos += ActualMoveSpeed * Ts.GetSecond() * CameraLeft;
-			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
-		}
-		if (Input::IsKeyPressed(Key::W))
-		{
-			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
-			glm::vec3 Forward = m_PerspectiveCamera.m_Transform.GetForward();
-			CameraPos -= ActualMoveSpeed * Ts.GetSecond() * Forward;
-			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
-		}
-		if (Input::IsKeyPressed(Key::S))
-		{
-			glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
-			glm::vec3 Forward = m_PerspectiveCamera.m_Transform.GetForward();
-			CameraPos += ActualMoveSpeed * Ts.GetSecond() * Forward;
-			m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
-		}
-		if (Input::IsMouseButtonPressed(Mouse::LeftButton))
-		{
-			std::pair<float, float> CurMousePosition = Input::GetMousePosition();
-			if (!bIsMousePressMoving)
-			{
-				bIsMousePressMoving = true;
-			}
-			else
-			{
-				if (CurMousePosition != MousePosition)
-				{
-					float OffsetX = CurMousePosition.first - MousePosition.first;
-					float OffsetY = CurMousePosition.second - MousePosition.second;
-					float CameraPitch = m_PerspectiveCamera.m_Transform.GetPitch();
-					float CameraYaw = m_PerspectiveCamera.m_Transform.GetYaw();
-					CameraPitch -= OffsetY * RotateSpeed * Ts.GetSecond();
-					CameraYaw -= OffsetX * RotateSpeed * Ts.GetSecond();
-					m_PerspectiveCamera.m_Transform.SetPitch(CameraPitch);
-					m_PerspectiveCamera.m_Transform.SetYaw(CameraYaw);
-					//ME_ENGINE_LOG("Mouse press moving ({},{})", OffsetX, OffsetY);
-					glm::vec3 CameraRot = m_PerspectiveCamera.m_Transform.Rotation();
-					//ME_ENGINE_LOG("Camera rotation: ({},{},{})", CameraRot.x, CameraRot.y, CameraRot.z);
-				}
-			}
-			MousePosition = CurMousePosition;
-			//ME_ENGINE_LOG("Left mouse button pressed");
-		}
-		else
-		{
-			bIsMousePressMoving = false;
-		}
-		if (Input::IsMouseButtonPressed(Mouse::RightButton))
-		{
-			m_PerspectiveCamera.m_Transform.DebugPrint();
-		}
-		if (Input::IsMouseButtonReleased(Mouse::RightButton))
-		{
-		}
+		//float ActualMoveSpeed = MoveSpeed;
+		//if (Input::IsKeyPressed(Key::LeftShift))
+		//{
+		//	ActualMoveSpeed = MoveSpeed * 5;
+		//}
+		//if (Input::IsKeyPressed(Key::A))
+		//{
+		//	glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
+		//	glm::vec3 CameraLeft = m_PerspectiveCamera.m_Transform.GetLeft();
+		//	CameraPos -= ActualMoveSpeed * Ts.GetSecond() * CameraLeft;
+		//	m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
+		//}
+		//if (Input::IsKeyPressed(Key::D))
+		//{
+		//	glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
+		//	glm::vec3 CameraLeft = m_PerspectiveCamera.m_Transform.GetLeft();
+		//	CameraPos += ActualMoveSpeed * Ts.GetSecond() * CameraLeft;
+		//	m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
+		//}
+		//if (Input::IsKeyPressed(Key::W))
+		//{
+		//	glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
+		//	glm::vec3 Forward = m_PerspectiveCamera.m_Transform.GetForward();
+		//	CameraPos -= ActualMoveSpeed * Ts.GetSecond() * Forward;
+		//	m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
+		//}
+		//if (Input::IsKeyPressed(Key::S))
+		//{
+		//	glm::vec3 CameraPos = m_PerspectiveCamera.m_Transform.Position();
+		//	glm::vec3 Forward = m_PerspectiveCamera.m_Transform.GetForward();
+		//	CameraPos += ActualMoveSpeed * Ts.GetSecond() * Forward;
+		//	m_PerspectiveCamera.m_Transform.SetPosition(CameraPos);
+		//}
+		//if (Input::IsMouseButtonPressed(Mouse::LeftButton))
+		//{
+		//	std::pair<float, float> CurMousePosition = Input::GetMousePosition();
+		//	if (!bIsMousePressMoving)
+		//	{
+		//		bIsMousePressMoving = true;
+		//	}
+		//	else
+		//	{
+		//		if (CurMousePosition != MousePosition)
+		//		{
+		//			float OffsetX = CurMousePosition.first - MousePosition.first;
+		//			float OffsetY = CurMousePosition.second - MousePosition.second;
+		//			float CameraPitch = m_PerspectiveCamera.m_Transform.GetPitch();
+		//			float CameraYaw = m_PerspectiveCamera.m_Transform.GetYaw();
+		//			CameraPitch -= OffsetY * RotateSpeed * Ts.GetSecond();
+		//			CameraYaw -= OffsetX * RotateSpeed * Ts.GetSecond();
+		//			m_PerspectiveCamera.m_Transform.SetPitch(CameraPitch);
+		//			m_PerspectiveCamera.m_Transform.SetYaw(CameraYaw);
+		//			//ME_ENGINE_LOG("Mouse press moving ({},{})", OffsetX, OffsetY);
+		//			glm::vec3 CameraRot = m_PerspectiveCamera.m_Transform.Rotation();
+		//			//ME_ENGINE_LOG("Camera rotation: ({},{},{})", CameraRot.x, CameraRot.y, CameraRot.z);
+		//		}
+		//	}
+		//	MousePosition = CurMousePosition;
+		//	//ME_ENGINE_LOG("Left mouse button pressed");
+		//}
+		//else
+		//{
+		//	bIsMousePressMoving = false;
+		//}
+		//if (Input::IsMouseButtonPressed(Mouse::RightButton))
+		//{
+		//	m_PerspectiveCamera.m_Transform.DebugPrint();
+		//}
+		//if (Input::IsMouseButtonReleased(Mouse::RightButton))
+		//{
+		//}
 
 	}
 

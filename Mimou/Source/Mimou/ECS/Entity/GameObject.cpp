@@ -3,59 +3,34 @@
 
 namespace Mimou
 {
-	GameObject::GameObject()
+
+	GameObject::GameObject(Scene* OwnedScene, Ref<GameObject> Parent)
+		: m_Scene(OwnedScene), m_Parent(Parent)
 	{
 
 	}
 
-	GameObject::GameObject(const Transform& InTransform)
-		: m_Transform(InTransform)
+	GameObject::~GameObject()
 	{
-
 	}
 
 	void GameObject::OnUpdate(Timestep Ts)
 	{
-		for (Ref<ComponentBase> Component : Components)
-		{
-			Component->OnUpdate(Ts);
-		}
+
 	}
 
-	void GameObject::AddChild(GameObject* Child)
+	bool GameObject::OnDestroy()
+	{
+		if (!(uint32_t)m_EntityID) return false;
+		if (!m_Scene->m_Registry.valid(m_EntityID)) return false;
+		m_Scene->m_Registry.destroy(m_EntityID);
+		m_EntityID = (entt::entity)0;
+		return true;
+	}
+
+	void GameObject::AddChild(Ref<GameObject> Child)
 	{
 		Children.push_back(Child);
-		Child->SetParent(this);
-	}
-
-	Transform GameObject::GetWorldTransform()
-	{
-		if (m_Parent == nullptr)
-		{
-			return m_Transform;
-		}
-		Transform WorldTransform;
-		WorldTransform.SetTransformMatrix(m_Parent->m_Transform.GetTransformMatrix() * m_Transform.GetTransformMatrix());
-		return WorldTransform;
-	}
-
-	void GameObject::AddComponent(const Ref<ComponentBase>& Component)
-	{
-		Components.push_back(Component);
-		Component->SetOwner(this);
-	}
-
-	Ref<ComponentBase> GameObject::GetComponentByName(const std::string& Name)
-	{
-		for (auto Comp : Components)
-		{
-			if (Comp->GetName() == Name)
-			{
-				return Comp;
-			}
-		}
-		ME_ENGINE_ERROR("Failed to get component {} from game object", Name);
-		return nullptr;
 	}
 
 }

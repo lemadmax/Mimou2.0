@@ -14,7 +14,7 @@ namespace Mimou
 		Material(glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec4 Specular, float Transparency, Ref<Shader> Shader);
 
 		virtual void Bind();
-		virtual void ApplyLighting(int index, Ref<Light> Light);
+		//virtual void ApplyLighting(int index, Ref<Light> Light);
 
 		inline void SetTexture(Ref<Texture> Texture) { m_Texture = Texture; }
 		inline void SetAmbient(glm::vec3 Ambient) { m_Ambient = Ambient; }

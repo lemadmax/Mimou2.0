@@ -170,7 +170,8 @@ project "MimouEditor"
 	}
 
 	defines {
-		"_CRT_SECURE_NO_WARNINGS"
+		"_CRT_SECURE_NO_WARNINGS",
+		"ME_WITH_EDITOR",
 	}
 
 	includedirs {

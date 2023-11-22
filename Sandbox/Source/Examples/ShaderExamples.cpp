@@ -38,64 +38,64 @@ ShaderEgLayer::ShaderEgLayer()
 	Renderer::AddLight(DirectionalLight);
 	Renderer::AddLight(MovingLight);
 
-	Ref<GameObject> SphereObject = CreateRef<GameObject>();
-	Ref<StaticMeshComponent> SMComp = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
-	SMComp->GetStaticMesh()->SetMaterial(LambertMat);
-	SphereObject->AddComponent(SMComp);
-	SphereObject->m_Transform.SetPosition(glm::vec3(-3, 0, 0));
-	GameObjects.push_back(SphereObject);
+	//Ref<GameObject> SphereObject = CreateRef<GameObject>();
+	//Ref<StaticMeshComponent> SMComp = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
+	//SMComp->GetStaticMesh()->SetMaterial(LambertMat);
+	//SphereObject->AddComponent(SMComp);
+	//SphereObject->m_Transform.SetPosition(glm::vec3(-3, 0, 0));
+	//GameObjects.push_back(SphereObject);
 
-	Ref<GameObject> SphereObject1 = CreateRef<GameObject>();
-	Ref<Shader> PhongShader = Shader::Create("Assets/Shaders/PhongShader.glsl");
-	Ref<Material> PhongMat = CreateRef<Material>(glm::vec3(0.2, 0.2, 0.2), glm::vec3(1, 1, 1), glm::vec4(0.9, 0.9, 0.9, 10.0), 1.0f, PhongShader);
-	Ref<StaticMeshComponent> SMComp1 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
-	SMComp1->GetStaticMesh()->SetMaterial(PhongMat);
-	SphereObject1->AddComponent(SMComp1);
-	SphereObject1->m_Transform.SetPosition(glm::vec3(0, 0, 0));
-	GameObjects.push_back(SphereObject1);
+	//Ref<GameObject> SphereObject1 = CreateRef<GameObject>();
+	//Ref<Shader> PhongShader = Shader::Create("Assets/Shaders/PhongShader.glsl");
+	//Ref<Material> PhongMat = CreateRef<Material>(glm::vec3(0.2, 0.2, 0.2), glm::vec3(1, 1, 1), glm::vec4(0.9, 0.9, 0.9, 10.0), 1.0f, PhongShader);
+	//Ref<StaticMeshComponent> SMComp1 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
+	//SMComp1->GetStaticMesh()->SetMaterial(PhongMat);
+	//SphereObject1->AddComponent(SMComp1);
+	//SphereObject1->m_Transform.SetPosition(glm::vec3(0, 0, 0));
+	//GameObjects.push_back(SphereObject1);
 
-	Ref<GameObject> SphereEar1 = CreateRef<GameObject>();
-	Ref<Material> PhongMat1 = CreateRef<Material>(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.1, 0.1, 0.1, 10.0), 1.0f, PhongShader);
-	Ref<StaticMeshComponent> SMComp2 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
-	SMComp2->GetStaticMesh()->SetMaterial(PhongMat1);
-	SphereEar1->AddComponent(SMComp2);
-	SphereEar1->m_Transform.SetPosition(glm::vec3(1, 1, 0));
-	SphereEar1->m_Transform.SetScale(glm::vec3(1, 1, 0.4));
-	GameObjects.push_back(SphereEar1);
-	SphereObject1->AddChild(SphereEar1.get());
+	//Ref<GameObject> SphereEar1 = CreateRef<GameObject>();
+	//Ref<Material> PhongMat1 = CreateRef<Material>(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.1, 0.1, 0.1, 10.0), 1.0f, PhongShader);
+	//Ref<StaticMeshComponent> SMComp2 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
+	//SMComp2->GetStaticMesh()->SetMaterial(PhongMat1);
+	//SphereEar1->AddComponent(SMComp2);
+	//SphereEar1->m_Transform.SetPosition(glm::vec3(1, 1, 0));
+	//SphereEar1->m_Transform.SetScale(glm::vec3(1, 1, 0.4));
+	//GameObjects.push_back(SphereEar1);
+	//SphereObject1->AddChild(SphereEar1.get());
 
-	Ref<GameObject> SphereObject2 = CreateRef<GameObject>();
-	Ref<Shader> BlinnPhongShader = Shader::Create("Assets/Shaders/BlinnPhongShader.glsl");
-	Ref<Material> BlinnPhongMat = CreateRef<Material>(glm::vec3(0.2, 0.2, 0.2), glm::vec3(1, 1, 1), glm::vec4(0.9, 0.9, 0.9, 10.0), 1.0f, BlinnPhongShader);
-	Ref<StaticMeshComponent> SMComp3 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
-	SMComp3->GetStaticMesh()->SetMaterial(BlinnPhongMat);
-	SphereObject2->AddComponent(SMComp3);
-	SphereObject2->m_Transform.SetPosition(glm::vec3(4, 1, 0));
-	GameObjects.push_back(SphereObject2);
+	//Ref<GameObject> SphereObject2 = CreateRef<GameObject>();
+	//Ref<Shader> BlinnPhongShader = Shader::Create("Assets/Shaders/BlinnPhongShader.glsl");
+	//Ref<Material> BlinnPhongMat = CreateRef<Material>(glm::vec3(0.2, 0.2, 0.2), glm::vec3(1, 1, 1), glm::vec4(0.9, 0.9, 0.9, 10.0), 1.0f, BlinnPhongShader);
+	//Ref<StaticMeshComponent> SMComp3 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSphere(32, 16));
+	//SMComp3->GetStaticMesh()->SetMaterial(BlinnPhongMat);
+	//SphereObject2->AddComponent(SMComp3);
+	//SphereObject2->m_Transform.SetPosition(glm::vec3(4, 1, 0));
+	//GameObjects.push_back(SphereObject2);
 
-	Ref<GameObject> SquareObject = CreateRef<GameObject>();
+	//Ref<GameObject> SquareObject = CreateRef<GameObject>();
 
-	Ref<Shader> TextureShader = Shader::Create("Assets/Shaders/Texture.glsl");
-	Ref<Texture> GridTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
-	Ref<Material> TextureMat = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, TextureShader);
-	TextureMat->SetTexture(GridTexture);
-	Ref<StaticMeshComponent> SMComp4 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSquare(2, 1));
-	SMComp4->GetStaticMesh()->SetMaterial(TextureMat);
-	SquareObject->AddComponent(SMComp4);
-	//SquareObject->m_Transform.SetScale(glm::vec3(100, 100, 1));
-	SquareObject->m_Transform.SetRotation(glm::vec3(0, 0, 0));
-	SquareObject->m_Transform.SetPosition(glm::vec3(0, -8, 0));
-	GameObjects.push_back(SquareObject);
+	//Ref<Shader> TextureShader = Shader::Create("Assets/Shaders/Texture.glsl");
+	//Ref<Texture> GridTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
+	//Ref<Material> TextureMat = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, TextureShader);
+	//TextureMat->SetTexture(GridTexture);
+	//Ref<StaticMeshComponent> SMComp4 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateSquare(2, 1));
+	//SMComp4->GetStaticMesh()->SetMaterial(TextureMat);
+	//SquareObject->AddComponent(SMComp4);
+	////SquareObject->m_Transform.SetScale(glm::vec3(100, 100, 1));
+	//SquareObject->m_Transform.SetRotation(glm::vec3(0, 0, 0));
+	//SquareObject->m_Transform.SetPosition(glm::vec3(0, -8, 0));
+	//GameObjects.push_back(SquareObject);
 
-	Ref<GameObject> CubeObject = CreateRef<GameObject>();
-	Ref<Texture> GridTexture1 = Texture2D::Create("Assets/Textures/duxin.jpg");
-	Ref<Material> TextureMat1 = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, TextureShader);
-	TextureMat1->SetTexture(GridTexture1);
-	Ref<StaticMeshComponent> SMComp5 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateCube());
-	SMComp5->GetStaticMesh()->SetMaterial(TextureMat1);
-	CubeObject->AddComponent(SMComp5);
-	CubeObject->m_Transform.SetPosition(glm::vec3(0, -4, 0));
-	GameObjects.push_back(CubeObject);
+	//Ref<GameObject> CubeObject = CreateRef<GameObject>();
+	//Ref<Texture> GridTexture1 = Texture2D::Create("Assets/Textures/duxin.jpg");
+	//Ref<Material> TextureMat1 = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, TextureShader);
+	//TextureMat1->SetTexture(GridTexture1);
+	//Ref<StaticMeshComponent> SMComp5 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateCube());
+	//SMComp5->GetStaticMesh()->SetMaterial(TextureMat1);
+	//CubeObject->AddComponent(SMComp5);
+	//CubeObject->m_Transform.SetPosition(glm::vec3(0, -4, 0));
+	//GameObjects.push_back(CubeObject);
 
 	EditorGridShader = Shader::Create("Assets/Shaders/EditorGrid.glsl"); 
 	EditorGridVA = VertexArray::Create();
@@ -126,18 +126,18 @@ void ShaderEgLayer::OnUpdate(Timestep Ts)
 	//Renderer::SubmitArrays(SphereMesh->GetVertexArray(), SphereMesh->GetMaterial(), DirectionalLight);
 	MovingLight->m_Transform.SetYaw(MovingLight->m_Transform.GetYaw() + Ts.GetSecond() * 100);
 
-	GameObjects[0]->m_Transform.SetPosition(glm::vec3(-3.0f, 3.0f * glm::abs(glm::sin(uTime)), 0.0f));
-	GameObjects[1]->m_Transform.SetPosition(glm::vec3(0.0f, 4.0f * glm::abs(glm::cos(uTime)), 0.0f));
-	GameObjects[3]->m_Transform.SetPosition(glm::vec3(4.0f, 3.0f * glm::abs(glm::sin(uTime)), 0.0f));
-	//GameObjects[4]->m_Transform.SetRotation(glm::vec3(0.0f, 50.0f * uTime, 0.0f));
-	GameObjects[5]->m_Transform.SetRotation(glm::vec3(0.0f, 50.0f * uTime, 0.0f));
+	//GameObjects[0]->m_Transform.SetPosition(glm::vec3(-3.0f, 3.0f * glm::abs(glm::sin(uTime)), 0.0f));
+	//GameObjects[1]->m_Transform.SetPosition(glm::vec3(0.0f, 4.0f * glm::abs(glm::cos(uTime)), 0.0f));
+	//GameObjects[3]->m_Transform.SetPosition(glm::vec3(4.0f, 3.0f * glm::abs(glm::sin(uTime)), 0.0f));
+	////GameObjects[4]->m_Transform.SetRotation(glm::vec3(0.0f, 50.0f * uTime, 0.0f));
+	//GameObjects[5]->m_Transform.SetRotation(glm::vec3(0.0f, 50.0f * uTime, 0.0f));
 
 	uTime += Ts;
 
-	for (Ref<GameObject> GameObject : GameObjects)
-	{
-		GameObject->OnUpdate(Ts);
-	}
+	//for (Ref<GameObject> GameObject : GameObjects)
+	//{
+	//	GameObject->OnUpdate(Ts);
+	//}
 
 	//Renderer::Submit(EditorGridVA, EditorGridShader);
 	EditorGridShader->Bind();

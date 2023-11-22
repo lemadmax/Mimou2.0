@@ -1,38 +1,47 @@
 #pragma once
 #include "Mimou/Transform/Transform.h"
 #include "Mimou/Timestep.h"
-#include "Mimou/ECS/Component/ComponentBase.h"
+#include "Mimou/ECS/Component/BasicComponents.h"
+#include "Mimou/ECS/Scene.h"
+
+#include "entt/entt.hpp"
 
 namespace Mimou
 {
 	class GameObject
 	{
 	public:
-		GameObject();
-		//virtual ~GameObject();
-
-		GameObject(const Transform& InTransform);
-
-		inline void SetTransform(const Transform& InTransform) { m_Transform = InTransform; }
-		inline const Transform& GetTransform() const { return m_Transform; }
+		GameObject() = default;
+		GameObject(Scene* OwnedScene, Ref<GameObject> Parent = nullptr);
+		virtual ~GameObject();
 
 		virtual void OnUpdate(Timestep Ts);
+		virtual bool OnDestroy();
 
-		void AddChild(GameObject* Child);
+		void AddChild(Ref<GameObject> Child);
 
-		Transform GetWorldTransform();
-		inline void SetParent(GameObject* Parent) { m_Parent = Parent; }
+		inline void SetParent(Ref<GameObject> Parent) { m_Parent = Parent; }
+		inline const entt::entity& GetEntityID() const { return m_EntityID; }
 
-		void AddComponent(const Ref<ComponentBase>& Component);
-		Ref<ComponentBase> GetComponentByName(const std::string& Name);
+		//template<typename T, typename... Args>
+		//T& AddComponent(Args&&... args)
+		//{
+		//	T& Component = m_Scene->m_Registry.emplace<T>(m_EntityID, std::forward<Args>(args)...);
+		//	return Component;
+		//}
 
-	public:
-		Transform m_Transform;
+		//template<typename T>
+		//T& GetComponent()
+		//{
+		//	return m_Scene->m_Registry.get<T>(m_EntityID);
+		//}
 
 	private:
-		GameObject* m_Parent = nullptr;
-		std::vector<GameObject*> Children;
+		entt::entity m_EntityID;
 
-		std::vector<Ref<ComponentBase>> Components;
+		Scene* m_Scene = nullptr;
+
+		Ref<GameObject> m_Parent = nullptr;
+		std::vector<Ref<GameObject>> Children;
 	};
 }

@@ -3,7 +3,7 @@
 
 namespace Mimou
 {
-	class PerspectiveCamera : public GameObject
+	class PerspectiveCamera
 	{
 	public:
 		PerspectiveCamera();

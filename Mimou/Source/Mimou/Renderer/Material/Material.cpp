@@ -29,13 +29,13 @@ namespace Mimou
 		}
 	}
 
-	void Material::ApplyLighting(int index, Ref<Light> Light)
-	{
-		ME_ENGINE_ASSERT(m_Shader, "Error when applying lighting, shader is null");
+	//void Material::ApplyLighting(int index, Ref<Light> Light)
+	//{
+	//	ME_ENGINE_ASSERT(m_Shader, "Error when applying lighting, shader is null");
 
-		m_Shader->SetFloat3("u_Lights[" + std::to_string(index) + "].LightColor", Light->GetColor());
-		m_Shader->SetFloat3("u_Lights[" + std::to_string(index) + "].LightDir", Light->GetDirection());
-		m_Shader->SetFloat("u_Lights[" + std::to_string(index) + "].Intensity", Light->GetIntensity());
-		m_Shader->SetInt("u_nl", index + 1);
-	}
+	//	m_Shader->SetFloat3("u_Lights[" + std::to_string(index) + "].LightColor", Light->GetColor());
+	//	//m_Shader->SetFloat3("u_Lights[" + std::to_string(index) + "].LightDir", Light->GetDirection());
+	//	m_Shader->SetFloat("u_Lights[" + std::to_string(index) + "].Intensity", Light->GetIntensity());
+	//	m_Shader->SetInt("u_nl", index + 1);
+	//}
 }

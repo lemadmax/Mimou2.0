@@ -48,7 +48,7 @@ namespace Mimou
 		Material->Bind();
 		for (int i = 0; i < m_SceneData->Lights.size(); i++)
 		{
-			Material->ApplyLighting(i, m_SceneData->Lights[i]);
+			//Material->ApplyLighting(i, m_SceneData->Lights[i]);
 		}
 		Material->GetShader()->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
 		Material->GetShader()->SetMat4("u_TransformMatrix", Transform);
@@ -72,7 +72,7 @@ namespace Mimou
 	void Renderer::SubmitArrays(const Ref<VertexArray>& VertexArray, const Ref<Material>& Material, const Ref<Light>& Light)
 	{
 		Material->Bind();
-		Material->ApplyLighting(0, Light);
+		//Material->ApplyLighting(0, Light);
 		Material->GetShader()->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
 		Material->GetShader()->SetMat4("u_TransformMatrix", glm::mat4(1.0f));
 		Material->GetShader()->SetMat4("u_InverseMatrix", glm::inverse(glm::mat4(1.0f)));
