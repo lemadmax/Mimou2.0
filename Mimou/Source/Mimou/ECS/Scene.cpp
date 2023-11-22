@@ -1,5 +1,6 @@
 #include "mepch.h"
 #include "Scene.h"
+#include "Mimou/ECS/Entity/GameObject.h"
 
 namespace Mimou
 {
@@ -24,10 +25,10 @@ namespace Mimou
 
 	Ref<GameObject> Scene::CreateGameObject(Ref<GameObject> Parent)
 	{
-		Ref<GameObject> Out = CreateRef<GameObject>(this, Parent);
+		Ref<GameObject> Out = CreateRef<GameObject>();
 		if (Parent)
 		{
-			Parent->AddChild(Out);
+			//Parent->AddChild(Out);
 		}
 		return Out;
 	}

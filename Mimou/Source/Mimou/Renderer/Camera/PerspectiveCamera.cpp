@@ -16,11 +16,11 @@ namespace Mimou
 		m_ProjectionMatrix = glm::perspective<float>(FOV, Aspect, 0.1f, 100.0f);
 	}
 
-	PerspectiveCamera::PerspectiveCamera(float FOV, float Aspect, const Transform& Transform)
-		: m_FOV(FOV), m_Aspect(Aspect)
-	{
-		m_ProjectionMatrix = glm::perspective<float>(FOV, Aspect, 0.1f, 100.0f);
-	}
+	//PerspectiveCamera::PerspectiveCamera(float FOV, float Aspect, const Transform& Transform)
+	//	: m_FOV(FOV), m_Aspect(Aspect)
+	//{
+	//	m_ProjectionMatrix = glm::perspective<float>(FOV, Aspect, 0.1f, 100.0f);
+	//}
 
 	const glm::mat4& PerspectiveCamera::GetProjectionMatrix()
 	{

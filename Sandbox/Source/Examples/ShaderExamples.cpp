@@ -124,7 +124,7 @@ void ShaderEgLayer::OnUpdate(Timestep Ts)
 	//Renderer::Submit(SunVertices, SunShader);
 	//Renderer::SubmitArrays(SphereVertices, SphereShader);
 	//Renderer::SubmitArrays(SphereMesh->GetVertexArray(), SphereMesh->GetMaterial(), DirectionalLight);
-	MovingLight->m_Transform.SetYaw(MovingLight->m_Transform.GetYaw() + Ts.GetSecond() * 100);
+	//MovingLight->m_Transform.SetYaw(MovingLight->m_Transform.GetYaw() + Ts.GetSecond() * 100);
 
 	//GameObjects[0]->m_Transform.SetPosition(glm::vec3(-3.0f, 3.0f * glm::abs(glm::sin(uTime)), 0.0f));
 	//GameObjects[1]->m_Transform.SetPosition(glm::vec3(0.0f, 4.0f * glm::abs(glm::cos(uTime)), 0.0f));

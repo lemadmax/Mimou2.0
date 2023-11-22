@@ -8,7 +8,7 @@ namespace Mimou
 	public:
 		PerspectiveCamera();
 		PerspectiveCamera(float FOV, float Aspect, const glm::vec3& Position, const glm::vec3& Rotation);
-		PerspectiveCamera(float FOV, float Aspect, const Transform& Transform);
+		//PerspectiveCamera(float FOV, float Aspect, const Transform& Transform);
 
 		const glm::mat4& GetProjectionMatrix();
 		const glm::mat4& GetViewMatrix();

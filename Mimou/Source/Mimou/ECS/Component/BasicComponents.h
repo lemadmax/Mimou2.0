@@ -36,12 +36,12 @@ namespace Mimou
 	struct SStaticMeshComponent
 	{
 		Ref<Mimou::VertexArray> VertexArray;
-		Ref<Material> Material;
+		//Ref<Mimou::Material> Material;
 
 		SStaticMeshComponent() = default;
 		SStaticMeshComponent(const SStaticMeshComponent&) = default;
-		SStaticMeshComponent(Ref<Mimou::VertexArray> InVertexArray, Ref<Mimou::Material> InMaterial)
-			: VertexArray(InVertexArray), Material(InMaterial) {}
+		SStaticMeshComponent(Ref<Mimou::VertexArray> InVertexArray)
+			: VertexArray(InVertexArray) {}
 	};
 
 	struct CameraComponent

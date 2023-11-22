@@ -1,12 +1,14 @@
 #pragma once
 #include "Mimou/Core.h"
 #include "Mimou/Timestep.h"
-#include "Mimou/ECS/Entity/GameObject.h"
 
 #include "entt/entt.hpp"
 
+
 namespace Mimou
 {
+	class GameObject;
+
 	class Scene
 	{
 	public:
