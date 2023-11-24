@@ -44,6 +44,19 @@ namespace Mimou
 			: VertexArray(InVertexArray) {}
 	};
 
+	struct DirectionalLightComponent
+	{
+		glm::vec3 Color = { 1.0f, 1.0f, 1.0f };
+		glm::vec3 Direction = { 1.0f, 1.0f, 1.0f };
+		float Intensity = 1.0f;
+		bool bIsOn = true;
+
+		DirectionalLightComponent() = default;
+		DirectionalLightComponent(const DirectionalLightComponent&) = default;
+		DirectionalLightComponent(const glm::vec3& InColor, const glm::vec3& InDirection, float InIntensity = 1.0)
+			: Color(InColor), Direction(InDirection), Intensity(InIntensity) {}
+	};
+
 	struct CameraComponent
 	{
 		Ref<Mimou::Camera> Camera;

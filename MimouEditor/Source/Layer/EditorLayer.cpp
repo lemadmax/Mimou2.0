@@ -1,13 +1,7 @@
 #include "EditorLayer.h"
 
 EditorLayer::EditorLayer()
-	: m_CameraController(glm::radians(70.0f), 3.0f/2.0f)
 {
-	
-	//TestSun();
-	float Width = (float)Application::GetInstance()->GetWindow().GetWidth();
-	float Height = (float)Application::GetInstance()->GetWindow().GetHeight();
-	m_CameraController.SetAspect(Width / Height);
 
 	DirectionalLight = CreateRef<Light>(glm::vec3(), glm::vec3(45.0, 135.0, 0), glm::vec3(0.7, 0.6, 0.6), 1.0f);
 	MovingLight = CreateRef<Light>(glm::vec3(), glm::vec3(0, 180, 0), glm::vec3(0.5, 0.4, 0.4), 1.0f);
@@ -50,16 +44,16 @@ EditorLayer::~EditorLayer()
 
 void EditorLayer::OnUpdate(Timestep Ts)
 {
-	m_CameraController.OnUpdate(Ts);
+	EditorCamera.OnUpdate(Ts);
 
-	Renderer::BeginScene(m_CameraController.GetCamera());
+	Renderer3D::BeginScene(EditorCamera);
 
 	if (m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f)
 	{
 		float AspectRatio = m_ViewportSize.x / m_ViewportSize.y;
-		if (AspectRatio != m_CameraController.GetAspect())
+		if (AspectRatio != EditorCamera.GetAspect())
 		{
-			m_CameraController.SetAspect(AspectRatio);
+			EditorCamera.SetAspect(AspectRatio);
 		}
 	}
 	m_FrameBuffer->Bind();

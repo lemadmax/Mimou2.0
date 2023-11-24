@@ -35,7 +35,7 @@ private:
 	Ref<Light> DirectionalLight;
 	Ref<Light> MovingLight;
 
-	PerspectiveCameraController m_CameraController;
+	EditorCamera EditorCamera;
 
 	bool m_IsViewportFocused;
 	bool m_IsViewportHovered;

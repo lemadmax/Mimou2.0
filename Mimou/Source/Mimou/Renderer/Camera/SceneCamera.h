@@ -3,7 +3,7 @@
 
 namespace Mimou
 {
-	class SceneCamera : Camera
+	class SceneCamera : public Camera
 	{
 	public:
 		SceneCamera();

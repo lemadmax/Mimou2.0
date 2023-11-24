@@ -173,6 +173,7 @@
     <ClInclude Include="Source\Mimou\Mesh\StaticMesh.h" />
     <ClInclude Include="Source\Mimou\Renderer\Buffer.h" />
     <ClInclude Include="Source\Mimou\Renderer\Camera\Camera.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Camera\EditorCamera.h" />
     <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.h" />
     <ClInclude Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.h" />
     <ClInclude Include="Source\Mimou\Renderer\Camera\SceneCamera.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="Source\Mimou\Mesh\StaticMesh.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Camera\Camera.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Camera\EditorCamera.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Camera\PerspectiveCameraController.cpp" />
     <ClCompile Include="Source\Mimou\Renderer\Camera\SceneCamera.cpp" />

@@ -25,7 +25,12 @@ namespace Mimou
 
 	class ShaderLibrary
 	{
+	private:
+		ShaderLibrary();
 	public:
+		static ShaderLibrary* GetInstance() { return s_Instance; }
+		void InitShaderLib();
+
 		void Add(const Ref<Shader>& Shader);
 		void Add(const std::string& Name, const Ref<Shader>& Shader);
 		Ref<Shader> Load(const std::string& FilePath);
@@ -36,5 +41,7 @@ namespace Mimou
 		bool Exists(const std::string& Name) const;
 	private:
 		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
+
+		static ShaderLibrary* s_Instance;
 	};
 }

@@ -129,13 +129,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EditorCamera.h" />
-    <ClInclude Include="EditorCameraController.h" />
     <ClInclude Include="Source\Layer\EditorLayer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EditorCamera.cpp" />
-    <ClCompile Include="EditorCameraController.cpp" />
     <ClCompile Include="Source\EditorApp.cpp" />
     <ClCompile Include="Source\Layer\EditorLayer.cpp" />
   </ItemGroup>

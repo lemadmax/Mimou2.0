@@ -232,6 +232,7 @@
       <Filter>Vendors\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\Renderer\Camera\SceneCamera.h" />
+    <ClInclude Include="Source\Mimou\Renderer\Camera\EditorCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -352,5 +353,6 @@
       <Filter>Vendors\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\Renderer\Camera\SceneCamera.cpp" />
+    <ClCompile Include="Source\Mimou\Renderer\Camera\EditorCamera.cpp" />
   </ItemGroup>
 </Project>

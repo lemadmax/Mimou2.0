@@ -1,0 +1,43 @@
+#pragma once
+#include "Camera.h"
+#include "Mimou/Timestep.h"
+
+#include "glm/glm.hpp"
+
+namespace Mimou
+{
+	class EditorCamera : public Camera
+	{
+	public:
+		EditorCamera() = default;
+		EditorCamera(const EditorCamera&) = default;
+		EditorCamera(float FOV, float Aspect, float NearClip, float FarClip, 
+			const glm::vec3& Position = { 0.0f, 0.0f, 10.0f },
+			const glm::vec3& LookAt = { 0.0f, 0.0f, 0.0f },
+			const glm::vec3& CameraUp = { 0.0f, 1.0f, 0.0f }
+			);
+
+		const glm::mat4& GetViewProjection() const;
+
+		void OnUpdate(Timestep Ts);
+
+	private:
+		void RecalculateProjection();
+		void RecalculateView();
+		
+	private:
+		glm::mat4 m_ViewMatrix;
+
+		float m_FOV = 70.0f, m_Near = 0.1f, m_Far = 100.0f;
+		float m_AspectRatio = 1.5f;
+		glm::vec3 Position = { 0.0f, 0.0f, 10.0f };
+		glm::vec3 LookAt = { 0.0f, 0.0f, 0.0f };
+		glm::vec3 CameraUp = { 0.0f, 1.0f, 0.0f };
+
+		float m_Pitch = 0.0f, m_Yaw = 0.0f;
+
+		float MoveSpeed = 1.0f, RotateSpeed = 7.0f;
+		bool bIsMouseDragging = false;
+		std::pair<float, float> PrevMousePos = { 0.0f, 0.0f };
+	};
+}

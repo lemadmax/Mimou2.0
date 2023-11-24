@@ -50,6 +50,29 @@ namespace Mimou
 		return Vertices;
 	}
 
+	void CreateSquareMeshTex(float* Vertices, int32_t i, int32_t z)
+	{
+		const uint32_t N = 8;
+
+		uint32_t j = z < 0 ? (i + 2) % 3 : (i + 1) % 3; // Right hand rule
+		uint32_t k = z < 0 ? (i + 1) % 3 : (i + 2) % 3;
+
+		// coordinates
+		// (-1, 1) (1, 1) (-1, -1) (1, -1)
+		Vertices[i] = Vertices[1 * N + i] = Vertices[2 * N + i] = Vertices[3 * N + i] = z;
+		Vertices[j] = Vertices[2 * N + j] = Vertices[2 * N + k] = Vertices[3 * N + k] = -1;
+		Vertices[k] = Vertices[1 * N + j] = Vertices[1 * N + k] = Vertices[3 * N + j] = 1;
+
+		// normals
+		Vertices[i + 3] = Vertices[1 * N + i + 3] = Vertices[2 * N + i + 3] = Vertices[3 * N + i + 3] = z < 0 ? -1 : 1;
+		Vertices[j + 3] = Vertices[1 * N + j + 3] = Vertices[2 * N + j + 3] = Vertices[3 * N + j + 3] = 0;
+		Vertices[k + 3] = Vertices[1 * N + k + 3] = Vertices[2 * N + k + 3] = Vertices[3 * N + k + 3] = 0;
+
+		// Texture coordinates
+		Vertices[N - 1] = Vertices[2 * N - 1] = Vertices[2 * N - 2] = Vertices[4 * N - 2] = 1;
+		Vertices[N - 2] = Vertices[3 * N - 2] = Vertices[3 * N - 1] = Vertices[4 * N - 1] = 0;
+	}
+
 	std::vector<float> GlueMeshes(const std::vector<float>& MeshA, const std::vector<float>& MeshB, uint32_t VertexSize)
 	{
 		std::vector<float> NewMesh(MeshA.size() + MeshB.size() + 2 * VertexSize);
@@ -107,6 +130,26 @@ namespace Mimou
 	Ref<StaticMesh> StaticMeshLibrary::CreateSquare(uint32_t i, uint32_t z)
 	{
 		return CreateRef<StaticMesh>(StaticMesh::MeshType::Square, i, z);
+	}
+
+	Ref<VertexArray> StaticMeshLibrary::CreateSquareVA(uint32_t i, uint32_t z)
+	{
+		Ref<VertexArray> VA = VertexArray::Create();
+		
+		const uint32_t N = 4 * 8;
+		float Data[N];
+		CreateSquareMeshTex(Data, i, z);
+
+		Ref<VertexBuffer> VB = VertexBuffer::Create(Data, sizeof(Data));
+		VB->SetLayout({
+			{ "a_Position", ShaderDataType::Float3 },
+			{ "a_Normal", ShaderDataType::Float3 },
+			{ "a_TexCoord", ShaderDataType::Float2 }
+			});
+
+		VA->AddVertexBuffer(VB);
+
+		return VA;
 	}
 
 	StaticMesh::StaticMesh(MeshType Type, uint32_t NU, uint32_t NV)

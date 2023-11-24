@@ -2,7 +2,7 @@
 
 #include "Application.h"
 #include "Input.h"
-#include "Renderer/Renderer.h"
+#include "Renderer/Renderer3D.h"
 
 #include "GLFW/glfw3.h"
 
@@ -30,6 +30,8 @@ namespace Mimou
 
 		m_ImGUILayer = new ImGUILayer();
 		PushOverlay(m_ImGUILayer);
+
+		Renderer3D::Init();
 	}
 
 	Application::~Application()

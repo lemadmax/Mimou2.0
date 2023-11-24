@@ -42,6 +42,18 @@ namespace Mimou
 		return nullptr;
 	}
 
+	ShaderLibrary* ShaderLibrary::s_Instance = new ShaderLibrary();
+
+	ShaderLibrary::ShaderLibrary()
+	{
+
+	}
+
+	void ShaderLibrary::InitShaderLib()
+	{
+
+	}
+
 	void ShaderLibrary::Add(const Ref<Shader>& Shader)
 	{
 		const std::string& Name = Shader->GetName();

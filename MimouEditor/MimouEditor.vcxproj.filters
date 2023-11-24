@@ -4,31 +4,16 @@
     <Filter Include="Layer">
       <UniqueIdentifier>{6287950D-CE9B-BDBE-971D-611E03F1B9EF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Camera">
-      <UniqueIdentifier>{16bafefb-7035-473b-bb4e-eb0a497ef7db}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Layer\EditorLayer.h">
       <Filter>Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="EditorCamera.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="EditorCameraController.h">
-      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\EditorApp.cpp" />
     <ClCompile Include="Source\Layer\EditorLayer.cpp">
       <Filter>Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="EditorCamera.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="EditorCameraController.cpp">
-      <Filter>Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
