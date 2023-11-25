@@ -13,6 +13,8 @@ namespace Mimou
 		virtual void UnBind() const override;
 
 		virtual uint32_t GetColorAttachmentTexID() const override;
+		virtual uint32_t GetDepthStencilAttachTexID() const override;
+
 
 		virtual void OnUpdate(uint32_t Width, uint32_t Height) override;
 		virtual void Resize(uint32_t Width, uint32_t Height) override;

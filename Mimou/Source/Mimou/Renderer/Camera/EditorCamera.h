@@ -36,7 +36,7 @@ namespace Mimou
 	private:
 		glm::mat4 m_ViewMatrix;
 
-		float m_FOV = 70.0f, m_Near = 0.1f, m_Far = 100.0f;
+		float m_FOV = 70.0f, m_Near = 0.0001f, m_Far = 100.0f;
 		float m_AspectRatio = 1.5f;
 		glm::vec3 Position = { 0.5f, 0.5f, 0.5f };
 		glm::vec3 LookAt = { 0.0f, 0.0f, 0.0f };

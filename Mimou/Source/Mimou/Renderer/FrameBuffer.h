@@ -19,6 +19,7 @@ namespace Mimou
 		virtual void UnBind() const = 0;
 
 		virtual uint32_t GetColorAttachmentTexID() const = 0;
+		virtual uint32_t GetDepthStencilAttachTexID() const = 0;
 
 		virtual void OnUpdate(uint32_t Width, uint32_t Height) = 0;
 		virtual void Resize(uint32_t Width, uint32_t Height) = 0;

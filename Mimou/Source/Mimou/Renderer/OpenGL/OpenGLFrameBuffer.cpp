@@ -35,6 +35,11 @@ namespace Mimou
 		return m_ColorAttachmentTex;
 	}
 
+	uint32_t OpenGLFrameBuffer::GetDepthStencilAttachTexID() const
+	{
+		return m_DepthStencilAttachTex;
+	}
+
 	void OpenGLFrameBuffer::OnUpdate(uint32_t Width, uint32_t Height)
 	{
 		if (Width > 0 && Height > 0 && m_Spec.Width != Width && m_Spec.Height != Height)

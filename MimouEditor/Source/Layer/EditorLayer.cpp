@@ -40,9 +40,12 @@ void EditorLayer::OnAttach()
 	TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(2, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
 	StaticMeshComponent& MeshComp = TestGB0->GetComponent<StaticMeshComponent>();
 	MeshComp.Mat->SetTexture(m_TestTexture);
+	//TransformComponent& TransformComp = TestGB0->GetComponent<TransformComponent>();
+	//TransformComp.Translation = glm::vec3(0.0f, 0.0f, -5.0f);
+	//TransformComp.Scale = glm::vec3(10.0f, 10.0f, 10.0f);
 
 	Ref<GameObject> TestGB1 = m_ActiveScene->CreateGameObject();
-	TestGB1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(1, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
+	TestGB1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(0, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
 	StaticMeshComponent& MeshComp1 = TestGB1->GetComponent<StaticMeshComponent>();
 	MeshComp1.Mat->SetTexture(m_TestTexture);
 	//TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateTriangle(), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Lambert Shader")));
@@ -239,6 +242,8 @@ void EditorLayer::ShowViewport()
 	ImVec2 ViewportPanelSize = ImGui::GetContentRegionAvail();
 	m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
 	ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetColorAttachmentTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+	//ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetDepthStencilAttachTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+
 	//ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::End();
 	ImGui::PopStyleVar();
