@@ -153,10 +153,8 @@
     <ClInclude Include="Source\Mimou\Debug\Instrumentor.h" />
     <ClInclude Include="Source\Mimou\ECS\Component\BasicComponents.h" />
     <ClInclude Include="Source\Mimou\ECS\Component\ComponentBase.h" />
-    <ClInclude Include="Source\Mimou\ECS\Component\StaticMeshComponent.h" />
     <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h" />
     <ClInclude Include="Source\Mimou\ECS\Scene.h" />
-    <ClInclude Include="Source\Mimou\ECS\System\StaticMeshSystem.h" />
     <ClInclude Include="Source\Mimou\ECS\System\SystemBase.h" />
     <ClInclude Include="Source\Mimou\EntryPoint.h" />
     <ClInclude Include="Source\Mimou\Event\AppEvent.h" />
@@ -207,10 +205,8 @@
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp" />
     <ClCompile Include="Source\Mimou\ECS\Component\ComponentBase.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\Component\StaticMeshComponent.cpp" />
     <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp" />
     <ClCompile Include="Source\Mimou\ECS\Scene.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\System\StaticMeshSystem.cpp" />
     <ClCompile Include="Source\Mimou\ECS\System\SystemBase.cpp" />
     <ClCompile Include="Source\Mimou\ImGUI\ImGUIBuild.cpp" />
     <ClCompile Include="Source\Mimou\ImGUI\ImGUILayer.cpp" />

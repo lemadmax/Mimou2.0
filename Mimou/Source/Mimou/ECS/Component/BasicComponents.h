@@ -18,7 +18,7 @@ namespace Mimou
 	{
 		glm::vec3 Translation = { 0.0f, 0.0f, 0.0f };
 		glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 Scale = { 0.0f, 0.0f, 0.0f };
+		glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
@@ -33,15 +33,15 @@ namespace Mimou
 		}
 	};
 
-	struct SStaticMeshComponent
+	struct StaticMeshComponent
 	{
 		Ref<Mimou::VertexArray> VertexArray;
-		//Ref<Mimou::Material> Material;
+		Ref<Mimou::Material> Mat;
 
-		SStaticMeshComponent() = default;
-		SStaticMeshComponent(const SStaticMeshComponent&) = default;
-		SStaticMeshComponent(Ref<Mimou::VertexArray> InVertexArray)
-			: VertexArray(InVertexArray) {}
+		StaticMeshComponent() = default;
+		StaticMeshComponent(const StaticMeshComponent&) = default;
+		StaticMeshComponent(Ref<Mimou::VertexArray> InVertexArray, Ref<Mimou::Material> InMat)
+			: VertexArray(InVertexArray), Mat(InMat) {}
 	};
 
 	struct DirectionalLightComponent

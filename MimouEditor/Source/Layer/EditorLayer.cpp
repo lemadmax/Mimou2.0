@@ -3,28 +3,10 @@
 EditorLayer::EditorLayer()
 {
 
-	DirectionalLight = CreateRef<Light>(glm::vec3(), glm::vec3(45.0, 135.0, 0), glm::vec3(0.7, 0.6, 0.6), 1.0f);
-	MovingLight = CreateRef<Light>(glm::vec3(), glm::vec3(0, 180, 0), glm::vec3(0.5, 0.4, 0.4), 1.0f);
-	Renderer::AddLight(DirectionalLight);
-	//Renderer::AddLight(MovingLight);
-
 	RenderCommand::EnableDepthTest();
 	RenderCommand::EnableBlend();
 	RenderCommand::ClearDepth();
 
-	m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
-
-	Ref<Shader> TextureShader = Shader::Create("Assets/Shaders/Texture.glsl");
-
-	//Ref<GameObject> CubeObject = CreateRef<GameObject>();
-	//Ref<Texture> GridTexture1 = Texture2D::Create("Assets/Textures/duxin.jpg");
-	//Ref<Material> TextureMat1 = CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, TextureShader);
-	//TextureMat1->SetTexture(GridTexture1);
-	//Ref<StaticMeshComponent> SMComp5 = CreateRef<StaticMeshComponent>(StaticMeshLibrary::CreateCube());
-	//SMComp5->GetStaticMesh()->SetMaterial(TextureMat1);
-	//CubeObject->AddComponent(SMComp5);
-	//CubeObject->m_Transform.SetPosition(glm::vec3(0, 3, 0));
-	//GameObjects.push_back(CubeObject);
 
 	EditorGridShader = Shader::Create("Assets/Shaders/EditorGrid.glsl"); 
 	EditorGridVA = VertexArray::Create();
@@ -36,17 +18,39 @@ EditorLayer::EditorLayer()
 	IndexBuffer = IndexBuffer::Create(Indices, 6);
 	EditorGridVA->AddIndexBuffer(IndexBuffer);
 
+	ShaderLibrary::GetInstance()->Load("Texture Shader", "Assets/Shaders/Texture.glsl");
+	ShaderLibrary::GetInstance()->Load("Lambert Shader", "Assets/Shaders/LambertShader.glsl");
 }
 
 EditorLayer::~EditorLayer()
 {
 }
 
+void EditorLayer::OnAttach()
+{
+	uint32_t Width = Application::GetInstance()->GetWindow().GetWidth();
+	uint32_t Height = Application::GetInstance()->GetWindow().GetHeight();
+	m_FrameBuffer = FrameBuffer::Create({ Width , Height });
+
+	m_ActiveScene = CreateRef<Scene>();
+
+	m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
+
+	Ref<GameObject> TestGB0 = m_ActiveScene->CreateGameObject();
+	TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(2, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
+	StaticMeshComponent& MeshComp = TestGB0->GetComponent<StaticMeshComponent>();
+	MeshComp.Mat->SetTexture(m_TestTexture);
+
+	Ref<GameObject> TestGB1 = m_ActiveScene->CreateGameObject();
+	TestGB1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(1, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
+	StaticMeshComponent& MeshComp1 = TestGB1->GetComponent<StaticMeshComponent>();
+	MeshComp1.Mat->SetTexture(m_TestTexture);
+	//TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateTriangle(), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Lambert Shader")));
+}
+
 void EditorLayer::OnUpdate(Timestep Ts)
 {
 	EditorCamera.OnUpdate(Ts);
-
-	Renderer3D::BeginScene(EditorCamera);
 
 	if (m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f)
 	{
@@ -61,37 +65,21 @@ void EditorLayer::OnUpdate(Timestep Ts)
 	RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 	RenderCommand::Clear();
 
-	//MovingLight->m_Transform.SetYaw(MovingLight->m_Transform.GetYaw() + Ts.GetSecond() * 100);
-
-	//GameObjects[0]->m_Transform.SetRotation(glm::vec3(0.0f, 50.0f * uTime, 0.0f));
-
 	uTime += Ts;
 
-	//for (Ref<GameObject> GameObject : GameObjects)
-	//{
-	//	GameObject->OnUpdate(Ts);
-	//}
+	m_ActiveScene->OnUpdateEditor(Ts, EditorCamera);
 
 	EditorGridShader->Bind();
-	EditorGridShader->SetMat4("u_ViewProjection", m_CameraController.GetCamera().GetViewProjectionMatrix());
-	EditorGridShader->SetMat4("u_ViewMat", m_CameraController.GetCamera().GetViewMatrix());
-	EditorGridShader->SetMat4("u_ProjMat", m_CameraController.GetCamera().GetProjectionMatrix());
-	EditorGridShader->SetFloat("u_zNear", m_CameraController.GetZNear());
-	EditorGridShader->SetFloat("u_zFar", m_CameraController.GetZFar());
+	EditorGridShader->SetMat4("u_ViewProjection", EditorCamera.GetViewProjection());
+	EditorGridShader->SetMat4("u_ViewMat", EditorCamera.GetViewMatrix());
+	EditorGridShader->SetMat4("u_ProjMat", EditorCamera.GetProjection());
+	EditorGridShader->SetFloat("u_zNear", EditorCamera.GetZNear());
+	EditorGridShader->SetFloat("u_zFar", EditorCamera.GetZFar());
 	EditorGridVA->Bind();
 
 	RenderCommand::DrawIndexed(EditorGridVA);
 
-	Renderer::EndScene();
-
 	m_FrameBuffer->UnBind();
-}
-
-void EditorLayer::OnAttach()
-{
-	uint32_t Width = Application::GetInstance()->GetWindow().GetWidth();
-	uint32_t Height = Application::GetInstance()->GetWindow().GetHeight();
-	m_FrameBuffer = FrameBuffer::Create({ Width , Height });
 }
 
 void EditorLayer::OnDetach()
@@ -147,7 +135,7 @@ void EditorLayer::OnImGUIRender()
 
 void EditorLayer::OnEvent(EventBase& Event)
 {
-	m_CameraController.OnEvent(Event);
+
 }
 
 void EditorLayer::ShowMenuBar()
@@ -262,6 +250,8 @@ void EditorLayer::ShowSettingPanel()
 	ImGui::Begin("Setting" , &IsPOpen, ImGuiWindowFlags_HorizontalScrollbar);
 
 	ImGui::ColorEdit3("Test Color section", TmpColor, ImGuiColorEditFlags_InputRGB);
+
+	ImGui::Separator();
 	
 	ImGui::End();
 }

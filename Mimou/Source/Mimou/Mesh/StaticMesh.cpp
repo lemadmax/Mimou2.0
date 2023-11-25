@@ -152,6 +152,31 @@ namespace Mimou
 		return VA;
 	}
 
+	Ref<VertexArray> StaticMeshLibrary::CreateTriangle()
+	{
+		Ref<VertexArray> TriangleVertices = VertexArray::Create();
+
+		float Vertices[3 * 6] =
+		{
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+			0.5f,  -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+			0.0f,  0.5f,  0.0f, 0.0f, 0.0f, 1.0f
+		};
+
+		Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(Vertices, sizeof(Vertices));
+
+		BufferLayout Layout =
+		{
+			{ "a_Position", ShaderDataType::Float3 },
+			{ "a_Normal", ShaderDataType::Float3 }
+		};
+		VertexBuffer->SetLayout(Layout);
+
+		TriangleVertices->AddVertexBuffer(VertexBuffer);
+
+		return TriangleVertices;
+	}
+
 	StaticMesh::StaticMesh(MeshType Type, uint32_t NU, uint32_t NV)
 		: m_Type(Type), m_NU(NU), m_NV(NV)
 	{

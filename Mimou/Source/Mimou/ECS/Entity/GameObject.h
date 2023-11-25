@@ -11,7 +11,7 @@ namespace Mimou
 	class GameObject
 	{
 	public:
-		GameObject() = default;
+		GameObject() = delete;
 		GameObject(Scene* OwnedScene, Ref<GameObject> Parent = nullptr);
 		virtual ~GameObject();
 
@@ -19,7 +19,9 @@ namespace Mimou
 		virtual bool OnDestroy();
 
 		void AddChild(Ref<GameObject> Child);
+		void RemoveChild(Ref<GameObject> Child);
 
+		inline Ref<GameObject> GetParent() const { return m_Parent; }
 		inline void SetParent(Ref<GameObject> Parent) { m_Parent = Parent; }
 		inline const entt::entity& GetEntityID() const { return m_EntityID; }
 
@@ -42,6 +44,7 @@ namespace Mimou
 		Scene* m_Scene = nullptr;
 
 		Ref<GameObject> m_Parent = nullptr;
-		std::vector<Ref<GameObject>> Children;
+		//std::vector<Ref<GameObject>> Children;
+		std::set<Ref<GameObject>> Children;
 	};
 }

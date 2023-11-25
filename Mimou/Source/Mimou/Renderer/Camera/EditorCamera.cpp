@@ -7,9 +7,9 @@
 namespace Mimou
 {
 	EditorCamera::EditorCamera(float FOV, float Aspect, float NearClip, float FarClip,
-		const glm::vec3& Position = { 0.0f, 0.0f, 10.0f },
-		const glm::vec3& LookAt = { 0.0f, 0.0f, 0.0f },
-		const glm::vec3& CameraUp = { 0.0f, 1.0f, 0.0f })
+		const glm::vec3& Position,
+		const glm::vec3& LookAt,
+		const glm::vec3& CameraUp)
 		: m_FOV(FOV), m_AspectRatio(Aspect), m_Near(NearClip), m_Far(FarClip)
 	{
 		RecalculateProjection();
@@ -19,6 +19,11 @@ namespace Mimou
 	const glm::mat4& EditorCamera::GetViewProjection() const
 	{
 		return m_Projection * m_ViewMatrix;
+	}
+
+	const glm::mat4& EditorCamera::GetViewMatrix() const
+	{
+		return m_ViewMatrix;
 	}
 
 	void EditorCamera::OnUpdate(Timestep Ts)
@@ -40,11 +45,11 @@ namespace Mimou
 		}
 		if (Input::IsKeyPressed(Key::W))
 		{
-			Position -= ActualMoveSpeed * Ts.GetSecond() * CameraForward;
+			Position += ActualMoveSpeed * Ts.GetSecond() * CameraForward;
 		}
 		if (Input::IsKeyPressed(Key::S))
 		{
-			Position += ActualMoveSpeed * Ts.GetSecond() * CameraForward;
+			Position -= ActualMoveSpeed * Ts.GetSecond() * CameraForward;
 		}
 		if (Input::IsMouseButtonPressed(Mouse::LeftButton))
 		{
@@ -65,9 +70,16 @@ namespace Mimou
 					CameraPitch -= OffsetY * RotateSpeed * Ts.GetSecond();
 					CameraYaw -= OffsetX * RotateSpeed * Ts.GetSecond();
 
-					LookAt.x = glm::cos(CameraPitch) * glm::sin(CameraYaw);
-					LookAt.y = glm::sin(CameraPitch);
-					LookAt.z = glm::cos(CameraPitch) * glm::cos(CameraYaw);
+					CameraForward.x = glm::cos(CameraPitch) * glm::sin(CameraYaw);
+					CameraForward.y = CameraLeft.y = glm::sin(CameraPitch);
+					CameraForward.z = CameraLeft.x = glm::cos(CameraPitch) * glm::cos(CameraYaw);
+
+					CameraLeft.x = -glm::cos(CameraYaw);
+					CameraLeft.y = 0;
+					CameraLeft.z = glm::sin(CameraYaw);
+
+					//glm::rotate
+					//LookAt = Position + CameraForward;
 				}
 			}
 			PrevMousePos = CurMousePosition;
@@ -85,6 +97,8 @@ namespace Mimou
 		{
 		}
 
+		LookAt = Position + CameraForward;
+		CameraUp = glm::cross(CameraLeft, CameraForward);
 		RecalculateView();
 	}
 

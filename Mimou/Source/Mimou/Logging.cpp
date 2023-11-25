@@ -29,6 +29,6 @@ namespace Mimou
 		EngineLogger = std::make_shared<spdlog::logger>("EngineLogger", begin(sinks), end(sinks));
 		ClientLogger = std::make_shared<spdlog::logger>("ClientLogger", begin(sinks), end(sinks));
 
-		EngineLogger->info(LogFileName);
+		//EngineLogger->info(LogFileName);
 	}
 }

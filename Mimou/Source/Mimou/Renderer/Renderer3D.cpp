@@ -15,9 +15,20 @@ namespace Mimou
 
 	}
 
-	void Renderer3D::BeginScene(SceneCamera& Camera, std::vector<DirectionalLight> DirLights)
+	void Renderer3D::OnWindowResized(uint32_t Width, uint32_t Height)
 	{
-		s_SceneData->ProjectionMatrix = Camera.GetProjection();
+		RenderCommand::SetViewport(0, 0, Width, Height);
+	}
+
+	void Renderer3D::BeginScene(SceneCamera& Camera, const glm::mat4& Transform, std::vector<DirectionalLight> DirLights)
+	{
+		s_SceneData->ViewProjectionMatrix = Camera.GetProjection() * glm::inverse(Transform);
+		s_SceneData->DirLights = DirLights;
+	}
+
+	void Renderer3D::BeginScene(EditorCamera& Camera, std::vector<DirectionalLight> DirLights)
+	{
+		s_SceneData->ViewProjectionMatrix = Camera.GetViewProjection();
 		s_SceneData->DirLights = DirLights;
 	}
 
@@ -27,8 +38,8 @@ namespace Mimou
 	}
 	void Renderer3D::DrawMesh(Ref<VertexArray> VA, Ref<Material> Mat, const glm::mat4& Transform)
 	{
+		ME_PROFILE_SCOPE("Renderer3D::DrawMesh");
 
-		ME_PROFILE_SCOPE("Renderer::SubmitArrays");
 		Mat->Bind();
 
 		Ref<Shader> Shader = Mat->GetShader();
@@ -38,7 +49,7 @@ namespace Mimou
 			s_SceneData->DirLights[i].SetUniform(i, Mat->GetShader());
 		}
 
-		glm::mat4 ViewProjectionMatrix = glm::inverse(Transform) * s_SceneData->ProjectionMatrix;
+		glm::mat4 ViewProjectionMatrix = s_SceneData->ViewProjectionMatrix;
 		Shader->SetMat4("u_ViewProjection", ViewProjectionMatrix);
 		Shader->SetMat4("u_TransformMatrix", Transform);
 		glm::mat4 InverseMatrix = glm::inverse(Transform);
@@ -46,6 +57,13 @@ namespace Mimou
 
 		VA->Bind();
 
-		RenderCommand::DrawArrays(VA);
+		if (VA->GetIndexBuffer())
+		{
+			RenderCommand::DrawIndexed(VA);
+		}
+		else
+		{
+			RenderCommand::DrawArrays(VA);
+		}
 	}
 }

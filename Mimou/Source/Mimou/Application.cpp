@@ -95,13 +95,13 @@ namespace Mimou
 	}
 	bool Application::OnWindowResized(WindowResizeEvent& Event)
 	{
-		//ME_LOG("Application::OnWindowResized: {}", Event.ToString());
-		Renderer::OnWindowResize(Event.GetWidth(), Event.GetHeight());
+		//ME_ENGINE_LOG("Application::OnWindowResized: {}", Event.ToString());
+		Renderer3D::OnWindowResized(Event.GetWidth(), Event.GetHeight());
 		return false;
 	}
 	bool Application::OnWindowClosed(WindowCloseEvent& Event)
 	{
-		//ME_LOG("Application::OnWindowClosed: {}", Event.ToString());
+		//ME_ENGINE_LOG("Application::OnWindowClosed: {}", Event.ToString());
 		bIsRunning = false;
 		return true;
 	}

@@ -1,5 +1,6 @@
 #include "mepch.h"
 #include "GameObject.h"
+#include "Mimou/ECS/Component/BasicComponents.h"
 
 namespace Mimou
 {
@@ -7,11 +8,13 @@ namespace Mimou
 	GameObject::GameObject(Scene* OwnedScene, Ref<GameObject> Parent)
 		: m_Scene(OwnedScene), m_Parent(Parent)
 	{
-
+		m_EntityID = OwnedScene->m_Registry.create();
+		TransformComponent& Transform = OwnedScene->m_Registry.emplace<TransformComponent>(m_EntityID);
 	}
 
 	GameObject::~GameObject()
 	{
+		OnDestroy();
 	}
 
 	void GameObject::OnUpdate(Timestep Ts)
@@ -30,7 +33,15 @@ namespace Mimou
 
 	void GameObject::AddChild(Ref<GameObject> Child)
 	{
-		Children.push_back(Child);
+		Children.insert(Child);
+	}
+
+	void GameObject::RemoveChild(Ref<GameObject> Child)
+	{
+		if (Children.contains(Child))
+		{
+			Children.erase(Child);
+		}
 	}
 
 }

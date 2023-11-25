@@ -1,6 +1,7 @@
 #pragma once
 #include "Mimou/Core.h"
 #include "Mimou/Timestep.h"
+#include "Mimou/Renderer/Camera/EditorCamera.h"
 
 #include "entt/entt.hpp"
 
@@ -16,6 +17,7 @@ namespace Mimou
 		virtual ~Scene();
 
 		virtual void OnUpdate(Timestep Ts);
+		virtual void OnUpdateEditor(Timestep Ts, EditorCamera& EditorCamera);
 
 	public:
 		Ref<GameObject> CreateGameObject(Ref<GameObject> Parent = nullptr);

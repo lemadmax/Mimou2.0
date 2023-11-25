@@ -30,9 +30,11 @@ namespace Mimou
 
 		static void Shutdown();
 
+		static void OnWindowResized(uint32_t Width, uint32_t Height);
+
 		static void BeginScene(SceneCamera& Camera, const glm::mat4& Transform, std::vector<DirectionalLight> DirLights);
 
-		static void BeginScene(EditorCamera& Camera);
+		static void BeginScene(EditorCamera& Camera, std::vector<DirectionalLight> DirLights);
 
 		static void EndScene();
 
@@ -41,7 +43,7 @@ namespace Mimou
 	private:
 		struct SceneData
 		{
-			glm::mat4 ProjectionMatrix;
+			glm::mat4 ViewProjectionMatrix;
 			std::vector<DirectionalLight> DirLights;
 		};
 

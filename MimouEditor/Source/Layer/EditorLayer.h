@@ -22,6 +22,8 @@ private:
 private:
 	float uTime = 0.0f;
 
+	Ref<Scene> m_ActiveScene;
+
 	Ref<FrameBuffer> m_FrameBuffer;
 
 	Ref<VertexArray> EditorGridVA;

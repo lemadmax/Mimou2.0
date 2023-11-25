@@ -12,6 +12,7 @@ out vec3 NearPoint;
 out vec3 FarPoint;
 out mat4 ViewMat;
 out mat4 ProjMat;
+out mat4 ViewProjMat;
 
 vec3 gridPlane[4] = vec3[4](vec3(1, 1, 0), vec3(-1, -1, 0), vec3(-1, 1, 0), vec3(1, -1, 0));
 
@@ -20,7 +21,7 @@ void main()
     vec4 p = vec4(gridPlane[gl_VertexID], 1.0);
     mat4 viewInv = inverse(u_ViewMat);
     mat4 projInv = inverse(u_ProjMat);
-    vec4 unprojNearPoint = viewInv * projInv * vec4(p.x, p.y, 0.0, 1.0);
+    vec4 unprojNearPoint = viewInv * projInv * vec4(p.x, p.y, -1.0, 1.0);
     vec4 unprojFarPoint = viewInv * projInv * vec4(p.x, p.y, 1.0, 1.0);
     NearPoint = (unprojNearPoint.xyz / unprojNearPoint.w).xyz;
     FarPoint = (unprojFarPoint.xyz / unprojFarPoint.w).xyz;
@@ -28,6 +29,7 @@ void main()
     gl_Position = p;
     ViewMat = u_ViewMat;
     ProjMat = u_ProjMat;
+    ViewProjMat = u_ViewProjection;
 }	
 
 
@@ -42,6 +44,7 @@ in vec3 NearPoint;
 in vec3 FarPoint;
 in mat4 ViewMat;
 in mat4 ProjMat;
+in mat4 ViewProjMat;
 
 layout(location = 0) out vec4 FragColor;
 
@@ -70,8 +73,9 @@ vec4 grid(vec3 fragPos3D, float scale)
 
 float computeDepth(vec3 pos)
 {
-    vec4 clipSpacePos = ProjMat * ViewMat * vec4(pos.xyz, 1.0);
+    vec4 clipSpacePos = ViewProjMat * vec4(pos.xyz, 1.0);
     return (clipSpacePos.z / clipSpacePos.w);
+    // return clipSpacePos.z;
 }
 
 float computeLinearDepth(float depth)
@@ -91,5 +95,6 @@ void main()
     float fading = max(0, (1.0 - linearDepth));
 
     FragColor = grid(fragPos3D, 1) * float(t > 0);
+    // FragColor = vec4(0.6, 0.2, 0.2, 1.0);
     // FragColor.a *= fading;
 }
