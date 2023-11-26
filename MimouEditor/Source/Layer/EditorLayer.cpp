@@ -2,9 +2,6 @@
 
 EditorLayer::EditorLayer()
 {
-
-	RenderCommand::EnableDepthTest();
-	RenderCommand::EnableBlend();
 	RenderCommand::ClearDepth();
 
 
@@ -41,7 +38,7 @@ void EditorLayer::OnAttach()
 	StaticMeshComponent& MeshComp = TestGB0->GetComponent<StaticMeshComponent>();
 	MeshComp.Mat->SetTexture(m_TestTexture);
 	//TransformComponent& TransformComp = TestGB0->GetComponent<TransformComponent>();
-	//TransformComp.Translation = glm::vec3(0.0f, 0.0f, -5.0f);
+	//TransformComp.Translation = glm::vec3(0.0f, 0.0f, 5.0f);
 	//TransformComp.Scale = glm::vec3(10.0f, 10.0f, 10.0f);
 
 	Ref<GameObject> TestGB1 = m_ActiveScene->CreateGameObject();

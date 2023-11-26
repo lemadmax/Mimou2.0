@@ -14,7 +14,7 @@ out mat4 ViewMat;
 out mat4 ProjMat;
 out mat4 ViewProjMat;
 
-vec3 gridPlane[4] = vec3[4](vec3(1, 1, 1), vec3(-1, -1, 1), vec3(-1, 1, 1), vec3(1, -1, 0));
+vec3 gridPlane[4] = vec3[4](vec3(1, 1, 0), vec3(-1, -1, 0), vec3(-1, 1, 0), vec3(1, -1, 0));
 
 void main()
 {
@@ -74,7 +74,7 @@ vec4 grid(vec3 fragPos3D, float scale)
 float computeDepth(vec3 pos)
 {
     vec4 clipSpacePos = ViewProjMat * vec4(pos, 1.0);
-    return clipSpacePos.z;
+    return clipSpacePos.z / clipSpacePos.w;
 }
 
 float computeLinearDepth(float depth)
@@ -88,12 +88,12 @@ void main()
 {
     float t = -NearPoint.y / (FarPoint.y - NearPoint.y);
     vec3 fragPos3D = NearPoint + t * (FarPoint - NearPoint);
-    // gl_FragDepth = computeDepth(fragPos3D);
+    gl_FragDepth = computeDepth(fragPos3D);
 
     float linearDepth = computeLinearDepth(gl_FragDepth);
     float fading = max(0, (1.0 - linearDepth));
 
-    FragColor = grid(fragPos3D, 1) * float(t > 0);
-    // FragColor = vec4(1, 0, 0, 1.0 * float(t > 0));
+    // FragColor = grid(fragPos3D, 1) * float(t > 0);
+    FragColor = vec4(1, 0, 0, 1.0 * float(t > 0));
     // FragColor.a *= fading;
 }
