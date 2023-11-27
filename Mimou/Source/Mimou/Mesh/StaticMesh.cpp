@@ -177,6 +177,30 @@ namespace Mimou
 		return TriangleVertices;
 	}
 
+	Ref<VertexArray> StaticMeshLibrary::CreateCubeVA()
+	{
+		std::vector<float> Vertices = CreateCubeMesh();
+		if (Vertices.empty())
+		{
+			ME_ENGINE_WARN("CreateMesh: Failed to create square mesh");
+			return nullptr;
+		}
+		float* Data = new float[Vertices.size()];
+		memcpy(Data, &Vertices[0], Vertices.size() * sizeof(float));
+
+		Ref<VertexArray> VertexArray = VertexArray::Create();
+		BufferLayout Layout =
+		{
+			{ "a_Position", ShaderDataType::Float3 },
+			{ "a_Normal", ShaderDataType::Float3 },
+			{ "a_TexCoord", ShaderDataType::Float2 }
+		};
+		Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(Data, Vertices.size() * sizeof(float));
+		VertexBuffer->SetLayout(Layout);
+		VertexArray->AddVertexBuffer(VertexBuffer);
+		return VertexArray;
+	}
+
 	StaticMesh::StaticMesh(MeshType Type, uint32_t NU, uint32_t NV)
 		: m_Type(Type), m_NU(NU), m_NV(NV)
 	{

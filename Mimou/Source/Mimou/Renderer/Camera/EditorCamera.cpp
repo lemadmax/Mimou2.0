@@ -70,6 +70,9 @@ namespace Mimou
 					CameraPitch -= OffsetY * RotateSpeed * Ts.GetSecond();
 					CameraYaw -= OffsetX * RotateSpeed * Ts.GetSecond();
 
+					CameraPitch = std::min(CameraPitch, glm::half_pi<float>() - 0.1f);
+					CameraPitch = std::max(CameraPitch, -glm::half_pi<float>() + 0.1f);
+
 					CameraForward.x = glm::cos(CameraPitch) * glm::sin(CameraYaw);
 					CameraForward.y = CameraLeft.y = glm::sin(CameraPitch);
 					CameraForward.z = CameraLeft.x = glm::cos(CameraPitch) * glm::cos(CameraYaw);

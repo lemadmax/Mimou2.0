@@ -68,5 +68,7 @@ namespace Mimou
 		static Ref<VertexArray> CreateSquareVA(uint32_t i, uint32_t z);
 
 		static Ref<VertexArray> CreateTriangle();
+
+		static Ref<VertexArray> CreateCubeVA();
 	};
 }
