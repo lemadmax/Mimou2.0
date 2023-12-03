@@ -12,7 +12,7 @@ namespace Mimou
 		EditorCamera() = default;
 		EditorCamera(const EditorCamera&) = default;
 		EditorCamera(float FOV, float Aspect, float NearClip, float FarClip, 
-			const glm::vec3& Position = { 0.0f, 1.0f, 1.0f },
+			const glm::vec3& Position = { 0.0f, 0.0f, 1.0f },
 			const glm::vec3& LookAt = { 0.0f, 0.0f, 0.0f },
 			const glm::vec3& CameraUp = { 0.0f, 1.0f, 0.0f }
 			);
@@ -38,7 +38,7 @@ namespace Mimou
 
 		float m_FOV = 70.0f, m_Near = 0.01f, m_Far = 100.0f;
 		float m_AspectRatio = 1.5f;
-		glm::vec3 Position = { 0.5f, 0.5f, 0.5f };
+		glm::vec3 Position = { 0.0f, 0.0f, 1.0f };
 		glm::vec3 LookAt = { 0.0f, 0.0f, 0.0f };
 		glm::vec3 CameraUp = { 0.0f, 1.0f, 0.0f };
 
