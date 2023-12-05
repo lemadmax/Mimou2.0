@@ -54,6 +54,7 @@ namespace Mimou
 			Parent->AddChild(Out);
 		}
 		GameObjects.insert({ Out->GetEntityID(), Out });
+		Out->OnCreate();
 		return Out;
 	}
 	bool Scene::DestroyGameObject(Ref<GameObject> GameObject)

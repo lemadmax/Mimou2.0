@@ -17,6 +17,11 @@ namespace Mimou
 		OnDestroy();
 	}
 
+	void GameObject::OnCreate()
+	{
+
+	}
+
 	void GameObject::OnUpdate(Timestep Ts)
 	{
 
