@@ -9,6 +9,7 @@
 namespace Mimou
 {
 	class GameObject;
+	class Panel;
 
 	class Scene
 	{
@@ -29,5 +30,6 @@ namespace Mimou
 		std::map<entt::entity, Ref<GameObject>> GameObjects;
 
 		friend class GameObject;
+		friend class Panel;
 	};
 }

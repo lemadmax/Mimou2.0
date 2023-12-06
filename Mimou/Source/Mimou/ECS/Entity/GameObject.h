@@ -15,6 +15,7 @@ namespace Mimou
 		GameObject(Scene* OwnedScene, Ref<GameObject> Parent = nullptr);
 		virtual ~GameObject();
 
+		virtual void OnCreate();
 		virtual void OnUpdate(Timestep Ts);
 		virtual bool OnDestroy();
 
