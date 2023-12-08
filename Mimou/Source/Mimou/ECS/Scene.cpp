@@ -8,7 +8,13 @@ namespace Mimou
 
 	Scene::Scene()
 	{
+		Scene("Default Scene");
+	}
 
+	Scene::Scene(const std::string& SceneName)
+		: m_SceneName(SceneName)
+	{
+		
 	}
 
 	Scene::~Scene()

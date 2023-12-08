@@ -15,16 +15,20 @@ namespace Mimou
 	{
 	public:
 		Scene();
+		Scene(const std::string& SceneName);
 		virtual ~Scene();
 
 		virtual void OnUpdate(Timestep Ts);
 		virtual void OnUpdateEditor(Timestep Ts, EditorCamera& EditorCamera);
+
+		inline const std::string& GetName() const { return m_SceneName; }
 
 	public:
 		Ref<GameObject> CreateGameObject(Ref<GameObject> Parent = nullptr);
 		bool DestroyGameObject(Ref<GameObject> GameObject);
 
 	private:
+		std::string m_SceneName;
 		entt::registry m_Registry;
 
 		std::map<entt::entity, Ref<GameObject>> GameObjects;

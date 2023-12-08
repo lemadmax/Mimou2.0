@@ -1,5 +1,6 @@
 #pragma once
 #include "Mimou.h"
+#include "Panel/SceneHierarchyPanel.h"
 
 class EditorLayer : public Layer
 {
@@ -18,6 +19,8 @@ private:
 	void ShowMenuBar();
 	void ShowViewport();
 	void ShowSettingPanel();
+
+	void ShowPanel(PanelType Type, const std::string& PanelName);
 
 private:
 	float uTime = 0.0f;
@@ -43,6 +46,10 @@ private:
 	bool m_IsViewportHovered;
 	glm::vec2 m_ViewportSize;
 	Ref<Texture> m_TestTexture;
+
+	// UI Panels
+	std::map<PanelType, Ref<Panel>> ActivePanels;
+	std::map<PanelType, Ref<Panel>> CachedPanels;
 
 private:
 	// temporary variables

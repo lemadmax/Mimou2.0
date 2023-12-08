@@ -14,8 +14,8 @@ namespace Mimou
 		UINT32 Height;
 
 		WindowProps(const std::string& Title = "Mimou Engine",
-			UINT32 Width = 1280,
-			UINT32 Height = 720) : Title(Title), Width(Width), Height(Height)
+			UINT32 Width = 1920,
+			UINT32 Height = 1080) : Title(Title), Width(Width), Height(Height)
 		{
 
 		}

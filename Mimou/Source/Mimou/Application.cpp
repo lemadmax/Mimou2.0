@@ -24,7 +24,7 @@ namespace Mimou
 
 		bIsRunning = true;
 
-		m_Window = Scope<Window>(Window::Create({ AppName, 1280, 720 }));
+		m_Window = Scope<Window>(Window::Create({ AppName, 1920, 1080 }));
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 		m_Window->SetVSync(1);
 

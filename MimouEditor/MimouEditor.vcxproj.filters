@@ -12,7 +12,10 @@
     <ClInclude Include="Source\Layer\EditorLayer.h">
       <Filter>Layer</Filter>
     </ClInclude>
-    <ClInclude Include="Panel.h">
+    <ClInclude Include="Source\Panel\Panel.h">
+      <Filter>Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Panel\SceneHierarchyPanel.h">
       <Filter>Panel</Filter>
     </ClInclude>
   </ItemGroup>
@@ -21,7 +24,10 @@
     <ClCompile Include="Source\Layer\EditorLayer.cpp">
       <Filter>Layer</Filter>
     </ClCompile>
-    <ClCompile Include="Panel.cpp">
+    <ClCompile Include="Source\Panel\Panel.cpp">
+      <Filter>Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Panel\SceneHierarchyPanel.cpp">
       <Filter>Panel</Filter>
     </ClCompile>
   </ItemGroup>

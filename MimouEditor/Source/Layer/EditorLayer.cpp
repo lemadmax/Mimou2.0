@@ -29,9 +29,11 @@ void EditorLayer::OnAttach()
 	uint32_t Height = Application::GetInstance()->GetWindow().GetHeight();
 	m_FrameBuffer = FrameBuffer::Create({ Width , Height });
 
-	m_ActiveScene = CreateRef<Scene>();
+	m_ActiveScene = CreateRef<Scene>("Editor Test Scene");
 
 	m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
+
+	ShowPanel(PanelType::SceneHierarchyPanel, m_ActiveScene->GetName());
 
 	Ref<GameObject> TestGB0 = m_ActiveScene->CreateGameObject();
 	TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(2, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
@@ -128,6 +130,11 @@ void EditorLayer::OnImGUIRender()
 	ShowMenuBar();
 	ShowViewport();
 	ShowSettingPanel();
+
+	for (auto Panels : ActivePanels)
+	{
+		Panels.second->OnImGUIUpdate();
+	}
 
 	ImGui::ShowDemoWindow();
 	ImGui::End();
@@ -256,4 +263,22 @@ void EditorLayer::ShowSettingPanel()
 	ImGui::Separator();
 	
 	ImGui::End();
+}
+
+void EditorLayer::ShowPanel(PanelType Type, const std::string& PanelName)
+{
+	if (ActivePanels.contains(Type))
+	{
+		return;
+	}
+	if (CachedPanels.contains(Type))
+	{
+		ActivePanels.emplace(std::pair<PanelType, Ref<Panel>>(Type, CachedPanels[Type]));
+		CachedPanels.erase(Type);
+	}
+	else
+	{
+		Ref<Panel> NewPanel = Panel::CreatePanel(Type, PanelName, m_ActiveScene);
+		ActivePanels.emplace(std::pair<PanelType, Ref<Panel>>(Type, NewPanel));
+	}
 }
