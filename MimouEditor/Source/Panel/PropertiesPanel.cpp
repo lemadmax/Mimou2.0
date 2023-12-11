@@ -1,4 +1,5 @@
 #include "PropertiesPanel.h"
+#include "SceneHierarchyPanel.h"
 
 #include "Layer/EditorLayer.h"
 

@@ -5,7 +5,7 @@
       <UniqueIdentifier>{6287950D-CE9B-BDBE-971D-611E03F1B9EF}</UniqueIdentifier>
     </Filter>
     <Filter Include="Panel">
-      <UniqueIdentifier>{80e0d2f1-1bd1-49e3-a859-b7bfbfd2eada}</UniqueIdentifier>
+      <UniqueIdentifier>{95BADD0D-01CF-05BF-CA50-A91E362402F0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -15,10 +15,12 @@
     <ClInclude Include="Source\Panel\Panel.h">
       <Filter>Panel</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Panel\PropertiesPanel.h">
+      <Filter>Panel</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Panel\SceneHierarchyPanel.h">
       <Filter>Panel</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Panel\PropertiesPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\EditorApp.cpp" />
@@ -28,9 +30,11 @@
     <ClCompile Include="Source\Panel\Panel.cpp">
       <Filter>Panel</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Panel\PropertiesPanel.cpp">
+      <Filter>Panel</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Panel\SceneHierarchyPanel.cpp">
       <Filter>Panel</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Panel\PropertiesPanel.cpp" />
   </ItemGroup>
 </Project>
