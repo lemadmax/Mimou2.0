@@ -47,7 +47,13 @@ void EditorLayer::OnAttach()
 	TestGB1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(0, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
 	StaticMeshComponent& MeshComp1 = TestGB1->GetComponent<StaticMeshComponent>();
 	MeshComp1.Mat->SetTexture(m_TestTexture);
-	//TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateTriangle(), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Lambert Shader")));
+
+	Ref<GameObject> TestGB2 = m_ActiveScene->CreateGameObject(TestGB1);
+	TestGB2->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(0, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
+	StaticMeshComponent& MeshComp2 = TestGB2->GetComponent<StaticMeshComponent>();
+	MeshComp2.Mat->SetTexture(m_TestTexture);
+	TransformComponent& Transform2 = TestGB2->GetComponent<TransformComponent>();
+	Transform2.Translation = glm::vec3(1, 1, 0);
 }
 
 void EditorLayer::OnUpdate(Timestep Ts)

@@ -21,10 +21,13 @@ namespace Mimou
 
 		void AddChild(Ref<GameObject> Child);
 		void RemoveChild(Ref<GameObject> Child);
+		
+		inline bool HasChildren() const { return !Children.empty(); }
 
 		inline Ref<GameObject> GetParent() const { return m_Parent; }
 		inline void SetParent(Ref<GameObject> Parent) { m_Parent = Parent; }
 		inline const entt::entity& GetEntityID() const { return m_EntityID; }
+		inline std::set<Ref<GameObject>> GetChildren() const { return Children; }
 
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)

@@ -10,6 +10,7 @@ namespace Mimou
 {
 	class GameObject;
 	class Panel;
+	class SceneHierarchyPanel;
 
 	class Scene
 	{
@@ -35,5 +36,6 @@ namespace Mimou
 
 		friend class GameObject;
 		friend class Panel;
+		friend class SceneHierarchyPanel;
 	};
 }

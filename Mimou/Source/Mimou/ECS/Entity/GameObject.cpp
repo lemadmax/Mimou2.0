@@ -10,6 +10,7 @@ namespace Mimou
 	{
 		m_EntityID = OwnedScene->m_Registry.create();
 		TransformComponent& Transform = OwnedScene->m_Registry.emplace<TransformComponent>(m_EntityID);
+		TagComponent& Tag = OwnedScene->m_Registry.emplace<TagComponent>(m_EntityID);
 	}
 
 	GameObject::~GameObject()

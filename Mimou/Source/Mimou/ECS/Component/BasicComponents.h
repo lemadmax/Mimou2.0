@@ -14,6 +14,16 @@ namespace Mimou
 
 	};
 
+	struct TagComponent
+	{
+		std::string Tag = "GameObject";
+
+		TagComponent() = default;
+		TagComponent(const TagComponent&) = default;
+		TagComponent(const std::string& InTag)
+			: Tag(InTag) {}
+	};
+
 	struct TransformComponent
 	{
 		glm::vec3 Translation = { 0.0f, 0.0f, 0.0f };
