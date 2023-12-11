@@ -12,7 +12,7 @@ namespace Mimou
 	class Panel
 	{
 	public:
-		Panel() = delete;
+		Panel() = default;
 		Panel(PanelType Type, const std::string& PanelName, const Ref<Scene>& Scene);
 		virtual ~Panel() = default;
 

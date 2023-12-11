@@ -130,11 +130,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\Panel\Panel.h" />
+    <ClInclude Include="Source\Panel\PropertiesPanel.h" />
     <ClInclude Include="Source\Panel\SceneHierarchyPanel.h" />
     <ClInclude Include="Source\Layer\EditorLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Panel\Panel.cpp" />
+    <ClCompile Include="Source\Panel\PropertiesPanel.cpp" />
     <ClCompile Include="Source\Panel\SceneHierarchyPanel.cpp" />
     <ClCompile Include="Source\EditorApp.cpp" />
     <ClCompile Include="Source\Layer\EditorLayer.cpp" />

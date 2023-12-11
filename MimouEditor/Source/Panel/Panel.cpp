@@ -1,5 +1,6 @@
 #include "Panel.h"
 #include "SceneHierarchyPanel.h"
+#include "PropertiesPanel.h"
 
 namespace Mimou
 {
@@ -11,6 +12,11 @@ namespace Mimou
 		case PanelType::SceneHierarchyPanel:
 		{
 			return CreateRef<SceneHierarchyPanel>(PanelName, Scene);
+			break;
+		}
+		case PanelType::PropertiesPanel:
+		{
+			return CreateRef<PropertiesPanel>(PanelName, Scene);
 			break;
 		}
 		default:

@@ -18,6 +18,7 @@
     <ClInclude Include="Source\Panel\SceneHierarchyPanel.h">
       <Filter>Panel</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Panel\PropertiesPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\EditorApp.cpp" />
@@ -30,5 +31,6 @@
     <ClCompile Include="Source\Panel\SceneHierarchyPanel.cpp">
       <Filter>Panel</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Panel\PropertiesPanel.cpp" />
   </ItemGroup>
 </Project>

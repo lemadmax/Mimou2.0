@@ -9,7 +9,7 @@ public:
 	EditorApp(const std::string& AppName)
 		: Mimou::Application(AppName)
 	{
-		PushLayer(new EditorLayer());
+		PushLayer(EditorLayer::GetInstance());
 	}
 	~EditorApp()
 	{

@@ -1,57 +1,70 @@
 #pragma once
 #include "Mimou.h"
-#include "Panel/SceneHierarchyPanel.h"
+#include "Panel/Panel.h"
 
-class EditorLayer : public Layer
+namespace Mimou
 {
-public:
-	EditorLayer();
 
-	~EditorLayer();
+	class EditorLayer : public Layer
+	{
+	private:
+		EditorLayer();
 
-	virtual void OnUpdate(Timestep Ts) override;
-	virtual void OnAttach() override;
-	virtual void OnDetach() override;
-	virtual void OnImGUIRender() override;
-	virtual void OnEvent(EventBase& Event) override;
+	public:
+		~EditorLayer();
 
-private:
-	void ShowMenuBar();
-	void ShowViewport();
-	void ShowSettingPanel();
+		static EditorLayer* GetInstance();
 
-	void ShowPanel(PanelType Type, const std::string& PanelName);
+		virtual void OnUpdate(Timestep Ts) override;
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGUIRender() override;
+		virtual void OnEvent(EventBase& Event) override;
 
-private:
-	float uTime = 0.0f;
+	public:
+		bool IsPanelOpen(PanelType Type);
+		Ref<Panel> GetPanel(PanelType Type);
 
-	Ref<Scene> m_ActiveScene;
+	private:
+		void ShowMenuBar();
+		void ShowViewport();
+		void ShowSettingPanel();
 
-	Ref<FrameBuffer> m_FrameBuffer;
+		void ShowPanel(PanelType Type, const std::string& PanelName);
 
-	Ref<VertexArray> EditorGridVA;
-	Ref<Shader> EditorGridShader;
+	private:
+		float uTime = 0.0f;
+
+		Ref<Scene> m_ActiveScene;
+
+		Ref<FrameBuffer> m_FrameBuffer;
+
+		Ref<VertexArray> EditorGridVA;
+		Ref<Shader> EditorGridShader;
 
 
-	Ref<Shader> SphereShader;
-	Ref<VertexArray> SphereVertices;
+		Ref<Shader> SphereShader;
+		Ref<VertexArray> SphereVertices;
 
-	Ref<StaticMesh> SphereMesh;
-	Ref<Light> DirectionalLight;
-	Ref<Light> MovingLight;
+		Ref<StaticMesh> SphereMesh;
+		Ref<Light> DirectionalLight;
+		Ref<Light> MovingLight;
 
-	EditorCamera EditorCamera;
+		EditorCamera EditorCamera;
 
-	bool m_IsViewportFocused;
-	bool m_IsViewportHovered;
-	glm::vec2 m_ViewportSize;
-	Ref<Texture> m_TestTexture;
+		bool m_IsViewportFocused;
+		bool m_IsViewportHovered;
+		glm::vec2 m_ViewportSize;
+		Ref<Texture> m_TestTexture;
 
-	// UI Panels
-	std::map<PanelType, Ref<Panel>> ActivePanels;
-	std::map<PanelType, Ref<Panel>> CachedPanels;
+		// UI Panels
+		std::map<PanelType, Ref<Panel>> ActivePanels;
+		std::map<PanelType, Ref<Panel>> CachedPanels;
 
-private:
-	// temporary variables
-	float TmpColor[3];
-};
+	private:
+		// temporary variables
+		float TmpColor[3];
+
+		static EditorLayer* s_Instance;
+	};
+}
