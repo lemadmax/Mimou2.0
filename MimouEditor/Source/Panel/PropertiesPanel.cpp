@@ -5,6 +5,7 @@
 
 namespace Mimou
 {
+	extern void DrawVec3Control(const std::string& Label, glm::vec3& Values);
 	PropertiesPanel::PropertiesPanel(const std::string& PanelName, const Ref<Scene>& Scene)
 		: Panel(PanelType::PropertiesPanel, PanelName, Scene)
 	{
@@ -28,20 +29,28 @@ namespace Mimou
 			return;
 		}
 
-		ShowTagComponent();
+		ShowComponent<TagComponent>("Tag Component", [&]() {
+			TagComponent* Tag = SelectedObject->TryGetComponent<TagComponent>();
+			if (Tag)
+			{
+				char Buffer[256];
+				memset(Buffer, 0, sizeof(Buffer));
+				strcpy_s(Buffer, sizeof(Buffer), Tag->Tag.c_str());
+				if (ImGui::InputText("Tag", Buffer, sizeof(Buffer)))
+				{
+					Tag->Tag = std::string(Buffer);
+				}
+			}
+			});
+
+		ShowComponent<TransformComponent>("Transform Component", [&]() {
+			TransformComponent* Transform = SelectedObject->TryGetComponent<TransformComponent>();
+			if (Transform)
+			{
+				DrawVec3Control("Transform", Transform->Translation);
+			}
+			});
 
 		ImGui::End();
-	}
-
-	void PropertiesPanel::ShowTagComponent()
-	{
-		TagComponent* Tag = SelectedObject->TryGetComponent<TagComponent>();
-		if (Tag)
-		{
-			char Buffer[256];
-			memset(Buffer, 0, sizeof(Buffer));
-			strcpy_s(Buffer, sizeof(Buffer), Tag->Tag.c_str());
-			ImGui::InputText("Tag", Buffer, sizeof(Buffer));
-		}
 	}
 }

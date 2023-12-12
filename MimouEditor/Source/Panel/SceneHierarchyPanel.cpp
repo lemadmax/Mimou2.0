@@ -23,6 +23,7 @@ namespace Mimou
 			{
 				ShowGameObject(GB);
 			}
+			if (!SelectedObject) SelectedObject = GB;
 		}
 
 		ImGui::End();

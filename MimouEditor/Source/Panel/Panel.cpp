@@ -37,4 +37,9 @@ namespace Mimou
 	{
 			
 	}
+
+	void DrawVec3Control(const std::string& Label, glm::vec3& Values)
+	{
+		ImGui::Text(Label.c_str());
+	}
 }
