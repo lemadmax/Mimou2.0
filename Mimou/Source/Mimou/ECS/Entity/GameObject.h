@@ -42,6 +42,12 @@ namespace Mimou
 			return m_Scene->m_Registry.get<T>(m_EntityID);
 		}
 
+		template<typename T>
+		T* TryGetComponent()
+		{
+			return m_Scene->m_Registry.try_get<T>(m_EntityID);
+		}
+
 	private:
 		entt::entity m_EntityID;
 

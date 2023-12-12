@@ -37,7 +37,7 @@ namespace Mimou
 		}
 		else
 		{
-			base_flags |= ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
+			base_flags |= ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 		}
 		if (SelectedObject == GB)
 		{
@@ -47,7 +47,7 @@ namespace Mimou
 		std::string GBTag = m_Scene->m_Registry.get<TagComponent>(ID).Tag;
 		if (ImGui::TreeNodeEx((void*)(uint32_t)ID, base_flags, GBTag.c_str()))
 		{
-			if (ImGui::IsItemClicked() || ImGui::IsItemToggledOpen())
+			if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
 			{
 				SelectedObject = GB;
 			}

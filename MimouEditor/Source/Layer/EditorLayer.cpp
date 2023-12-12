@@ -48,6 +48,7 @@ namespace Mimou
 		m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
 
 		ShowPanel(PanelType::SceneHierarchyPanel, m_ActiveScene->GetName());
+		ShowPanel(PanelType::PropertiesPanel, "Properties");
 
 		Ref<GameObject> TestGB0 = m_ActiveScene->CreateGameObject();
 		TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(2, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
@@ -149,7 +150,7 @@ namespace Mimou
 
 		ShowMenuBar();
 		ShowViewport();
-		ShowSettingPanel();
+		//ShowSettingPanel();
 
 		for (auto Panels : ActivePanels)
 		{

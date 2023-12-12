@@ -10,7 +10,14 @@ namespace Mimou
 
 		virtual void OnImGUIUpdate() override;
 
+
 	private:
 
+		void ShowTagComponent();
+
+		void ShowTransformComponent();
+
+	private:
+		Ref<GameObject> SelectedObject;
 	};
 }
