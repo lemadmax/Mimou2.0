@@ -2,6 +2,8 @@
 #include "SceneHierarchyPanel.h"
 #include "PropertiesPanel.h"
 
+#include "imgui_internal.h"
+
 namespace Mimou
 {
 
@@ -38,8 +40,24 @@ namespace Mimou
 			
 	}
 
-	void DrawVec3Control(const std::string& Label, glm::vec3& Values)
+	void PanelUtilities::DrawVec3Control(const std::string& Label, glm::vec3& Values)
 	{
+		static float DragSpeed = 0.001;
+		ImGui::PushMultiItemsWidths(4, ImGui::CalcItemWidth());
+
+		ImGui::DragFloat("X", &Values.x, DragSpeed);
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+
+		ImGui::DragFloat("Y", &Values.y, DragSpeed);
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+
+		ImGui::DragFloat("Z", &Values.z, DragSpeed);
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+
 		ImGui::Text(Label.c_str());
+		ImGui::PopItemWidth();
 	}
 }

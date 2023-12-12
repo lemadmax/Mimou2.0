@@ -5,7 +5,7 @@
 
 namespace Mimou
 {
-	extern void DrawVec3Control(const std::string& Label, glm::vec3& Values);
+	//extern void DrawVec3Control(const std::string& Label, glm::vec3& Values);
 	PropertiesPanel::PropertiesPanel(const std::string& PanelName, const Ref<Scene>& Scene)
 		: Panel(PanelType::PropertiesPanel, PanelName, Scene)
 	{
@@ -44,10 +44,25 @@ namespace Mimou
 			});
 
 		ShowComponent<TransformComponent>("Transform Component", [&]() {
+			ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_DefaultOpen
+				| ImGuiTreeNodeFlags_OpenOnArrow
+				| ImGuiTreeNodeFlags_OpenOnDoubleClick;
+
 			TransformComponent* Transform = SelectedObject->TryGetComponent<TransformComponent>();
 			if (Transform)
 			{
-				DrawVec3Control("Transform", Transform->Translation);
+				if (ImGui::TreeNodeEx("Transform", NodeFlags))
+				{
+					PanelUtilities::DrawVec3Control("Translation", Transform->Translation);
+					ImGui::Spacing();
+					
+					PanelUtilities::DrawVec3Control("Rotation", Transform->Rotation);
+					ImGui::Spacing();
+
+					PanelUtilities::DrawVec3Control("Scale", Transform->Scale);
+
+					ImGui::TreePop();
+				}
 			}
 			});
 
