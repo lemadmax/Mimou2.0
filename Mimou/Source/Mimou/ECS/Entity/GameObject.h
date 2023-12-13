@@ -29,6 +29,11 @@ namespace Mimou
 		inline const entt::entity& GetEntityID() const { return m_EntityID; }
 		inline std::set<Ref<GameObject>> GetChildren() const { return Children; }
 
+		glm::mat4 GetWorldTransform();
+		glm::vec3 GetWorldTranslation();
+		glm::vec3 GetWorldRotation();
+		glm::vec3 GetWorldScale();
+
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)
 		{

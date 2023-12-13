@@ -53,6 +53,8 @@ namespace Mimou
 			{
 				if (ImGui::TreeNodeEx("Transform", NodeFlags))
 				{
+					ImGui::Spacing();
+
 					PanelUtilities::DrawVec3Control("Translation", Transform->Translation);
 					ImGui::Spacing();
 					
@@ -60,9 +62,15 @@ namespace Mimou
 					ImGui::Spacing();
 
 					PanelUtilities::DrawVec3Control("Scale", Transform->Scale);
+					ImGui::Spacing();
 
 					ImGui::TreePop();
 				}
+				//if (ImGui::TreeNodeEx("World Transofrm", NodeFlags))
+				//{
+
+				//	ImGui::TreePop();
+				//}
 			}
 			});
 

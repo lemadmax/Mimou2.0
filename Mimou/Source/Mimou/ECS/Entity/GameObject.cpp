@@ -50,4 +50,34 @@ namespace Mimou
 		}
 	}
 
+	glm::mat4 GameObject::GetWorldTransform()
+	{
+		TransformComponent* TransformComp = TryGetComponent<TransformComponent>();
+		ME_ASSERT(TransformComp != nullptr, "Game object has no transform component");
+
+		glm::mat4 Transform = TransformComp->GetTransform();
+		if (m_Parent)
+		{
+			return m_Parent->GetWorldTransform() * Transform;
+		}
+		return Transform;
+	}
+
+	glm::vec3 GameObject::GetWorldTranslation()
+	{
+		return glm::vec3();
+	}
+
+	glm::vec3 GameObject::GetWorldRotation()
+	{
+
+		return glm::vec3();
+	}
+
+	glm::vec3 GameObject::GetWorldScale()
+	{
+
+		return glm::vec3();
+	}
+
 }

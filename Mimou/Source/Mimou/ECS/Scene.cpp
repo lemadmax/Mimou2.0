@@ -43,9 +43,11 @@ namespace Mimou
 			auto View = m_Registry.view<TransformComponent, StaticMeshComponent>();
 			for (auto Entity : View)
 			{
-				auto [Transform, StaticMesh] = View.get<TransformComponent, StaticMeshComponent>(Entity);
+				auto [TransformComp, StaticMesh] = View.get<TransformComponent, StaticMeshComponent>(Entity);
+				Ref<GameObject> GB = GameObjects[Entity];
+				glm::mat4 Transform = GB->GetWorldTransform();
 
-				Renderer3D::DrawMesh(StaticMesh.VertexArray, StaticMesh.Mat, Transform.GetTransform());
+				Renderer3D::DrawMesh(StaticMesh.VertexArray, StaticMesh.Mat, Transform);
 			}
 		}
 

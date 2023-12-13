@@ -43,6 +43,9 @@ namespace Mimou
 	void PanelUtilities::DrawVec3Control(const std::string& Label, glm::vec3& Values)
 	{
 		static float DragSpeed = 0.001;
+
+		ImGui::PushID(Label.c_str());
+
 		ImGui::PushMultiItemsWidths(4, ImGui::CalcItemWidth());
 
 		ImGui::DragFloat("X", &Values.x, DragSpeed);
@@ -59,5 +62,7 @@ namespace Mimou
 
 		ImGui::Text(Label.c_str());
 		ImGui::PopItemWidth();
+
+		ImGui::PopID();
 	}
 }
