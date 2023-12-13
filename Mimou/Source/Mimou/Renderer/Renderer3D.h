@@ -34,7 +34,7 @@ namespace Mimou
 
 		static void OnWindowResized(uint32_t Width, uint32_t Height);
 
-		static void BeginScene(SceneCamera& Camera, const glm::mat4& Transform, const DirLight* DirLights, uint32_t LightCnt);
+		static void BeginScene(const Ref<SceneCamera>& Camera, const glm::mat4& Transform, const DirLight* DirLights, uint32_t LightCnt);
 
 		static void BeginScene(EditorCamera& Camera, const DirLight* DirLights, uint32_t LightCnt);
 

@@ -66,6 +66,41 @@ namespace Mimou
 			//}
 			});
 
+		ShowComponent<CameraComponent>("Camera", [&](CameraComponent* Camera) {
+			Ref<SceneCamera> CameraInst = Camera->Camera;
+			ImGui::Spacing();
+			ImGui::Checkbox("Is Primiary", &Camera->IsPrimary);
+			ImGui::Spacing();
+
+			float FOV = CameraInst->GetFOV();
+			if (ImGui::InputFloat("FOV", &FOV))
+			{
+				CameraInst->SetFOV(FOV);
+			}
+			ImGui::Spacing();
+
+			ImGui::PushItemWidth(80.0f);
+
+			float zFar = CameraInst->GetZFar();
+			float zNear = CameraInst->GetZNear();
+			bool zFarChanged = ImGui::DragFloat("Clip far", &zFar);
+			ImGui::SameLine();
+			bool zNearChanged = ImGui::DragFloat("Clip near", &zNear);
+
+			if (zFarChanged || zNearChanged)
+			{
+				CameraInst->SetClipDistance(zFar, zNear);
+			}
+
+			ImGui::PopItemWidth();
+
+			ImGui::Spacing();
+			});
+
+		ShowComponent<LightComponent>("Light", [&](LightComponent* Light) {
+
+			});
+
 		ImGui::End();
 	}
 }

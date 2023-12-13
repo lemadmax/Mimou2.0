@@ -40,23 +40,55 @@ namespace Mimou
 			
 	}
 
-	void PanelUtilities::DrawVec3Control(const std::string& Label, glm::vec3& Values)
+	void PanelUtilities::DrawVec3Control(const std::string& Label, glm::vec3& Values, const std::string& ItemLabels)
 	{
+		ME_ENGINE_ASSERT(ItemLabels.length == 3, "Bad vec3 item labels");
 		static float DragSpeed = 0.001;
 
 		ImGui::PushID(Label.c_str());
 
 		ImGui::PushMultiItemsWidths(4, ImGui::CalcItemWidth());
 
-		ImGui::DragFloat("X", &Values.x, DragSpeed);
+		
+		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "%c", ItemLabels[0]);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.0f, 0.0f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.4f, 0.0f, 0.0f, 1.0f));
+		if (ImGui::Button(std::format("{}:", ItemLabels[0]).c_str()))
+		{
+			Values.x = 0.0f;
+		}
+		ImGui::PopStyleColor(3);
+
+		ImGui::SameLine();
+		ImGui::DragFloat("##X", &Values.x, DragSpeed);
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
-		ImGui::DragFloat("Y", &Values.y, DragSpeed);
+		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "%c", ItemLabels[1]);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.0f, 0.8f, 0.0f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.0f, 0.4f, 0.0f, 1.0f));
+		ImGui::Button(std::format("{}:", ItemLabels[1]).c_str());
+		ImGui::PopStyleColor(3);
+
+		ImGui::SameLine();
+		ImGui::DragFloat("##Y", &Values.y, DragSpeed);
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
-		ImGui::DragFloat("Z", &Values.z, DragSpeed);
+		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "%c", ItemLabels[2]);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 1.0f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.0f, 0.0f, 0.8f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.0f, 0.0f, 0.4f, 1.0f));
+		ImGui::Button(std::format("{}:", ItemLabels[2]).c_str());
+		ImGui::PopStyleColor(3);
+
+		ImGui::SameLine();
+		ImGui::DragFloat("##Z", &Values.z, DragSpeed);
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 

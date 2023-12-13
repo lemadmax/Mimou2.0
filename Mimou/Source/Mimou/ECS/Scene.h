@@ -21,7 +21,6 @@ namespace Mimou
 
 		virtual void OnUpdate(Timestep Ts);
 		virtual void OnUpdateEditor(Timestep Ts, EditorCamera& EditorCamera);
-		virtual void OnUpdateEditor(Timestep Ts, const Ref<SceneCamera>& Camera);
 
 		inline const std::string& GetName() const { return m_SceneName; }
 

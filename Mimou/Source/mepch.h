@@ -10,6 +10,7 @@
 #include<vector>
 #include<unordered_map>
 #include<map>
+#include<format>
 
 #include "Mimou/Logging.h"
 

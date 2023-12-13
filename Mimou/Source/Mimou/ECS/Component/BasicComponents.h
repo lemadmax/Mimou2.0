@@ -2,7 +2,7 @@
 #include "Mimou/Core.h"
 #include "Mimou/Renderer/VertexArray.h"
 #include "Mimou/Renderer/Material/Material.h"
-#include "Mimou/Renderer/Camera/Camera.h"
+#include "Mimou/Renderer/Camera/SceneCamera.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtx/quaternion.hpp"
@@ -40,6 +40,17 @@ namespace Mimou
 			glm::mat4 RotationMat = glm::toMat4(glm::quat(Rotation));
 
 			return glm::translate(glm::mat4(1.0f), Translation) * RotationMat * glm::scale(glm::mat4(1.0f), Scale);
+		}
+
+		glm::quat Quat() const
+		{
+			return glm::quat(Rotation);
+		}
+
+		glm::vec3 GetDirection() const
+		{
+			glm::vec3 Direction = glm::quat(Rotation) * glm::vec3(0.0f, 0.0f, 1.0f);
+			return Direction;
 		}
 	};
 

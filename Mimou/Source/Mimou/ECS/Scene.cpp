@@ -38,8 +38,8 @@ namespace Mimou
 		}
 
 		Ref<SceneCamera> PrimaryCamera;
+		glm::mat4 CameraTransform;
 		{
-			glm::mat4 CameraTransform;
 			auto View = m_Registry.view<TransformComponent, CameraComponent>();
 			for (auto Entity : View)
 			{
@@ -62,14 +62,22 @@ namespace Mimou
 				if (Light.IsOn)
 				{
 					ME_ENGINE_ASSERT(LightCnt + 1 <= MAX_LIGHT_NUM, "Light number exceeds the limits");
-
-					//DirLight[LightCnt++] = {Light.Color, Light.Intensity}
-
+					if (Light.IsDirectional)
+					{
+						DirLight[LightCnt++] = { Light.Color, Transform.GetDirection(), Light.Intensity };
+					}
 				}
 			}
 		}
 
-		Renderer3D::BeginScene(EditorCamera, std::vector<Renderer3D::DirectionalLight>());
+		if (PrimaryCamera)
+		{
+			Renderer3D::BeginScene(PrimaryCamera, CameraTransform, DirLight, LightCnt);
+		}
+		else
+		{
+			Renderer3D::BeginScene(EditorCamera, DirLight, LightCnt);
+		}
 
 		RenderScene();
 

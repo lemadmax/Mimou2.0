@@ -30,6 +30,6 @@ namespace Mimou
 	class PanelUtilities
 	{
 	public:
-		static void DrawVec3Control(const std::string& Label, glm::vec3& Values);
+		static void DrawVec3Control(const std::string& Label, glm::vec3& Values, const std::string& ItemLabels = "XYZ");
 	};
 }

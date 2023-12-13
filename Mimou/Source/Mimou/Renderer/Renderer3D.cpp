@@ -20,21 +20,23 @@ namespace Mimou
 		RenderCommand::SetViewport(0, 0, Width, Height);
 	}
 
-	void Renderer3D::BeginScene(SceneCamera& Camera, const glm::mat4& Transform, const DirLight* DirLights, uint32_t LightCnt)
+	void Renderer3D::BeginScene(const Ref<SceneCamera>& Camera, const glm::mat4& Transform, const DirLight* DirLights, uint32_t LightCnt)
 	{
-		s_SceneData->ViewProjectionMatrix = Camera.GetProjection() * glm::inverse(Transform);
+		s_SceneData->ViewProjectionMatrix = Camera->GetProjection() * glm::inverse(Transform);
+		s_SceneData->LightCnt = LightCnt;
 		memcpy(s_SceneData->DirLights, DirLights, sizeof(Renderer3D::DirLight) * LightCnt);
 	}
 
 	void Renderer3D::BeginScene(EditorCamera& Camera, const DirLight* DirLights, uint32_t LightCnt)
 	{
 		s_SceneData->ViewProjectionMatrix = Camera.GetViewProjection();
+		s_SceneData->LightCnt = LightCnt;
 		memcpy(s_SceneData->DirLights, DirLights, sizeof(Renderer3D::DirLight) * LightCnt);
 	}
 
 	void Renderer3D::EndScene()
 	{
-
+		s_SceneData->LightCnt = 0;
 	}
 	void Renderer3D::DrawMesh(Ref<VertexArray> VA, Ref<Material> Mat, const glm::mat4& Transform)
 	{
