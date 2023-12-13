@@ -13,25 +13,27 @@ namespace Mimou
 
 	private:
 
-		void ShowTagComponent();
-
-		template<typename T>
-		void ShowComponent(const std::string& Name, std::function<void()> Fn)
+		template<typename T, typename Fn>
+		void ShowComponent(const std::string& Name, Fn DrawFunc)
 		{
-			ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_SpanAvailWidth 
-				| ImGuiTreeNodeFlags_OpenOnArrow 
-				| ImGuiTreeNodeFlags_OpenOnDoubleClick 
-				| ImGuiTreeNodeFlags_DefaultOpen
-				| ImGuiTreeNodeFlags_Framed;
-
-			if (ImGui::TreeNodeEx(Name.c_str(), NodeFlags))
+			T* Component = SelectedObject->TryGetComponent<T>();
+			if (Component)
 			{
-				ImGui::Spacing();
+				ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_SpanAvailWidth
+					| ImGuiTreeNodeFlags_OpenOnArrow
+					| ImGuiTreeNodeFlags_OpenOnDoubleClick
+					| ImGuiTreeNodeFlags_DefaultOpen
+					| ImGuiTreeNodeFlags_Framed;
 
-				Fn();
+				if (ImGui::TreeNodeEx(Name.c_str(), NodeFlags))
+				{
+					ImGui::Spacing();
 
-				ImGui::Spacing();
-				ImGui::TreePop();
+					DrawFunc(Component);
+
+					ImGui::Spacing();
+					ImGui::TreePop();
+				}
 			}
 		}
 

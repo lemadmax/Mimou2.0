@@ -37,19 +37,41 @@ namespace Mimou
 			GameObject.second->OnUpdate(Ts);
 		}
 
-		Renderer3D::BeginScene(EditorCamera, std::vector<Renderer3D::DirectionalLight>());
-
+		Ref<SceneCamera> PrimaryCamera;
 		{
-			auto View = m_Registry.view<TransformComponent, StaticMeshComponent>();
+			glm::mat4 CameraTransform;
+			auto View = m_Registry.view<TransformComponent, CameraComponent>();
 			for (auto Entity : View)
 			{
-				auto [TransformComp, StaticMesh] = View.get<TransformComponent, StaticMeshComponent>(Entity);
-				Ref<GameObject> GB = GameObjects[Entity];
-				glm::mat4 Transform = GB->GetWorldTransform();
-
-				Renderer3D::DrawMesh(StaticMesh.VertexArray, StaticMesh.Mat, Transform);
+				auto [Transform, Camera] = m_Registry.get<TransformComponent, CameraComponent>(Entity);
+				if (Camera.IsPrimary)
+				{
+					PrimaryCamera = Camera.Camera;
+					CameraTransform = Transform.GetTransform();
+				}
 			}
 		}
+
+		Renderer3D::DirLight DirLight[MAX_LIGHT_NUM];
+		uint32_t LightCnt = 0;
+		{
+			auto View = m_Registry.view<TransformComponent, LightComponent>();
+			for (auto Entity : View)
+			{
+				auto [Transform, Light] = m_Registry.get<TransformComponent, LightComponent>(Entity);
+				if (Light.IsOn)
+				{
+					ME_ENGINE_ASSERT(LightCnt + 1 <= MAX_LIGHT_NUM, "Light number exceeds the limits");
+
+					//DirLight[LightCnt++] = {Light.Color, Light.Intensity}
+
+				}
+			}
+		}
+
+		Renderer3D::BeginScene(EditorCamera, std::vector<Renderer3D::DirectionalLight>());
+
+		RenderScene();
 
 		Renderer3D::EndScene();
 	}
@@ -73,5 +95,20 @@ namespace Mimou
 		}
 		GameObjects.erase(GameObject->GetEntityID());
 		return GameObject->OnDestroy();
+	}
+
+	void Scene::RenderScene()
+	{
+		{
+			auto View = m_Registry.view<TransformComponent, StaticMeshComponent>();
+			for (auto Entity : View)
+			{
+				auto [TransformComp, StaticMesh] = View.get<TransformComponent, StaticMeshComponent>(Entity);
+				Ref<GameObject> GB = GameObjects[Entity];
+				glm::mat4 Transform = GB->GetWorldTransform();
+
+				Renderer3D::DrawMesh(StaticMesh.VertexArray, StaticMesh.Mat, Transform);
+			}
+		}
 	}
 }

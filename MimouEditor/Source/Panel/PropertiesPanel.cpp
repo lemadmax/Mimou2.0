@@ -29,49 +29,41 @@ namespace Mimou
 			return;
 		}
 
-		ShowComponent<TagComponent>("Tag Component", [&]() {
-			TagComponent* Tag = SelectedObject->TryGetComponent<TagComponent>();
-			if (Tag)
+		ShowComponent<TagComponent>("Tag Component", [&](TagComponent* Tag) {
+			char Buffer[256];
+			memset(Buffer, 0, sizeof(Buffer));
+			strcpy_s(Buffer, sizeof(Buffer), Tag->Tag.c_str());
+			if (ImGui::InputText("Tag", Buffer, sizeof(Buffer)))
 			{
-				char Buffer[256];
-				memset(Buffer, 0, sizeof(Buffer));
-				strcpy_s(Buffer, sizeof(Buffer), Tag->Tag.c_str());
-				if (ImGui::InputText("Tag", Buffer, sizeof(Buffer)))
-				{
-					Tag->Tag = std::string(Buffer);
-				}
+				Tag->Tag = std::string(Buffer);
 			}
 			});
 
-		ShowComponent<TransformComponent>("Transform Component", [&]() {
+		ShowComponent<TransformComponent>("Transform Component", [&](TransformComponent* Transform) {
 			ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_DefaultOpen
 				| ImGuiTreeNodeFlags_OpenOnArrow
 				| ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
-			TransformComponent* Transform = SelectedObject->TryGetComponent<TransformComponent>();
-			if (Transform)
+			if (ImGui::TreeNodeEx("Transform", NodeFlags))
 			{
-				if (ImGui::TreeNodeEx("Transform", NodeFlags))
-				{
-					ImGui::Spacing();
+				ImGui::Spacing();
 
-					PanelUtilities::DrawVec3Control("Translation", Transform->Translation);
-					ImGui::Spacing();
+				PanelUtilities::DrawVec3Control("Translation", Transform->Translation);
+				ImGui::Spacing();
 					
-					PanelUtilities::DrawVec3Control("Rotation", Transform->Rotation);
-					ImGui::Spacing();
+				PanelUtilities::DrawVec3Control("Rotation", Transform->Rotation);
+				ImGui::Spacing();
 
-					PanelUtilities::DrawVec3Control("Scale", Transform->Scale);
-					ImGui::Spacing();
+				PanelUtilities::DrawVec3Control("Scale", Transform->Scale);
+				ImGui::Spacing();
 
-					ImGui::TreePop();
-				}
-				//if (ImGui::TreeNodeEx("World Transofrm", NodeFlags))
-				//{
-
-				//	ImGui::TreePop();
-				//}
+				ImGui::TreePop();
 			}
+			//if (ImGui::TreeNodeEx("World Transofrm", NodeFlags))
+			//{
+
+			//	ImGui::TreePop();
+			//}
 			});
 
 		ImGui::End();

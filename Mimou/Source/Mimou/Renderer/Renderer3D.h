@@ -5,13 +5,15 @@
 #include "Mimou/Renderer/Material/Material.h"
 #include "Mimou/Renderer/Shader.h"
 
+#define MAX_LIGHT_NUM 256
+
 namespace Mimou
 {
 	class Renderer3D
 	{
 	public:
 
-		struct DirectionalLight
+		struct DirLight
 		{
 			glm::vec3 Color = { 1.0f, 1.0f, 1.0f };
 			glm::vec3 Direction = { 1.0f, 1.0f, 1.0f };
@@ -32,9 +34,9 @@ namespace Mimou
 
 		static void OnWindowResized(uint32_t Width, uint32_t Height);
 
-		static void BeginScene(SceneCamera& Camera, const glm::mat4& Transform, std::vector<DirectionalLight> DirLights);
+		static void BeginScene(SceneCamera& Camera, const glm::mat4& Transform, const DirLight* DirLights, uint32_t LightCnt);
 
-		static void BeginScene(EditorCamera& Camera, std::vector<DirectionalLight> DirLights);
+		static void BeginScene(EditorCamera& Camera, const DirLight* DirLights, uint32_t LightCnt);
 
 		static void EndScene();
 
@@ -44,7 +46,8 @@ namespace Mimou
 		struct SceneData
 		{
 			glm::mat4 ViewProjectionMatrix;
-			std::vector<DirectionalLight> DirLights;
+			DirLight DirLights[MAX_LIGHT_NUM];
+			uint32_t LightCnt;
 		};
 
 		static SceneData* s_SceneData;

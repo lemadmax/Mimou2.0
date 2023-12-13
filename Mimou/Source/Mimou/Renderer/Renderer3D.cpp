@@ -20,16 +20,16 @@ namespace Mimou
 		RenderCommand::SetViewport(0, 0, Width, Height);
 	}
 
-	void Renderer3D::BeginScene(SceneCamera& Camera, const glm::mat4& Transform, std::vector<DirectionalLight> DirLights)
+	void Renderer3D::BeginScene(SceneCamera& Camera, const glm::mat4& Transform, const DirLight* DirLights, uint32_t LightCnt)
 	{
 		s_SceneData->ViewProjectionMatrix = Camera.GetProjection() * glm::inverse(Transform);
-		s_SceneData->DirLights = DirLights;
+		memcpy(s_SceneData->DirLights, DirLights, sizeof(Renderer3D::DirLight) * LightCnt);
 	}
 
-	void Renderer3D::BeginScene(EditorCamera& Camera, std::vector<DirectionalLight> DirLights)
+	void Renderer3D::BeginScene(EditorCamera& Camera, const DirLight* DirLights, uint32_t LightCnt)
 	{
 		s_SceneData->ViewProjectionMatrix = Camera.GetViewProjection();
-		s_SceneData->DirLights = DirLights;
+		memcpy(s_SceneData->DirLights, DirLights, sizeof(Renderer3D::DirLight) * LightCnt);
 	}
 
 	void Renderer3D::EndScene()
@@ -43,8 +43,8 @@ namespace Mimou
 		Mat->Bind();
 
 		Ref<Shader> Shader = Mat->GetShader();
-		Mat->GetShader()->SetInt("u_nl", s_SceneData->DirLights.size());
-		for (int i = 0; i < s_SceneData->DirLights.size(); i++)
+		Mat->GetShader()->SetInt("u_nl", s_SceneData->LightCnt);
+		for (int i = 0; i < s_SceneData->LightCnt; i++)
 		{
 			s_SceneData->DirLights[i].SetUniform(i, Mat->GetShader());
 		}

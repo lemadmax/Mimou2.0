@@ -84,9 +84,6 @@
     <ClInclude Include="Source\Mimou\ECS\Component\BasicComponents.h">
       <Filter>Source\Mimou\ECS\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mimou\ECS\Component\ComponentBase.h">
-      <Filter>Source\Mimou\ECS\Component</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h">
       <Filter>Source\Mimou\ECS\Entity</Filter>
     </ClInclude>
@@ -235,9 +232,6 @@
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
       <Filter>Source\Mimou</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mimou\ECS\Component\ComponentBase.cpp">
-      <Filter>Source\Mimou\ECS\Component</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp">
       <Filter>Source\Mimou\ECS\Entity</Filter>
