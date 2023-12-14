@@ -5,12 +5,12 @@
 namespace Mimou
 {
 
-	GameObject::GameObject(Scene* OwnedScene, Ref<GameObject> Parent)
+	GameObject::GameObject(Scene* OwnedScene, const std::string& Name, Ref<GameObject> Parent)
 		: m_Scene(OwnedScene), m_Parent(Parent)
 	{
 		m_EntityID = OwnedScene->m_Registry.create();
 		TransformComponent& Transform = OwnedScene->m_Registry.emplace<TransformComponent>(m_EntityID);
-		TagComponent& Tag = OwnedScene->m_Registry.emplace<TagComponent>(m_EntityID);
+		TagComponent& Tag = OwnedScene->m_Registry.emplace<TagComponent>(m_EntityID, Name);
 	}
 
 	GameObject::~GameObject()

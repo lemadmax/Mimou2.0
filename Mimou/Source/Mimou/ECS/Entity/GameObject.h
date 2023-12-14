@@ -12,7 +12,7 @@ namespace Mimou
 	{
 	public:
 		GameObject() = delete;
-		GameObject(Scene* OwnedScene, Ref<GameObject> Parent = nullptr);
+		GameObject(Scene* OwnedScene, const std::string& Name = "Game Object", Ref<GameObject> Parent = nullptr);
 		virtual ~GameObject();
 
 		virtual void OnCreate();

@@ -98,7 +98,16 @@ namespace Mimou
 			});
 
 		ShowComponent<LightComponent>("Light", [&](LightComponent* Light) {
+			ImGui::Spacing();
+			ImGui::Checkbox("Is on", &Light->IsOn);
+			ImGui::Spacing();
 
+			PanelUtilities::DrawVec3Control("Light color", Light->Color, "RGB");
+			ImGui::Spacing();
+
+			ImGui::DragFloat("Intensity", &Light->Intensity, 0.01f, 0.0f, 1.0f, "%.2f");
+
+			ImGui::Spacing();
 			});
 
 		ImGui::End();

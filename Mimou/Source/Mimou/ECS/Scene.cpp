@@ -84,9 +84,9 @@ namespace Mimou
 		Renderer3D::EndScene();
 	}
 
-	Ref<GameObject> Scene::CreateGameObject(Ref<GameObject> Parent)
+	Ref<GameObject> Scene::CreateGameObject(const std::string& Name, Ref<GameObject> Parent)
 	{
-		Ref<GameObject> Out = CreateRef<GameObject>(this, Parent);
+		Ref<GameObject> Out = CreateRef<GameObject>(this, Name, Parent);
 		if (Parent)
 		{
 			Parent->AddChild(Out);

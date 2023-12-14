@@ -22,6 +22,7 @@ namespace Mimou
 
 		ShaderLibrary::GetInstance()->Load("Texture Shader", "Assets/Shaders/Texture.glsl");
 		ShaderLibrary::GetInstance()->Load("Lambert Shader", "Assets/Shaders/LambertShader.glsl");
+		ShaderLibrary::GetInstance()->Load("Phong Shader", "Assets/Shaders/PhongShader.glsl");
 	}
 
 	EditorLayer::~EditorLayer()
@@ -50,33 +51,38 @@ namespace Mimou
 		ShowPanel(PanelType::SceneHierarchyPanel, m_ActiveScene->GetName());
 		ShowPanel(PanelType::PropertiesPanel, "Properties");
 
-		Ref<GameObject> Camera1 = m_ActiveScene->CreateGameObject();
+		Ref<GameObject> Camera1 = m_ActiveScene->CreateGameObject("Camera 1");
 		Camera1->AddComponent<CameraComponent>(CreateRef<SceneCamera>());
-		Ref<GameObject> Camera2 = m_ActiveScene->CreateGameObject();
+		Ref<GameObject> Camera2 = m_ActiveScene->CreateGameObject("Camera 2");
 		Camera2->AddComponent<CameraComponent>(CreateRef<SceneCamera>());
 
-		Ref<GameObject> Light1 = m_ActiveScene->CreateGameObject();
+		Ref<GameObject> Light1 = m_ActiveScene->CreateGameObject("Light 1");
 		Light1->AddComponent<LightComponent>(glm::vec3(0.8f, 0.8f, 0.8f), 1.0f, true);
 		
-		Ref<GameObject> TestGB0 = m_ActiveScene->CreateGameObject();
-		TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(2, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
-		StaticMeshComponent& MeshComp = TestGB0->GetComponent<StaticMeshComponent>();
-		MeshComp.Mat->SetTexture(m_TestTexture);
-		//TransformComponent& TransformComp = TestGB0->GetComponent<TransformComponent>();
-		//TransformComp.Translation = glm::vec3(0.0f, 0.0f, 5.0f);
-		//TransformComp.Scale = glm::vec3(10.0f, 10.0f, 10.0f);
+		//Ref<GameObject> TestGB0 = m_ActiveScene->CreateGameObject("Square 1");
+		//TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(2, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
+		//StaticMeshComponent& MeshComp = TestGB0->GetComponent<StaticMeshComponent>();
+		//MeshComp.Mat->SetTexture(m_TestTexture);
 
-		Ref<GameObject> TestGB1 = m_ActiveScene->CreateGameObject();
-		TestGB1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(0, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
-		StaticMeshComponent& MeshComp1 = TestGB1->GetComponent<StaticMeshComponent>();
-		MeshComp1.Mat->SetTexture(m_TestTexture);
+		//Ref<GameObject> TestGB1 = m_ActiveScene->CreateGameObject("Square 2");
+		//TestGB1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(0, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
+		//StaticMeshComponent& MeshComp1 = TestGB1->GetComponent<StaticMeshComponent>();
+		//MeshComp1.Mat->SetTexture(m_TestTexture);
 
-		Ref<GameObject> TestGB2 = m_ActiveScene->CreateGameObject(TestGB1);
-		TestGB2->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(0, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
-		StaticMeshComponent& MeshComp2 = TestGB2->GetComponent<StaticMeshComponent>();
-		MeshComp2.Mat->SetTexture(m_TestTexture);
-		TransformComponent& Transform2 = TestGB2->GetComponent<TransformComponent>();
-		Transform2.Translation = glm::vec3(1, 1, 0);
+		//Ref<GameObject> TestGB2 = m_ActiveScene->CreateGameObject("Square 3", TestGB1);
+		//TestGB2->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(0, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
+		//StaticMeshComponent& MeshComp2 = TestGB2->GetComponent<StaticMeshComponent>();
+		//MeshComp2.Mat->SetTexture(m_TestTexture);
+		//TransformComponent& Transform2 = TestGB2->GetComponent<TransformComponent>();
+		//Transform2.Translation = glm::vec3(1, 1, 0);
+
+		Ref<GameObject> Cube1 = m_ActiveScene->CreateGameObject("Cube 1");
+		Cube1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateCubeVA(), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Phong Shader")));
+		
+		Ref<GameObject> Sphere1 = m_ActiveScene->CreateGameObject("Sphere 1");
+		Sphere1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSphereVA(50, 100), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Phong Shader")));
+		TransformComponent& Transform1 = Sphere1->GetComponent<TransformComponent>();
+		Transform1.Translation = glm::vec3(3, 0, 0);
 	}
 
 	void EditorLayer::OnUpdate(Timestep Ts)

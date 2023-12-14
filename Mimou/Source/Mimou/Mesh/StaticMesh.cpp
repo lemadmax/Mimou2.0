@@ -201,6 +201,30 @@ namespace Mimou
 		return VertexArray;
 	}
 
+	Ref<VertexArray> StaticMeshLibrary::CreateSphereVA(uint32_t NU, uint32_t NV)
+	{
+		std::function<void(std::vector<float>&, float, float)> Fn(UVToSphere);
+		std::vector<float> Vertices = CreateMesh(NU, NV, Fn);
+		if (Vertices.empty())
+		{
+			ME_ENGINE_WARN("CreateMesh: Failed to create sphere mesh");
+			return nullptr;
+		}
+		float* Data = new float[Vertices.size()];
+		memcpy(Data, &Vertices[0], Vertices.size() * sizeof(float));
+
+		Ref<VertexArray> VertexArray = VertexArray::Create();
+		BufferLayout Layout =
+		{
+			{ "a_Position", ShaderDataType::Float3 },
+			{ "a_Normal", ShaderDataType::Float3 }
+		};
+		Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(Data, Vertices.size() * sizeof(float));
+		VertexBuffer->SetLayout(Layout);
+		VertexArray->AddVertexBuffer(VertexBuffer);
+		return VertexArray;
+	}
+
 	StaticMesh::StaticMesh(MeshType Type, uint32_t NU, uint32_t NV)
 		: m_Type(Type), m_NU(NU), m_NV(NV)
 	{
