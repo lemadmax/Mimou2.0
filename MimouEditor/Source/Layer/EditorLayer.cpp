@@ -58,6 +58,8 @@ namespace Mimou
 
 		Ref<GameObject> Light1 = m_ActiveScene->CreateGameObject("Light 1");
 		Light1->AddComponent<LightComponent>(glm::vec3(0.8f, 0.8f, 0.8f), 1.0f, true);
+		TransformComponent& TransformLight1 = Light1->GetComponent<TransformComponent>();
+		TransformLight1.Rotation = glm::vec3(0.0f, glm::radians(180.0f), 0.0f);
 		
 		//Ref<GameObject> TestGB0 = m_ActiveScene->CreateGameObject("Square 1");
 		//TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(2, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
@@ -77,12 +79,20 @@ namespace Mimou
 		//Transform2.Translation = glm::vec3(1, 1, 0);
 
 		Ref<GameObject> Cube1 = m_ActiveScene->CreateGameObject("Cube 1");
-		Cube1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateCubeVA(), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Phong Shader")));
+		Cube1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateCubeVA(), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
+		StaticMeshComponent& MeshComp = Cube1->GetComponent<StaticMeshComponent>();
+		MeshComp.Mat->SetTexture(m_TestTexture);
 		
 		Ref<GameObject> Sphere1 = m_ActiveScene->CreateGameObject("Sphere 1");
 		Sphere1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSphereVA(50, 100), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Phong Shader")));
 		TransformComponent& Transform1 = Sphere1->GetComponent<TransformComponent>();
 		Transform1.Translation = glm::vec3(3, 0, 0);
+
+		Ref<GameObject> Sphere2 = m_ActiveScene->CreateGameObject("Sphere 2");
+		Sphere2->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSphereVA(50, 100), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Lambert Shader")));
+		TransformComponent& Transform2 = Sphere2->GetComponent<TransformComponent>();
+		Transform2.Translation = glm::vec3(-3, 0, 0);
+
 	}
 
 	void EditorLayer::OnUpdate(Timestep Ts)

@@ -10,6 +10,7 @@ uniform mat4 u_InverseMatrix;
 
 out vec3 v_Position;
 out vec3 v_Normal;
+out mat4 v_InverseMatrix;
 
 void main()
 {
@@ -57,8 +58,14 @@ void main()
         vec3 LightColor = u_Lights[i].LightColor * u_Lights[i].Intensity;
         vec3 L = -u_Lights[i].LightDir;
         float Irriadiance = max(0., dot(L, N)) * u_IrradiPerp;
-        vec3 R = 2. * dot(N, L) * N - L;
-        Radiance += Irriadiance * LightColor * (u_Diffuse + u_Specular.rgb * pow(max(0., R.z), u_Specular.w));
+        float specular = 0.0;
+        if (Irriadiance > 0.)
+        {
+            vec3 R = 2. * dot(N, -L) * N + L;
+            vec3 V = normalize(-v_Position);
+            specular = pow(max(dot(R, V), 0.0), u_Lights[i].Intensity);
+        }
+        Radiance += Irriadiance * u_Diffuse + specular * u_Specular.rgb;
     }
     Radiance = pow(Radiance, vec3(1.0 / 2.2)); // Gamma correction
     FragColor = vec4(Radiance, u_Transparency);
