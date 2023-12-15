@@ -26,6 +26,14 @@ namespace Mimou
 			if (!SelectedObject) SelectedObject = GB;
 		}
 
+		//ImGui::OpenPopup("Add entity", ImGuiPopupFlags_MouseButtonRight);
+
+		if (ImGui::BeginPopupContextWindow("Add entity", ImGuiPopupFlags_MouseButtonRight))
+		{
+			ImGui::Selectable("GameObject");
+			ImGui::EndPopup();
+		}
+
 		ImGui::End();
 	}
 

@@ -58,7 +58,7 @@ namespace Mimou
 		m_Data.Width = Props.Width;
 		m_Data.Height = Props.Height;
 
-		ME_LOG("Creating Windows window {0}, ({1}, {2})", m_Data.Title, m_Data.Width, m_Data.Height);
+		ME_ENGINE_LOG("Creating Windows window {0}, ({1}, {2})", m_Data.Title, m_Data.Width, m_Data.Height);
 
 		if (!bIsGLFWInitialized)
 		{
