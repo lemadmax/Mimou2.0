@@ -27,6 +27,7 @@ namespace Mimou
 	public:
 		Ref<GameObject> CreateGameObject(const std::string& Name = "Game Object", Ref<GameObject> Parent = nullptr);
 		bool DestroyGameObject(Ref<GameObject> GameObject);
+		bool DestroyAllGameObjects();
 
 		void RenderScene();
 

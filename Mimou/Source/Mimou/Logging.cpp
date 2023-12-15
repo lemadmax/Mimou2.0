@@ -31,4 +31,9 @@ namespace Mimou
 
 		//EngineLogger->info(LogFileName);
 	}
+
+	void Logging::Uninit()
+	{
+
+	}
 }

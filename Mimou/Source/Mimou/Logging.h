@@ -14,6 +14,8 @@ namespace Mimou
 	public:
 		static void Init();
 
+		static void Uninit();
+
 		static inline Ref<spdlog::logger> GetEngineLogger()
 		{
 			return EngineLogger;
@@ -30,7 +32,11 @@ namespace Mimou
 
 }
 
-#ifdef ME_BUILD_DEBUG | ME_BUILD_RELEASE
+#ifndef ME_ENABLE_LOG
+//#define ME_ENABLE_LOG 0
+#endif
+
+#ifdef ME_ENABLE_LOG | ME_BUILD_DEBUG | ME_BUILD_RELEASE
 
 #define ME_ENGINE_LOG(...) ::Mimou::Logging::GetEngineLogger()->info(__VA_ARGS__)
 #define ME_ENGINE_WARN(...) ::Mimou::Logging::GetEngineLogger()->warn(__VA_ARGS__)
@@ -42,7 +48,7 @@ namespace Mimou
 #define ME_ERROR(...) ::Mimou::Logging::GetClientLogger()->error(__VA_ARGS__)
 #define ME_TRACE(...) ::Mimou::Logging::GetClientLogger()->trace(__VA_ARGS__)
 
-#elif ME_BUILD_DIST
+#else
 
 #define ME_ENGINE_LOG(...) 
 #define ME_ENGINE_WARN(...) 

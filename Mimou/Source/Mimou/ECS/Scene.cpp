@@ -105,6 +105,17 @@ namespace Mimou
 		return GameObject->OnDestroy();
 	}
 
+	bool Scene::DestroyAllGameObjects()
+	{
+		bool res = true;
+		for (auto Pair : GameObjects)
+		{
+			res &= Pair.second->OnDestroy();
+		}
+		GameObjects.clear();
+		return res;
+	}
+
 	void Scene::RenderScene()
 	{
 		{

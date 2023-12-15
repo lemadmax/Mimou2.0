@@ -16,6 +16,22 @@ namespace Mimou
 
 		ImGui::Begin(m_PanelName.c_str());
 
+		PendingDestroy.clear();
+		bDestroyAll = false;
+
+		if (ImGui::BeginPopupContextWindow("Add Entity", ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_MouseButtonRight))
+		{
+			if (ImGui::Selectable("Add game object"))
+			{
+				m_Scene->CreateGameObject();
+			}
+			if (ImGui::Selectable("Remove all"))
+			{
+				bDestroyAll = true;
+			}
+			ImGui::EndPopup();
+		}
+
 		for (auto Object : m_Scene->GameObjects)
 		{
 			Ref<GameObject> GB = Object.second;
@@ -25,14 +41,18 @@ namespace Mimou
 			}
 			if (!SelectedObject) SelectedObject = GB;
 		}
-
-		//ImGui::OpenPopup("Add entity", ImGuiPopupFlags_MouseButtonRight);
-
-		if (ImGui::BeginPopupContextWindow("Add entity", ImGuiPopupFlags_MouseButtonRight))
+		if (bDestroyAll)
 		{
-			ImGui::Selectable("GameObject");
-			ImGui::EndPopup();
+			m_Scene->DestroyAllGameObjects();
 		}
+		else
+		{
+			for (Ref<GameObject> Object : PendingDestroy)
+			{
+				m_Scene->DestroyGameObject(Object);
+			}
+		}
+
 
 		ImGui::End();
 	}
@@ -56,10 +76,26 @@ namespace Mimou
 		std::string GBTag = m_Scene->m_Registry.get<TagComponent>(ID).Tag;
 		if (ImGui::TreeNodeEx((void*)(uint32_t)ID, base_flags, GBTag.c_str()))
 		{
+
+			if (ImGui::BeginPopupContextItem("Add Child Entity", ImGuiPopupFlags_MouseButtonRight))
+			{
+				SelectedObject = GB;
+				if (ImGui::Selectable("Add child game object"))
+				{
+					m_Scene->CreateGameObject("GameObject", SelectedObject);
+				}
+				if (ImGui::Selectable("Remove"))
+				{
+					PendingDestroy.push_back(SelectedObject);
+				}
+				ImGui::EndPopup();
+			}
+
 			if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
 			{
 				SelectedObject = GB;
 			}
+			
 			for (auto Child : GB->GetChildren())
 			{
 				ShowGameObject(Child);
@@ -68,6 +104,10 @@ namespace Mimou
 			ImGui::TreePop();
 		}
 
+		
+	}
+	void SceneHierarchyPanel::OpenRightClickPopup(Ref<GameObject> GB)
+	{
 		
 	}
 }

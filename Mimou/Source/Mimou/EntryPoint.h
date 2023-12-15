@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 	Mimou::Logging::Init();
 
 	ME_PROFILE_BEGIN_SESSION("Startup", "MimouProfile-Startup.json");
-	Mimou::Logging::GetEngineLogger()->info("Engine Start");
+	ME_ENGINE_LOG("Engine Start");
 	auto App = Mimou::CreateApplication();
 	ME_PROFILE_END_SESSION();
 
@@ -21,6 +21,7 @@ int main(int argc, char** argv)
 	delete App;
 	ME_PROFILE_END_SESSION();
 
+	Mimou::Logging::Uninit();
 	return 0;
 }
 
