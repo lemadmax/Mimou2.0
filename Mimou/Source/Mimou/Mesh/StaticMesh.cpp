@@ -118,41 +118,7 @@ namespace Mimou
 		Vertices.insert(Vertices.end(), Points.begin(), Points.end());
 	}
 
-	Ref<StaticMesh> StaticMeshLibrary::CreateSphere(uint32_t NU, uint32_t NV)
-	{
-		return CreateRef<StaticMesh>(StaticMesh::MeshType::Sphere, NU, NV);
-	}
-	Ref<StaticMesh> StaticMeshLibrary::CreateCube()
-	{
-		return CreateRef<StaticMesh>(StaticMesh::MeshType::Cube, 0, 0);
-	}
-
-	Ref<StaticMesh> StaticMeshLibrary::CreateSquare(uint32_t i, uint32_t z)
-	{
-		return CreateRef<StaticMesh>(StaticMesh::MeshType::Square, i, z);
-	}
-
-	Ref<VertexArray> StaticMeshLibrary::CreateSquareVA(uint32_t i, uint32_t z)
-	{
-		Ref<VertexArray> VA = VertexArray::Create();
-		
-		const uint32_t N = 4 * 8;
-		float Data[N];
-		CreateSquareMeshTex(Data, i, z);
-
-		Ref<VertexBuffer> VB = VertexBuffer::Create(Data, sizeof(Data));
-		VB->SetLayout({
-			{ "a_Position", ShaderDataType::Float3 },
-			{ "a_Normal", ShaderDataType::Float3 },
-			{ "a_TexCoord", ShaderDataType::Float2 }
-			});
-
-		VA->AddVertexBuffer(VB);
-
-		return VA;
-	}
-
-	Ref<VertexArray> StaticMeshLibrary::CreateTriangle()
+	Ref<VertexArray> CreateTriangle()
 	{
 		Ref<VertexArray> TriangleVertices = VertexArray::Create();
 
@@ -177,7 +143,27 @@ namespace Mimou
 		return TriangleVertices;
 	}
 
-	Ref<VertexArray> StaticMeshLibrary::CreateCubeVA()
+	Ref<VertexArray> CreateSquare(uint32_t i, uint32_t z)
+	{
+		Ref<VertexArray> VA = VertexArray::Create();
+
+		const uint32_t N = 4 * 8;
+		float Data[N];
+		CreateSquareMeshTex(Data, i, z);
+
+		Ref<VertexBuffer> VB = VertexBuffer::Create(Data, sizeof(Data));
+		VB->SetLayout({
+			{ "a_Position", ShaderDataType::Float3 },
+			{ "a_Normal", ShaderDataType::Float3 },
+			{ "a_TexCoord", ShaderDataType::Float2 }
+			});
+
+		VA->AddVertexBuffer(VB);
+
+		return VA;
+	}
+
+	Ref<VertexArray> CreateCube()
 	{
 		std::vector<float> Vertices = CreateCubeMesh();
 		if (Vertices.empty())
@@ -201,7 +187,7 @@ namespace Mimou
 		return VertexArray;
 	}
 
-	Ref<VertexArray> StaticMeshLibrary::CreateSphereVA(uint32_t NU, uint32_t NV)
+	Ref<VertexArray> CreateSphere(uint32_t NU, uint32_t NV)
 	{
 		std::function<void(std::vector<float>&, float, float)> Fn(UVToSphere);
 		std::vector<float> Vertices = CreateMesh(NU, NV, Fn);
@@ -225,108 +211,38 @@ namespace Mimou
 		return VertexArray;
 	}
 
-	StaticMesh::StaticMesh(MeshType Type, uint32_t NU, uint32_t NV)
-		: m_Type(Type), m_NU(NU), m_NV(NV)
+	void StaticMeshLibrary::Init()
 	{
-
+		if (!s_Instance)
+		{
+			s_Instance = new StaticMeshLibrary();
+		}
+		s_Instance->PreloadAssets();
 	}
 
-	StaticMesh::~StaticMesh()
+	void StaticMeshLibrary::PreloadAssets()
 	{
-		delete m_Vertices;
+		Ref<VertexArray> TriangleVA = CreateTriangle();
+		Ref<VertexArray> SquareVA = CreateSquare(2, 0);
+		Ref<VertexArray> CubeVA = CreateCube();
+		Ref<VertexArray> SphereVA = CreateSphere(50, 100);
+
+		CachedVA.emplace("Triangle", TriangleVA);
+		CachedVA.emplace("Square", SquareVA);
+		CachedVA.emplace("Cube", CubeVA);
+		CachedVA.emplace("Sphere", SphereVA);
 	}
 
-	void StaticMesh::Draw()
+	Ref<VertexArray> StaticMeshLibrary::GetAsset(const std::string& AssetName)
 	{
-
-	}
-
-	void StaticMesh::GenerateVertices()
-	{
-		switch (m_Type)
+		if (!s_Instance)
 		{
-		case StaticMesh::MeshType::None:
+			s_Instance = new StaticMeshLibrary();
+		}
+		if (s_Instance->CachedVA.contains(AssetName))
 		{
-			ME_ENGINE_WARN("Attemp to generate a None type mesh");
-			return;
+			return s_Instance->CachedVA[AssetName];
 		}
-		case StaticMesh::MeshType::Sphere:
-		{
-			std::function<void(std::vector<float>&, float, float)> Fn(UVToSphere);
-			std::vector<float> Vertices = CreateMesh(m_NU, m_NV, Fn);
-			if (Vertices.empty())
-			{
-				ME_ENGINE_WARN("CreateMesh: Failed to create sphere mesh");
-				return;
-			}
-			m_Vertices = new float[Vertices.size()];
-			memcpy(m_Vertices, &Vertices[0], Vertices.size() * sizeof(float));
-			Cnt = Vertices.size();
-
-			m_VertexArray = VertexArray::Create();
-			BufferLayout Layout =
-			{
-				{ "a_Position", ShaderDataType::Float3 },
-				{ "a_Normal", ShaderDataType::Float3 }
-			};
-			Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(m_Vertices, Cnt * sizeof(float));
-			VertexBuffer->SetLayout(Layout);
-			m_VertexArray->AddVertexBuffer(VertexBuffer);
-			break;
-		}
-		case StaticMesh::MeshType::Square:
-		{
-			std::vector<float> Vertices = CreateSquareMesh(m_NU, m_NV);
-			if (Vertices.empty())
-			{
-				ME_ENGINE_WARN("CreateMesh: Failed to create square mesh");
-				return;
-			}
-			m_Vertices = new float[Vertices.size()];
-			memcpy(m_Vertices, &Vertices[0], Vertices.size() * sizeof(float));
-			Cnt = Vertices.size();
-
-			m_VertexArray = VertexArray::Create();
-			BufferLayout Layout =
-			{
-				{ "a_Position", ShaderDataType::Float3 },
-				{ "a_Normal", ShaderDataType::Float3 },
-				{ "a_TexCoord", ShaderDataType::Float2 }
-			};
-			Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(m_Vertices, Cnt * sizeof(float));
-			VertexBuffer->SetLayout(Layout);
-			m_VertexArray->AddVertexBuffer(VertexBuffer);
-			break;
-		}
-		case StaticMesh::MeshType::Cube:
-		{
-			std::vector<float> Vertices = CreateCubeMesh();
-			if (Vertices.empty())
-			{
-				ME_ENGINE_WARN("CreateMesh: Failed to create square mesh");
-				return;
-			}
-			m_Vertices = new float[Vertices.size()];
-			memcpy(m_Vertices, &Vertices[0], Vertices.size() * sizeof(float));
-			Cnt = Vertices.size();
-
-			m_VertexArray = VertexArray::Create();
-			BufferLayout Layout =
-			{
-				{ "a_Position", ShaderDataType::Float3 },
-				{ "a_Normal", ShaderDataType::Float3 },
-				{ "a_TexCoord", ShaderDataType::Float2 }
-			};
-			Ref<VertexBuffer> VertexBuffer = VertexBuffer::Create(m_Vertices, Cnt * sizeof(float));
-			VertexBuffer->SetLayout(Layout);
-			m_VertexArray->AddVertexBuffer(VertexBuffer);
-			break;
-		}
-		default:
-		{
-			ME_ENGINE_ERROR("Failed to generate vertices (mesh type:{})", m_Type);
-			return;
-		}
-		}
+		return nullptr;
 	}
 }

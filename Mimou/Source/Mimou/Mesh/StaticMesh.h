@@ -4,73 +4,30 @@
 
 namespace Mimou
 {
-	class StaticMesh
-	{
-	public:
-		enum class MeshType
-		{
-			None,
-			Square,
-			Sphere,
-			Cube
-		};
-
-	public:
-		StaticMesh(MeshType Type, uint32_t NU, uint32_t NV);
-		~StaticMesh();
-
-		void Draw();
-		
-		inline MeshType GetMeshType() const { return m_Type; }
-		inline uint32_t GetSize() const { return Cnt; }
-		inline float* GetVertices()
-		{ 
-			if (m_Vertices == nullptr)
-			{
-				GenerateVertices();
-			}
-			return m_Vertices; 
-		}
-		inline Ref<VertexArray> GetVertexArray()
-		{
-			if (m_VertexArray == nullptr)
-			{
-				GenerateVertices();
-			}
-			return m_VertexArray;
-		}
-
-		void GenerateVertices();
-
-		inline void SetMaterial(Ref<Material> Material) { m_Material = Material; }
-		inline Ref<Material> GetMaterial() const { return m_Material; }
-
-	private:
-		MeshType m_Type;
-		uint32_t m_NU, m_NV;
-
-		float* m_Vertices = nullptr;
-		uint32_t Cnt = 0;
-
-		Ref<VertexArray> m_VertexArray;
-		Ref<Material> m_Material;
-	};
 
 	class StaticMeshLibrary
 	{
+	private:
+		StaticMeshLibrary();
+
 	public:
-		static Ref<StaticMesh> CreateSphere(uint32_t NU, uint32_t NV);
+		static StaticMeshLibrary* Get()
+		{
+			if (s_Instance)
+			{
+				s_Instance = new StaticMeshLibrary();
+			}
+			return s_Instance;
+		}
 
-		static Ref<StaticMesh> CreateCube();
+		static void Init();
+		static Ref<VertexArray> GetAsset(const std::string& AssetName);
 
-		static Ref<StaticMesh> CreateSquare(uint32_t i, uint32_t z);
+		void PreloadAssets();
 
-		static Ref<VertexArray> CreateSquareVA(uint32_t i, uint32_t z);
+	private:
+		std::map<std::string, Ref<VertexArray>> CachedVA;
 
-		static Ref<VertexArray> CreateTriangle();
-
-		static Ref<VertexArray> CreateCubeVA();
-
-		static Ref<VertexArray> CreateSphereVA(uint32_t NU, uint32_t NV);
+		static StaticMeshLibrary* s_Instance;
 	};
 }

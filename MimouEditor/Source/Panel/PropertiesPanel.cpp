@@ -110,6 +110,10 @@ namespace Mimou
 			ImGui::Spacing();
 			});
 
+		ShowComponent<StaticMeshComponent>("Static Mesh", [&](StaticMeshComponent* StaticMesh) {
+
+			});
+		
 		ImGui::End();
 	}
 }

@@ -1,5 +1,6 @@
 #include "mepch.h"
 #include "Renderer3D.h"
+#include "Mimou/Mesh/StaticMesh.h"
 
 namespace Mimou
 {
@@ -8,6 +9,7 @@ namespace Mimou
 	void Renderer3D::Init()
 	{
 		RenderCommand::Init();
+		StaticMeshLibrary::Init();
 	}
 
 	void Renderer3D::Shutdown()

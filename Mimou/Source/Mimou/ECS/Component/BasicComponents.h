@@ -54,15 +54,17 @@ namespace Mimou
 		}
 	};
 
+#define MAX_MATSLOT_NUM 8
+
 	struct StaticMeshComponent
 	{
-		Ref<Mimou::VertexArray> VertexArray;
-		Ref<Mimou::Material> Mat;
+		std::string AssetName;
+		std::vector<Ref<Material>> MaterialSlots;
 
 		StaticMeshComponent() = default;
 		StaticMeshComponent(const StaticMeshComponent&) = default;
-		StaticMeshComponent(Ref<Mimou::VertexArray> InVertexArray, Ref<Mimou::Material> InMat)
-			: VertexArray(InVertexArray), Mat(InMat) {}
+		StaticMeshComponent(const std::string& InAssetName)
+			: AssetName(InAssetName) {}
 	};
 
 	struct CameraComponent
