@@ -10,6 +10,8 @@ namespace Mimou
 	{
 		RenderCommand::Init();
 		StaticMeshLibrary::Init();
+		ShaderLibrary::GetInstance()->InitShaderLib();
+		s_SceneData->DefaultMat = CreateRef<Material>();
 	}
 
 	void Renderer3D::Shutdown()
@@ -40,6 +42,7 @@ namespace Mimou
 	{
 		s_SceneData->LightCnt = 0;
 	}
+
 	void Renderer3D::DrawMesh(Ref<VertexArray> VA, Ref<Material> Mat, const glm::mat4& Transform)
 	{
 		ME_PROFILE_SCOPE("Renderer3D::DrawMesh");
@@ -68,6 +71,21 @@ namespace Mimou
 		else
 		{
 			RenderCommand::DrawArrays(VA);
+		}
+	}
+
+	void Renderer3D::DrawMesh(Ref<VertexArray> VA, std::vector<Ref<Material>> Mats, const glm::mat4& Transform)
+	{
+		if (Mats.size() == 0)
+		{
+			DrawMesh(VA, s_SceneData->DefaultMat, Transform);
+		}
+		else
+		{
+			for (Ref<Material> Mat : Mats)
+			{
+				DrawMesh(VA, Mat, Transform);
+			}
 		}
 	}
 }

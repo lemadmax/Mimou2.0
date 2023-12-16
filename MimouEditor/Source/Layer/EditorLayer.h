@@ -46,7 +46,6 @@ namespace Mimou
 		Ref<Shader> SphereShader;
 		Ref<VertexArray> SphereVertices;
 
-		Ref<StaticMesh> SphereMesh;
 		Ref<Light> DirectionalLight;
 		Ref<Light> MovingLight;
 

@@ -42,12 +42,15 @@ namespace Mimou
 
 		static void DrawMesh(Ref<VertexArray> VA, Ref<Material> Mat, const glm::mat4& Transform);
 
+		static void DrawMesh(Ref<VertexArray> VA, std::vector<Ref<Material>> Mats, const glm::mat4& Transform);
+
 	private:
 		struct SceneData
 		{
 			glm::mat4 ViewProjectionMatrix;
 			DirLight DirLights[MAX_LIGHT_NUM];
 			uint32_t LightCnt;
+			Ref<Material> DefaultMat;
 		};
 
 		static SceneData* s_SceneData;

@@ -1,6 +1,8 @@
 #pragma once
 #include "Mimou.h"
 
+#include "imgui_internal.h"
+
 namespace Mimou
 {
 	enum class PanelType : uint32_t
@@ -31,5 +33,28 @@ namespace Mimou
 	{
 	public:
 		static void DrawVec3Control(const std::string& Label, glm::vec3& Values, const std::string& ItemLabels = "XYZ");
+
+		template<typename T, typename Fn>
+		static void DrawDynamicVector(const std::string& Label, std::vector<T>& Vec, Fn ItemFunc)
+		{
+			ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_AllowItemOverlap;
+			float LineWidth = ImGui::CalcItemWidth();
+
+			ImVec2 ContentRegionAvail = ImGui::GetContentRegionAvail();
+			float LineHeight = ImGui::GetTextLineHeight();
+			ImGui::PushItemWidth(-LineHeight);
+			if (ImGui::TreeNodeEx(Label.c_str(), NodeFlags))
+			{
+				ImGui::TreePop();
+			}
+			ImGui::PopItemWidth();
+			ImGui::SameLine(ContentRegionAvail.x);
+			if (ImGui::Button("+", ImVec2(LineHeight, LineHeight)))
+			{
+
+			}
+
+			//ImGui::PopStyleVar(1);
+		}
 	};
 }

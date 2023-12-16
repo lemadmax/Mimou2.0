@@ -33,7 +33,11 @@ namespace Mimou
 }
 
 #ifndef ME_ENABLE_LOG
-//#define ME_ENABLE_LOG 0
+#define ME_ENABLE_LOG 0
+#endif
+
+#ifndef ME_ENABLE_LOG_FILE
+#define ME_ENABLE_LOG_FILE 0
 #endif
 
 #ifdef ME_ENABLE_LOG | ME_BUILD_DEBUG | ME_BUILD_RELEASE

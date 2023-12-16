@@ -24,9 +24,12 @@ float computeDepth(vec3 pos)
 
 float computeLinearDepth(float depth)
 {
-    float clipSpaceDepth = depth * 2.0 - 1.0;
-    float linearDepth = (2.0 * u_zNear * u_zFar) / (u_zFar + u_zNear - clipSpaceDepth * (u_zFar - u_zNear));
-    return linearDepth / u_zFar;
+    // float clipSpaceDepth = depth * 2.0 - 1.0;
+    // // float linearDepth = (2.0 * u_zNear * u_zFar) / (u_zFar + u_zNear - clipSpaceDepth * (u_zFar - u_zNear));
+    // float linearDepth = clipSpaceDepth * (u_zFar - u_zNear);
+    // return linearDepth / (u_zFar - u_zNear);
+    float linearDepth = 1.0/160.0 * depth * depth - 3.0/80.0 * depth;
+    return linearDepth;
 }
 
 void main()
@@ -44,7 +47,7 @@ void main()
     p.z = computeDepth(fragPos3D);
     gl_Position = p;
 
-    float linearDepth = computeLinearDepth(p.z);
+    float linearDepth = computeLinearDepth(fragPos3D.z);
     fading = max(0, (1.0 - linearDepth));
 }	
 

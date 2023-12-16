@@ -7,6 +7,41 @@
 
 namespace Mimou
 {
+
+	StaticMeshLibrary* StaticMeshLibrary::s_Instance = nullptr;
+
+	void StaticMeshLibrary::Init()
+	{
+		if (!s_Instance)
+		{
+			s_Instance = new StaticMeshLibrary();
+		}
+		s_Instance->PreloadAssets();
+	}
+
+	Ref<VertexArray> StaticMeshLibrary::GetAsset(const std::string& AssetName)
+	{
+		if (!s_Instance)
+		{
+			s_Instance = new StaticMeshLibrary();
+		}
+		if (s_Instance->CachedVA.contains(AssetName))
+		{
+			return s_Instance->CachedVA[AssetName];
+		}
+		return nullptr;
+	}
+
+	std::vector<std::string> StaticMeshLibrary::GetAvaliableAssets()
+	{
+		std::vector<std::string> Names;
+		for (auto Pair : CachedVA)
+		{
+			Names.push_back(Pair.first);
+		}
+		return Names;
+	}
+
 	template<typename... Args>
 	std::vector<float> CreateMesh(uint32_t NU, uint32_t NV, std::function<void(std::vector<float>&, float, float, Args...)> Func, Args... Data)
 	{
@@ -211,15 +246,6 @@ namespace Mimou
 		return VertexArray;
 	}
 
-	void StaticMeshLibrary::Init()
-	{
-		if (!s_Instance)
-		{
-			s_Instance = new StaticMeshLibrary();
-		}
-		s_Instance->PreloadAssets();
-	}
-
 	void StaticMeshLibrary::PreloadAssets()
 	{
 		Ref<VertexArray> TriangleVA = CreateTriangle();
@@ -231,18 +257,5 @@ namespace Mimou
 		CachedVA.emplace("Square", SquareVA);
 		CachedVA.emplace("Cube", CubeVA);
 		CachedVA.emplace("Sphere", SphereVA);
-	}
-
-	Ref<VertexArray> StaticMeshLibrary::GetAsset(const std::string& AssetName)
-	{
-		if (!s_Instance)
-		{
-			s_Instance = new StaticMeshLibrary();
-		}
-		if (s_Instance->CachedVA.contains(AssetName))
-		{
-			return s_Instance->CachedVA[AssetName];
-		}
-		return nullptr;
 	}
 }

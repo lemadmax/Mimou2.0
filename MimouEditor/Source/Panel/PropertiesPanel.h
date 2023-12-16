@@ -37,7 +37,11 @@ namespace Mimou
 			}
 		}
 
+		void ShowMaterial(Ref<Material> Mat);
+
 	private:
 		Ref<GameObject> SelectedObject;
 	};
 }
+
+#define SHOW_SELECT_ADD_COMPONENT(Component, GameObject) if(ImGui::Selectable(#Component)) { GameObject->AddComponent<Component>(); }

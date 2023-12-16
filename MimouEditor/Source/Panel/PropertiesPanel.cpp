@@ -15,13 +15,16 @@ namespace Mimou
 	void PropertiesPanel::OnImGUIUpdate()
 	{
 		if (!m_Scene) return;
-		
+
 		Ref<SceneHierarchyPanel> SceneHierPanel = std::static_pointer_cast<SceneHierarchyPanel>(EditorLayer::GetInstance()->GetPanel(PanelType::SceneHierarchyPanel));
 		if (!SceneHierPanel) return;
 
 		SelectedObject = SceneHierPanel->GetSelectedObject();
 
+		bool pOpen = true;
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(300.0f, 500.0f));
 		ImGui::Begin(m_PanelName.c_str());
+
 
 		if (!SelectedObject)
 		{
@@ -29,15 +32,42 @@ namespace Mimou
 			return;
 		}
 
-		ShowComponent<TagComponent>("Tag Component", [&](TagComponent* Tag) {
+		if (ImGui::BeginPopup("Add Component Popup"))
+		{
+
+			ImGui::SeparatorText("Compnents");
+
+			SHOW_SELECT_ADD_COMPONENT(CameraComponent, SelectedObject)
+			SHOW_SELECT_ADD_COMPONENT(StaticMeshComponent, SelectedObject)
+			SHOW_SELECT_ADD_COMPONENT(LightComponent, SelectedObject)
+			SHOW_SELECT_ADD_COMPONENT(TransformComponent, SelectedObject)
+
+			ImGui::EndPopup();
+		}
+
+		TagComponent* TagComp = SelectedObject->TryGetComponent<TagComponent>();
+		if (TagComp)
+		{
 			char Buffer[256];
 			memset(Buffer, 0, sizeof(Buffer));
-			strcpy_s(Buffer, sizeof(Buffer), Tag->Tag.c_str());
-			if (ImGui::InputText("Tag", Buffer, sizeof(Buffer)))
+			strcpy_s(Buffer, sizeof(Buffer), TagComp->Tag.c_str());
+			float ItemWidth = ImGui::CalcItemWidth();
+			ImGui::PushItemWidth(ItemWidth * 2.0f / 3.0f);
+			if (ImGui::InputText("##Tag", Buffer, sizeof(Buffer)))
 			{
-				Tag->Tag = std::string(Buffer);
+				TagComp->Tag = std::string(Buffer);
 			}
-			});
+			ImGui::PopItemWidth();
+			ImGui::PushItemWidth(ItemWidth / 3.0f);
+			ImGui::SameLine();
+			if (ImGui::Button("Add Component"))
+			{
+				ImGui::OpenPopup("Add Component Popup");
+			}
+			ImGui::PopItemWidth();
+		}
+
+		ImGui::Separator();
 
 		ShowComponent<TransformComponent>("Transform Component", [&](TransformComponent* Transform) {
 			ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_DefaultOpen
@@ -48,22 +78,17 @@ namespace Mimou
 			{
 				ImGui::Spacing();
 
-				PanelUtilities::DrawVec3Control("Translation", Transform->Translation);
+				PanelUtilities::DrawVec3Control("Translation:", Transform->Translation);
 				ImGui::Spacing();
 					
-				PanelUtilities::DrawVec3Control("Rotation", Transform->Rotation);
+				PanelUtilities::DrawVec3Control("Rotation:", Transform->Rotation);
 				ImGui::Spacing();
 
-				PanelUtilities::DrawVec3Control("Scale", Transform->Scale);
+				PanelUtilities::DrawVec3Control("Scale:", Transform->Scale);
 				ImGui::Spacing();
 
 				ImGui::TreePop();
 			}
-			//if (ImGui::TreeNodeEx("World Transofrm", NodeFlags))
-			//{
-
-			//	ImGui::TreePop();
-			//}
 			});
 
 		ShowComponent<CameraComponent>("Camera", [&](CameraComponent* Camera) {
@@ -111,9 +136,45 @@ namespace Mimou
 			});
 
 		ShowComponent<StaticMeshComponent>("Static Mesh", [&](StaticMeshComponent* StaticMesh) {
+			ImGui::Spacing();
 
+			int CurrentIdx = 0;
+			std::vector<std::string> MeshNames = StaticMeshLibrary::Get()->GetAvaliableAssets();
+			//char** Items = new char* [MeshNames.size()];
+			char* Items[256];
+			for (size_t i = 0; i < MeshNames.size(); i++)
+			{
+				std::string Name = MeshNames[i];
+				Items[i] = new char[Name.length() + 1];
+				strcpy(Items[i], Name.c_str());
+				if (Name == StaticMesh->AssetName)
+				{
+					CurrentIdx = i;
+				}
+			}
+			if (ImGui::Combo("Mesh", &CurrentIdx, Items, MeshNames.size()))
+			{
+				StaticMesh->AssetName = MeshNames[CurrentIdx];
+			}
+
+			for (size_t i = 0; i < MeshNames.size(); i++)
+			{
+				delete[] Items[i];
+			}
+
+			ImGui::Spacing();
+			PanelUtilities::DrawDynamicVector("Material Slots", StaticMesh->MaterialSlots, [&](Ref<Material> Mat) {
+
+				});
+			ImGui::Spacing();
 			});
 		
 		ImGui::End();
+		ImGui::PopStyleVar(1);
+	}
+
+	void PropertiesPanel::ShowMaterial(Ref<Material> Mat)
+	{
+
 	}
 }

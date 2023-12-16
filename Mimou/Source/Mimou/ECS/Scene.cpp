@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Mimou/ECS/Entity/GameObject.h"
 #include "Mimou/Renderer/Renderer3D.h"
+#include "Mimou/Mesh/StaticMesh.h"
 
 namespace Mimou
 {
@@ -126,7 +127,8 @@ namespace Mimou
 				Ref<GameObject> GB = GameObjects[Entity];
 				glm::mat4 Transform = GB->GetWorldTransform();
 
-				Renderer3D::DrawMesh(StaticMesh.VertexArray, StaticMesh.Mat, Transform);
+				Ref<VertexArray> VA = StaticMeshLibrary::GetAsset(StaticMesh.AssetName);
+				Renderer3D::DrawMesh(VA, StaticMesh.MaterialSlots, Transform);
 			}
 		}
 	}

@@ -51,7 +51,10 @@ namespace Mimou
 
 	void ShaderLibrary::InitShaderLib()
 	{
-
+		Load("Texture Shader", "Assets/Shaders/Texture.glsl");
+		Load("Lambert Shader", "Assets/Shaders/LambertShader.glsl");
+		Load("Phong Shader", "Assets/Shaders/PhongShader.glsl");
+		Load("Default", "Assets/Shaders/Default.glsl");
 	}
 
 	void ShaderLibrary::Add(const Ref<Shader>& Shader)
@@ -84,6 +87,16 @@ namespace Mimou
 	{
 		ME_ENGINE_ASSERT(m_Shaders.find(Name) != m_Shaders.end(), "Shader not found!");
 		return m_Shaders[Name];
+	}
+
+	std::vector<std::string> ShaderLibrary::GetNames() const
+	{
+		std::vector<std::string> Names;
+		for (auto Pair : m_Shaders)
+		{
+			Names.push_back(Pair.first);
+		}
+		return Names;
 	}
 
 	bool ShaderLibrary::Exists(const std::string& Name) const

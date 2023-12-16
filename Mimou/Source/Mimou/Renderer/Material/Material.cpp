@@ -3,9 +3,9 @@
 
 namespace Mimou
 {
-	Material::Material(glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec4 Specular, float Transparency, Ref<Shader> Shader)
-		: m_Ambient(Ambient), m_Diffuse(Diffuse), m_Specular(Specular), m_Transparency(Transparency), m_Shader(Shader)
+	Material::Material()
 	{
+		m_Shader = ShaderLibrary::GetInstance()->Get("Default");
 	}
 
 	void Material::Bind()

@@ -58,7 +58,7 @@ namespace Mimou
 
 	struct StaticMeshComponent
 	{
-		std::string AssetName;
+		std::string AssetName = "Cube";
 		std::vector<Ref<Material>> MaterialSlots;
 
 		StaticMeshComponent() = default;

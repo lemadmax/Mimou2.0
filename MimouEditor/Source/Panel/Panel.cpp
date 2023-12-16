@@ -47,11 +47,24 @@ namespace Mimou
 
 		ImGui::PushID(Label.c_str());
 
-		ImGui::PushMultiItemsWidths(4, ImGui::CalcItemWidth());
-
+		//ImGui::PushMultiItemsWidths(4, ImGui::CalcItemWidth());
+		float LineWidth = ImGui::CalcItemWidth();
+		float vecItemWidth = (LineWidth - 120.0f) / 3;
 		
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "%c", ItemLabels[0]);
+		//ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
 
+		//ImGui::PushItemWidth(80.0f);
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(1.0f, 0.0f));
+		ImGui::ButtonEx(Label.c_str(), ImVec2(90.0f, 0.0f));
+		ImGui::PopStyleVar(1);
+		ImGui::PopStyleColor(1);
+		ImGui::SameLine();
+
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+
+		ImGui::PushItemWidth(10.0f);
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.0f, 0.0f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.4f, 0.0f, 0.0f, 1.0f));
@@ -60,40 +73,52 @@ namespace Mimou
 			Values.x = 0.0f;
 		}
 		ImGui::PopStyleColor(3);
+		ImGui::PopItemWidth();
 
 		ImGui::SameLine();
+		ImGui::PushItemWidth(vecItemWidth);
 		ImGui::DragFloat("##X", &Values.x, DragSpeed);
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "%c", ItemLabels[1]);
 
+		ImGui::PushItemWidth(10.0f);
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.0f, 0.8f, 0.0f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.0f, 0.4f, 0.0f, 1.0f));
-		ImGui::Button(std::format("{}:", ItemLabels[1]).c_str());
+		if(ImGui::Button(std::format("{}:", ItemLabels[1]).c_str()))
+		{
+			Values.x = 0.0f;
+		}
 		ImGui::PopStyleColor(3);
+		ImGui::PopItemWidth();
 
 		ImGui::SameLine();
+		ImGui::PushItemWidth(vecItemWidth);
 		ImGui::DragFloat("##Y", &Values.y, DragSpeed);
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "%c", ItemLabels[2]);
 
+		ImGui::PushItemWidth(10.0f);
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 1.0f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.0f, 0.0f, 0.8f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.0f, 0.0f, 0.4f, 1.0f));
-		ImGui::Button(std::format("{}:", ItemLabels[2]).c_str());
+		if(ImGui::Button(std::format("{}:", ItemLabels[2]).c_str()))
+		{
+			Values.x = 0.0f;
+		}
 		ImGui::PopStyleColor(3);
+		ImGui::PopItemWidth();
 
 		ImGui::SameLine();
+		ImGui::PushItemWidth(vecItemWidth);
 		ImGui::DragFloat("##Z", &Values.z, DragSpeed);
 		ImGui::PopItemWidth();
-		ImGui::SameLine();
 
-		ImGui::Text(Label.c_str());
-		ImGui::PopItemWidth();
+		ImGui::PopStyleVar(1);
 
 		ImGui::PopID();
 	}
