@@ -139,31 +139,22 @@ namespace Mimou
 			ImGui::Spacing();
 
 			int CurrentIdx = 0;
-			std::vector<std::string> MeshNames = StaticMeshLibrary::Get()->GetAvaliableAssets();
-			//char** Items = new char* [MeshNames.size()];
-			char* Items[256];
-			for (size_t i = 0; i < MeshNames.size(); i++)
-			{
-				std::string Name = MeshNames[i];
-				Items[i] = new char[Name.length() + 1];
-				strcpy(Items[i], Name.c_str());
-				if (Name == StaticMesh->AssetName)
-				{
-					CurrentIdx = i;
-				}
-			}
-			if (ImGui::Combo("Mesh", &CurrentIdx, Items, MeshNames.size()))
+			std::vector<std::string> MeshNames = StaticMeshLibrary::Get()->GetAvaliableAssets(StaticMesh->AssetName, CurrentIdx);
+			if (PanelUtilities::DrawComboFromVector("Mesh Asset", MeshNames, &CurrentIdx))
 			{
 				StaticMesh->AssetName = MeshNames[CurrentIdx];
 			}
 
-			for (size_t i = 0; i < MeshNames.size(); i++)
-			{
-				delete[] Items[i];
-			}
-
 			ImGui::Spacing();
-			PanelUtilities::DrawDynamicVector("Material Slots", StaticMesh->MaterialSlots, [&](Ref<Material> Mat) {
+			PanelUtilities::DrawDynamicVector("Material Slots", StaticMesh->MaterialSlots, [&](Ref<Material>& Mat) {
+				ImGui::Spacing();
+				
+				int CurMatIdx = 0;
+				std::vector<std::string> MatNames = MaterialLibrary::Get()->GetNames(Mat->GetName(), CurMatIdx);
+				if (PanelUtilities::DrawComboFromVector("Material Instance", MatNames, &CurMatIdx))
+				{
+					Mat = MaterialLibrary::Get()->GetMaterial(MatNames[CurMatIdx]);
+				}
 
 				});
 			ImGui::Spacing();

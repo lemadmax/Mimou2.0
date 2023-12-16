@@ -10,6 +10,7 @@ namespace Mimou
 	{
 	public:
 		Material();
+		Material(const std::string& Name, const Ref<Shader>& ShaderInst);
 		Material(const Material& Other) = default;
 
 		virtual ~Material() = default;
@@ -19,6 +20,7 @@ namespace Mimou
 
 		inline void SetTexture(Ref<Texture> Texture) { m_Texture = Texture; }
 		inline Ref<Shader> GetShader() const { return m_Shader; }
+		inline const std::string& GetName() const { return m_Name; }
 
 	public:
 
@@ -28,10 +30,39 @@ namespace Mimou
 		float m_Transparency = 1.0f;
 
 	private:
+		std::string m_Name;
 		Ref<Shader> m_Shader;
 
 		Ref<Texture> m_Texture;
 		// TODO: Multiple texture slots
 		std::vector<Ref<Texture>> m_Textures;
+	};
+
+	class MaterialLibrary
+	{
+	private:
+		MaterialLibrary() = default;
+
+	public:
+		static MaterialLibrary* Get()
+		{
+			if (!s_Instance)
+			{
+				s_Instance = new MaterialLibrary();
+			}
+			return s_Instance;
+		}
+
+		void Init();
+		void LoadMaterialInstances();
+
+		Ref<Material> GetMaterial(const std::string& AssetName);
+		std::vector<std::string> GetNames();
+		std::vector<std::string> GetNames(const std::string& AssetName, int& Idx);
+
+	private:
+		std::map<std::string, Ref<Material>> CachedMats;
+
+		static MaterialLibrary* s_Instance;
 	};
 }

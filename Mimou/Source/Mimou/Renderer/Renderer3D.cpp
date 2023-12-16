@@ -10,7 +10,10 @@ namespace Mimou
 	{
 		RenderCommand::Init();
 		StaticMeshLibrary::Init();
+
+		// Shader must be initialized before material
 		ShaderLibrary::GetInstance()->InitShaderLib();
+		MaterialLibrary::Get()->Init();
 		s_SceneData->DefaultMat = CreateRef<Material>();
 	}
 

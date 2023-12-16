@@ -61,10 +61,16 @@ namespace Mimou
 		std::string AssetName = "Cube";
 		std::vector<Ref<Material>> MaterialSlots;
 
-		StaticMeshComponent() = default;
+		StaticMeshComponent()
+		{
+			MaterialSlots.push_back(MaterialLibrary::Get()->GetMaterial("Default"));
+		}
 		StaticMeshComponent(const StaticMeshComponent&) = default;
 		StaticMeshComponent(const std::string& InAssetName)
-			: AssetName(InAssetName) {}
+			: AssetName(InAssetName) 
+		{
+			MaterialSlots.push_back(MaterialLibrary::Get()->GetMaterial("DefaultMat"));
+		}
 	};
 
 	struct CameraComponent

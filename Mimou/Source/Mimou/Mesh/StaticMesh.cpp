@@ -42,6 +42,21 @@ namespace Mimou
 		return Names;
 	}
 
+	std::vector<std::string> StaticMeshLibrary::GetAvaliableAssets(const std::string& AssetName, int& Idx)
+	{
+		std::vector<std::string> Names;
+		for (auto Pair : CachedVA)
+		{
+			if (AssetName == Pair.first)
+			{
+				Idx = Names.size();
+			}
+			Names.push_back(Pair.first);
+		}
+		return Names;
+	}
+
+
 	template<typename... Args>
 	std::vector<float> CreateMesh(uint32_t NU, uint32_t NV, std::function<void(std::vector<float>&, float, float, Args...)> Func, Args... Data)
 	{

@@ -122,4 +122,26 @@ namespace Mimou
 
 		ImGui::PopID();
 	}
+
+	bool PanelUtilities::DrawComboFromVector(const std::string& Label, const std::vector<std::string>& Vec, int* CurrentIdx)
+	{
+		bool IdxChanged = false;
+		char* Items[256];
+		for (size_t i = 0; i < Vec.size(); i++)
+		{
+			std::string Name = Vec[i];
+			Items[i] = new char[Name.length() + 1];
+			strcpy(Items[i], Name.c_str());
+		}
+		if (ImGui::Combo(Label.c_str(), CurrentIdx, Items, Vec.size()))
+		{
+			IdxChanged = true;
+		}
+
+		for (size_t i = 0; i < Vec.size(); i++)
+		{
+			delete[] Items[i];
+		}
+		return IdxChanged;
+	}
 }

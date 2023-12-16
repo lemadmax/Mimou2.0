@@ -24,6 +24,7 @@ namespace Mimou
 
 
 		std::vector<std::string> GetAvaliableAssets();
+		std::vector<std::string> GetAvaliableAssets(const std::string& AssetName, int& Idx);
 		void PreloadAssets();
 
 	private:

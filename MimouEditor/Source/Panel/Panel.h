@@ -34,27 +34,22 @@ namespace Mimou
 	public:
 		static void DrawVec3Control(const std::string& Label, glm::vec3& Values, const std::string& ItemLabels = "XYZ");
 
+		static bool DrawComboFromVector(const std::string& Label, const std::vector<std::string>& Vec, int* CurrentIdx);
+
 		template<typename T, typename Fn>
 		static void DrawDynamicVector(const std::string& Label, std::vector<T>& Vec, Fn ItemFunc)
 		{
-			ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_AllowItemOverlap;
-			float LineWidth = ImGui::CalcItemWidth();
+			ImGuiTreeNodeFlags NodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_DefaultOpen;
 
-			ImVec2 ContentRegionAvail = ImGui::GetContentRegionAvail();
-			float LineHeight = ImGui::GetTextLineHeight();
-			ImGui::PushItemWidth(-LineHeight);
 			if (ImGui::TreeNodeEx(Label.c_str(), NodeFlags))
 			{
+				for (int i = 0; i < Vec.size(); i++)
+				{
+					ItemFunc(Vec[i]);
+				}
 				ImGui::TreePop();
 			}
-			ImGui::PopItemWidth();
-			ImGui::SameLine(ContentRegionAvail.x);
-			if (ImGui::Button("+", ImVec2(LineHeight, LineHeight)))
-			{
 
-			}
-
-			//ImGui::PopStyleVar(1);
 		}
 	};
 }
