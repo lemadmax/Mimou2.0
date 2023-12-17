@@ -21,7 +21,7 @@ namespace Mimou
 
 			void SetUniform(uint32_t i, Ref<Shader> Shader)
 			{
-				Shader->SetFloat3("u_Lights[" + std::to_string(i) + "].LightColor", Color);
+				//Shader->SetFloat3("u_Lights[" + std::to_string(i) + "].LightColor", Color);
 				Shader->SetFloat3("u_Lights[" + std::to_string(i) + "].LightDir", Direction);
 				Shader->SetFloat("u_Lights[" + std::to_string(i) + "].Intensity", Intensity); 
 			}

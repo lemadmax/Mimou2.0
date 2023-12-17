@@ -24,8 +24,8 @@ namespace Mimou
 			return;
 		}
 		m_Shader->Bind();
-		m_Shader->SetFloat3("u_Ambient", m_Ambient);
-		m_Shader->SetFloat3("u_Diffuse", m_Diffuse);
+		m_Shader->SetFloat4("u_Ambient", m_Ambient);
+		m_Shader->SetFloat4("u_Diffuse", m_Diffuse);
 		m_Shader->SetFloat4("u_Specular", m_Specular);
 		m_Shader->SetFloat("u_Transparency", m_Transparency);
 		m_Shader->SetFloat("u_IrradiPerp", 1.0f);
@@ -48,7 +48,7 @@ namespace Mimou
 		CachedMats.emplace("PhongMat", CreateRef<Material>("PhongMat", ShaderLibrary::GetInstance()->Get("Phong Shader")));
 		CachedMats.emplace("LambertMat", CreateRef<Material>("LambertMat", ShaderLibrary::GetInstance()->Get("Lambert Shader")));
 		CachedMats.emplace("TextureMat", CreateRef<Material>("TextureMat", ShaderLibrary::GetInstance()->Get("Texture Shader")));
-		CachedMats.emplace("DefaultMat", CreateRef<Material>("DefaultMat", ShaderLibrary::GetInstance()->Get("Default")));
+		CachedMats.emplace("DefaultMat", CreateRef<Material>("DefaultMat", ShaderLibrary::GetInstance()->Get("Phong Shader")));
 	}
 
 	Ref<Material> MaterialLibrary::GetMaterial(const std::string& AssetName)

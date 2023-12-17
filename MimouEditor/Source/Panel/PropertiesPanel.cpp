@@ -127,10 +127,10 @@ namespace Mimou
 			ImGui::Checkbox("Is on", &Light->IsOn);
 			ImGui::Spacing();
 
-			PanelUtilities::DrawVec3Control("Light color", Light->Color, "RGB");
-			ImGui::Spacing();
+			//PanelUtilities::DrawVec3Control("Light color", Light->Color, "RGB");
+			//ImGui::Spacing();
 
-			ImGui::DragFloat("Intensity", &Light->Intensity, 0.01f, 0.0f, 1.0f, "%.2f");
+			ImGui::DragFloat("Intensity", &Light->Intensity, 0.1f, 0.0f, 120.0f, "%.1f");
 
 			ImGui::Spacing();
 			});
@@ -141,7 +141,7 @@ namespace Mimou
 			int CurrentIdx = 0;
 			std::vector<std::string> MeshNames = StaticMeshLibrary::Get()->GetAvaliableAssets(StaticMesh->AssetName, CurrentIdx);
 			if (PanelUtilities::DrawComboFromVector("Mesh Asset", MeshNames, &CurrentIdx))
-			{
+			{ 
 				StaticMesh->AssetName = MeshNames[CurrentIdx];
 			}
 
@@ -155,6 +155,27 @@ namespace Mimou
 				{
 					Mat = MaterialLibrary::Get()->GetMaterial(MatNames[CurMatIdx]);
 				}
+
+				ImGuiColorEditFlags MiscFlags = ImGuiColorEditFlags_HDR | ImGuiColorEditFlags_Float | ImGuiColorEditFlags_NoLabel;
+				float Ambient[4] = { Mat->m_Ambient.x, Mat->m_Ambient.y, Mat->m_Ambient.z, Mat->m_Ambient.w };
+				if (ImGui::ColorEdit4("Ambient", Ambient, MiscFlags))
+				{
+					Mat->m_Ambient = glm::vec4(Ambient[0], Ambient[1] , Ambient[2], Ambient[3]);
+				}
+				float Diffuse[4] = { Mat->m_Diffuse.x, Mat->m_Diffuse.y, Mat->m_Diffuse.z, Mat->m_Diffuse.w };
+				if (ImGui::ColorEdit4("Diffuse", Diffuse, MiscFlags))
+				{
+					Mat->m_Diffuse = glm::vec4(Diffuse[0], Diffuse[1], Diffuse[2], Diffuse[3]);
+				}float Specular[4] = { Mat->m_Specular.x, Mat->m_Specular.y, Mat->m_Specular.z, Mat->m_Specular.w };
+				if (ImGui::ColorEdit4("Specular", Specular, MiscFlags))
+				{
+					Mat->m_Specular = glm::vec4(Specular[0], Specular[1], Specular[2], Specular[3]);
+				}
+
+				ImGui::DragFloat("Transparency", &Mat->m_Transparency, 0.01f, 0.0f, 1.0f, "%.3f");
+				ImGui::DragFloat("IrradiPerp", &Mat->m_IrradiPerp, 0.01f, 0.0f, 1.0f, "%.3f");
+
+				ImGui::Spacing();
 
 				});
 			ImGui::Spacing();

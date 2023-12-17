@@ -3,6 +3,7 @@
 
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec3 a_Normal;
+layout(location = 2) in vec2 a_TexCoord;
 
 uniform mat4 u_ViewProjection;
 uniform mat4 u_TransformMatrix;
@@ -10,7 +11,7 @@ uniform mat4 u_InverseMatrix;
 
 out vec3 v_Position;
 out vec3 v_Normal;
-out mat4 v_InverseMatrix;
+out vec2 v_TexCoord;
 
 void main()
 {
@@ -32,7 +33,6 @@ layout(location = 0) out vec4 FragColor;
 
 struct SceneLight
 {
-    vec3 LightColor;
     vec3 LightDir;
     float Intensity;
 };
@@ -40,8 +40,8 @@ struct SceneLight
 uniform int u_nl;
 uniform SceneLight u_Lights[MAX_LIGHTS];
 
-uniform vec3 u_Ambient;
-uniform vec3 u_Diffuse;
+uniform vec4 u_Ambient;
+uniform vec4 u_Diffuse;
 uniform vec4 u_Specular;
 uniform float u_Transparency;
 uniform float u_IrradiPerp;
@@ -52,10 +52,9 @@ in vec3 v_Normal;
 void main()
 {
     vec3 N = normalize(v_Normal);
-    vec3 Radiance = u_Ambient;
+    vec3 Radiance = u_Ambient.w * u_Ambient.rgb;
     for (int i = 0; i < u_nl; i++)
     {
-        vec3 LightColor = u_Lights[i].LightColor * u_Lights[i].Intensity;
         vec3 L = -u_Lights[i].LightDir;
         float Irriadiance = max(0., dot(L, N)) * u_IrradiPerp;
         float specular = 0.0;
@@ -65,7 +64,7 @@ void main()
             vec3 V = normalize(-v_Position);
             specular = pow(max(dot(R, V), 0.0), u_Lights[i].Intensity);
         }
-        Radiance += Irriadiance * u_Diffuse + specular * u_Specular.rgb;
+        Radiance += u_Diffuse.w * Irriadiance * u_Diffuse.rgb + u_Specular.w * specular * u_Specular.rgb;
     }
     Radiance = pow(Radiance, vec3(1.0 / 2.2)); // Gamma correction
     FragColor = vec4(Radiance, u_Transparency);

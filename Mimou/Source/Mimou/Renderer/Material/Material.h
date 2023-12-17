@@ -24,10 +24,11 @@ namespace Mimou
 
 	public:
 
-		glm::vec3 m_Ambient = {0.2f, 0.3f, 0.4};
-		glm::vec3 m_Diffuse = { 0.2f, 0.3f, 0.4 };
+		glm::vec4 m_Ambient = { 0.2f, 0.3f, 0.4f, 1.0f };
+		glm::vec4 m_Diffuse = { 0.2f, 0.3f, 0.4f, 1.0f };
 		glm::vec4 m_Specular = { 0.9f, 0.8f, 0.9f, 1.0f };
 		float m_Transparency = 1.0f;
+		float m_IrradiPerp = 1.0f;
 
 	private:
 		std::string m_Name;
