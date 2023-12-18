@@ -15,10 +15,12 @@ IncludeDir["GLFW"] = "Mimou/Vendors/GLFW/include"
 IncludeDir["ImGUI"] = "Mimou/Vendors/ImGUI"
 IncludeDir["stb_image"] = "Mimou/Vendors/stb_image"
 IncludeDir["EnTT"] = "Mimou/Vendors/EnTT/single_include"
+IncludeDir["YAML"] = "Mimou/Vendors/yaml-cpp/include"
 
 include "Mimou/Vendors/Glad"
 include "Mimou/Vendors/GLFW"
 include "Mimou/Vendors/ImGUI"
+include "Mimou/Vendors/yaml-cpp"
 
 project "Mimou"
 	kind "StaticLib"
@@ -55,13 +57,15 @@ project "Mimou"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.EnTT}",
+		"%{IncludeDir.YAML}",
 	}
 
 	links {
 		"Glad",
 		"ImGUI",
 		"GLFW",
-		"opengl32.lib"
+		"opengl32.lib",
+		"YAML",
 	}
 
 	filter "system:windows"
@@ -184,6 +188,7 @@ project "MimouEditor"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.EnTT}",
+		"%{IncludeDir.YAML}",
 	}
 
 	links {
