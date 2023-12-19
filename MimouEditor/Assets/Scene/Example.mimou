@@ -1,0 +1,17 @@
+Editor Test Scene
+---
+GameObject: 0
+TagComponent:
+  Tag: Camera 1
+---
+GameObject: 1
+TagComponent:
+  Tag: Camera 2
+---
+GameObject: 2
+TagComponent:
+  Tag: Light 1
+---
+GameObject: 3
+TagComponent:
+  Tag: Cube 1

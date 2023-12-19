@@ -26,7 +26,7 @@ class iterator_base {
   template <typename>
   friend class iterator_base;
   struct enabler {};
-  using base_type = node_iterator;
+  typedef node_iterator base_type;
 
   struct proxy {
     explicit proxy(const V& x) : m_ref(x) {}

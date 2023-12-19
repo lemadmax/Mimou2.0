@@ -84,7 +84,7 @@ struct is_numeric<long double> {
 
 template <bool, class T = void>
 struct enable_if_c {
-  using type = T;
+  typedef T type;
 };
 
 template <class T>
@@ -95,7 +95,7 @@ struct enable_if : public enable_if_c<Cond::value, T> {};
 
 template <bool, class T = void>
 struct disable_if_c {
-  using type = T;
+  typedef T type;
 };
 
 template <class T>
@@ -107,9 +107,9 @@ struct disable_if : public disable_if_c<Cond::value, T> {};
 
 template <typename S, typename T>
 struct is_streamable {
-  template <typename StreamT, typename ValueT>
+  template <typename SS, typename TT>
   static auto test(int)
-      -> decltype(std::declval<StreamT&>() << std::declval<ValueT>(), std::true_type());
+      -> decltype(std::declval<SS&>() << std::declval<TT>(), std::true_type());
 
   template <typename, typename>
   static auto test(...) -> std::false_type;

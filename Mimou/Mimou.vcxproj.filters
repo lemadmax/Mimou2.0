@@ -90,6 +90,9 @@
     <ClInclude Include="Source\Mimou\ECS\Scene.h">
       <Filter>Source\Mimou\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\SceneSerializer.h">
+      <Filter>Source\Mimou\ECS</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\ECS\System\SystemBase.h">
       <Filter>Source\Mimou\ECS\System</Filter>
     </ClInclude>
@@ -237,6 +240,9 @@
       <Filter>Source\Mimou\ECS\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\ECS\Scene.cpp">
+      <Filter>Source\Mimou\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\SceneSerializer.cpp">
       <Filter>Source\Mimou\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\ECS\System\SystemBase.cpp">

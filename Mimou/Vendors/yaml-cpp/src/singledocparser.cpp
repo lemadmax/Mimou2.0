@@ -7,7 +7,6 @@
 #include "singledocparser.h"
 #include "tag.h"
 #include "token.h"
-#include "yaml-cpp/depthguard.h"
 #include "yaml-cpp/emitterstyle.h"
 #include "yaml-cpp/eventhandler.h"
 #include "yaml-cpp/exceptions.h"  // IWYU pragma: keep
@@ -22,7 +21,7 @@ SingleDocParser::SingleDocParser(Scanner& scanner, const Directives& directives)
       m_anchors{},
       m_curAnchor(0) {}
 
-SingleDocParser::~SingleDocParser() = default;
+SingleDocParser::~SingleDocParser() {}
 
 // HandleDocument
 // . Handles the next document
@@ -48,8 +47,6 @@ void SingleDocParser::HandleDocument(EventHandler& eventHandler) {
 }
 
 void SingleDocParser::HandleNode(EventHandler& eventHandler) {
-  DepthGuard<500> depthguard(depth, m_scanner.mark(), ErrorMsg::BAD_FILE);
-
   // an empty node *is* a possibility
   if (m_scanner.empty()) {
     eventHandler.OnNull(m_scanner.mark(), NullAnchor);
@@ -82,24 +79,17 @@ void SingleDocParser::HandleNode(EventHandler& eventHandler) {
   if (!anchor_name.empty())
     eventHandler.OnAnchor(mark, anchor_name);
 
-  // after parsing properties, an empty node is again a possibility
-  if (m_scanner.empty()) {
-    eventHandler.OnNull(mark, anchor);
-    return;
-  }
-
   const Token& token = m_scanner.peek();
 
-  // add non-specific tags
-  if (tag.empty())
-    tag = (token.type == Token::NON_PLAIN_SCALAR ? "!" : "?");
-  
-  if (token.type == Token::PLAIN_SCALAR 
-      && tag.compare("?") == 0 && IsNullString(token.value)) {
+  if (token.type == Token::PLAIN_SCALAR && IsNullString(token.value)) {
     eventHandler.OnNull(mark, anchor);
     m_scanner.pop();
     return;
   }
+
+  // add non-specific tags
+  if (tag.empty())
+    tag = (token.type == Token::NON_PLAIN_SCALAR ? "!" : "?");
 
   // now split based on what kind of node we should be
   switch (token.type) {
@@ -167,7 +157,7 @@ void SingleDocParser::HandleBlockSequence(EventHandler& eventHandler) {
   m_scanner.pop();
   m_pCollectionStack->PushCollectionType(CollectionType::BlockSeq);
 
-  while (true) {
+  while (1) {
     if (m_scanner.empty())
       throw ParserException(m_scanner.mark(), ErrorMsg::END_OF_SEQ);
 
@@ -200,7 +190,7 @@ void SingleDocParser::HandleFlowSequence(EventHandler& eventHandler) {
   m_scanner.pop();
   m_pCollectionStack->PushCollectionType(CollectionType::FlowSeq);
 
-  while (true) {
+  while (1) {
     if (m_scanner.empty())
       throw ParserException(m_scanner.mark(), ErrorMsg::END_OF_SEQ_FLOW);
 
@@ -253,7 +243,7 @@ void SingleDocParser::HandleBlockMap(EventHandler& eventHandler) {
   m_scanner.pop();
   m_pCollectionStack->PushCollectionType(CollectionType::BlockMap);
 
-  while (true) {
+  while (1) {
     if (m_scanner.empty())
       throw ParserException(m_scanner.mark(), ErrorMsg::END_OF_MAP);
 
@@ -292,7 +282,7 @@ void SingleDocParser::HandleFlowMap(EventHandler& eventHandler) {
   m_scanner.pop();
   m_pCollectionStack->PushCollectionType(CollectionType::FlowMap);
 
-  while (true) {
+  while (1) {
     if (m_scanner.empty())
       throw ParserException(m_scanner.mark(), ErrorMsg::END_OF_MAP_FLOW);
 
@@ -377,7 +367,7 @@ void SingleDocParser::ParseProperties(std::string& tag, anchor_t& anchor,
   anchor_name.clear();
   anchor = NullAnchor;
 
-  while (true) {
+  while (1) {
     if (m_scanner.empty())
       return;
 
@@ -423,12 +413,9 @@ anchor_t SingleDocParser::RegisterAnchor(const std::string& name) {
 
 anchor_t SingleDocParser::LookupAnchor(const Mark& mark,
                                        const std::string& name) const {
-  auto it = m_anchors.find(name);
-  if (it == m_anchors.end()) {
-    std::stringstream ss;
-    ss << ErrorMsg::UNKNOWN_ANCHOR << name;
-    throw ParserException(mark, ss.str());
-  }
+  Anchors::const_iterator it = m_anchors.find(name);
+  if (it == m_anchors.end())
+    throw ParserException(mark, ErrorMsg::UNKNOWN_ANCHOR);
 
   return it->second;
 }

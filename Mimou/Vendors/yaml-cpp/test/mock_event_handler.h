@@ -1,10 +1,7 @@
 #include "yaml-cpp/emitterstyle.h"
 #include "yaml-cpp/eventhandler.h"
-#include "yaml-cpp/mark.h"
 
 #include "gmock/gmock.h"
-
-#include <string>
 
 namespace YAML {
 

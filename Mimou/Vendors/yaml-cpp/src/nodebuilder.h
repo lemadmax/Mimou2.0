@@ -31,25 +31,25 @@ class NodeBuilder : public EventHandler {
   NodeBuilder(NodeBuilder&&) = delete;
   NodeBuilder& operator=(const NodeBuilder&) = delete;
   NodeBuilder& operator=(NodeBuilder&&) = delete;
-  ~NodeBuilder() override;
+  virtual ~NodeBuilder();
 
   Node Root();
 
-  void OnDocumentStart(const Mark& mark) override;
-  void OnDocumentEnd() override;
+  virtual void OnDocumentStart(const Mark& mark);
+  virtual void OnDocumentEnd();
 
-  void OnNull(const Mark& mark, anchor_t anchor) override;
-  void OnAlias(const Mark& mark, anchor_t anchor) override;
-  void OnScalar(const Mark& mark, const std::string& tag,
-                        anchor_t anchor, const std::string& value) override;
+  virtual void OnNull(const Mark& mark, anchor_t anchor);
+  virtual void OnAlias(const Mark& mark, anchor_t anchor);
+  virtual void OnScalar(const Mark& mark, const std::string& tag,
+                        anchor_t anchor, const std::string& value);
 
-  void OnSequenceStart(const Mark& mark, const std::string& tag,
-                               anchor_t anchor, EmitterStyle::value style) override;
-  void OnSequenceEnd() override;
+  virtual void OnSequenceStart(const Mark& mark, const std::string& tag,
+                               anchor_t anchor, EmitterStyle::value style);
+  virtual void OnSequenceEnd();
 
-  void OnMapStart(const Mark& mark, const std::string& tag,
-                          anchor_t anchor, EmitterStyle::value style) override;
-  void OnMapEnd() override;
+  virtual void OnMapStart(const Mark& mark, const std::string& tag,
+                          anchor_t anchor, EmitterStyle::value style);
+  virtual void OnMapEnd();
 
  private:
   detail::node& Push(const Mark& mark, anchor_t anchor);
@@ -61,11 +61,11 @@ class NodeBuilder : public EventHandler {
   detail::shared_memory_holder m_pMemory;
   detail::node* m_pRoot;
 
-  using Nodes = std::vector<detail::node *>;
+  typedef std::vector<detail::node*> Nodes;
   Nodes m_stack;
   Nodes m_anchors;
 
-  using PushedKey = std::pair<detail::node*, bool>;
+  typedef std::pair<detail::node*, bool> PushedKey;
   std::vector<PushedKey> m_keys;
   std::size_t m_mapDepth;
 };

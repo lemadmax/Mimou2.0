@@ -154,6 +154,7 @@
     <ClInclude Include="Source\Mimou\ECS\Component\BasicComponents.h" />
     <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h" />
     <ClInclude Include="Source\Mimou\ECS\Scene.h" />
+    <ClInclude Include="Source\Mimou\ECS\SceneSerializer.h" />
     <ClInclude Include="Source\Mimou\ECS\System\SystemBase.h" />
     <ClInclude Include="Source\Mimou\EntryPoint.h" />
     <ClInclude Include="Source\Mimou\Event\AppEvent.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="Source\Mimou\Application.cpp" />
     <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp" />
     <ClCompile Include="Source\Mimou\ECS\Scene.cpp" />
+    <ClCompile Include="Source\Mimou\ECS\SceneSerializer.cpp" />
     <ClCompile Include="Source\Mimou\ECS\System\SystemBase.cpp" />
     <ClCompile Include="Source\Mimou\ImGUI\ImGUIBuild.cpp" />
     <ClCompile Include="Source\Mimou\ImGUI\ImGUILayer.cpp" />

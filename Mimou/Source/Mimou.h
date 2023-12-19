@@ -6,6 +6,7 @@
 #include "Mimou/ImGUI/ImGUILayer.h"
 #include "Mimou/Input.h"
 #include "Mimou/Timestep.h"
+
 #include "Mimou/Renderer/RenderCommand.h"
 #include "Mimou/Renderer/VertexArray.h"
 #include "Mimou/Renderer/Buffer.h"
@@ -15,8 +16,11 @@
 #include "Mimou/Renderer/Camera/EditorCamera.h"
 #include "Mimou/Renderer/Material/Material.h"
 #include "Mimou/Renderer/Lighting/Light.h"
-#include "Mimou/ECS/Component/BasicComponents.h"
 #include "Mimou/Renderer/FrameBuffer.h"
+
+#include "Mimou/ECS/Component/BasicComponents.h"
+#include "Mimou/ECS/SceneSerializer.h"
+
 #include "Mimou/Mesh/StaticMesh.h"
 
 

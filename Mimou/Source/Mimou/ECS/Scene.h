@@ -12,6 +12,8 @@ namespace Mimou
 	class Panel;
 	class SceneHierarchyPanel;
 
+	class SceneSerializer;
+
 	class Scene
 	{
 	public:
@@ -40,5 +42,7 @@ namespace Mimou
 		friend class GameObject;
 		friend class Panel;
 		friend class SceneHierarchyPanel;
+
+		friend class SceneSerializer;
 	};
 }

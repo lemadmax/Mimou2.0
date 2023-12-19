@@ -81,6 +81,10 @@ namespace Mimou
 
 	EditorLayer::~EditorLayer()
 	{
+		if (m_ActiveScene)
+		{
+			SceneSerializer::Get()->SerializeScene(m_ActiveScene, "Assets/Scene/Example.mimou");
+		}
 	}
 
 	EditorLayer* EditorLayer::GetInstance()

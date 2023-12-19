@@ -3,10 +3,10 @@
 #include <fstream>
 #include <sstream>
 
-#include "nodebuilder.h"
-#include "yaml-cpp/node/impl.h"
 #include "yaml-cpp/node/node.h"
+#include "yaml-cpp/node/impl.h"
 #include "yaml-cpp/parser.h"
+#include "nodebuilder.h"
 
 namespace YAML {
 Node Load(const std::string& input) {
@@ -30,9 +30,9 @@ Node Load(std::istream& input) {
 }
 
 Node LoadFile(const std::string& filename) {
-  std::ifstream fin(filename);
+  std::ifstream fin(filename.c_str());
   if (!fin) {
-    throw BadFile(filename);
+    throw BadFile();
   }
   return Load(fin);
 }
@@ -51,7 +51,7 @@ std::vector<Node> LoadAll(std::istream& input) {
   std::vector<Node> docs;
 
   Parser parser(input);
-  while (true) {
+  while (1) {
     NodeBuilder builder;
     if (!parser.HandleNextDocument(builder)) {
       break;
@@ -63,9 +63,9 @@ std::vector<Node> LoadAll(std::istream& input) {
 }
 
 std::vector<Node> LoadAllFromFile(const std::string& filename) {
-  std::ifstream fin(filename);
+  std::ifstream fin(filename.c_str());
   if (!fin) {
-    throw BadFile(filename);
+    throw BadFile();
   }
   return LoadAll(fin);
 }

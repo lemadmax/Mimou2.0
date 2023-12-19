@@ -1,32 +1,26 @@
-add_executable(yaml-cpp-sandbox sandbox.cpp)
-add_executable(yaml-cpp-parse parse.cpp)
-add_executable(yaml-cpp-read read.cpp)
+cmake_minimum_required(VERSION 3.5)
 
-target_link_libraries(yaml-cpp-sandbox PRIVATE yaml-cpp)
-target_link_libraries(yaml-cpp-parse PRIVATE yaml-cpp)
-target_link_libraries(yaml-cpp-read PRIVATE yaml-cpp)
-
-set_property(TARGET yaml-cpp-sandbox PROPERTY OUTPUT_NAME sandbox)
-set_property(TARGET yaml-cpp-parse PROPERTY OUTPUT_NAME parse)
-set_property(TARGET yaml-cpp-read PROPERTY OUTPUT_NAME read)
-
-set_target_properties(yaml-cpp-sandbox
-  PROPERTIES
+add_sources(parse.cpp)
+add_executable(parse parse.cpp)
+set_target_properties(parse PROPERTIES
+    CXX_STANDARD 11
     CXX_STANDARD_REQUIRED ON
-    OUTPUT_NAME sandbox)
+)
+target_link_libraries(parse yaml-cpp)
 
-set_target_properties(yaml-cpp-parse
-  PROPERTIES
+add_sources(sandbox.cpp)
+add_executable(sandbox sandbox.cpp)
+set_target_properties(sandbox PROPERTIES
+    CXX_STANDARD 11
     CXX_STANDARD_REQUIRED ON
-    OUTPUT_NAME parse)
+)
+target_link_libraries(sandbox yaml-cpp)
 
-set_target_properties(yaml-cpp-read
-  PROPERTIES
+add_sources(read.cpp)
+add_executable(read read.cpp)
+set_target_properties(read PROPERTIES
+    CXX_STANDARD 11
     CXX_STANDARD_REQUIRED ON
-    OUTPUT_NAME read)
+)
+target_link_libraries(read yaml-cpp)
 
-if (NOT DEFINED CMAKE_CXX_STANDARD)
-  set_target_properties(yaml-cpp-sandbox yaml-cpp-parse yaml-cpp-read
-    PROPERTIES
-      CXX_STANDARD 11)
-endif()

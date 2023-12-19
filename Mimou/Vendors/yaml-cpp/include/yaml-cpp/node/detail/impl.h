@@ -9,8 +9,6 @@
 
 #include "yaml-cpp/node/detail/node.h"
 #include "yaml-cpp/node/detail/node_data.h"
-
-#include <algorithm>
 #include <type_traits>
 
 namespace YAML {
@@ -35,7 +33,7 @@ struct get_idx<Key,
   static node* get(std::vector<node*>& sequence, const Key& key,
                    shared_memory_holder pMemory) {
     if (key > sequence.size() || (key > 0 && !sequence[key - 1]->is_defined()))
-      return nullptr;
+      return 0;
     if (key == sequence.size())
       sequence.push_back(&pMemory->create_node());
     return sequence[key];
@@ -60,9 +58,7 @@ struct get_idx<Key, typename std::enable_if<std::is_signed<Key>::value>::type> {
 
 template <typename Key, typename Enable = void>
 struct remove_idx {
-  static bool remove(std::vector<node*>&, const Key&, std::size_t&) {
-    return false;
-  }
+  static bool remove(std::vector<node*>&, const Key&) { return false; }
 };
 
 template <typename Key>
@@ -70,15 +66,11 @@ struct remove_idx<
     Key, typename std::enable_if<std::is_unsigned<Key>::value &&
                                  !std::is_same<Key, bool>::value>::type> {
 
-  static bool remove(std::vector<node*>& sequence, const Key& key,
-                     std::size_t& seqSize) {
+  static bool remove(std::vector<node*>& sequence, const Key& key) {
     if (key >= sequence.size()) {
       return false;
     } else {
       sequence.erase(sequence.begin() + key);
-      if (seqSize > key) {
-          --seqSize;
-      }
       return true;
     }
   }
@@ -88,10 +80,9 @@ template <typename Key>
 struct remove_idx<Key,
                   typename std::enable_if<std::is_signed<Key>::value>::type> {
 
-  static bool remove(std::vector<node*>& sequence, const Key& key,
-                     std::size_t& seqSize) {
+  static bool remove(std::vector<node*>& sequence, const Key& key) {
     return key >= 0 ? remove_idx<std::size_t>::remove(
-                          sequence, static_cast<std::size_t>(key), seqSize)
+                          sequence, static_cast<std::size_t>(key))
                     : false;
   }
 };
@@ -106,11 +97,7 @@ inline bool node::equals(const T& rhs, shared_memory_holder pMemory) {
 }
 
 inline bool node::equals(const char* rhs, shared_memory_holder pMemory) {
-  std::string lhs;
-  if (convert<std::string>::decode(Node(*this, std::move(pMemory)), lhs)) {
-    return lhs == rhs;
-  }
-  return false;
+  return equals<std::string>(rhs, pMemory);
 }
 
 // indexing
@@ -128,14 +115,16 @@ inline node* node_data::get(const Key& key,
         return pNode;
       return nullptr;
     case NodeType::Scalar:
-      throw BadSubscript(m_mark, key);
+      throw BadSubscript(key);
   }
 
-  auto it = std::find_if(m_map.begin(), m_map.end(), [&](const kv_pair m) {
-    return m.first->equals(key, pMemory);
-  });
+  for (node_map::const_iterator it = m_map.begin(); it != m_map.end(); ++it) {
+    if (it->first->equals(key, pMemory)) {
+      return it->second;
+    }
+  }
 
-  return it != m_map.end() ? it->second : nullptr;
+  return nullptr;
 }
 
 template <typename Key>
@@ -154,15 +143,13 @@ inline node& node_data::get(const Key& key, shared_memory_holder pMemory) {
       convert_to_map(pMemory);
       break;
     case NodeType::Scalar:
-      throw BadSubscript(m_mark, key);
+      throw BadSubscript(key);
   }
 
-  auto it = std::find_if(m_map.begin(), m_map.end(), [&](const kv_pair m) {
-    return m.first->equals(key, pMemory);
-  });
-
-  if (it != m_map.end()) {
-    return *it->second;
+  for (node_map::const_iterator it = m_map.begin(); it != m_map.end(); ++it) {
+    if (it->first->equals(key, pMemory)) {
+      return *it->second;
+    }
   }
 
   node& k = convert_to_node(key, pMemory);
@@ -174,10 +161,8 @@ inline node& node_data::get(const Key& key, shared_memory_holder pMemory) {
 template <typename Key>
 inline bool node_data::remove(const Key& key, shared_memory_holder pMemory) {
   if (m_type == NodeType::Sequence) {
-    return remove_idx<Key>::remove(m_sequence, key, m_seqSize);
-  }
-
-  if (m_type == NodeType::Map) {
+    return remove_idx<Key>::remove(m_sequence, key);
+  } else if (m_type == NodeType::Map) {
     kv_pairs::iterator it = m_undefinedPairs.begin();
     while (it != m_undefinedPairs.end()) {
       kv_pairs::iterator jt = std::next(it);
@@ -187,13 +172,11 @@ inline bool node_data::remove(const Key& key, shared_memory_holder pMemory) {
       it = jt;
     }
 
-    auto iter = std::find_if(m_map.begin(), m_map.end(), [&](const kv_pair m) {
-      return m.first->equals(key, pMemory);
-    });
-
-    if (iter != m_map.end()) {
-      m_map.erase(iter);
-      return true;
+    for (node_map::iterator iter = m_map.begin(); iter != m_map.end(); ++iter) {
+      if (iter->first->equals(key, pMemory)) {
+        m_map.erase(iter);
+        return true;
+      }
     }
   }
 

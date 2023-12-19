@@ -13,6 +13,7 @@
 #include "yaml-cpp/dll.h"
 #include "yaml-cpp/emitterstyle.h"
 #include "yaml-cpp/mark.h"
+#include "yaml-cpp/node/detail/bool_type.h"
 #include "yaml-cpp/node/detail/iterator_fwd.h"
 #include "yaml-cpp/node/ptr.h"
 #include "yaml-cpp/node/type.h"
@@ -38,8 +39,8 @@ class YAML_CPP_API Node {
   template <typename T, typename S>
   friend struct as_if;
 
-  using iterator = YAML::iterator;
-  using const_iterator = YAML::const_iterator;
+  typedef YAML::iterator iterator;
+  typedef YAML::const_iterator const_iterator;
 
   Node();
   explicit Node(NodeType::value type);
@@ -58,7 +59,7 @@ class YAML_CPP_API Node {
   bool IsMap() const { return Type() == NodeType::Map; }
 
   // bool conversions
-  explicit operator bool() const { return IsDefined(); }
+  YAML_CPP_OPERATOR_BOOL()
   bool operator!() const { return !IsDefined(); }
 
   // access

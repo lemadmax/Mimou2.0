@@ -7,18 +7,23 @@ project "YAML"
 
     files
     {
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/src/contrib/**.h",
-		"%{prj.name}/src/contrib/**.cpp",
+		"src/**.h",
+		"src/**.cpp",
+        "include/**.h",
     }
+
+	includedirs {
+		"include",
+	}
 
     filter "system:windows"
         systemversion "latest"
-        cppdialect "C++20"
+        cppdialect "C++17"
+        cdialect "C11"
         staticruntime "on"
 
     filter "configurations:Debug"
+        buildoptions "/MDd"
         runtime "Debug"
         symbols "on"
 
