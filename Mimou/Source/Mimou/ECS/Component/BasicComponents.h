@@ -86,14 +86,13 @@ namespace Mimou
 
 	struct LightComponent
 	{
-		glm::vec3 Color = { 1.0f, 1.0f, 1.0f };
 		float Intensity = 1.0f;
 		bool IsDirectional = true;
 		bool IsOn = true;
 
 		LightComponent() = default;
 		LightComponent(const LightComponent&) = default;
-		LightComponent(const glm::vec3& InColor, float InIntensity, bool InIsDir)
-			: Color(InColor), Intensity(InIntensity), IsDirectional(InIsDir) {}
+		LightComponent(float InIntensity, bool InIsDir)
+			: Intensity(InIntensity), IsDirectional(InIsDir) {}
 	};
 }

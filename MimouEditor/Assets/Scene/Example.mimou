@@ -1,17 +1,50 @@
-Editor Test Scene
----
-GameObject: 0
-TagComponent:
-  Tag: Camera 1
----
-GameObject: 1
-TagComponent:
-  Tag: Camera 2
----
-GameObject: 2
-TagComponent:
-  Tag: Light 1
----
-GameObject: 3
-TagComponent:
-  Tag: Cube 1
+Scene: Editor Test Scene
+GameObjects:
+  - EntityID: 0
+    TagComponent:
+      Tag: Camera 1
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      FOV: 70
+      Aspect: 1.5
+      zNear: 0.100000001
+      zFar: 100
+      IsPrimary: false
+? - EntityID: 1
+    TagComponent:
+      Tag: Camera 2
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      FOV: 70
+      Aspect: 1.5
+      zNear: 0.100000001
+      zFar: 100
+      IsPrimary: false
+: - EntityID: 2
+    TagComponent:
+      Tag: Light 1
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 3.14159274, 0]
+      Scale: [1, 1, 1]
+    LightComponent:
+      Intensity: 1
+      IsDirectional: true
+      IsOn: true
+? - EntityID: 3
+    TagComponent:
+      Tag: Cube 1
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat

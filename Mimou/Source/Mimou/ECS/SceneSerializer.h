@@ -28,6 +28,8 @@ namespace Mimou
 
 		void SerializeGameObjects(YAML::Emitter& Out, const Ref<GameObject>& GB);
 
+		Ref<GameObject> DeserializeGameObject(const Ref<Scene>& Scene, YAML::Node& Node);
+
 	private:
 		static SceneSerializer* s_Instance;
 	};
