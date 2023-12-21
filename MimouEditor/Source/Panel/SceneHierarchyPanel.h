@@ -14,7 +14,7 @@ namespace Mimou
 
 		void ShowGameObject(Ref<GameObject> GB);
 
-		inline Ref<GameObject> GetSelectedObject() const { return SelectedObject; }
+		inline Ref<GameObject> GetSelectedObject();
 
 	private:
 		void OpenRightClickPopup(Ref<GameObject> GB);

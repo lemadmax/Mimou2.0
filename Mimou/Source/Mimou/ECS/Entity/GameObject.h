@@ -12,7 +12,7 @@ namespace Mimou
 	{
 	public:
 		GameObject() = delete;
-		GameObject(Scene* OwnedScene, const std::string& Name = "Game Object", Ref<GameObject> Parent = nullptr);
+		GameObject(const Ref<Scene>& OwnedScene, const std::string& Name = "Game Object", Ref<GameObject> Parent = nullptr);
 		virtual ~GameObject();
 
 		virtual void OnCreate();
@@ -33,6 +33,8 @@ namespace Mimou
 		glm::vec3 GetWorldTranslation();
 		glm::vec3 GetWorldRotation();
 		glm::vec3 GetWorldScale();
+
+		Ref<Scene> GetOwnedScene() const { return m_Scene; }
 
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)
@@ -62,7 +64,7 @@ namespace Mimou
 	private:
 		entt::entity m_EntityID;
 
-		Scene* m_Scene = nullptr;
+		Ref<Scene> m_Scene = nullptr;
 
 		Ref<GameObject> m_Parent = nullptr;
 		//std::vector<Ref<GameObject>> Children;

@@ -5,7 +5,7 @@
 namespace Mimou
 {
 
-	GameObject::GameObject(Scene* OwnedScene, const std::string& Name, Ref<GameObject> Parent)
+	GameObject::GameObject(const Ref<Scene>& OwnedScene, const std::string& Name, Ref<GameObject> Parent)
 		: m_Scene(OwnedScene), m_Parent(Parent)
 	{
 		m_EntityID = OwnedScene->m_Registry.create();

@@ -115,6 +115,16 @@ namespace Mimou
 
 		
 	}
+
+	Ref<GameObject> SceneHierarchyPanel::GetSelectedObject()
+	{
+		if (SelectedObject && SelectedObject->GetOwnedScene() != m_Scene)
+		{
+			SelectedObject = nullptr;
+		}
+		return SelectedObject;
+	}
+
 	void SceneHierarchyPanel::OpenRightClickPopup(Ref<GameObject> GB)
 	{
 		
