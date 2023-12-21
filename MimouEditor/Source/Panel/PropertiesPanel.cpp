@@ -6,15 +6,15 @@
 namespace Mimou
 {
 	//extern void DrawVec3Control(const std::string& Label, glm::vec3& Values);
-	PropertiesPanel::PropertiesPanel(const std::string& PanelName, const Ref<Scene>& Scene)
-		: Panel(PanelType::PropertiesPanel, PanelName, Scene)
+	PropertiesPanel::PropertiesPanel(const std::string& PanelName)
+		: Panel(PanelType::PropertiesPanel, PanelName)
 	{
 
 	}
 
 	void PropertiesPanel::OnImGUIUpdate()
 	{
-		if (!m_Scene) return;
+		m_Scene = EditorLayer::GetInstance()->GetActiveScene();
 
 		Ref<SceneHierarchyPanel> SceneHierPanel = std::static_pointer_cast<SceneHierarchyPanel>(EditorLayer::GetInstance()->GetPanel(PanelType::SceneHierarchyPanel));
 		if (!SceneHierPanel) return;
@@ -23,6 +23,14 @@ namespace Mimou
 
 		bool pOpen = true;
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(300.0f, 500.0f));
+
+		if (!m_Scene)
+		{
+			ImGui::Begin("Empty");
+			ImGui::End();
+			return;
+		}
+
 		ImGui::Begin(m_PanelName.c_str());
 
 

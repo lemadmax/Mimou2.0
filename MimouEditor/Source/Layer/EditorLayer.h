@@ -21,6 +21,8 @@ namespace Mimou
 		virtual void OnImGUIRender() override;
 		virtual void OnEvent(EventBase& Event) override;
 
+		inline Ref<Scene> GetActiveScene() const { return m_ActiveScene; }
+
 	public:
 		bool IsPanelOpen(PanelType Type);
 		Ref<Panel> GetPanel(PanelType Type);

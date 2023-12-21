@@ -53,6 +53,12 @@ namespace Mimou
 			return m_Scene->m_Registry.try_get<T>(m_EntityID);
 		}
 
+		template<typename T>
+		bool RemoveComponent()
+		{
+			return m_Scene->m_Registry.remove<T>(m_EntityID);
+		}
+
 	private:
 		entt::entity m_EntityID;
 

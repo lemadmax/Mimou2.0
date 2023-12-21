@@ -7,7 +7,7 @@ namespace Mimou
 	{
 	public:
 		SceneHierarchyPanel() = default;
-		SceneHierarchyPanel(const std::string& PanelName = "Default Panel", const Ref<Scene>& Scene = nullptr);
+		SceneHierarchyPanel(const std::string& PanelName = "Default Panel");
 		virtual ~SceneHierarchyPanel() {}
 
 		virtual void OnImGUIUpdate() override;

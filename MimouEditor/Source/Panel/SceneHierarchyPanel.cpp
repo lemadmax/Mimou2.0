@@ -1,18 +1,27 @@
 #include "SceneHierarchyPanel.h"
 
+#include "Layer/EditorLayer.h"
+
 #include "entt/entt.hpp"
 
 namespace Mimou
 {
-	SceneHierarchyPanel::SceneHierarchyPanel(const std::string& PanelName, const Ref<Scene>& Scene)
-		: Panel(PanelType::SceneHierarchyPanel, PanelName, Scene), SelectedObject(nullptr)
+	SceneHierarchyPanel::SceneHierarchyPanel(const std::string& PanelName)
+		: Panel(PanelType::SceneHierarchyPanel, PanelName), SelectedObject(nullptr)
 	{
 
 	}
 
 	void SceneHierarchyPanel::OnImGUIUpdate()
 	{
-		if (!m_Scene) return;
+		m_Scene = EditorLayer::GetInstance()->GetActiveScene();
+		if (!m_Scene)
+		{
+			ImGui::Begin("No Opened Scene");
+
+			ImGui::End();
+			return;
+		}
 
 		ImGui::Begin(m_PanelName.c_str());
 

@@ -32,8 +32,8 @@ namespace Mimou
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(const glm::vec3& InTranslation)
-			: Translation(InTranslation) {}
+		TransformComponent(const glm::vec3& InTranslation, const glm::vec3& InRot, const glm::vec3& InScale)
+			: Translation(InTranslation), Rotation(InRot), Scale(InScale) {}
 
 		glm::mat4 GetTransform() const
 		{

@@ -15,12 +15,12 @@ namespace Mimou
 	{
 	public:
 		Panel() = default;
-		Panel(PanelType Type, const std::string& PanelName, const Ref<Scene>& Scene);
+		Panel(PanelType Type, const std::string& PanelName);
 		virtual ~Panel() = default;
 
 		virtual void OnImGUIUpdate();
 
-		static Ref<Panel> CreatePanel(PanelType Type, const std::string& PanelName, const Ref<Scene>& Scene);
+		static Ref<Panel> CreatePanel(PanelType Type, const std::string& PanelName);
 		
 	protected:
 		Ref<Scene> m_Scene;

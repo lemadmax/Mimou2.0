@@ -274,6 +274,15 @@ namespace Mimou
 				}
 				if (ImGui::MenuItem("Save As..")) {}
 
+				if (ImGui::MenuItem("Load Scene"))
+				{
+					Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene("Assets/Scene/TestScene.mimou");
+					if (Loaded)
+					{
+						m_ActiveScene = Loaded;
+					}
+				}
+
 			//	ImGui::Separator();
 			//	if (ImGui::BeginMenu("Options"))
 			//	{
@@ -382,7 +391,7 @@ namespace Mimou
 		}
 		else
 		{
-			Ref<Panel> NewPanel = Panel::CreatePanel(Type, PanelName, m_ActiveScene);
+			Ref<Panel> NewPanel = Panel::CreatePanel(Type, PanelName);
 			ActivePanels.emplace(std::pair<PanelType, Ref<Panel>>(Type, NewPanel));
 		}
 	}

@@ -6,7 +6,7 @@ namespace Mimou
 	class PropertiesPanel : public Panel
 	{
 	public:
-		PropertiesPanel(const std::string& PanelName, const Ref<Scene>& Scene);
+		PropertiesPanel(const std::string& PanelName);
 
 		virtual void OnImGUIUpdate() override;
 

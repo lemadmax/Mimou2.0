@@ -7,18 +7,18 @@
 namespace Mimou
 {
 
-	Ref<Panel> Panel::CreatePanel(PanelType Type, const std::string& PanelName, const Ref<Scene>& Scene)
+	Ref<Panel> Panel::CreatePanel(PanelType Type, const std::string& PanelName)
 	{
 		switch (Type)
 		{
 		case PanelType::SceneHierarchyPanel:
 		{
-			return CreateRef<SceneHierarchyPanel>(PanelName, Scene);
+			return CreateRef<SceneHierarchyPanel>(PanelName);
 			break;
 		}
 		case PanelType::PropertiesPanel:
 		{
-			return CreateRef<PropertiesPanel>(PanelName, Scene);
+			return CreateRef<PropertiesPanel>(PanelName);
 			break;
 		}
 		default:
@@ -29,8 +29,8 @@ namespace Mimou
 		return Ref<Panel>();
 	}
 
-	Panel::Panel(PanelType Type, const std::string& PanelName, const Ref<Scene>& Scene)
-		: m_Type(Type), m_PanelName(PanelName), m_Scene(Scene)
+	Panel::Panel(PanelType Type, const std::string& PanelName)
+		: m_Type(Type), m_PanelName(PanelName)
 	{
 
 	}
