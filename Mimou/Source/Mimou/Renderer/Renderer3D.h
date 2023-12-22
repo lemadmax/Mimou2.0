@@ -15,11 +15,13 @@ namespace Mimou
 
 		struct DirLight
 		{
+			glm::vec3 Color = { 1.0f, 1.0f, 1.0f };
 			glm::vec3 Direction = { 1.0f, 1.0f, 1.0f };
 			float Intensity = 1.0f;
 
 			void SetUniform(uint32_t i, Ref<Shader> Shader)
 			{
+				Shader->SetFloat3("u_Lights[" + std::to_string(i) + "].LightColor", Color);
 				Shader->SetFloat3("u_Lights[" + std::to_string(i) + "].LightDir", Direction);
 				Shader->SetFloat("u_Lights[" + std::to_string(i) + "].Intensity", Intensity); 
 			}

@@ -137,8 +137,13 @@ namespace Mimou
 			ImGui::Checkbox("Is on", &Light->IsOn);
 			ImGui::Spacing();
 
-			//PanelUtilities::DrawVec3Control("Light color", Light->Color, "RGB");
-			//ImGui::Spacing();
+			ImGuiColorEditFlags MiscFlags = ImGuiColorEditFlags_HDR | ImGuiColorEditFlags_Float | ImGuiColorEditFlags_NoLabel;
+			float LightCol[3] = { Light->Color.x, Light->Color.y, Light->Color.z };
+			if (ImGui::ColorEdit3("Color", LightCol, MiscFlags))
+			{
+				Light->Color = glm::vec3(LightCol[0], LightCol[1], LightCol[2]);
+			}
+			ImGui::Spacing();
 
 			ImGui::DragFloat("Intensity", &Light->Intensity, 0.1f, 0.0f, 120.0f, "%.1f");
 

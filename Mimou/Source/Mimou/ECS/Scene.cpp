@@ -65,7 +65,7 @@ namespace Mimou
 					ME_ENGINE_ASSERT(LightCnt + 1 <= MAX_LIGHT_NUM, "Light number exceeds the limits");
 					if (Light.IsDirectional)
 					{
-						DirLight[LightCnt++] = { Transform.GetDirection(), Light.Intensity };
+						DirLight[LightCnt++] = { Light.Color, Transform.GetDirection(), Light.Intensity };
 					}
 				}
 			}

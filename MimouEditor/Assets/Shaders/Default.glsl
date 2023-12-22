@@ -67,7 +67,7 @@ void main()
             vec3 V = normalize(-v_Position);
             specular = pow(max(dot(R, V), 0.0), u_Lights[i].Intensity);
         }
-        Radiance += Irriadiance * u_Diffuse + specular * u_Specular.rgb;
+        Radiance += LightColor * (Irriadiance * u_Diffuse + specular * u_Specular.rgb);
     }
     Radiance = pow(Radiance, vec3(1.0 / 2.2)); // Gamma correction
     FragColor = vec4(Radiance, u_Transparency);

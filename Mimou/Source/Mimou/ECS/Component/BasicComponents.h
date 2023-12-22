@@ -89,6 +89,7 @@ namespace Mimou
 
 	struct LightComponent
 	{
+		glm::vec3 Color = { 1.0, 1.0, 1.0 };
 		float Intensity = 1.0f;
 		bool IsDirectional = true;
 		bool IsOn = true;

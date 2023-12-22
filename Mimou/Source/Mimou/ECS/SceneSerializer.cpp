@@ -152,6 +152,9 @@ namespace Mimou
             Out << YAML::Key << "LightComponent";
             Out << YAML::BeginMap;
 
+            Out << YAML::Key;
+            Out << YAML::Value << LightComp->Color;
+
             Out << YAML::Key << "Intensity";
             Out << YAML::Value << YAML::Flow << LightComp->Intensity;
 
@@ -257,10 +260,12 @@ namespace Mimou
             YAML::Node LightCompNode = Node["LightComponent"];
             if (LightCompNode)
             {
+                glm::vec3 Color = LightCompNode["Color"].as<glm::vec3>();
                 float Intensity = LightCompNode["Intensity"].as<float>();
                 bool IsDirectional = LightCompNode["IsDirectional"];
                 bool IsOn = LightCompNode["IsOn"];
-                GB->AddComponent<LightComponent>(Intensity, IsDirectional, IsOn);
+                LightComponent LightComp = GB->AddComponent<LightComponent>(Intensity, IsDirectional, IsOn);
+                LightComp.Color = Color;
             }
         }
 
