@@ -28,6 +28,7 @@ namespace Mimou
 		{
 			ImGui::Begin("Empty");
 			ImGui::End();
+			ImGui::PopStyleVar(1);
 			return;
 		}
 
@@ -37,6 +38,7 @@ namespace Mimou
 		if (!SelectedObject)
 		{
 			ImGui::End();
+			ImGui::PopStyleVar(1);
 			return;
 		}
 

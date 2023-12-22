@@ -188,7 +188,7 @@ namespace Mimou
     {
         YAML::Node TagCompNode = Node["TagComponent"];
         std::string Tag = TagCompNode["Tag"].as<std::string>();
-        Ref<GameObject> GB = Scene->CreateGameObject(Tag);
+        Ref<GameObject> GB = Scene::CreateGameObject(Scene, Tag, nullptr);
 
         if (!GB) return nullptr;
 

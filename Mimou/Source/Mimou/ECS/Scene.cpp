@@ -85,35 +85,35 @@ namespace Mimou
 		Renderer3D::EndScene();
 	}
 
-	Ref<GameObject> Scene::CreateGameObject(const std::string& Name, Ref<GameObject> Parent)
+	Ref<GameObject> Scene::CreateGameObject(const Ref<Scene>& Scene, const std::string& Name, Ref<GameObject> Parent)
 	{
-		Ref<GameObject> Out = CreateRef<GameObject>(this, Name, Parent);
+		Ref<GameObject> Out = CreateRef<GameObject>(Scene, Name, Parent);
 		if (Parent)
 		{
 			Parent->AddChild(Out);
 		}
-		GameObjects.insert({ Out->GetEntityID(), Out });
+		Scene->GameObjects.insert({ Out->GetEntityID(), Out });
 		Out->OnCreate();
 		return Out;
 	}
-	bool Scene::DestroyGameObject(Ref<GameObject> GameObject)
+	bool Scene::DestroyGameObject(const Ref<Scene>& Scene, Ref<GameObject> GameObject)
 	{
 		if (GameObject->GetParent())
 		{
 			GameObject->GetParent()->RemoveChild(GameObject);
 		}
-		GameObjects.erase(GameObject->GetEntityID());
+		Scene->GameObjects.erase(GameObject->GetEntityID());
 		return GameObject->OnDestroy();
 	}
 
-	bool Scene::DestroyAllGameObjects()
+	bool Scene::DestroyAllGameObjects(const Ref<Scene>& Scene)
 	{
 		bool res = true;
-		for (auto Pair : GameObjects)
+		for (auto Pair : Scene->GameObjects)
 		{
 			res &= Pair.second->OnDestroy();
 		}
-		GameObjects.clear();
+		Scene->GameObjects.clear();
 		return res;
 	}
 

@@ -106,12 +106,12 @@ namespace Mimou
 		ShowPanel(PanelType::SceneHierarchyPanel, m_ActiveScene->GetName());
 		ShowPanel(PanelType::PropertiesPanel, "Properties");
 
-		Ref<GameObject> Camera1 = m_ActiveScene->CreateGameObject("Camera 1");
+		Ref<GameObject> Camera1 = Scene::CreateGameObject(m_ActiveScene, "Camera 1");
 		Camera1->AddComponent<CameraComponent>(CreateRef<SceneCamera>());
-		Ref<GameObject> Camera2 = m_ActiveScene->CreateGameObject("Camera 2");
+		Ref<GameObject> Camera2 = Scene::CreateGameObject(m_ActiveScene, "Camera 2");
 		Camera2->AddComponent<CameraComponent>(CreateRef<SceneCamera>());
 
-		Ref<GameObject> Light1 = m_ActiveScene->CreateGameObject("Light 1");
+		Ref<GameObject> Light1 = Scene::CreateGameObject(m_ActiveScene, "Light 1");
 		Light1->AddComponent<LightComponent>(1.0f, true);
 		TransformComponent& TransformLight1 = Light1->GetComponent<TransformComponent>();
 		TransformLight1.Rotation = glm::vec3(0.0f, glm::radians(180.0f), 0.0f);
@@ -133,7 +133,7 @@ namespace Mimou
 		//TransformComponent& Transform2 = TestGB2->GetComponent<TransformComponent>();
 		//Transform2.Translation = glm::vec3(1, 1, 0);
 
-		Ref<GameObject> Cube1 = m_ActiveScene->CreateGameObject("Cube 1");
+		Ref<GameObject> Cube1 = Scene::CreateGameObject(m_ActiveScene, "Cube 1", nullptr);
 		Cube1->AddComponent<StaticMeshComponent>("Cube");
 		
 		//Ref<GameObject> Sphere1 = m_ActiveScene->CreateGameObject("Sphere 1");

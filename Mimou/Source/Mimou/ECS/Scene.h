@@ -27,9 +27,9 @@ namespace Mimou
 		inline const std::string& GetName() const { return m_SceneName; }
 
 	public:
-		Ref<GameObject> CreateGameObject(const std::string& Name = "Game Object", Ref<GameObject> Parent = nullptr);
-		bool DestroyGameObject(Ref<GameObject> GameObject);
-		bool DestroyAllGameObjects();
+		static Ref<GameObject> CreateGameObject(const Ref<Scene>& Scene, const std::string& Name = "Game Object", Ref<GameObject> Parent = nullptr);
+		static bool DestroyGameObject(const Ref<Scene>& Scene, Ref<GameObject> GameObject);
+		static bool DestroyAllGameObjects(const Ref<Scene>& Scene);
 
 		void RenderScene();
 

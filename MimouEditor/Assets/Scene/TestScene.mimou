@@ -3,10 +3,6 @@ GameObjects:
   - EntityID: 0
     TagComponent:
       Tag: Camera 1
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
     CameraComponent:
       FOV: 70
       Aspect: 1.5

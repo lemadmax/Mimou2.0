@@ -32,7 +32,7 @@ namespace Mimou
 		{
 			if (ImGui::Selectable("Add game object"))
 			{
-				m_Scene->CreateGameObject();
+				Scene::CreateGameObject(m_Scene);
 			}
 			if (ImGui::Selectable("Remove all"))
 			{
@@ -52,13 +52,13 @@ namespace Mimou
 		}
 		if (bDestroyAll)
 		{
-			m_Scene->DestroyAllGameObjects();
+			Scene::DestroyAllGameObjects(m_Scene);
 		}
 		else
 		{
 			for (Ref<GameObject> Object : PendingDestroy)
 			{
-				m_Scene->DestroyGameObject(Object);
+				Scene::DestroyGameObject(m_Scene, Object);
 			}
 		}
 
@@ -91,7 +91,7 @@ namespace Mimou
 				SelectedObject = GB;
 				if (ImGui::Selectable("Add child game object"))
 				{
-					m_Scene->CreateGameObject("GameObject", SelectedObject);
+					Scene::CreateGameObject(m_Scene, "GameObject", SelectedObject);
 				}
 				if (ImGui::Selectable("Remove"))
 				{
