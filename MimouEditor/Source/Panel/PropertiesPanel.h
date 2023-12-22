@@ -23,9 +23,27 @@ namespace Mimou
 					| ImGuiTreeNodeFlags_OpenOnArrow
 					| ImGuiTreeNodeFlags_OpenOnDoubleClick
 					| ImGuiTreeNodeFlags_DefaultOpen
-					| ImGuiTreeNodeFlags_Framed;
+					| ImGuiTreeNodeFlags_Framed
+					| ImGuiTreeNodeFlags_AllowOverlap;
 
-				if (ImGui::TreeNodeEx(Name.c_str(), NodeFlags))
+				if (ImGui::BeginPopupContextItem("Edit Component"))
+				{
+					if (ImGui::Selectable("Remove"))
+					{
+						SelectedObject->RemoveComponent<T>();
+					}
+					ImGui::EndPopup();
+				}
+
+				ImVec2 RegionSize = ImGui::GetContentRegionAvail();
+				
+				bool NodeOpened = ImGui::TreeNodeEx(Name.c_str(), NodeFlags);
+
+				float FrameHeight = ImGui::GetFrameHeight();
+				ImGui::SameLine(RegionSize.x - FrameHeight * 0.5);
+				ImGui::Button("+", ImVec2(FrameHeight, FrameHeight));
+
+				if (NodeOpened)
 				{
 					ImGui::Spacing();
 
@@ -34,6 +52,8 @@ namespace Mimou
 					ImGui::Spacing();
 					ImGui::TreePop();
 				}
+
+
 			}
 		}
 

@@ -101,20 +101,20 @@ namespace Mimou
 
 		m_ActiveScene = CreateRef<Scene>("Editor Test Scene");
 
-		m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
+		//m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
 
-		ShowPanel(PanelType::SceneHierarchyPanel, m_ActiveScene->GetName());
+		ShowPanel(PanelType::SceneHierarchyPanel, "Scene");
 		ShowPanel(PanelType::PropertiesPanel, "Properties");
 
-		Ref<GameObject> Camera1 = Scene::CreateGameObject(m_ActiveScene, "Camera 1");
-		Camera1->AddComponent<CameraComponent>(CreateRef<SceneCamera>());
-		Ref<GameObject> Camera2 = Scene::CreateGameObject(m_ActiveScene, "Camera 2");
-		Camera2->AddComponent<CameraComponent>(CreateRef<SceneCamera>());
+		//Ref<GameObject> Camera1 = Scene::CreateGameObject(m_ActiveScene, "Camera 1");
+		//Camera1->AddComponent<CameraComponent>(CreateRef<SceneCamera>());
+		//Ref<GameObject> Camera2 = Scene::CreateGameObject(m_ActiveScene, "Camera 2");
+		//Camera2->AddComponent<CameraComponent>(CreateRef<SceneCamera>());
 
-		Ref<GameObject> Light1 = Scene::CreateGameObject(m_ActiveScene, "Light 1");
-		Light1->AddComponent<LightComponent>(1.0f, true);
-		TransformComponent& TransformLight1 = Light1->GetComponent<TransformComponent>();
-		TransformLight1.Rotation = glm::vec3(0.0f, glm::radians(180.0f), 0.0f);
+		//Ref<GameObject> Light1 = Scene::CreateGameObject(m_ActiveScene, "Light 1");
+		//Light1->AddComponent<LightComponent>(1.0f, true);
+		//TransformComponent& TransformLight1 = Light1->GetComponent<TransformComponent>();
+		//TransformLight1.Rotation = glm::vec3(0.0f, glm::radians(180.0f), 0.0f);
 		
 		//Ref<GameObject> TestGB0 = m_ActiveScene->CreateGameObject("Square 1");
 		//TestGB0->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSquareVA(2, 0), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Texture Shader")));
@@ -133,8 +133,8 @@ namespace Mimou
 		//TransformComponent& Transform2 = TestGB2->GetComponent<TransformComponent>();
 		//Transform2.Translation = glm::vec3(1, 1, 0);
 
-		Ref<GameObject> Cube1 = Scene::CreateGameObject(m_ActiveScene, "Cube 1", nullptr);
-		Cube1->AddComponent<StaticMeshComponent>("Cube");
+		//Ref<GameObject> Cube1 = Scene::CreateGameObject(m_ActiveScene, "Cube 1", nullptr);
+		//Cube1->AddComponent<StaticMeshComponent>("Cube");
 		
 		//Ref<GameObject> Sphere1 = m_ActiveScene->CreateGameObject("Sphere 1");
 		//Sphere1->AddComponent<StaticMeshComponent>(StaticMeshLibrary::CreateSphereVA(50, 100), CreateRef<Material>(glm::vec3(0.2, 0.3, 0.4), glm::vec3(0.2, 0.3, 0.4), glm::vec4(0.7, 0.6, 0.6, 1.0), 1.0f, ShaderLibrary::GetInstance()->Get("Phong Shader")));
@@ -170,13 +170,30 @@ namespace Mimou
 		m_ActiveScene->OnUpdateEditor(Ts, EditorCamera);
 
 		EditorGridShader->Bind();
-		EditorGridShader->SetMat4("u_ViewProjection", EditorCamera.GetViewProjection());
-		EditorGridShader->SetMat4("u_ViewMat", EditorCamera.GetViewMatrix());
-		EditorGridShader->SetMat4("u_ProjMat", EditorCamera.GetProjection());
-		EditorGridShader->SetFloat("u_zNear", EditorCamera.GetZNear());
-		EditorGridShader->SetFloat("u_zFar", EditorCamera.GetZFar());
-		EditorGridVA->Bind();
+		Ref<GameObject> PrimaryCameraGB = m_ActiveScene->GetPrimiaryCamera();
+		if (PrimaryCameraGB)
+		{
+			CameraComponent CameraComp = PrimaryCameraGB->GetComponent<CameraComponent>();
+			TransformComponent TransformComp = PrimaryCameraGB->GetComponent<TransformComponent>();
+			glm::mat4 ProjectMatrix = CameraComp.Camera->GetProjection();
+			glm::mat4 ViewMatrix = glm::inverse(TransformComp.GetTransform());
+			glm::mat4 ViewProjection = ProjectMatrix * ViewMatrix;
+			EditorGridShader->SetMat4("u_ViewProjection", ViewProjection);
+			EditorGridShader->SetMat4("u_ViewMat", ViewMatrix);
+			EditorGridShader->SetMat4("u_ProjMat", ProjectMatrix);
+			EditorGridShader->SetFloat("u_zNear", CameraComp.Camera->GetZNear());
+			EditorGridShader->SetFloat("u_zFar", CameraComp.Camera->GetZFar());
+		}
+		else
+		{
+			EditorGridShader->SetMat4("u_ViewProjection", EditorCamera.GetViewProjection());
+			EditorGridShader->SetMat4("u_ViewMat", EditorCamera.GetViewMatrix());
+			EditorGridShader->SetMat4("u_ProjMat", EditorCamera.GetProjection());
+			EditorGridShader->SetFloat("u_zNear", EditorCamera.GetZNear());
+			EditorGridShader->SetFloat("u_zFar", EditorCamera.GetZFar());
+		}
 
+		EditorGridVA->Bind();
 		RenderCommand::DrawIndexed(EditorGridVA);
 
 		m_FrameBuffer->UnBind();
@@ -276,7 +293,7 @@ namespace Mimou
 
 				if (ImGui::MenuItem("Load Scene"))
 				{
-					Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene("Assets/Scene/TestScene.mimou");
+					Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Example.mimou");
 					if (Loaded)
 					{
 						m_ActiveScene = Loaded;

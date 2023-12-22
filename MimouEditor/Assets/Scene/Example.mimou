@@ -1,49 +1,23 @@
 Scene: Editor Test Scene
 GameObjects:
-  - EntityID: 0
+  - EntityID: 1048578
     TagComponent:
-      Tag: Camera 1
+      Tag: Scene Light
     TransformComponent:
       Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      FOV: 70
-      Aspect: 1.5
-      zNear: 0.100000001
-      zFar: 100
-      IsPrimary: false
-  - EntityID: 1
-    TagComponent:
-      Tag: Camera 2
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      FOV: 70
-      Aspect: 1.5
-      zNear: 0.100000001
-      zFar: 100
-      IsPrimary: false
-  - EntityID: 2
-    TagComponent:
-      Tag: Light 1
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 3.14159274, 0]
+      Rotation: [45, 180, 45]
       Scale: [1, 1, 1]
     LightComponent:
       Intensity: 1
       IsDirectional: true
       IsOn: true
-  - EntityID: 3
+  - EntityID: 1048579
     TagComponent:
-      Tag: Cube 1
+      Tag: Plane
     TransformComponent:
-      Translation: [0, 2, 0]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
+      Scale: [10, 1, 10]
     StaticMeshComponent:
       AssetName: Cube
       MaterialSlots:

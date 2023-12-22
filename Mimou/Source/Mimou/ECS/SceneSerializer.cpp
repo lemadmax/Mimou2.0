@@ -215,7 +215,53 @@ namespace Mimou
             {
                 GB->RemoveComponent<TransformComponent>();
             }
-            
+        }
+
+        {
+            YAML::Node StaticMeshCompNode = Node["StaticMeshComponent"];
+            if (StaticMeshCompNode)
+            {
+                std::string AssetName = StaticMeshCompNode["AssetName"].as<std::string>();
+                
+                StaticMeshComponent StaticMeshComp = GB->AddComponent<StaticMeshComponent>(AssetName);
+
+                YAML::Node MatSlotsNode = StaticMeshCompNode["MaterialSlots"];
+                if (MatSlotsNode)
+                {
+                    for (size_t i = 0; i < MatSlotsNode.size(); i++)
+                    {
+                        std::string MatName = MatSlotsNode[i].as<std::string>();
+                        Ref<Material> Mat = MaterialLibrary::Get()->GetMaterial(MatName);
+                        if (Mat) StaticMeshComp.MaterialSlots.emplace_back(Mat);
+                    }
+                }
+            }
+        }
+
+        {
+            YAML::Node CameraCompNode = Node["CameraComponent"];
+            if (CameraCompNode)
+            {
+                bool IsPrimary = CameraCompNode["IsPrimary"];
+                CameraComponent CameraComp = GB->AddComponent<CameraComponent>();
+                CameraComp.IsPrimary = IsPrimary;
+                float FOV = CameraCompNode["FOV"].as<float>();
+                float Aspect = CameraCompNode["Aspect"].as<float>();
+                float zNear = CameraCompNode["zNear"].as<float>();
+                float zFar = CameraCompNode["zFar"].as<float>();
+                CameraComp.Camera->SetProjectionPersp(FOV, Aspect, zNear, zFar);
+            }
+        }
+
+        {
+            YAML::Node LightCompNode = Node["LightComponent"];
+            if (LightCompNode)
+            {
+                float Intensity = LightCompNode["Intensity"].as<float>();
+                bool IsDirectional = LightCompNode["IsDirectional"];
+                bool IsOn = LightCompNode["IsOn"];
+                GB->AddComponent<LightComponent>(Intensity, IsDirectional, IsOn);
+            }
         }
 
         return GB;

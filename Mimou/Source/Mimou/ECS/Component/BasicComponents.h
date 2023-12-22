@@ -49,7 +49,7 @@ namespace Mimou
 
 		glm::vec3 GetDirection() const
 		{
-			glm::vec3 Direction = glm::quat(Rotation) * glm::vec3(0.0f, 0.0f, 1.0f);
+			glm::vec3 Direction = glm::normalize(glm::quat(Rotation) * glm::vec3(0.0f, 0.0f, 1.0f));
 			return Direction;
 		}
 	};
@@ -63,7 +63,7 @@ namespace Mimou
 
 		StaticMeshComponent()
 		{
-			MaterialSlots.push_back(MaterialLibrary::Get()->GetMaterial("Default"));
+			MaterialSlots.push_back(MaterialLibrary::Get()->GetMaterial("DefaultMat"));
 		}
 		StaticMeshComponent(const StaticMeshComponent&) = default;
 		StaticMeshComponent(const std::string& InAssetName)
@@ -78,7 +78,10 @@ namespace Mimou
 		Ref<SceneCamera> Camera;
 		bool IsPrimary = false;
 
-		CameraComponent() = default;
+		CameraComponent()
+		{
+			Camera = CreateRef<SceneCamera>();
+		}
 		CameraComponent(const CameraComponent&) = default;
 		CameraComponent(Ref<SceneCamera> InCamera)
 			: Camera(InCamera) {}
@@ -92,7 +95,7 @@ namespace Mimou
 
 		LightComponent() = default;
 		LightComponent(const LightComponent&) = default;
-		LightComponent(float InIntensity, bool InIsDir)
-			: Intensity(InIntensity), IsDirectional(InIsDir) {}
+		LightComponent(float InIntensity, bool InIsDir, bool InIsOn = true)
+			: Intensity(InIntensity), IsDirectional(InIsDir), IsOn(InIsOn) {}
 	};
 }

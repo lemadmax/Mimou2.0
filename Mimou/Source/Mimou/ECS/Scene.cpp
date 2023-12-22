@@ -85,6 +85,23 @@ namespace Mimou
 		Renderer3D::EndScene();
 	}
 
+	Ref<GameObject> Scene::GetPrimiaryCamera()
+	{
+		Ref<GameObject> GB = nullptr;
+		{
+			auto View = m_Registry.view<TransformComponent, CameraComponent>();
+			for (auto Entity : View)
+			{
+				auto Camera = m_Registry.get<CameraComponent>(Entity);
+				if (Camera.IsPrimary)
+				{
+					GB = GameObjects[Entity];
+				}
+			}
+		}
+		return GB;
+	}
+
 	Ref<GameObject> Scene::CreateGameObject(const Ref<Scene>& Scene, const std::string& Name, Ref<GameObject> Parent)
 	{
 		Ref<GameObject> Out = CreateRef<GameObject>(Scene, Name, Parent);
