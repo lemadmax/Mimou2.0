@@ -7,32 +7,32 @@ namespace Mimou
 {
 	Material::Material()
 	{
-		m_Shader = ShaderLibrary::GetInstance()->Get("Default");
 	}
 
-	Material::Material(const std::string& Name, const Ref<Shader>& ShaderInst)
-		: m_Name(Name), m_Shader(ShaderInst)
+	Material::Material(const std::string& Name, const std::string& ShaderAsset)
+		: m_Name(Name), m_ShaderAsset(ShaderAsset)
 	{
 		
 	}
 
 	void Material::Bind()
 	{
-		if (m_Shader == nullptr)
+		Ref<Shader> ShaderInst = ShaderLibrary::GetInstance()->Get(m_ShaderAsset);
+		if (ShaderInst == nullptr)
 		{
 			ME_ENGINE_ERROR("Material::Bind: Shader is null");
 			return;
 		}
-		m_Shader->Bind();
-		m_Shader->SetFloat4("u_Ambient", m_Ambient);
-		m_Shader->SetFloat4("u_Diffuse", m_Diffuse);
-		m_Shader->SetFloat4("u_Specular", m_Specular);
-		m_Shader->SetFloat("u_Transparency", m_Transparency);
-		m_Shader->SetFloat("u_IrradiPerp", 1.0f);
+		ShaderInst->Bind();
+		ShaderInst->SetFloat4("u_Ambient", m_Ambient);
+		ShaderInst->SetFloat4("u_Diffuse", m_Diffuse);
+		ShaderInst->SetFloat4("u_Specular", m_Specular);
+		ShaderInst->SetFloat("u_Transparency", m_Transparency);
+		ShaderInst->SetFloat("u_IrradiPerp", 1.0f);
 		if (m_Texture)
 		{
 			m_Texture->Bind(); 
-			m_Shader->SetInt("u_Texture", 0);
+			ShaderInst->SetInt("u_Texture", 0);
 		}
 	}
 
@@ -45,10 +45,10 @@ namespace Mimou
 
 	void MaterialLibrary::LoadMaterialInstances()
 	{
-		CachedMats.emplace("PhongMat", CreateRef<Material>("PhongMat", ShaderLibrary::GetInstance()->Get("Phong Shader")));
-		CachedMats.emplace("LambertMat", CreateRef<Material>("LambertMat", ShaderLibrary::GetInstance()->Get("Lambert Shader")));
-		CachedMats.emplace("TextureMat", CreateRef<Material>("TextureMat", ShaderLibrary::GetInstance()->Get("Texture Shader")));
-		CachedMats.emplace("DefaultMat", CreateRef<Material>("DefaultMat", ShaderLibrary::GetInstance()->Get("Phong Shader")));
+		CachedMats.emplace("PhongMat", CreateRef<Material>("PhongMat", "Phong Shader"));
+		CachedMats.emplace("LambertMat", CreateRef<Material>("LambertMat", "Lambert Shader"));
+		CachedMats.emplace("TextureMat", CreateRef<Material>("TextureMat", "Texture Shader"));
+		CachedMats.emplace("DefaultMat", CreateRef<Material>("DefaultMat", "Default"));
 	}
 
 	Ref<Material> MaterialLibrary::GetMaterial(const std::string& AssetName)

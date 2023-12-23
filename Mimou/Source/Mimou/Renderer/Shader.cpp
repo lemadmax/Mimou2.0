@@ -83,6 +83,15 @@ namespace Mimou
 		return Shader;
 	}
 
+	Ref<Shader> ShaderLibrary::Reload(const std::string& Name, const std::string& FilePath)
+	{
+		if (Exists(Name))
+		{
+			m_Shaders.erase(Name);
+		}
+		return Load(Name, FilePath);
+	}
+
 	Ref<Shader> ShaderLibrary::Get(const std::string& Name)
 	{
 		ME_ENGINE_ASSERT(m_Shaders.find(Name) != m_Shaders.end(), "Shader not found!");

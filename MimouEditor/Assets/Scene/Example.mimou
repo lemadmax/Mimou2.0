@@ -8,10 +8,10 @@ GameObjects:
       Rotation: [0, 3.1400001, 0]
       Scale: [1, 1, 1]
     LightComponent:
-      [1, 1, 1]: Intensity
-      1: IsDirectional
-      true: IsOn
-      true
+      Color: [1, 1, 1]
+      Intensity: 1
+      IsDirectional: true
+      IsOn: true
   - EntityID: 1
     TagComponent:
       Tag: Plane

@@ -36,6 +36,8 @@ namespace Mimou
 		Ref<Shader> Load(const std::string& FilePath);
 		Ref<Shader> Load(const std::string& Name, const std::string& FilePath);
 
+		Ref<Shader> Reload(const std::string& Name, const std::string& FilePath);
+
 		Ref<Shader> Get(const std::string& Name);
 		std::vector<std::string> GetNames() const;
 

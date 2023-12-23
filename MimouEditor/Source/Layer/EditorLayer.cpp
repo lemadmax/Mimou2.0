@@ -300,6 +300,11 @@ namespace Mimou
 					}
 				}
 
+				if (ImGui::MenuItem("Test reload shader"))
+				{
+					ShaderLibrary::GetInstance()->Reload("Default", "Assets/Shaders/Default.glsl");
+				}
+
 			//	ImGui::Separator();
 			//	if (ImGui::BeginMenu("Options"))
 			//	{

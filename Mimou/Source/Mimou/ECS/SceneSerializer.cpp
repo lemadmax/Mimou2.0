@@ -152,7 +152,7 @@ namespace Mimou
             Out << YAML::Key << "LightComponent";
             Out << YAML::BeginMap;
 
-            Out << YAML::Key;
+            Out << YAML::Key << "Color";
             Out << YAML::Value << LightComp->Color;
 
             Out << YAML::Key << "Intensity";

@@ -10,7 +10,7 @@ namespace Mimou
 	{
 	public:
 		Material();
-		Material(const std::string& Name, const Ref<Shader>& ShaderInst);
+		Material(const std::string& Name, const std::string& ShaderAsset);
 		Material(const Material& Other) = default;
 
 		virtual ~Material() = default;
@@ -19,7 +19,7 @@ namespace Mimou
 		virtual void Bind();
 
 		inline void SetTexture(Ref<Texture> Texture) { m_Texture = Texture; }
-		inline Ref<Shader> GetShader() const { return m_Shader; }
+		inline Ref<Shader> GetShader() const { return ShaderLibrary::GetInstance()->Get(m_ShaderAsset); }
 		inline const std::string& GetName() const { return m_Name; }
 
 	public:
@@ -32,7 +32,7 @@ namespace Mimou
 
 	private:
 		std::string m_Name;
-		Ref<Shader> m_Shader;
+		std::string m_ShaderAsset = "Default";
 
 		Ref<Texture> m_Texture;
 		// TODO: Multiple texture slots
