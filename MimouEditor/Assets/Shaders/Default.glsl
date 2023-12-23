@@ -16,12 +16,15 @@ out vec2 v_TexCoord;
 
 void main()
 {
-    vec4 Pos = u_ViewProjection * u_TransformMatrix * vec4(a_Position, 1.0);
-    vec4 Nor = vec4(a_Normal, 0.) * u_InverseMatrix;
+    vec4 vertPos = u_TransformMatrix * vec4(a_Position, 1.0);
 
-    gl_Position = Pos;
-    v_Position = Pos.xyz;
-    v_Normal = Nor.xyz;
+    gl_Position = u_ViewProjection * vertPos;
+
+    vec4 Nor = u_InverseMatrix * vec4(a_Normal, 0.);
+
+    v_Position = vertPos.xyz / vertPos.w;
+    // v_Normal = Nor.xyz;
+    v_Normal = a_Normal;
 }
 
 
@@ -63,9 +66,12 @@ void main()
         float specular = 0.0;
         if (Irriadiance > 0.)
         {
-            vec3 R = 2. * dot(N, L) * N - L;
+            // vec3 R = 2. * dot(N, L) * N - L;
+            vec3 R = reflect(-L, N);
             vec3 V = normalize(-v_Position);
-            specular = pow(max(dot(R, V), 0.0), u_Lights[i].Intensity);
+            // specular = pow(max(dot(R, V), 0.0), u_Lights[i].Intensity);
+            // specular = pow(max(R.z, 0.0), u_Lights[i].Intensity);
+            specular = max(R.z, 0.0);
             Radiance += LightColor * (Irriadiance * u_Diffuse.rgb + specular * u_Specular.rgb);
         }
     }
