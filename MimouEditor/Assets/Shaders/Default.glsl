@@ -18,13 +18,12 @@ void main()
 {
     vec4 vertPos = u_TransformMatrix * vec4(a_Position, 1.0);
 
-    gl_Position = u_ViewProjection * vertPos;
+    gl_Position =  u_ViewProjection * vertPos;
 
     vec4 Nor = vec4(a_Normal, 0.)* u_InverseMatrix;
 
-    v_Position = vertPos.xyz / vertPos.w;
+    v_Position = vertPos.xyz;
     v_Normal = Nor.xyz;
-    // v_Normal = a_Normal;
 }
 
 
@@ -50,6 +49,7 @@ uniform vec4 u_Diffuse;
 uniform vec4 u_Specular;
 uniform float u_Transparency;
 uniform float u_IrradiPerp;
+uniform vec3 ViewPos;
 
 in vec3 v_Position;
 in vec3 v_Normal;
@@ -60,23 +60,19 @@ void main()
     vec3 Radiance = u_Ambient.rgb;
     for (int i = 0; i < u_nl; i++)
     {
-        vec3 LightColor = u_Lights[i].LightColor;
+        vec3 LightColor = u_Lights[i].LightColor * u_Lights[i].Intensity;
         vec3 L = -u_Lights[i].LightDir;
-        float Irriadiance = max(0., dot(L, N)) * u_IrradiPerp;
-        Radiance += (Irriadiance * u_Diffuse.rgb);
-        // float specular = 0.0;
-        // if (Irriadiance > 0.)
-        // {
-        //     // vec3 R = 2. * dot(N, L) * N - L;
-        //     vec3 R = reflect(-L, N);
-        //     vec3 V = normalize(-v_Position);
-        //     // specular = pow(max(dot(R, V), 0.0), u_Lights[i].Intensity);
-        //     // specular = pow(max(R.z, 0.0), u_Lights[i].Intensity);
-        //     specular = max(R.z, 0.0);
-        //     Radiance += LightColor * (Irriadiance * u_Diffuse.rgb + specular * u_Specular.rgb);
-        // }
+        float Irriadiance = dot(L, N);
+        if (Irriadiance > 0.)
+        {
+            vec3 R = 2. * Irriadiance * N - L;
+            vec3 V = normalize(ViewPos - v_Position);
+            Irriadiance = Irriadiance * u_IrradiPerp;
+            Radiance += LightColor * (Irriadiance * u_Diffuse.rgb);
+
+            float Specular = pow(max(0., dot(R, V)), u_Specular.w);
+            Radiance += LightColor * (Specular * u_Specular.rgb);
+        }
     }
-    // Radiance = pow(Radiance, vec3(1.0 / 2.2)); // Gamma correction
-    // FragColor = vec4(Radiance, u_Transparency);
     FragColor = vec4(Radiance, u_Transparency);
 }

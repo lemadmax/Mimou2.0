@@ -51,6 +51,8 @@ namespace Mimou
 			DirLight DirLights[MAX_LIGHT_NUM];
 			uint32_t LightCnt;
 			Ref<Material> DefaultMat;
+
+			glm::vec3 ViewPos;
 		};
 
 		static SceneData* s_SceneData;

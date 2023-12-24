@@ -231,6 +231,9 @@
     <ClInclude Include="Vendors\stb_image\stb_image.h">
       <Filter>Vendors\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="PlatformUtils.h">
+      <Filter>Source\Mimou\Utils\FileUtils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -349,6 +352,9 @@
     </ClCompile>
     <ClCompile Include="Vendors\stb_image\stb_image.cpp">
       <Filter>Vendors\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsPlatformUtils.cpp">
+      <Filter>Source\Mimou\Utils\FileUtils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

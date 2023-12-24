@@ -31,6 +31,7 @@ namespace Mimou
 	{
 		s_SceneData->ViewProjectionMatrix = Camera->GetProjection() * glm::inverse(Transform);
 		s_SceneData->LightCnt = LightCnt;
+		s_SceneData->ViewPos = glm::vec3(Transform[3][0], Transform[3][1], Transform[3][2]);
 		memcpy(s_SceneData->DirLights, DirLights, sizeof(Renderer3D::DirLight) * LightCnt);
 	}
 
@@ -38,6 +39,7 @@ namespace Mimou
 	{
 		s_SceneData->ViewProjectionMatrix = Camera.GetViewProjection();
 		s_SceneData->LightCnt = LightCnt;
+		s_SceneData->ViewPos = Camera.GetPosition();
 		memcpy(s_SceneData->DirLights, DirLights, sizeof(Renderer3D::DirLight) * LightCnt);
 	}
 
@@ -64,6 +66,8 @@ namespace Mimou
 		Shader->SetMat4("u_TransformMatrix", Transform);
 		glm::mat4 InverseMatrix = glm::inverse(Transform);
 		Shader->SetMat4("u_InverseMatrix", InverseMatrix);
+		Shader->SetFloat3("ViewPos", s_SceneData->ViewPos);
+		
 
 		VA->Bind();
 

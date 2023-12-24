@@ -28,6 +28,7 @@ namespace Mimou
 		inline float GetZNear() const { return m_Near; }
 		inline float GetZFar() const { return m_Far; }
 
+		inline glm::vec3 GetPosition() const { return Position; }
 
 	private:
 		void RecalculateProjection();
