@@ -20,11 +20,11 @@ void main()
 
     gl_Position = u_ViewProjection * vertPos;
 
-    vec4 Nor = u_InverseMatrix * vec4(a_Normal, 0.);
+    vec4 Nor = vec4(a_Normal, 0.)* u_InverseMatrix;
 
     v_Position = vertPos.xyz / vertPos.w;
-    // v_Normal = Nor.xyz;
-    v_Normal = a_Normal;
+    v_Normal = Nor.xyz;
+    // v_Normal = a_Normal;
 }
 
 
@@ -63,18 +63,20 @@ void main()
         vec3 LightColor = u_Lights[i].LightColor;
         vec3 L = -u_Lights[i].LightDir;
         float Irriadiance = max(0., dot(L, N)) * u_IrradiPerp;
-        float specular = 0.0;
-        if (Irriadiance > 0.)
-        {
-            // vec3 R = 2. * dot(N, L) * N - L;
-            vec3 R = reflect(-L, N);
-            vec3 V = normalize(-v_Position);
-            // specular = pow(max(dot(R, V), 0.0), u_Lights[i].Intensity);
-            // specular = pow(max(R.z, 0.0), u_Lights[i].Intensity);
-            specular = max(R.z, 0.0);
-            Radiance += LightColor * (Irriadiance * u_Diffuse.rgb + specular * u_Specular.rgb);
-        }
+        Radiance += (Irriadiance * u_Diffuse.rgb);
+        // float specular = 0.0;
+        // if (Irriadiance > 0.)
+        // {
+        //     // vec3 R = 2. * dot(N, L) * N - L;
+        //     vec3 R = reflect(-L, N);
+        //     vec3 V = normalize(-v_Position);
+        //     // specular = pow(max(dot(R, V), 0.0), u_Lights[i].Intensity);
+        //     // specular = pow(max(R.z, 0.0), u_Lights[i].Intensity);
+        //     specular = max(R.z, 0.0);
+        //     Radiance += LightColor * (Irriadiance * u_Diffuse.rgb + specular * u_Specular.rgb);
+        // }
     }
-    Radiance = pow(Radiance, vec3(1.0 / 2.2)); // Gamma correction
+    // Radiance = pow(Radiance, vec3(1.0 / 2.2)); // Gamma correction
+    // FragColor = vec4(Radiance, u_Transparency);
     FragColor = vec4(Radiance, u_Transparency);
 }
