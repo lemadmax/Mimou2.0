@@ -293,10 +293,19 @@ namespace Mimou
 
 				if (ImGui::MenuItem("Load Scene"))
 				{
-					Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Example.mimou");
-					if (Loaded)
+					//Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Example.mimou");
+					//if (Loaded)
+					//{
+					//	m_ActiveScene = Loaded;
+					//}
+					std::string FileName = FileDialog::GetFileName("Mimou\0*.mimou\0");
+					if (!FileName.empty())
 					{
-						m_ActiveScene = Loaded;
+						Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene(FileName);
+						if (Loaded)
+						{
+							m_ActiveScene = Loaded;
+						}
 					}
 				}
 

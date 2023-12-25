@@ -147,7 +147,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="PlatformUtils.h" />
+    <ClInclude Include="Source\Mimou\Utils\FileUtils\PlatformUtils.h" />
     <ClInclude Include="Source\Mimou.h" />
     <ClInclude Include="Source\Mimou\Application.h" />
     <ClInclude Include="Source\Mimou\Core.h" />
@@ -245,7 +245,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendors\stb_image\stb_image.cpp" />
-    <ClCompile Include="WindowsPlatformUtils.cpp" />
+    <ClCompile Include="Source\Mimou\Utils\FileUtils\WindowsPlatformUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Vendors\Glad\Glad.vcxproj">

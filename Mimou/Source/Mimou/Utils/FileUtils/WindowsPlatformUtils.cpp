@@ -10,10 +10,10 @@
 namespace Mimou
 {
 
-	std::string FileDialog::OpenFile(const std::wstring& Filter)
+	std::string FileDialog::GetFileName(const std::string& Filter)
 	{
-		OPENFILENAME ofn;
-		WCHAR szFile[260] = { 0 };
+		OPENFILENAMEA ofn;
+		char szFile[260] = { 0 };
 		HWND hwnd = glfwGetWin32Window((GLFWwindow*)Application::GetInstance()->GetWindow().GetNativeWindow());
 		HANDLE hf;
 
@@ -25,20 +25,20 @@ namespace Mimou
 		ofn.nMaxFile = sizeof(szFile);
 		ofn.lpstrFilter = Filter.c_str();
 		ofn.nFilterIndex = 1;
-		ofn.lpstrFileTitle = (LPWSTR)L"Test Title";
-		ofn.nMaxFileTitle = 1;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
 		ofn.lpstrInitialDir = NULL;
 		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
-		if (GetOpenFileName(&ofn) == TRUE)
+		if (GetOpenFileNameA(&ofn) == TRUE)
 		{
-			std::wstring Out(ofn.lpstrFile);
-
+			std::string Out(ofn.lpstrFile);
+			return Out;
 		}
 	}
 
 	std::string FileDialog::SaveFile(const std::string& Filter)
 	{
-
+		return std::string();
 	}
 }

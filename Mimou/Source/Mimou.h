@@ -23,6 +23,8 @@
 
 #include "Mimou/Mesh/StaticMesh.h"
 
+#include "Mimou/Utils/FileUtils/PlatformUtils.h"
+
 
 #include "Mimou/Utils/FileUtils/FileHelper.h"
 
