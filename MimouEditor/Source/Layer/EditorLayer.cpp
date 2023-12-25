@@ -282,23 +282,16 @@ namespace Mimou
 				//	}
 				//	ImGui::EndMenu();
 				//}
-				if (ImGui::MenuItem("Save Scene", "Ctrl+S")) 
+				if (ImGui::MenuItem("Save", "Ctrl+S")) 
 				{
 					if (m_ActiveScene)
 					{
 						SceneSerializer::Get()->SerializeScene(m_ActiveScene, "Assets/Scene/Example.mimou");
 					}
 				}
-				if (ImGui::MenuItem("Save As..")) {}
-
-				if (ImGui::MenuItem("Load Scene"))
+				if (ImGui::MenuItem("Open..."))
 				{
-					//Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Example.mimou");
-					//if (Loaded)
-					//{
-					//	m_ActiveScene = Loaded;
-					//}
-					std::string FileName = FileDialog::GetFileName("Mimou\0*.mimou\0");
+					std::string FileName = FileDialog::MEGetOpenFileName("Mimou File (*.mimou)\0*.mimou\0");
 					if (!FileName.empty())
 					{
 						Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene(FileName);
@@ -308,6 +301,15 @@ namespace Mimou
 						}
 					}
 				}
+				if (ImGui::MenuItem("Save As...")) 
+				{
+					std::string FileName = FileDialog::MEGetSaveFileName("Mimou File (*.mimou)\0*.mimou\0");
+					if (!FileName.empty())
+					{
+						SceneSerializer::Get()->SerializeScene(m_ActiveScene, FileName);
+					}
+				}
+
 
 				if (ImGui::MenuItem("Test reload shader"))
 				{

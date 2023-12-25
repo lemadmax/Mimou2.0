@@ -1,0 +1,38 @@
+Scene: Editor Test Scene
+GameObjects:
+  - EntityID: 0
+    TagComponent:
+      Tag: Light
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 3.1400001, 0]
+      Scale: [1, 1, 1]
+    LightComponent:
+      Color: [1, 1, 1]
+      Intensity: 0.699999988
+      IsDirectional: true
+      IsOn: true
+  - EntityID: 1
+    TagComponent:
+      Tag: Sphere
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    StaticMeshComponent:
+      AssetName: Sphere
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 2
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 5]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      FOV: 70
+      Aspect: 1.5
+      zNear: 0.100000001
+      zFar: 100
+      IsPrimary: false
