@@ -18,7 +18,7 @@ namespace Mimou
 		: m_SceneName(SceneName)
 	{
 		ClassDescriptor<Scene>* CD = Scene::GetClass();
-		CD->RegisterProperty("m_SceneName", ClassDescriptor<Scene>::MimouProperty<std::string>({ "m_SceneName", "string",
+		CD->RegisterProperty<std::string>("m_SceneName", ClassDescriptor<Scene>::MimouProperty<std::string>({ "m_SceneName", "string",
 			[](Scene* Obj, std::string Value) {
 				Obj->m_SceneName = Value;
 			}, 

@@ -63,7 +63,8 @@ namespace Mimou
 		template<typename ValueType>
 		bool RegisterProperty(const std::string& PropName, const MimouProperty<ValueType>& Property)
 		{
-			Properties.insert(PropName, Property);
+			MimouProperty<ValueType> Temp = Property;
+			Properties<ValueType>.insert(PropName, Temp);
 			PropertySignitures.insert(PropName, Property.PropertyName);
 		}
 
@@ -110,24 +111,30 @@ namespace Mimou
 
 		std::string m_ClassName;
 
-	public:
-		static ClassDescriptor* Get();
+	//public:
+	//	template<typename T>
+	//	static ClassDescriptor* Get();
 
-	private:
-		static ClassDescriptor* s_Instance;
+	//private:
+	//	static ClassDescriptor* s_Instance;
 	};
 	
+	template<typename ClassType>
+	Ref<ClassType> LoadObject(const std::string& AssetPath)
+	{
+		return CreateRef<ClassType>("Demo Scene");
+	}
 }
 
 
 #define ME_CLASS(ClassType) class ClassType;
 
 #define DECLARE_ME_CLASS(ClassType) static std::string StaticClass() { return #ClassType; } \
-								::Mimou::ClassDescriptor<ClassType>* GetClass() { return ::Mimou::ClassDescriptor<ClassType>::Get(); }
+								::Mimou::ClassDescriptor<ClassType>* GetClass();
 
 //#define ME_PROPERTY(PropType, PropName) 
 
 
-#define IMPLEMENT_ME_CLASS(ClassType) ::Mimou::ClassDescriptor<ClassType>* ::Mimou::ClassDescriptor<ClassType>::s_Instance = nullptr; \
-			::Mimou::ClassDescriptor<ClassType>* ::Mimou::ClassDescriptor<ClassType>::Get() { if (!s_Instance) s_Instance = new ::Mimou::ClassDescriptor<ClassType>(#ClassType); return s_Instance; }
+#define IMPLEMENT_ME_CLASS(ClassType) ::Mimou::ClassDescriptor<ClassType>* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor<ClassType>(#ClassType); \
+								::Mimou::ClassDescriptor<ClassType>* ClassType::GetClass() { return m_ClassDescriptor##ClassType; }
 

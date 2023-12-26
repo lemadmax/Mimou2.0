@@ -99,7 +99,7 @@ namespace Mimou
 		uint32_t Height = Application::GetInstance()->GetWindow().GetHeight();
 		m_FrameBuffer = FrameBuffer::Create({ Width , Height });
 
-		m_ActiveScene = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Demo.mimou");
+		//m_ActiveScene = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Demo.mimou");
 
 		//m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
 
@@ -284,6 +284,14 @@ namespace Mimou
 				//	}
 				//	ImGui::EndMenu();
 				//}
+				if (ImGui::MenuItem("Open"))
+				{
+					Ref<Scene> Loaded = LoadObject<Scene>("Assets/Scene/Demo.mimou");
+					if (Loaded)
+					{
+						m_ActiveScene = Loaded;
+					}
+				}
 				if (ImGui::MenuItem("Open..."))
 				{
 					OpenScene();

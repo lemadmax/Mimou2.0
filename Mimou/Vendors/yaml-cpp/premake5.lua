@@ -24,6 +24,7 @@ project "YAML"
 
     filter "configurations:DevEditor"
         buildoptions "/MDd"
+        runtime "Debug"
         symbols "on"
 
     filter "configurations:Debug"
