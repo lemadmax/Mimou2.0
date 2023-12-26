@@ -5,7 +5,7 @@ namespace Mimou
 	class FileDialog
 	{
 	public:
-		static std::string MEGetOpenFileName(const std::string& Filter);
-		static std::string MEGetSaveFileName(const std::string& Filter);
+		static std::string MEGetOpenFileName(const char* Filter);
+		static std::string MEGetSaveFileName(const char* Filter);
 	};
 }

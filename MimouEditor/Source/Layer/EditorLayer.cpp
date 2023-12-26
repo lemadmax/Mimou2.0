@@ -99,7 +99,7 @@ namespace Mimou
 		uint32_t Height = Application::GetInstance()->GetWindow().GetHeight();
 		m_FrameBuffer = FrameBuffer::Create({ Width , Height });
 
-		m_ActiveScene = CreateRef<Scene>("Editor Test Scene");
+		m_ActiveScene = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Demo.mimou");
 
 		//m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
 
@@ -267,8 +267,10 @@ namespace Mimou
 			if (ImGui::BeginMenu("File"))
 			{
 				ImGui::MenuItem("(main menu)", NULL, false, false);
-				if (ImGui::MenuItem("New")) {}
-				if (ImGui::MenuItem("Open", "Ctrl+O")) {}
+				if (ImGui::MenuItem("New")) 
+				{
+					NewScene();
+				}
 				//if (ImGui::BeginMenu("Open Recent"))
 				//{
 				//	ImGui::MenuItem("fish_hat.c");
@@ -282,32 +284,13 @@ namespace Mimou
 				//	}
 				//	ImGui::EndMenu();
 				//}
-				if (ImGui::MenuItem("Save", "Ctrl+S")) 
-				{
-					if (m_ActiveScene)
-					{
-						SceneSerializer::Get()->SerializeScene(m_ActiveScene, "Assets/Scene/Example.mimou");
-					}
-				}
 				if (ImGui::MenuItem("Open..."))
 				{
-					std::string FileName = FileDialog::MEGetOpenFileName("Mimou File (*.mimou)\0*.mimou\0");
-					if (!FileName.empty())
-					{
-						Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene(FileName);
-						if (Loaded)
-						{
-							m_ActiveScene = Loaded;
-						}
-					}
+					OpenScene();
 				}
 				if (ImGui::MenuItem("Save As...")) 
 				{
-					std::string FileName = FileDialog::MEGetSaveFileName("Mimou File (*.mimou)\0*.mimou\0");
-					if (!FileName.empty())
-					{
-						SceneSerializer::Get()->SerializeScene(m_ActiveScene, FileName);
-					}
+					SaveSceneAs();
 				}
 
 
@@ -427,6 +410,42 @@ namespace Mimou
 			Ref<Panel> NewPanel = Panel::CreatePanel(Type, PanelName);
 			ActivePanels.emplace(std::pair<PanelType, Ref<Panel>>(Type, NewPanel));
 		}
+	}
+
+	void EditorLayer::NewScene()
+	{
+		if (m_ActiveScene)
+		{
+			SaveScene();
+		}
+		m_ActiveScene = CreateRef<Scene>();
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string FileName = FileDialog::MEGetOpenFileName("Mimou File (*.mimou)\0*.mimou\0");
+		if (!FileName.empty())
+		{
+			Ref<Scene> Loaded = SceneSerializer::Get()->DeserializeScene(FileName);
+			if (Loaded)
+			{
+				m_ActiveScene = Loaded;
+			}
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string FileName = FileDialog::MEGetSaveFileName("Mimou File (*.mimou)\0*.mimou\0");
+		if (!FileName.empty())
+		{
+			SceneSerializer::Get()->SerializeScene(m_ActiveScene, FileName);
+		}
+	}
+
+	void EditorLayer::SaveScene()
+	{
+
 	}
 
 	bool EditorLayer::IsPanelOpen(PanelType Type)

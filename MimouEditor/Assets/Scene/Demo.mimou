@@ -1,0 +1,87 @@
+Scene: Editor Test Scene
+GameObjects:
+  - EntityID: 0
+    TagComponent:
+      Tag: Scene Light
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0.792999983, 2.28200006, 0]
+      Scale: [1, 1, 1]
+    LightComponent:
+      Color: [0.725868702, 0.72051245, 0.700645447]
+      Intensity: 1
+      IsDirectional: true
+      IsOn: true
+  - EntityID: 2
+    TagComponent:
+      Tag: Sphere
+    TransformComponent:
+      Translation: [0, 2, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    StaticMeshComponent:
+      AssetName: Sphere
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 3
+    TagComponent:
+      Tag: Map
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - EntityID: 4
+    TagComponent:
+      Tag: Plane
+    TransformComponent:
+      Translation: [0, -1, 0]
+      Rotation: [0, 0, 0]
+      Scale: [20, 1, 20]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 5
+    TagComponent:
+      Tag: Wall02
+    TransformComponent:
+      Translation: [21, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 2, 20]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 6
+    TagComponent:
+      Tag: Wall03
+    TransformComponent:
+      Translation: [0, 0, -21]
+      Rotation: [0, 0, 0]
+      Scale: [20, 2, 1]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 7
+    TagComponent:
+      Tag: Wall04
+    TransformComponent:
+      Translation: [0, 0, 21]
+      Rotation: [0, 0, 0]
+      Scale: [20, 2, 1]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 1048577
+    TagComponent:
+      Tag: Wall01
+    TransformComponent:
+      Translation: [-21, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 2, 20]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat

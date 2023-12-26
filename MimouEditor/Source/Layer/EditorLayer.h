@@ -35,6 +35,12 @@ namespace Mimou
 		void ShowPanel(PanelType Type, const std::string& PanelName);
 
 	private:
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
+		void SaveScene();
+
+	private:
 		float uTime = 0.0f;
 
 		Ref<Scene> m_ActiveScene;

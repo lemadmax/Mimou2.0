@@ -10,7 +10,7 @@
 namespace Mimou
 {
 
-	std::string FileDialog::MEGetOpenFileName(const std::string& Filter)
+	std::string FileDialog::MEGetOpenFileName(const char* Filter)
 	{
 		OPENFILENAMEA ofn;
 		char szFile[260] = { 0 };
@@ -21,13 +21,9 @@ namespace Mimou
 		ofn.lStructSize = sizeof(ofn);
 		ofn.hwndOwner = hwnd;
 		ofn.lpstrFile = szFile;
-		ofn.lpstrFile[0] = '\0';
 		ofn.nMaxFile = sizeof(szFile);
-		ofn.lpstrFilter = Filter.c_str();
-		ofn.nFilterIndex = 0;
-		ofn.lpstrFileTitle = NULL;
-		ofn.nMaxFileTitle = 0;
-		ofn.lpstrInitialDir = NULL;
+		ofn.lpstrFilter = Filter;
+		ofn.nFilterIndex = 1;
 		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
 		if (GetOpenFileNameA(&ofn) == TRUE)
@@ -38,7 +34,7 @@ namespace Mimou
 		return std::string();
 	}
 
-	std::string FileDialog::MEGetSaveFileName(const std::string& Filter)
+	std::string FileDialog::MEGetSaveFileName(const char* Filter)
 	{
 		OPENFILENAMEA ofn;
 		char szFile[260] = { 0 };
@@ -49,19 +45,14 @@ namespace Mimou
 		ofn.lStructSize = sizeof(ofn);
 		ofn.hwndOwner = hwnd;
 		ofn.lpstrFile = szFile;
-		ofn.lpstrFile[0] = '\0';
 		ofn.nMaxFile = sizeof(szFile);
-		ofn.lpstrFilter = Filter.c_str();
-		ofn.nFilterIndex = 0;
-		ofn.lpstrFileTitle = NULL;
-		ofn.nMaxFileTitle = 0;
-		ofn.lpstrInitialDir = NULL;
+		ofn.lpstrFilter = Filter;
+		ofn.nFilterIndex = 1;
 		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
 		if (GetSaveFileNameA(&ofn) == TRUE)
 		{
-			std::string Out(ofn.lpstrFile);
-			return Out;
+			return ofn.lpstrFile;
 		}
 
 		return std::string();
