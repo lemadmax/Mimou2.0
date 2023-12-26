@@ -7,6 +7,8 @@
 namespace Mimou
 {
 
+	IMPLEMENT_ME_CLASS(Scene)
+
 	Scene::Scene()
 	{
 		Scene("Default Scene");
@@ -15,7 +17,14 @@ namespace Mimou
 	Scene::Scene(const std::string& SceneName)
 		: m_SceneName(SceneName)
 	{
-		
+		ClassDescriptor<Scene>* CD = Scene::GetClass();
+		CD->RegisterProperty("m_SceneName", ClassDescriptor<Scene>::MimouProperty<std::string>({ "m_SceneName", "string",
+			[](Scene* Obj, std::string Value) {
+				Obj->m_SceneName = Value;
+			}, 
+			[](Scene* Obj) {
+				return Obj->m_SceneName;
+			} }));
 	}
 
 	Scene::~Scene()

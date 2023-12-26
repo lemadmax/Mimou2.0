@@ -19,6 +19,10 @@ project "Glad"
         systemversion "latest"
         staticruntime "on"
 
+    filter "configurations:DevEditor"
+        buildoptions "/MDd"
+        symbols "on"
+
     filter "configurations:Debug"
         runtime "Debug"
         symbols "on"

@@ -1,5 +1,6 @@
 workspace "Mimou2.0"
 	configurations {
+		"DevEditor",
 		"Debug",
 		"Release",
 		"Dist"
@@ -76,9 +77,17 @@ project "Mimou"
 			"ME_BUILD_DLL"
 		}
 
-		postbuildcommands {
-			("{COPY} %{cfg.buildtarget.relpath} ../Sandbox/Binaries/" .. outputdir)
-		}
+		-- postbuildcommands {
+		-- 	("{COPY} %{cfg.buildtarget.relpath} ../Sandbox/Binaries/" .. outputdir)
+		-- }
+
+		filter "configurations:DevEditor"
+			defines {
+				"ME_WITH_EDITOR",
+				"ME_BUILD_DEBUG",
+			}
+			buildoptions "/MDd"
+			symbols "on"
 
 		filter "configurations:Debug"
 			defines "ME_BUILD_DEBUG"
@@ -201,6 +210,14 @@ project "MimouEditor"
 		defines {
 			"ME_PLATFORM_WINDOWS"
 		}
+
+		filter "configurations:DevEditor"
+			defines {
+				"ME_WITH_EDITOR",
+				"ME_BUILD_DEBUG",
+			}
+			buildoptions "/MDd"
+			symbols "on"
 
 		filter "configurations:Debug"
 			defines "ME_BUILD_DEBUG"

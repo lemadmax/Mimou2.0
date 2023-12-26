@@ -22,6 +22,10 @@ project "YAML"
         cdialect "C11"
         staticruntime "on"
 
+    filter "configurations:DevEditor"
+        buildoptions "/MDd"
+        symbols "on"
+
     filter "configurations:Debug"
         buildoptions "/MDd"
         runtime "Debug"

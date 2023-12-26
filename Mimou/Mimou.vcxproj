@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DevEditor|x64">
+      <Configuration>DevEditor</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
@@ -22,6 +26,12 @@
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DevEditor|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -43,6 +53,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DevEditor|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -53,6 +66,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DevEditor|x64'">
+    <OutDir>Binaries\DevEditor-windows-x86_64\</OutDir>
+    <IntDir>Intermediate\DevEditor-windows-x86_64\</IntDir>
+    <TargetName>Mimou</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>Binaries\Debug-windows-x86_64\</OutDir>
     <IntDir>Intermediate\Debug-windows-x86_64\</IntDir>
@@ -71,6 +90,28 @@
     <TargetName>Mimou</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DevEditor|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_WITH_EDITOR;ME_BUILD_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\EnTT\single_include;Vendors\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -92,9 +133,6 @@
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
-    <PostBuildEvent>
-      <Command>IF EXIST Binaries\Debug-windows-x86_64\Mimou.lib\ (xcopy /Q /E /Y /I Binaries\Debug-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Debug-windows-x86_64 &gt; nul) ELSE (xcopy /Q /Y /I Binaries\Debug-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Debug-windows-x86_64 &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -117,9 +155,6 @@
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
-    <PostBuildEvent>
-      <Command>IF EXIST Binaries\Release-windows-x86_64\Mimou.lib\ (xcopy /Q /E /Y /I Binaries\Release-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Release-windows-x86_64 &gt; nul) ELSE (xcopy /Q /Y /I Binaries\Release-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Release-windows-x86_64 &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
@@ -142,18 +177,15 @@
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
-    <PostBuildEvent>
-      <Command>IF EXIST Binaries\Dist-windows-x86_64\Mimou.lib\ (xcopy /Q /E /Y /I Binaries\Dist-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Dist-windows-x86_64 &gt; nul) ELSE (xcopy /Q /Y /I Binaries\Dist-windows-x86_64\Mimou.lib ..\Sandbox\Binaries\Dist-windows-x86_64 &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Mimou\Utils\FileUtils\PlatformUtils.h" />
     <ClInclude Include="Source\Mimou.h" />
     <ClInclude Include="Source\Mimou\Application.h" />
     <ClInclude Include="Source\Mimou\Core.h" />
     <ClInclude Include="Source\Mimou\Debug\Instrumentor.h" />
     <ClInclude Include="Source\Mimou\ECS\Component\BasicComponents.h" />
     <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h" />
+    <ClInclude Include="Source\Mimou\ECS\MimouObject.h" />
     <ClInclude Include="Source\Mimou\ECS\Scene.h" />
     <ClInclude Include="Source\Mimou\ECS\SceneSerializer.h" />
     <ClInclude Include="Source\Mimou\ECS\System\SystemBase.h" />
@@ -197,6 +229,7 @@
     <ClInclude Include="Source\Mimou\Timestep.h" />
     <ClInclude Include="Source\Mimou\Transform\Transform.h" />
     <ClInclude Include="Source\Mimou\Utils\FileUtils\FileHelper.h" />
+    <ClInclude Include="Source\Mimou\Utils\FileUtils\PlatformUtils.h" />
     <ClInclude Include="Source\Mimou\Window\Window.h" />
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsInput.h" />
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsWindow.h" />
@@ -239,13 +272,13 @@
     <ClCompile Include="Source\Mimou\Renderer\VertexArray.cpp" />
     <ClCompile Include="Source\Mimou\Transform\Transform.cpp" />
     <ClCompile Include="Source\Mimou\Utils\FileUtils\FileHelper.cpp" />
+    <ClCompile Include="Source\Mimou\Utils\FileUtils\WindowsPlatformUtils.cpp" />
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsWindow.cpp" />
     <ClCompile Include="Source\mepch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendors\stb_image\stb_image.cpp" />
-    <ClCompile Include="Source\Mimou\Utils\FileUtils\WindowsPlatformUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Vendors\Glad\Glad.vcxproj">

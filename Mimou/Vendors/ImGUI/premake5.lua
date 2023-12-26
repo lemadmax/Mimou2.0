@@ -25,6 +25,10 @@ project "ImGUI"
         cppdialect "C++17"
         staticruntime "on"
 
+    filter "configurations:DevEditor"
+        buildoptions "/MDd"
+        symbols "on"
+
     filter "configurations:Debug"
         runtime "Debug"
         symbols "on"
