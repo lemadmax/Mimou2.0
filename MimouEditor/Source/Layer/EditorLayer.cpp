@@ -100,6 +100,7 @@ namespace Mimou
 		m_FrameBuffer = FrameBuffer::Create({ Width , Height });
 
 		//m_ActiveScene = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Demo.mimou");
+		m_ActiveScene = CreateRef<Scene>("Empty");
 
 		//m_TestTexture = Texture2D::Create("Assets/Textures/duxin.jpg");
 

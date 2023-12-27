@@ -359,5 +359,6 @@
     <ClCompile Include="Vendors\stb_image\stb_image.cpp">
       <Filter>Vendors\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\MimouObject.cpp" />
   </ItemGroup>
 </Project>

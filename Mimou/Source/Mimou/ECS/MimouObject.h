@@ -4,6 +4,12 @@
 
 namespace Mimou
 {
+	enum class MimouValueType : INT32
+	{
+		NONE = 0,
+		STRING = 1,
+	};
+	extern const std::string TypeStr[256];
 
 	//void SerializeString(YAML::Emitter& Out, const std::string& Key, const std::string& Value)
 	//{
@@ -48,7 +54,7 @@ namespace Mimou
 		struct MimouProperty
 		{
 			std::string PropertyName;
-			std::string PropertyType;
+			MimouValueType PropertyType;
 
 			SetValueFn<ValueType> SetValue;
 			GetValueFn<ValueType> GetValue;
@@ -61,11 +67,37 @@ namespace Mimou
 		ClassDescriptor(const std::string& ClassName) : m_ClassName(ClassName) {}
 
 		template<typename ValueType>
-		bool RegisterProperty(const std::string& PropName, const MimouProperty<ValueType>& Property)
+		void RegisterProperty(const std::string& PropName, const MimouProperty<ValueType>& Property)
 		{
+			if (!PropertySignitures.contains(PropName))
+				PropertySignitures.insert(std::make_pair(PropName, Property.PropertyType));
 			MimouProperty<ValueType> Temp = Property;
-			Properties<ValueType>.insert(PropName, Temp);
-			PropertySignitures.insert(PropName, Property.PropertyName);
+			SetGetProperty<ValueType>(PropName, Property.PropertyType, Temp);
+		}
+
+		template<typename ValueType>
+		void SetGetProperty(const std::string PropName, MimouValueType PropType, MimouProperty<ValueType>& Out)
+		{
+			switch (PropType)
+			{
+			case MimouValueType::STRING:
+			{
+				if (StringProperties.contains(PropName))
+				{
+					Out = StringProperties[PropName];
+				}
+				else
+				{
+					StringProperties.insert(std::make_pair(PropName, Out));
+				}
+				break;
+			}
+			default:
+			{
+				ME_ENGINE_WARN("Mimou hasn't support type {}", TypeStr[(INT32)PropType]);
+				break;
+			}
+			}
 		}
 
 		template<typename ValueType>
@@ -76,13 +108,14 @@ namespace Mimou
 				ME_ENGINE_WARN("Object is null");
 				return ValueType();
 			}
-			if (!Properties.contains(PropName))
+			if (!PropertySignitures.contains(PropName))
 			{
 				ME_ENGINE_WARN("Property {} doesn't exist", PropName);
 				return ValueType();
 			}
 
-			MimouProperty<ValueType> Prop = Properties[PropName];
+			MimouProperty<ValueType> Prop;
+			SetGetProperty<ValueType>(PropName, PropertySignitures[PropName], Prop);
 			return Prop.GetValueFn(Obj);
 		}
 
@@ -94,20 +127,21 @@ namespace Mimou
 				ME_ENGINE_WARN("Object is null");
 				return false;
 			}
-			if (!Properties.contains(PropName))
+			if (!PropertySignitures.contains(PropName))
 			{
 				ME_ENGINE_WARN("Property {} doesn't exist", PropName);
 				return false;
 			}
 
-			MimouProperty<ValueType> Prop = Properties[PropName];
+			MimouProperty<ValueType> Prop;
+			SetGetProperty<ValueType>(PropName, PropertySignitures[PropName], Prop);
 			Prop.SetValueFn(Obj, Value);
 		}
 
-		std::map<std::string, std::string> PropertySignitures;
+		std::map<std::string, MimouValueType> PropertySignitures;
 
-		template<typename ValueType>
-		static std::map<std::string, MimouProperty<ValueType>> Properties;
+
+		std::map<std::string, MimouProperty<std::string>> StringProperties;
 
 		std::string m_ClassName;
 

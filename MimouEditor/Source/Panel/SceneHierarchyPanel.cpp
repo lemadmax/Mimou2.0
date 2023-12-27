@@ -23,7 +23,7 @@ namespace Mimou
 			return;
 		}
 
-		ImGui::Begin(m_PanelName.c_str());
+		ImGui::Begin(m_Scene->GetName().c_str());
 
 		PendingDestroy.clear();
 		bDestroyAll = false;

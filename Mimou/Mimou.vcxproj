@@ -239,6 +239,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp" />
     <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp" />
+    <ClCompile Include="Source\Mimou\ECS\MimouObject.cpp" />
     <ClCompile Include="Source\Mimou\ECS\Scene.cpp" />
     <ClCompile Include="Source\Mimou\ECS\SceneSerializer.cpp" />
     <ClCompile Include="Source\Mimou\ECS\System\SystemBase.cpp" />
