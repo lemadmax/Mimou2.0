@@ -7,6 +7,8 @@ namespace Mimou
 	const std::string TypeStr[256] =
 	{
 		"None",
-		"String"
+		"String",
+		"Map",
+		"ME_OBJECT"
 	};
 }

@@ -8,36 +8,10 @@ namespace Mimou
 	{
 		NONE = 0,
 		STRING = 1,
+		MAP = 2,
+		ME_OBJECT = 3,
 	};
 	extern const std::string TypeStr[256];
-
-	//void SerializeString(YAML::Emitter& Out, const std::string& Key, const std::string& Value)
-	//{
-	//	Out << YAML::Key << Key;
-	//	Out << YAML::Value << Value;
-	//}
-
-	//template<typename Property>
-	//void SerializeProperty(YAML::Emitter& Out, const std::string& Key, const Property& Value, const std::string& ValueType)
-	//{
-	//	switch (ValueType)
-	//	{
-	//	case "std::string":
-	//	{
-	//		SerializeString(Out, Key, Value);
-	//		break;
-	//	}
-	//	default:
-	//	{
-	//		ME_ENGINE_WARN("Serialization failed due to unsupported value type: {}", ValueType);
-	//		break;
-	//	}
-	//	}
-	//}
-
-	//template<typename Property>
-	//using SerializeFn = std::function<void<YAML::Emitter&, const std::string&, const T&, const std::string&>>;
-
 
 	template<typename ClassType>
 	class ClassDescriptor
@@ -116,7 +90,7 @@ namespace Mimou
 
 			MimouProperty<ValueType> Prop;
 			SetGetProperty<ValueType>(PropName, PropertySignitures[PropName], Prop);
-			return Prop.GetValueFn(Obj);
+			return Prop.GetValue(Obj);
 		}
 
 		template<typename ValueType>
@@ -135,7 +109,7 @@ namespace Mimou
 
 			MimouProperty<ValueType> Prop;
 			SetGetProperty<ValueType>(PropName, PropertySignitures[PropName], Prop);
-			Prop.SetValueFn(Obj, Value);
+			Prop.SetValue(Obj, Value);
 		}
 
 		std::map<std::string, MimouValueType> PropertySignitures;
@@ -145,30 +119,58 @@ namespace Mimou
 
 		std::string m_ClassName;
 
-	//public:
-	//	template<typename T>
-	//	static ClassDescriptor* Get();
-
-	//private:
-	//	static ClassDescriptor* s_Instance;
 	};
 	
 	template<typename ClassType>
 	Ref<ClassType> LoadObject(const std::string& AssetPath)
 	{
-		return CreateRef<ClassType>("Demo Scene");
+		Ref<ClassType> Out = CreateRef<ClassType>();
+		YAML::Node RawData = YAML::LoadFile(AssetPath);
+		if (RawData)
+		{
+			ClassDescriptor<ClassType>* ClassDesc = Out->GetClass();
+			for (auto [PropName, PropType] : ClassDesc->PropertySignitures)
+			{
+				switch (PropType)
+				{
+				case MimouValueType::STRING:
+				{
+					std::string Data = RawData[PropName].as<std::string>();
+					ClassDesc->SetPropertyValue<std::string>(Out.get(), PropName, Data);
+					break;
+				}
+				default:
+				{
+					ME_ENGINE_WARN("Data type not supported");
+					break;
+				}
+				}
+			}
+		}
+		else
+		{
+			ME_ENGINE_ERROR("Failed to load asset: {}", AssetPath);
+		}
+		return Out;
 	}
 }
 
 
 #define ME_CLASS(ClassType) class ClassType;
 
-#define DECLARE_ME_CLASS(ClassType) static std::string StaticClass() { return #ClassType; } \
+#define DECLARE_ME_CLASS(ClassType) public: static std::string StaticClass() { return #ClassType; } \
 								::Mimou::ClassDescriptor<ClassType>* GetClass();
 
-//#define ME_PROPERTY(PropType, PropName) 
 
 
 #define IMPLEMENT_ME_CLASS(ClassType) ::Mimou::ClassDescriptor<ClassType>* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor<ClassType>(#ClassType); \
 								::Mimou::ClassDescriptor<ClassType>* ClassType::GetClass() { return m_ClassDescriptor##ClassType; }
 
+#define ME_MAP(Key, Value) std::map<Key, Value>
+#define REGISTER_PROPERTY(ClassType, PropName, PropType, MimouType) m_ClassDescriptor##ClassType->RegisterProperty<PropType>(#PropName, { #PropName, MimouType, \
+									[](ClassType* Obj, PropType Value) { \
+										Obj->PropName = Value; \
+										}, \
+										[](ClassType* Obj) { \
+										return Obj->PropName; \
+										} });

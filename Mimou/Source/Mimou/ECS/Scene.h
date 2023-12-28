@@ -40,11 +40,12 @@ namespace Mimou
 
 	public:
 		std::string m_SceneName;
+
+		std::map<entt::entity, Ref<GameObject>> GameObjects;
 		
 	private:
 		entt::registry m_Registry;
 
-		std::map<entt::entity, Ref<GameObject>> GameObjects;
 
 		friend class GameObject;
 		friend class Panel;

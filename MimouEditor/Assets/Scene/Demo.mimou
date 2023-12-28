@@ -1,4 +1,4 @@
-Scene: Editor Test Scene
+m_SceneName: Editor Test Scene
 GameObjects:
   - EntityID: 0
     TagComponent:
