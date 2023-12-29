@@ -13,16 +13,19 @@ namespace Mimou
 	};
 	extern const std::string TypeStr[256];
 
-	template<typename ClassType>
+	class MEObject;
+
 	class ClassDescriptor
 	{
 	public:
 
-		template<typename ValueType>
-		using SetValueFn = std::function<void(ClassType*, ValueType)>;
+		using CreateObjectFn = std::function<Ref<MEObject>()>;
 
 		template<typename ValueType>
-		using GetValueFn = std::function<ValueType(ClassType*)>;
+		using SetValueFn = std::function<void(MEObject*, ValueType)>;
+
+		template<typename ValueType>
+		using GetValueFn = std::function<ValueType(MEObject*)>;
 
 		template<typename ValueType>
 		struct MimouProperty
@@ -38,7 +41,20 @@ namespace Mimou
 
 	public:
 		ClassDescriptor() = delete;
-		ClassDescriptor(const std::string& ClassName) : m_ClassName(ClassName) {}
+		ClassDescriptor(const std::string& ClassName, CreateObjectFn CreateFn) : m_ClassName(ClassName), m_CreateObject(CreateFn) {}
+
+		CreateObjectFn m_CreateObject;
+
+		Ref<MEObject> CreateNewObject()
+		{
+			return m_CreateObject();
+		}
+
+		//template<typename ClassType, typename... Args>
+		//Ref<ClassType> CreateObject(Args&& ...args)
+		//{
+		//	return CreateRef<ClassType>(std::forward<Args>(args));
+		//}
 
 		template<typename ValueType>
 		void RegisterProperty(const std::string& PropName, const MimouProperty<ValueType>& Property)
@@ -75,7 +91,7 @@ namespace Mimou
 		}
 
 		template<typename ValueType>
-		ValueType GetPropertyValue(ClassType* Obj, const std::string& PropName)
+		ValueType GetPropertyValue(MEObject* Obj, const std::string& PropName)
 		{
 			if (!Obj)
 			{
@@ -94,7 +110,7 @@ namespace Mimou
 		}
 
 		template<typename ValueType>
-		bool SetPropertyValue(ClassType* Obj, const std::string& PropName, const ValueType& Value)
+		bool SetPropertyValue(MEObject* Obj, const std::string& PropName, const ValueType& Value)
 		{
 			if (!Obj)
 			{
@@ -120,6 +136,13 @@ namespace Mimou
 		std::string m_ClassName;
 
 	};
+
+	class MEObject
+	{
+	public:
+		virtual ClassDescriptor* GetClass() = 0;
+
+	};
 	
 	template<typename ClassType>
 	Ref<ClassType> LoadObject(const std::string& AssetPath)
@@ -128,7 +151,7 @@ namespace Mimou
 		YAML::Node RawData = YAML::LoadFile(AssetPath);
 		if (RawData)
 		{
-			ClassDescriptor<ClassType>* ClassDesc = Out->GetClass();
+			ClassDescriptor* ClassDesc = Out->GetClass();
 			for (auto [PropName, PropType] : ClassDesc->PropertySignitures)
 			{
 				switch (PropType)
@@ -159,18 +182,20 @@ namespace Mimou
 #define ME_CLASS(ClassType) class ClassType;
 
 #define DECLARE_ME_CLASS(ClassType) public: static std::string StaticClass() { return #ClassType; } \
-								::Mimou::ClassDescriptor<ClassType>* GetClass();
+								virtual ::Mimou::ClassDescriptor* GetClass();
 
 
 
-#define IMPLEMENT_ME_CLASS(ClassType) ::Mimou::ClassDescriptor<ClassType>* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor<ClassType>(#ClassType); \
-								::Mimou::ClassDescriptor<ClassType>* ClassType::GetClass() { return m_ClassDescriptor##ClassType; }
+#define IMPLEMENT_ME_CLASS(ClassType) ::Mimou::ClassDescriptor* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor(#ClassType, []() { return CreateRef<ClassType>(); }); \
+								::Mimou::ClassDescriptor* ClassType::GetClass() { return m_ClassDescriptor##ClassType; }
 
 #define ME_MAP(Key, Value) std::map<Key, Value>
 #define REGISTER_PROPERTY(ClassType, PropName, PropType, MimouType) m_ClassDescriptor##ClassType->RegisterProperty<PropType>(#PropName, { #PropName, MimouType, \
-									[](ClassType* Obj, PropType Value) { \
-										Obj->PropName = Value; \
+									[](MEObject* Obj, PropType Value) { \
+										ClassType* Derived = static_cast<ClassType*>(Obj); \
+										Derived->PropName = Value; \
 										}, \
-										[](ClassType* Obj) { \
-										return Obj->PropName; \
+										[](MEObject* Obj) { \
+										ClassType* Derived = static_cast<ClassType*>(Obj); \
+										return Derived->PropName; \
 										} });

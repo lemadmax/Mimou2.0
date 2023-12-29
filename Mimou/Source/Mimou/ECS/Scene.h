@@ -16,7 +16,7 @@ namespace Mimou
 	class SceneSerializer;
 
 	ME_CLASS(Scene)
-	class Scene
+	class Scene : public MEObject
 	{
 		DECLARE_ME_CLASS(Scene)
 	public:
