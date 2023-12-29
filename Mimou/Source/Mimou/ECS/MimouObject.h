@@ -1,5 +1,6 @@
 #pragma once
 #include "Mimou/Logging.h"
+
 #include "yaml-cpp/yaml.h"
 
 namespace Mimou
@@ -19,7 +20,7 @@ namespace Mimou
 	{
 	public:
 
-		using CreateObjectFn = std::function<Ref<MEObject>()>;
+		using CreateObjectFn = std::function<MEObject*()>;
 
 		template<typename ValueType>
 		using SetValueFn = std::function<void(MEObject*, ValueType)>;
@@ -45,16 +46,10 @@ namespace Mimou
 
 		CreateObjectFn m_CreateObject;
 
-		Ref<MEObject> CreateNewObject()
+		MEObject* CreateNewObject()
 		{
 			return m_CreateObject();
 		}
-
-		//template<typename ClassType, typename... Args>
-		//Ref<ClassType> CreateObject(Args&& ...args)
-		//{
-		//	return CreateRef<ClassType>(std::forward<Args>(args));
-		//}
 
 		template<typename ValueType>
 		void RegisterProperty(const std::string& PropName, const MimouProperty<ValueType>& Property)
@@ -137,9 +132,36 @@ namespace Mimou
 
 	};
 
+	class MEObjectManager
+	{
+	private:
+		MEObjectManager() = default;
+
+	public:
+
+		static MEObjectManager* GetInstance()
+		{
+			if (!s_Instance)
+			{
+				s_Instance = new MEObjectManager();
+			}
+			return s_Instance;
+		}
+
+		void RegisterMEClass(const std::string& ClassName, ClassDescriptor* CD);
+
+		MEObject* CreateObject(const std::string& ClassName);
+
+	private:
+		static MEObjectManager* s_Instance;
+
+		std::map<std::string, ClassDescriptor*> ClassLibs;
+	};
+
 	class MEObject
 	{
 	public:
+
 		virtual ClassDescriptor* GetClass() = 0;
 
 	};
@@ -147,35 +169,47 @@ namespace Mimou
 	template<typename ClassType>
 	Ref<ClassType> LoadObject(const std::string& AssetPath)
 	{
-		Ref<ClassType> Out = CreateRef<ClassType>();
 		YAML::Node RawData = YAML::LoadFile(AssetPath);
 		if (RawData)
 		{
-			ClassDescriptor* ClassDesc = Out->GetClass();
-			for (auto [PropName, PropType] : ClassDesc->PropertySignitures)
+			std::string AssetType = RawData["ClassType"].as<std::string>();
+			if (AssetType == ClassType::StaticClass())
 			{
-				switch (PropType)
+				MEObject* OutPtr = MEObjectManager::GetInstance()->CreateObject(AssetType);
+				if (!OutPtr)
 				{
-				case MimouValueType::STRING:
+					ME_ENGINE_ERROR("Failed to create object {}", AssetType);
+					return nullptr;
+				}
+				Ref<ClassType> Out(static_cast<ClassType*>(OutPtr));
+				ClassDescriptor* ClassDesc = Out->GetClass();
+				for (auto [PropName, PropType] : ClassDesc->PropertySignitures)
 				{
-					std::string Data = RawData[PropName].as<std::string>();
-					ClassDesc->SetPropertyValue<std::string>(Out.get(), PropName, Data);
-					break;
+					switch (PropType)
+					{
+					case MimouValueType::STRING:
+					{
+						std::string Data = RawData[PropName].as<std::string>();
+						ClassDesc->SetPropertyValue<std::string>(Out.get(), PropName, Data);
+						break;
+					}
+					default:
+					{
+						ME_ENGINE_WARN("Data type not supported");
+						break;
+					}
+					}
 				}
-				default:
-				{
-					ME_ENGINE_WARN("Data type not supported");
-					break;
-				}
-				}
+				return Out;
 			}
 		}
 		else
 		{
 			ME_ENGINE_ERROR("Failed to load asset: {}", AssetPath);
 		}
-		return Out;
+		return nullptr;
 	}
+
 }
 
 
@@ -186,10 +220,11 @@ namespace Mimou
 
 
 
-#define IMPLEMENT_ME_CLASS(ClassType) ::Mimou::ClassDescriptor* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor(#ClassType, []() { return CreateRef<ClassType>(); }); \
+#define IMPLEMENT_ME_CLASS(ClassType) ::Mimou::ClassDescriptor* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor(#ClassType, []() { return new ClassType(); }); \
 								::Mimou::ClassDescriptor* ClassType::GetClass() { return m_ClassDescriptor##ClassType; }
 
 #define ME_MAP(Key, Value) std::map<Key, Value>
+#define REGISTER_CLASS(ClassType) ::Mimou::MEObjectManager::GetInstance()->RegisterMEClass(#ClassType, m_ClassDescriptor##ClassType); 
 #define REGISTER_PROPERTY(ClassType, PropName, PropType, MimouType) m_ClassDescriptor##ClassType->RegisterProperty<PropType>(#PropName, { #PropName, MimouType, \
 									[](MEObject* Obj, PropType Value) { \
 										ClassType* Derived = static_cast<ClassType*>(Obj); \
