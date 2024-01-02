@@ -21,6 +21,8 @@ namespace Mimou
 		std::string Tag = "GameObject";
 
 		TagComponent();
+		TagComponent(const std::string& InTag)
+			: Tag(InTag) {}
 	};
 
 	struct TransformComponent

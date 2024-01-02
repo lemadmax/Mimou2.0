@@ -7,7 +7,9 @@
 namespace Mimou
 {
 
-	IMPLEMENT_ME_CLASS(Scene)
+	BEGIN_ME_CLASS(Scene)
+
+	END_ME_CLASS()
 
 	Scene::Scene()
 	{
@@ -17,8 +19,8 @@ namespace Mimou
 	Scene::Scene(const std::string& SceneName)
 		: m_SceneName(SceneName)
 	{
-		REGISTER_CLASS(Scene)
-		REGISTER_PROPERTY(Scene, m_SceneName, std::string, MimouValueType::STRING)
+		//REGISTER_CLASS(Scene)
+		//REGISTER_PROPERTY(Scene, m_SceneName, std::string, MimouValueType::STRING)
 		//REGISTER_PROPERTY(Scene, GameObjects, ME_MAP(entt::entity, Ref<GameObject>), MimouValueType::MAP)
 	}
 

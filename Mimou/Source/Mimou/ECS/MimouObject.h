@@ -41,6 +41,8 @@ namespace Mimou
 		ClassDescriptor() = delete;
 		ClassDescriptor(const std::string& ClassName, CreateObjectFn CreateFn) : m_ClassName(ClassName), m_CreateObject(CreateFn) {}
 
+		std::string GetClassType() { return m_ClassName; }
+
 		CreateObjectFn m_CreateObject;
 
 		MEObject* CreateNewObject()
@@ -165,55 +167,25 @@ namespace Mimou
 
 	struct MEObject
 	{
+		MEObject()
+		{
+			ME_ENGINE_LOG("Initializing properties");
+			Init();
+		}
 		virtual ClassDescriptor* GetClass() = 0;
+		virtual void Init() = 0;
 	};
 	
+	class MimouSerializer;
+
 	template<typename ClassType>
 	Ref<ClassType> LoadObject(const std::string& AssetPath)
 	{
-		YAML::Node RawData = YAML::LoadFile(AssetPath);
-		if (RawData)
-		{
-			std::string AssetType = RawData["ClassType"].as<std::string>();
-			if (AssetType == ClassType::StaticClass())
-			{
-				MEObject* OutPtr = MEObjectManager::GetInstance()->CreateObject(AssetType);
-				if (!OutPtr)
-				{
-					ME_ENGINE_ERROR("Failed to create object {}", AssetType);
-					return nullptr;
-				}
-				Ref<ClassType> Out(static_cast<ClassType*>(OutPtr));
-				ClassDescriptor* ClassDesc = Out->GetClass();
-				for (auto [PropName, PropType] : ClassDesc->PropertySignitures)
-				{
-					switch (PropType)
-					{
-					case MimouValueType::STRING:
-					{
-						std::string Data = RawData[PropName].as<std::string>();
-						ClassDesc->SetPropertyValue<std::string>(Out.get(), PropName, Data);
-						break;
-					}
-					default:
-					{
-						ME_ENGINE_WARN("Data type not supported");
-						break;
-					}
-					}
-				}
-				return Out;
-			}
-		}
-		else
-		{
-			ME_ENGINE_ERROR("Failed to load asset: {}", AssetPath);
-		}
-		return nullptr;
+		return MimouSerializer::LoadMEObject(ClassType::StaticClass(), AssetPath);
 	}
 
-	template<typename T>
-	bool SaveObject(T* Obj, const std::string& AssetPath)
+	template<typename ClassType>
+	bool SaveObject(Ref<ClassType> Obj, const std::string& AssetPath)
 	{
 		MimouSerializer::SaveMEObject(Obj, AssetPath);
 	}
@@ -224,15 +196,17 @@ namespace Mimou
 #define ME_CLASS(ClassType) class ClassType;
 
 #define DECLARE_ME_CLASS(ClassType) public: static std::string StaticClass() { return #ClassType; } \
-								virtual ::Mimou::ClassDescriptor* GetClass();
-
-
-
-#define IMPLEMENT_ME_CLASS(ClassType) ::Mimou::ClassDescriptor* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor(#ClassType, []() { return new ClassType(); }); \
-								::Mimou::ClassDescriptor* ClassType::GetClass() { return m_ClassDescriptor##ClassType; }
+								virtual ::Mimou::ClassDescriptor* GetClass(); \
+								virtual void ClassType::Init();
 
 #define ME_MAP(Key, Value) std::map<Key, Value>
-#define REGISTER_CLASS(ClassType) ::Mimou::MEObjectManager::GetInstance()->RegisterMEClass(#ClassType, m_ClassDescriptor##ClassType); 
+
+
+#define BEGIN_ME_CLASS(ClassType) ::Mimou::ClassDescriptor* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor(#ClassType, []() { return new ClassType(); }); \
+								::Mimou::ClassDescriptor* ClassType::GetClass() { return m_ClassDescriptor##ClassType; } \
+								virtual void ClassType::Init() { \
+									::Mimou::MEObjectManager::GetInstance()->RegisterMEClass(#ClassType, m_ClassDescriptor##ClassType); 
+
 #define REGISTER_PROPERTY(ClassType, PropName, PropType, MimouType) m_ClassDescriptor##ClassType->RegisterProperty<PropType>(#PropName, { #PropName, MimouType, \
 									[](MEObject* Obj, PropType Value) { \
 										ClassType* Derived = static_cast<ClassType*>(Obj); \
@@ -242,6 +216,9 @@ namespace Mimou
 										ClassType* Derived = static_cast<ClassType*>(Obj); \
 										return Derived->PropName; \
 										} });
+
+#define END_ME_CLASS() }
+
 
 #define DECLARE_ME_STRUCT(StructName) static std::string StaticClass() { return #StructName;} \
 								virtual ::Mimou::ClassDescriptor* GetClass();
