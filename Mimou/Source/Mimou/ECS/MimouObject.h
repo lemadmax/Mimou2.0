@@ -1,5 +1,6 @@
 #pragma once
 #include "Mimou/Logging.h"
+#include "MimouSerializer.h"
 
 namespace Mimou
 {
