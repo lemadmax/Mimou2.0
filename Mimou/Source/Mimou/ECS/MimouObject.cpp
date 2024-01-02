@@ -1,5 +1,6 @@
 #include "mepch.h"
 #include "MimouObject.h"
+#include "MimouSerializer.h"
 
 namespace Mimou
 {
@@ -28,4 +29,5 @@ namespace Mimou
 		}
 		return nullptr;
 	}
+
 }

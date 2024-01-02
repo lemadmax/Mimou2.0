@@ -3,6 +3,7 @@
 #include "Mimou/Renderer/VertexArray.h"
 #include "Mimou/Renderer/Material/Material.h"
 #include "Mimou/Renderer/Camera/SceneCamera.h"
+#include "Mimou/ECS/MimouObject.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtx/quaternion.hpp"
@@ -14,14 +15,12 @@ namespace Mimou
 
 	};
 
-	struct TagComponent
+	struct TagComponent : public MEObject
 	{
+		DECLARE_ME_STRUCT(TagComponent)
 		std::string Tag = "GameObject";
 
-		TagComponent() = default;
-		TagComponent(const TagComponent&) = default;
-		TagComponent(const std::string& InTag)
-			: Tag(InTag) {}
+		TagComponent();
 	};
 
 	struct TransformComponent

@@ -237,6 +237,7 @@
     <ClInclude Include="Vendors\stb_image\stb_image.h">
       <Filter>Vendors\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\MimouSerializer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -360,5 +361,7 @@
       <Filter>Vendors\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\ECS\MimouObject.cpp" />
+    <ClCompile Include="Source\Mimou\ECS\Component\BasicComponents.cpp" />
+    <ClCompile Include="Source\Mimou\ECS\MimouSerializer.cpp" />
   </ItemGroup>
 </Project>

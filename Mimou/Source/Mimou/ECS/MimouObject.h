@@ -1,8 +1,6 @@
 #pragma once
 #include "Mimou/Logging.h"
 
-#include "yaml-cpp/yaml.h"
-
 namespace Mimou
 {
 	enum class MimouValueType : INT32
@@ -14,7 +12,7 @@ namespace Mimou
 	};
 	extern const std::string TypeStr[256];
 
-	class MEObject;
+	struct MEObject;
 
 	class ClassDescriptor
 	{
@@ -36,8 +34,6 @@ namespace Mimou
 
 			SetValueFn<ValueType> SetValue;
 			GetValueFn<ValueType> GetValue;
-
-			//SerializeFn Serialize;
 		};
 
 	public:
@@ -158,12 +154,17 @@ namespace Mimou
 		std::map<std::string, ClassDescriptor*> ClassLibs;
 	};
 
-	class MEObject
+	//class MEObject
+	//{
+	//public:
+
+	//	virtual ClassDescriptor* GetClass() = 0;
+
+	//};
+
+	struct MEObject
 	{
-	public:
-
 		virtual ClassDescriptor* GetClass() = 0;
-
 	};
 	
 	template<typename ClassType>
@@ -210,6 +211,12 @@ namespace Mimou
 		return nullptr;
 	}
 
+	template<typename T>
+	bool SaveObject(T* Obj, const std::string& AssetPath)
+	{
+		MimouSerializer::SaveMEObject(Obj, AssetPath);
+	}
+
 }
 
 
@@ -234,3 +241,9 @@ namespace Mimou
 										ClassType* Derived = static_cast<ClassType*>(Obj); \
 										return Derived->PropName; \
 										} });
+
+#define DECLARE_ME_STRUCT(StructName) static std::string StaticClass() { return #StructName;} \
+								virtual ::Mimou::ClassDescriptor* GetClass();
+
+#define IMPLEMENT_ME_STRUCT(StructName) ::Mimou::ClassDescriptor* m_ClassDescriptor##StructName = new ::Mimou::ClassDescriptor(#StructName, []() { return new StructName(); }); \
+								::Mimou::ClassDescriptor* StructName::GetClass() { return m_ClassDescriptor##StructName; }
