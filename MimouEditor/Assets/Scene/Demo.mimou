@@ -1,5 +1,5 @@
 ClassType: Scene
-m_SceneName: Test Scene
+Scene: Test Scene
 GameObjects:
   - EntityID: 0
     TagComponent:

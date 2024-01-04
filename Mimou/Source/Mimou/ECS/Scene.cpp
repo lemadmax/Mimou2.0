@@ -7,9 +7,9 @@
 namespace Mimou
 {
 
-	BEGIN_ME_CLASS(Scene)
+	//BEGIN_ME_CLASS(Scene)
 
-	END_ME_CLASS()
+	//END_ME_CLASS()
 
 	Scene::Scene()
 	{

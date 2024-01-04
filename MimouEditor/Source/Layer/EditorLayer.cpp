@@ -287,15 +287,15 @@ namespace Mimou
 				//}
 				if (ImGui::MenuItem("Open"))
 				{
-					Ref<Scene> Loaded = LoadObject<Scene>("Assets/Scene/NewDemo.mimou");
-					if (Loaded)
-					{
-						m_ActiveScene = Loaded;
-					}
+					//Ref<Scene> Loaded = LoadObject<Scene>("Assets/Scene/NewDemo.mimou");
+					//if (Loaded)
+					//{
+					//	m_ActiveScene = Loaded;
+					//}
 				}
 				if (ImGui::MenuItem("Save"))
 				{
-					SaveObject<Scene>(m_ActiveScene, "Assets/Scene/NewDemo.mimou");
+					//SaveObject<Scene>(m_ActiveScene, "Assets/Scene/NewDemo.mimou");
 				}
 				if (ImGui::MenuItem("Open..."))
 				{

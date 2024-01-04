@@ -179,7 +179,7 @@ namespace Mimou
 	class MimouSerializer;
 
 	template<typename ClassType>
-	Ref<ClassType> LoadObject(const std::string& AssetPath)
+	Ref<MEObject> LoadObject(const std::string& AssetPath)
 	{
 		return MimouSerializer::LoadMEObject(ClassType::StaticClass(), AssetPath);
 	}
@@ -188,6 +188,7 @@ namespace Mimou
 	bool SaveObject(Ref<ClassType> Obj, const std::string& AssetPath)
 	{
 		MimouSerializer::SaveMEObject(Obj, AssetPath);
+		return true;
 	}
 
 }
@@ -204,7 +205,7 @@ namespace Mimou
 
 #define BEGIN_ME_CLASS(ClassType) ::Mimou::ClassDescriptor* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor(#ClassType, []() { return new ClassType(); }); \
 								::Mimou::ClassDescriptor* ClassType::GetClass() { return m_ClassDescriptor##ClassType; } \
-								virtual void ClassType::Init() { \
+								void ClassType::Init() { \
 									::Mimou::MEObjectManager::GetInstance()->RegisterMEClass(#ClassType, m_ClassDescriptor##ClassType); 
 
 #define REGISTER_PROPERTY(ClassType, PropName, PropType, MimouType) m_ClassDescriptor##ClassType->RegisterProperty<PropType>(#PropName, { #PropName, MimouType, \

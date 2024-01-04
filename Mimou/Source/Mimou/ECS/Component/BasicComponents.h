@@ -15,12 +15,13 @@ namespace Mimou
 
 	};
 
-	struct TagComponent : public MEObject
+	struct TagComponent
 	{
-		DECLARE_ME_STRUCT(TagComponent)
+		//DECLARE_ME_STRUCT(TagComponent)
 		std::string Tag = "GameObject";
 
-		TagComponent();
+		TagComponent() = default;
+		TagComponent(const TagComponent&) = default;
 		TagComponent(const std::string& InTag)
 			: Tag(InTag) {}
 	};
