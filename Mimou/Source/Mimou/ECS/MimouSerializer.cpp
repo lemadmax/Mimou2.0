@@ -23,8 +23,8 @@ namespace Mimou
 			case MimouValueType::STRING:
 			{
 				Out << YAML::Key << PropName;
-				std::string DataValue;
-				if (ClassDesc->SetPropertyValue<std::string>(Obj.get(), PropName, DataValue))
+				std::string DataValue = ClassDesc->GetPropertyValue<std::string>(Obj.get(), PropName);
+				if (!DataValue.empty())
 				{
 					Out << YAML::Value << DataValue;
 				}

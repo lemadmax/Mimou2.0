@@ -8,18 +8,19 @@ namespace Mimou
 	{
 		NONE = 0,
 		STRING = 1,
-		MAP = 2,
+		ME_OBJ_MAP = 2,
 		ME_OBJECT = 3,
 	};
 	extern const std::string TypeStr[256];
 
-	struct MEObject;
+	class MEObject;
 
 	class ClassDescriptor
 	{
 	public:
 
 		using CreateObjectFn = std::function<MEObject*()>;
+		using InitFn = std::function<void(ClassDescriptor*)>;
 
 		template<typename ValueType>
 		using SetValueFn = std::function<void(MEObject*, ValueType)>;
@@ -39,7 +40,10 @@ namespace Mimou
 
 	public:
 		ClassDescriptor() = delete;
-		ClassDescriptor(const std::string& ClassName, CreateObjectFn CreateFn) : m_ClassName(ClassName), m_CreateObject(CreateFn) {}
+		ClassDescriptor(const std::string& ClassName, CreateObjectFn CreateFn, InitFn Init) : m_ClassName(ClassName), m_CreateObject(CreateFn) 
+		{
+			Init(this);
+		}
 
 		std::string GetClassType() { return m_ClassName; }
 
@@ -75,6 +79,17 @@ namespace Mimou
 					StringProperties.insert(std::make_pair(PropName, Out));
 				}
 				break;
+			}
+			case MimouValueType::ME_OBJECT:
+			{
+				if (MEObjProperties.contains(PropName))
+				{
+					Out = MEObjProperties[PropName];
+				}
+				else
+				{
+					MEObjProperties.insert(std::make_pair(PropName, Out));
+				}
 			}
 			default:
 			{
@@ -127,6 +142,8 @@ namespace Mimou
 
 		std::map<std::string, MimouProperty<std::string>> StringProperties;
 
+		std::map<std::string, MimouProperty<Ref<MEObject>>> MEObjProperties;
+
 		std::string m_ClassName;
 
 	};
@@ -165,15 +182,14 @@ namespace Mimou
 
 	//};
 
-	struct MEObject
+	class MEObject
 	{
+	public:
 		MEObject()
 		{
 			ME_ENGINE_LOG("Initializing properties");
-			Init();
 		}
-		virtual ClassDescriptor* GetClass() = 0;
-		virtual void Init() = 0;
+		virtual ClassDescriptor* GetClass() { return nullptr; }
 	};
 	
 	class MimouSerializer;
@@ -197,18 +213,15 @@ namespace Mimou
 #define ME_CLASS(ClassType) class ClassType;
 
 #define DECLARE_ME_CLASS(ClassType) public: static std::string StaticClass() { return #ClassType; } \
-								virtual ::Mimou::ClassDescriptor* GetClass(); \
-								virtual void Init();
+								virtual ::Mimou::ClassDescriptor* GetClass(); 
 
 #define ME_MAP(Key, Value) std::map<Key, Value>
 
 
-#define BEGIN_ME_CLASS(ClassType) ::Mimou::ClassDescriptor* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor(#ClassType, []() { return new ClassType(); }); \
-								::Mimou::ClassDescriptor* ClassType::GetClass() { return m_ClassDescriptor##ClassType; } \
-								void ClassType::Init() { \
-									::Mimou::MEObjectManager::GetInstance()->RegisterMEClass(#ClassType, m_ClassDescriptor##ClassType); 
+#define BEGIN_ME_CLASS(ClassType) ::Mimou::ClassDescriptor* m_ClassDescriptor##ClassType = new ::Mimou::ClassDescriptor(#ClassType, []() { return new ClassType(); }, \
+								[](::Mimou::ClassDescriptor* CD) { 
 
-#define REGISTER_PROPERTY(ClassType, PropName, PropType, MimouType) m_ClassDescriptor##ClassType->RegisterProperty<PropType>(#PropName, { #PropName, MimouType, \
+#define REGISTER_PROPERTY(ClassType, PropName, PropType, MimouType) CD->RegisterProperty<PropType>(#PropName, { #PropName, MimouType, \
 									[](MEObject* Obj, PropType Value) { \
 										ClassType* Derived = static_cast<ClassType*>(Obj); \
 										Derived->PropName = Value; \
@@ -218,7 +231,8 @@ namespace Mimou
 										return Derived->PropName; \
 										} });
 
-#define END_ME_CLASS() }
+#define END_ME_CLASS(ClassType)	}); ::Mimou::ClassDescriptor* ClassType::GetClass() { return m_ClassDescriptor##ClassType; }
+						
 
 
 #define DECLARE_ME_STRUCT(StructName) static std::string StaticClass() { return #StructName;} \

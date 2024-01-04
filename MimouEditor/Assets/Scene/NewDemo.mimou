@@ -1,0 +1,98 @@
+Scene: Test Scene
+GameObjects:
+  - EntityID: 0
+    TagComponent:
+      Tag: Scene Light
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0.792999983, 1.93700004, 0.282999992]
+      Scale: [1, 1, 1]
+    LightComponent:
+      Color: [1, 1, 1]
+      Intensity: 1.39999998
+      IsDirectional: true
+      IsOn: true
+  - EntityID: 1
+    TagComponent:
+      Tag: Sphere
+    TransformComponent:
+      Translation: [0, 2.90700006, 0]
+      Rotation: [0, 0.0299999993, 0]
+      Scale: [1, 1, 1]
+    StaticMeshComponent:
+      AssetName: Sphere
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 2
+    TagComponent:
+      Tag: Map
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - EntityID: 3
+    TagComponent:
+      Tag: Plane
+    TransformComponent:
+      Translation: [0, -1, 0]
+      Rotation: [0, 0, 0]
+      Scale: [20, 1, 20]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 4
+    TagComponent:
+      Tag: Wall02
+    TransformComponent:
+      Translation: [21, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 2, 20]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 5
+    TagComponent:
+      Tag: Wall03
+    TransformComponent:
+      Translation: [0, 0, -21]
+      Rotation: [0, 0, 0]
+      Scale: [20, 2, 1]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 6
+    TagComponent:
+      Tag: Wall04
+    TransformComponent:
+      Translation: [0, 0, 21]
+      Rotation: [0, 0, 0]
+      Scale: [20, 2, 1]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 7
+    TagComponent:
+      Tag: Wall01
+    TransformComponent:
+      Translation: [-21, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 2, 20]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat
+  - EntityID: 8
+    TagComponent:
+      Tag: Cube
+    TransformComponent:
+      Translation: [0, 0.920000017, 0]
+      Rotation: [0, 0.331, 0]
+      Scale: [1.33299994, 1.01999998, 1.20700002]
+    StaticMeshComponent:
+      AssetName: Cube
+      MaterialSlots:
+        - DefaultMat

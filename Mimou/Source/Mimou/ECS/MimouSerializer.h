@@ -3,7 +3,7 @@
 
 namespace Mimou
 {
-	struct MEObject;
+	class MEObject;
 
 	class MimouSerializer
 	{
