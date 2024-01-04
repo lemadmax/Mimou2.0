@@ -15,10 +15,10 @@ namespace Mimou
 
 	class SceneSerializer;
 
-	//ME_CLASS(Scene)
-	class Scene
+	ME_CLASS(Scene)
+	class Scene : public MEObject
 	{
-		//DECLARE_ME_CLASS(Scene)
+		DECLARE_ME_CLASS(Scene)
 	public:
 		Scene();
 		Scene(const std::string& SceneName);

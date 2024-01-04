@@ -198,7 +198,7 @@ namespace Mimou
 
 #define DECLARE_ME_CLASS(ClassType) public: static std::string StaticClass() { return #ClassType; } \
 								virtual ::Mimou::ClassDescriptor* GetClass(); \
-								virtual void ClassType::Init();
+								virtual void Init();
 
 #define ME_MAP(Key, Value) std::map<Key, Value>
 

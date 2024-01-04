@@ -90,6 +90,9 @@
     <ClInclude Include="Source\Mimou\ECS\MimouObject.h">
       <Filter>Source\Mimou\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\MimouSerializer.h">
+      <Filter>Source\Mimou\ECS</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Mimou\ECS\Scene.h">
       <Filter>Source\Mimou\ECS</Filter>
     </ClInclude>
@@ -237,14 +240,22 @@
     <ClInclude Include="Vendors\stb_image\stb_image.h">
       <Filter>Vendors\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mimou\ECS\MimouSerializer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
       <Filter>Source\Mimou</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\Component\BasicComponents.cpp">
+      <Filter>Source\Mimou\ECS\Component</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp">
       <Filter>Source\Mimou\ECS\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\MimouObject.cpp">
+      <Filter>Source\Mimou\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\MimouSerializer.cpp">
+      <Filter>Source\Mimou\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\ECS\Scene.cpp">
       <Filter>Source\Mimou\ECS</Filter>
@@ -360,8 +371,5 @@
     <ClCompile Include="Vendors\stb_image\stb_image.cpp">
       <Filter>Vendors\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mimou\ECS\MimouObject.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\Component\BasicComponents.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\MimouSerializer.cpp" />
   </ItemGroup>
 </Project>

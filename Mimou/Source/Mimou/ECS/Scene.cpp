@@ -7,13 +7,14 @@
 namespace Mimou
 {
 
-	//BEGIN_ME_CLASS(Scene)
+	BEGIN_ME_CLASS(Scene)
 
-	//END_ME_CLASS()
+	END_ME_CLASS()
 
 	Scene::Scene()
+		: m_SceneName("Default Scene")
 	{
-		Scene("Default Scene");
+		
 	}
 
 	Scene::Scene(const std::string& SceneName)
