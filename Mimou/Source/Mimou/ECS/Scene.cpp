@@ -9,6 +9,7 @@ namespace Mimou
 
 	BEGIN_ME_CLASS(Scene)
 		REGISTER_PROPERTY(Scene, m_SceneName, std::string, MimouValueType::STRING)
+		REGISTER_OBJ_MAP(Scene, GameObjects, GameObject)
 	END_ME_CLASS(Scene)
 
 	Scene::Scene()
@@ -99,7 +100,7 @@ namespace Mimou
 				auto Camera = m_Registry.get<CameraComponent>(Entity);
 				if (Camera.IsPrimary)
 				{
-					GB = GameObjects[Entity];
+					GB = GameObjects[(uint32_t)Entity];
 				}
 			}
 		}
@@ -113,7 +114,7 @@ namespace Mimou
 		{
 			Parent->AddChild(Out);
 		}
-		Scene->GameObjects.insert({ Out->GetEntityID(), Out });
+		Scene->GameObjects.insert({ (uint32_t)Out->GetEntityID(), Out });
 		Out->OnCreate();
 		return Out;
 	}
@@ -123,7 +124,7 @@ namespace Mimou
 		{
 			GameObject->GetParent()->RemoveChild(GameObject);
 		}
-		Scene->GameObjects.erase(GameObject->GetEntityID());
+		Scene->GameObjects.erase((uint32_t)GameObject->GetEntityID());
 		return GameObject->OnDestroy();
 	}
 
@@ -145,7 +146,7 @@ namespace Mimou
 			for (auto Entity : View)
 			{
 				auto [TransformComp, StaticMesh] = View.get<TransformComponent, StaticMeshComponent>(Entity);
-				Ref<GameObject> GB = GameObjects[Entity];
+				Ref<GameObject> GB = GameObjects[(uint32_t)Entity];
 				glm::mat4 Transform = GB->GetWorldTransform();
 
 				Ref<VertexArray> VA = StaticMeshLibrary::GetAsset(StaticMesh.AssetName);

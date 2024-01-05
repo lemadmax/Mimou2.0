@@ -41,7 +41,7 @@ namespace Mimou
 	public:
 		std::string m_SceneName;
 
-		std::map<entt::entity, Ref<GameObject>> GameObjects;
+		std::map<uint32_t, Ref<GameObject>> GameObjects;
 		
 	private:
 		entt::registry m_Registry;

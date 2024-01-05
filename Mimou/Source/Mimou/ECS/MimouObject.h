@@ -2,6 +2,8 @@
 #include "Mimou/Logging.h"
 #include "MimouSerializer.h"
 
+#include "entt/entt.hpp"
+
 namespace Mimou
 {
 	enum class MimouValueType : INT32
@@ -80,15 +82,15 @@ namespace Mimou
 				}
 				break;
 			}
-			case MimouValueType::ME_OBJECT:
+			case MimouValueType::ME_OBJ_MAP:
 			{
-				if (MEObjProperties.contains(PropName))
+				if (MEObjMapProperties.contains(PropName))
 				{
-					Out = MEObjProperties[PropName];
+					Out = MEObjMapProperties[PropName];
 				}
 				else
 				{
-					MEObjProperties.insert(std::make_pair(PropName, Out));
+					MEObjMapProperties.insert(std::make_pair(PropName, Out));
 				}
 			}
 			default:
@@ -142,7 +144,7 @@ namespace Mimou
 
 		std::map<std::string, MimouProperty<std::string>> StringProperties;
 
-		std::map<std::string, MimouProperty<Ref<MEObject>>> MEObjProperties;
+		std::map<std::string, MimouProperty<std::map<uint32_t, Ref<MEObject>>>> MEObjMapProperties;
 
 		std::string m_ClassName;
 
@@ -189,7 +191,7 @@ namespace Mimou
 		{
 			ME_ENGINE_LOG("Initializing properties");
 		}
-		virtual ClassDescriptor* GetClass() { return nullptr; }
+		virtual ClassDescriptor* GetClass() = 0;
 	};
 	
 	class MimouSerializer;
@@ -230,6 +232,28 @@ namespace Mimou
 										ClassType* Derived = static_cast<ClassType*>(Obj); \
 										return Derived->PropName; \
 										} });
+
+
+#define REGISTER_OBJ_MAP(ClassType, PropName, ObjType) CD->RegisterProperty<std::map<uint32_t, Ref<MEObject>>>(#PropName, { #PropName, MimouValueType::ME_OBJ_MAP, \
+									[](MEObject* Obj, std::map<uint32_t, Ref<MEObject>> Value) { \
+										ClassType* Derived = static_cast<ClassType*>(Obj); \
+										for (auto Pair : Value)\
+										{\
+											Ref<ObjType> DerivedObj  = std::dynamic_pointer_cast<ObjType>(Pair.second);\
+											Derived->PropName.insert({Pair.first, DerivedObj});\
+										}\
+										}, \
+										[](MEObject* Obj) { \
+										ClassType* Derived = static_cast<ClassType*>(Obj); \
+										std::map<uint32_t, Ref<MEObject>> Out;\
+										for (auto Pair : Derived->PropName)\
+										{\
+											Ref<MEObject> BaseObj = std::static_pointer_cast<MEObject>(Pair.second);\
+											Out.insert({Pair.first, BaseObj});\
+										}\
+										return Out; \
+										} });
+
 
 #define END_ME_CLASS(ClassType)	}); ::Mimou::ClassDescriptor* ClassType::GetClass() { return m_ClassDescriptor##ClassType; }
 						
