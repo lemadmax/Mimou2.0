@@ -20,8 +20,11 @@
 
 #include "Mimou/ECS/Component/BasicComponents.h"
 #include "Mimou/ECS/SceneSerializer.h"
+#include "Mimou/ECS/MEClass.h"
+#include "Mimou/ECS/MEObject.h"
 
 #include "Mimou/Mesh/StaticMesh.h"
+
 
 #include "Mimou/Utils/FileUtils/PlatformUtils.h"
 

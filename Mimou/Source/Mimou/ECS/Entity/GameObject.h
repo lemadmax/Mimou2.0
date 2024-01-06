@@ -8,7 +8,7 @@
 
 namespace Mimou
 {
-	class GameObject : public MEObject
+	class GameObject
 	{
 	public:
 		GameObject() = delete;

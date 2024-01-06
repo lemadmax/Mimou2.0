@@ -2,7 +2,7 @@
 #include "Mimou/Core.h"
 #include "Mimou/Timestep.h"
 #include "Mimou/Renderer/Camera/EditorCamera.h"
-#include "MimouObject.h"
+#include "MEObject.h"
 
 #include "entt/entt.hpp"
 
@@ -15,7 +15,6 @@ namespace Mimou
 
 	class SceneSerializer;
 
-	ME_CLASS(Scene)
 	class Scene : public MEObject
 	{
 		DECLARE_ME_CLASS(Scene)
@@ -39,8 +38,13 @@ namespace Mimou
 		void RenderScene();
 
 	public:
-		std::string m_SceneName;
+		ME_PROPERTY(m_SceneName, MEPropType::STRING)
+		std::string m_SceneName = "Default Scene";
 
+		ME_PROPERTY(TestData, MEPropType::INT)
+		int TestData = 10;
+
+		ME_PROPERTY(GameObjects, MEPropType::OBJ_MAP)
 		std::map<uint32_t, Ref<GameObject>> GameObjects;
 		
 	private:

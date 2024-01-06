@@ -7,14 +7,8 @@
 namespace Mimou
 {
 
-	BEGIN_ME_CLASS(Scene)
-		REGISTER_PROPERTY(Scene, m_SceneName, std::string, MimouValueType::STRING)
-		REGISTER_OBJ_MAP(Scene, GameObjects, GameObject)
-	END_ME_CLASS(Scene)
-
 	Scene::Scene()
 	{
-		Scene("Default Scene");
 	}
 
 	Scene::Scene(const std::string& SceneName)

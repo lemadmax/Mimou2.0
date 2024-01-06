@@ -1,2 +1,3 @@
-ClassType: Scene
+ClassName: Scene
+TestData: 10
 m_SceneName: Empty

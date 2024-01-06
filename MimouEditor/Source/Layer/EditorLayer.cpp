@@ -287,16 +287,16 @@ namespace Mimou
 				//}
 				if (ImGui::MenuItem("Open"))
 				{
-					Ref<MEObject> Loaded = LoadObject<Scene>("Assets/Scene/NewDemo.mimou");
-					if (Loaded)
-					{
-						Ref<Scene> LoadedScene = std::dynamic_pointer_cast<Scene>(Loaded);
-						m_ActiveScene = LoadedScene;
-					}
+					//Ref<MEObject> Loaded = LoadObject<Scene>("Assets/Scene/NewDemo.mimou");
+					//if (Loaded)
+					//{
+					//	Ref<Scene> LoadedScene = std::dynamic_pointer_cast<Scene>(Loaded);
+					//	m_ActiveScene = LoadedScene;
+					//}
 				}
 				if (ImGui::MenuItem("Save"))
 				{
-					SaveObject<Scene>(m_ActiveScene, "Assets/Scene/Demo.mimou");
+					SaveObject<Scene>(m_ActiveScene.get(), "Assets/Scene/Demo.mimou");
 				}
 				if (ImGui::MenuItem("Open..."))
 				{
