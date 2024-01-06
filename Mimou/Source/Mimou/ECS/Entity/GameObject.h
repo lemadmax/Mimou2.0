@@ -3,15 +3,17 @@
 #include "Mimou/Timestep.h"
 #include "Mimou/ECS/Component/BasicComponents.h"
 #include "Mimou/ECS/Scene.h"
+#include "Mimou/ECS/MEObject.h"
 
 #include "entt/entt.hpp"
 
 namespace Mimou
 {
-	class GameObject
+	class GameObject : public MEObject
 	{
+		DECLARE_ME_CLASS(GameObject)
 	public:
-		GameObject() = delete;
+		GameObject() = default;
 		GameObject(const Ref<Scene>& OwnedScene, const std::string& Name = "Game Object", Ref<GameObject> Parent = nullptr);
 		virtual ~GameObject();
 
@@ -40,6 +42,7 @@ namespace Mimou
 		T& AddComponent(Args&&... args)
 		{
 			T& Component = m_Scene->m_Registry.emplace<T>(m_EntityID, std::forward<Args>(args)...);
+			Components.insert((MEObject*)&Component);
 			return Component;
 		}
 
@@ -58,11 +61,20 @@ namespace Mimou
 		template<typename T>
 		bool RemoveComponent()
 		{
+			T* Comp = m_Scene->m_Registry.try_get<T>(m_EntityID);
+			if (Comp)
+			{
+				Components.erase((MEObject*)Comp);
+			}
 			return m_Scene->m_Registry.remove<T>(m_EntityID);
 		}
 
 	private:
+		ME_PROPERTY(m_EntityID, MEPropType::INT)
 		entt::entity m_EntityID;
+
+		ME_PROPERTY(Components, MEPropType::COMP_SET)
+		std::set<MEObject*> Components;
 
 		Ref<Scene> m_Scene = nullptr;
 

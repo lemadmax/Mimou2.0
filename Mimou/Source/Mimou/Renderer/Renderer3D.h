@@ -42,7 +42,7 @@ namespace Mimou
 
 		static void DrawMesh(Ref<VertexArray> VA, Ref<Material> Mat, const glm::mat4& Transform);
 
-		static void DrawMesh(Ref<VertexArray> VA, std::vector<Ref<Material>> Mats, const glm::mat4& Transform);
+		static void DrawMesh(Ref<VertexArray> VA, std::vector<std::string> Mats, const glm::mat4& Transform);
 
 	private:
 		struct SceneData

@@ -3,5 +3,5 @@
 
 namespace Mimou
 {
-
+	IMPLEMENT_ME_CLASS(Camera)
 }

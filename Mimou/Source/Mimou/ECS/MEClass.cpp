@@ -5,18 +5,23 @@
 
 namespace Mimou
 {
+	MEClass::MEClass(const std::string& ClassName, InstantiateFn InstFn) : m_ClassName(ClassName), m_InstFn(InstFn)
+	{
+		MEClassManager::GetInstance()->RegisterMEClass(this);
+	}
+
 	void MEClass::RegisterProperty(const std::string& PropName, MEProperty* Prop)
 	{
 		m_Properties.insert({ PropName, Prop });
 	}
 
+	void MEClassManager::RegisterMEClass(MEClass* Class)
+	{
+		ClassMap.insert({ Class->GetName(), Class });
+	}
+
 	MEClass* MEClassManager::GetClass(const std::string& ClassName)
 	{
-		if (!ClassMap.contains(ClassName))
-		{
-			MEClass* NewClass = new MEClass(ClassName);
-			ClassMap.insert({ ClassName, NewClass });
-		}
 		return ClassMap[ClassName];
 	}
 

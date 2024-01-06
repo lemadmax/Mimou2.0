@@ -1,11 +1,12 @@
 #pragma once
-
+#include "Mimou/ECS/MEObject.h"
 #include "glm/glm.hpp"
 
 namespace Mimou
 {
-	class Camera
+	class Camera : public MEObject
 	{
+		DECLARE_ME_CLASS(Camera)
 	public:
 		Camera() = default;
 		Camera(const glm::mat4& Projection)

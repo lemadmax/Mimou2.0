@@ -5,22 +5,33 @@ namespace Mimou
 	class MEObject;
 	class MEProperty;
 	class MEClassManager;
+	class GameObject;
 
 	enum class MEPropType : UINT32
 	{
 		NONE = 0,
+		BOOL,
 		INT,
+		FLOAT,
 		STRING,
+		STRING_VEC,
+		OBJ_REF,
 		OBJ_MAP,
+		COMP_SET,
+		VEC3,
 	};
 
 	class MEClass
 	{
+		using InstantiateFn = std::function<MEObject* ()>;
 	public:
 		MEClass() = delete;
-		MEClass(const std::string& ClassName) : m_ClassName(ClassName)
-		{
+		MEClass(const std::string& ClassName, InstantiateFn InstFn);
 
+		template<typename ClassName>
+		ClassName* Instantiate()
+		{
+			return static_cast<ClassName>(m_InstFn());
 		}
 
 		void RegisterProperty(const std::string& PropName, MEProperty* Prop);
@@ -32,6 +43,8 @@ namespace Mimou
 	private:
 		std::string m_ClassName;
 
+		InstantiateFn m_InstFn;
+
 		std::map<std::string, MEProperty*> m_Properties;
 	};
 
@@ -41,8 +54,16 @@ namespace Mimou
 		MEProperty() = delete;
 		MEProperty(MEObject* ObjPtr, const std::string& PropName, void* PropPtr, MEPropType PropType);
 
+		template<typename T>
+		T GetValue(const void* Obj)
+		{
+			char* Dest = (char*)Obj + m_Offset;
+			return *(T*)Dest;
+		}
+
 		std::string GetString(const void* Obj);
 		int GetInt(const void* Obj);
+		std::map<uint32_t, Ref<GameObject>> GetObjMap(const void* Obj);
 
 	public:
 		uint32_t m_Offset;
@@ -62,6 +83,8 @@ namespace Mimou
 			return &s_Instance;
 		}
 
+
+		void RegisterMEClass(MEClass* Class);
 		MEClass* GetClass(const std::string& ClassName);
 
 
@@ -72,6 +95,9 @@ namespace Mimou
 
 #define DECLARE_ME_CLASS(ClassName) public: \
 static std::string StaticClass() { return #ClassName; } \
-virtual ::Mimou::MEClass* GetClass() { return ::Mimou::MEClassManager::GetInstance()->GetClass(#ClassName); }
+virtual ::Mimou::MEClass* GetClass() { return MEClassManager::GetInstance()->GetClass(#ClassName); } \
+virtual bool IsA(const std::string& Class) { return #ClassName == Class; }
+
+#define IMPLEMENT_ME_CLASS(ClassName) ::Mimou::MEClass* MEClass##ClassName = new ::Mimou::MEClass(#ClassName, []() { return new ClassName(); });
 
 #define ME_PROPERTY(PropName, PropType) const ::Mimou::MEProperty __##PropName = ::Mimou::MEProperty((::Mimou::MEObject*)this, #PropName, &this->PropName, PropType);

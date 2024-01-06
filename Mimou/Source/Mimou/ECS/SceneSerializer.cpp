@@ -46,6 +46,17 @@ namespace Mimou
         return Out;
     }
 
+    YAML::Emitter& operator << (YAML::Emitter& Out, const std::vector<std::string>& v)
+    {
+        Out << YAML::BeginSeq;
+        for (int i = 0; i < v.size(); i++)
+        {
+            Out << v[i];
+        }
+        Out << YAML::EndSeq;
+        return Out;
+    }
+
     void SceneSerializer::SerializeScene(const Ref<Scene>& Scene, const std::string& AssetPath)
     {
         YAML::Emitter Out;
@@ -110,13 +121,8 @@ namespace Mimou
             Out << YAML::Key << "AssetName";
             Out << YAML::Value << SMComp->AssetName;
 
-            std::vector<std::string> MaterialPaths;
-            for (Ref<Material> Mat : SMComp->MaterialSlots)
-            {
-                MaterialPaths.emplace_back(Mat->GetName());
-            }
             Out << YAML::Key << "MaterialSlots";
-            Out << YAML::Value << MaterialPaths;
+            Out << YAML::Value << SMComp->MaterialSlots;
 
             Out << YAML::EndMap;
         }
@@ -234,8 +240,8 @@ namespace Mimou
                     for (size_t i = 0; i < MatSlotsNode.size(); i++)
                     {
                         std::string MatName = MatSlotsNode[i].as<std::string>();
-                        Ref<Material> Mat = MaterialLibrary::Get()->GetMaterial(MatName);
-                        if (Mat) StaticMeshComp.MaterialSlots.emplace_back(Mat);
+                        //Ref<Material> Mat = MaterialLibrary::Get()->GetMaterial(MatName);
+                        StaticMeshComp.MaterialSlots.emplace_back(MatName);
                     }
                 }
             }

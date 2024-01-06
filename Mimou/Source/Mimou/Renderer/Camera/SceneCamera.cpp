@@ -5,6 +5,7 @@
 
 namespace Mimou
 {
+	IMPLEMENT_ME_CLASS(SceneCamera)
 
 	SceneCamera::SceneCamera()
 	{

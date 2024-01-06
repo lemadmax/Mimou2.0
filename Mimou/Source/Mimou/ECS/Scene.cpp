@@ -6,6 +6,7 @@
 
 namespace Mimou
 {
+	IMPLEMENT_ME_CLASS(Scene)
 
 	Scene::Scene()
 	{

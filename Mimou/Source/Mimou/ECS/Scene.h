@@ -41,9 +41,6 @@ namespace Mimou
 		ME_PROPERTY(m_SceneName, MEPropType::STRING)
 		std::string m_SceneName = "Default Scene";
 
-		ME_PROPERTY(TestData, MEPropType::INT)
-		int TestData = 10;
-
 		ME_PROPERTY(GameObjects, MEPropType::OBJ_MAP)
 		std::map<uint32_t, Ref<GameObject>> GameObjects;
 		

@@ -5,6 +5,7 @@ namespace Mimou
 {
 	class SceneCamera : public Camera
 	{
+		DECLARE_ME_CLASS(SceneCamera)
 	public:
 		SceneCamera();
 		~SceneCamera();
@@ -23,10 +24,18 @@ namespace Mimou
 	private:
 		void RecalculateProjection();
 
-	private:
+	public:
 
+		ME_PROPERTY(m_FOV, MEPropType::FLOAT)
 		float m_FOV = 70.0f;
+
+		ME_PROPERTY(m_Aspect, MEPropType::FLOAT)
 		float m_Aspect = 1.5f;
-		float m_zNear = 0.1f, m_zFar = 100.0f;
+
+		ME_PROPERTY(m_zNear, MEPropType::FLOAT)
+		float m_zNear = 0.1f;
+
+		ME_PROPERTY(m_zFar, MEPropType::FLOAT)
+		float m_zFar = 100.0f;
 	};
 }

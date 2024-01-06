@@ -4,13 +4,19 @@
 
 namespace Mimou
 {
+	IMPLEMENT_ME_CLASS(GameObject)
+	IMPLEMENT_ME_CLASS(TagComponent)
+	IMPLEMENT_ME_CLASS(TransformComponent)
+	IMPLEMENT_ME_CLASS(StaticMeshComponent)
+	IMPLEMENT_ME_CLASS(CameraComponent)
+	IMPLEMENT_ME_CLASS(LightComponent)
 
 	GameObject::GameObject(const Ref<Scene>& OwnedScene, const std::string& Name, Ref<GameObject> Parent)
 		: m_Scene(OwnedScene), m_Parent(Parent)
 	{
 		m_EntityID = OwnedScene->m_Registry.create();
-		TransformComponent& Transform = OwnedScene->m_Registry.emplace<TransformComponent>(m_EntityID);
-		TagComponent& Tag = OwnedScene->m_Registry.emplace<TagComponent>(m_EntityID, Name);
+		TransformComponent& Transform = AddComponent<TransformComponent>();
+		TagComponent& Tag = AddComponent<TagComponent>(Name);
 	}
 
 	GameObject::~GameObject()

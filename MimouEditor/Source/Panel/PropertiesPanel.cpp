@@ -161,9 +161,10 @@ namespace Mimou
 			}
 
 			ImGui::Spacing();
-			PanelUtilities::DrawDynamicVector("Material Slots", StaticMesh->MaterialSlots, [&](Ref<Material>& Mat) {
+			PanelUtilities::DrawDynamicVector("Material Slots", StaticMesh->MaterialSlots, [&](std::string& MatName) {
 				ImGui::Spacing();
 				
+				Ref<Material> Mat = MaterialLibrary::Get()->GetMaterial(MatName);
 				int CurMatIdx = 0;
 				std::vector<std::string> MatNames = MaterialLibrary::Get()->GetNames(Mat->GetName(), CurMatIdx);
 				if (PanelUtilities::DrawComboFromVector("Material Instance", MatNames, &CurMatIdx))

@@ -1,3 +1,64 @@
 ClassName: Scene
-TestData: 10
+GameObjects:
+  0:
+    ClassName: GameObject
+    Components:
+      - ClassName: TransformComponent
+        Rotation: [0, -4.08400011, -0.634000003]
+        Scale: [1, 1, 1]
+        Translation: [0, 0, 0]
+      - ClassName: TagComponent
+        Tag: Light
+      - ClassName: LightComponent
+        Color: [1, 1, 1]
+        Intensity: 1
+        IsDirectional: true
+        IsOn: true
+    m_EntityID: 0
+  1:
+    ClassName: GameObject
+    Components:
+      - ClassName: TransformComponent
+        Rotation: [0, 0, 0]
+        Scale: [1, 1, 1]
+        Translation: [0, 0, 0]
+      - ClassName: TagComponent
+        Tag: Sphere
+      - ClassName: StaticMeshComponent
+        AssetName: Sphere
+        MaterialSlots:
+          - DefaultMat
+    m_EntityID: 1
+  2:
+    ClassName: GameObject
+    Components:
+      - ClassName: TransformComponent
+        Rotation: [0, 0, 0]
+        Scale: [1, 1, 1]
+        Translation: [0, 0, 0]
+      - ClassName: TagComponent
+        Tag: Camera
+      - ClassName: CameraComponent
+        Camera:
+          ClassName: SceneCamera
+          m_Aspect: 1.5
+          m_FOV: 70
+          m_zFar: 100
+          m_zNear: 0.100000001
+        IsPrimary: false
+    m_EntityID: 2
+  3:
+    ClassName: GameObject
+    Components:
+      - ClassName: TransformComponent
+        Rotation: [0, 0, 0]
+        Scale: [10, 0.305999994, 10]
+        Translation: [0, -1.34099996, 0]
+      - ClassName: TagComponent
+        Tag: plane
+      - ClassName: StaticMeshComponent
+        AssetName: Cube
+        MaterialSlots:
+          - DefaultMat
+    m_EntityID: 3
 m_SceneName: Empty

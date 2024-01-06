@@ -3,11 +3,9 @@
 
 namespace Mimou
 {
-	//IMPLEMENT_ME_STRUCT(TagComponent)
-	
-	//TagComponent::TagComponent()
-	//{
-	//	//REGISTER_CLASS(TagComponent)
-	//	//REGISTER_PROPERTY(TagComponent, Tag, std::string, MimouValueType::STRING)
-	//}
+	IMPLEMENT_ME_CLASS(TagComponent)
+	IMPLEMENT_ME_CLASS(TransformComponent)
+	IMPLEMENT_ME_CLASS(StaticMeshComponent)
+	IMPLEMENT_ME_CLASS(CameraComponent)
+	IMPLEMENT_ME_CLASS(LightComponent)
 }

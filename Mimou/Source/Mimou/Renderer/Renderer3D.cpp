@@ -81,7 +81,7 @@ namespace Mimou
 		}
 	}
 
-	void Renderer3D::DrawMesh(Ref<VertexArray> VA, std::vector<Ref<Material>> Mats, const glm::mat4& Transform)
+	void Renderer3D::DrawMesh(Ref<VertexArray> VA, std::vector<std::string> Mats, const glm::mat4& Transform)
 	{
 		if (Mats.size() == 0)
 		{
@@ -89,9 +89,9 @@ namespace Mimou
 		}
 		else
 		{
-			for (Ref<Material> Mat : Mats)
+			for (std::string Mat : Mats)
 			{
-				DrawMesh(VA, Mat, Transform);
+				DrawMesh(VA, MaterialLibrary::Get()->GetMaterial(Mat), Transform);
 			}
 		}
 	}
