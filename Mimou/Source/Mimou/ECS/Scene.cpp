@@ -134,6 +134,14 @@ namespace Mimou
 		return res;
 	}
 
+	bool Scene::AddGameObject(Scene* Owner, Ref<GameObject> GB)
+	{
+		GB->AttachToScene(Owner);
+		Owner->GameObjects.insert({ (uint32_t)GB->GetEntityID(), GB });
+		GB->OnCreate();
+		return true;
+	}
+
 	void Scene::RenderScene()
 	{
 		{

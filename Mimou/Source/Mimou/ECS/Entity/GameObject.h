@@ -21,6 +21,8 @@ namespace Mimou
 		virtual void OnUpdate(Timestep Ts);
 		virtual bool OnDestroy();
 
+		void AttachToScene(Scene* Target);
+
 		void AddChild(Ref<GameObject> Child);
 		void RemoveChild(Ref<GameObject> Child);
 		
@@ -36,11 +38,18 @@ namespace Mimou
 		glm::vec3 GetWorldRotation();
 		glm::vec3 GetWorldScale();
 
-		Ref<Scene> GetOwnedScene() const { return m_Scene; }
+		Scene* GetOwnedScene() const { return m_Scene; }
+
+		MEObject* AddComponentGeneric(MEObject* CompObj);
 
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)
 		{
+			if (HasComponent<T>())
+			{
+				ME_ENGINE_WARN("Failed to add component {}: Already exists", T::StaticClass());
+				return GetComponent<T>();
+			}
 			T& Component = m_Scene->m_Registry.emplace<T>(m_EntityID, std::forward<Args>(args)...);
 			Components.insert((MEObject*)&Component);
 			return Component;
@@ -59,6 +68,12 @@ namespace Mimou
 		}
 
 		template<typename T>
+		bool HasComponent()
+		{
+			return m_Scene->m_Registry.all_of<T>(m_EntityID);
+		}
+
+		template<typename T>
 		bool RemoveComponent()
 		{
 			T* Comp = m_Scene->m_Registry.try_get<T>(m_EntityID);
@@ -73,10 +88,11 @@ namespace Mimou
 		ME_PROPERTY(m_EntityID, MEPropType::INT)
 		entt::entity m_EntityID;
 
+		// unsafe, should only be used for serialization
 		ME_PROPERTY(Components, MEPropType::COMP_SET)
 		std::set<MEObject*> Components;
 
-		Ref<Scene> m_Scene = nullptr;
+		Scene* m_Scene = nullptr;
 
 		Ref<GameObject> m_Parent = nullptr;
 		//std::vector<Ref<GameObject>> Children;

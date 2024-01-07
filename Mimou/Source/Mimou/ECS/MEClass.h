@@ -16,22 +16,27 @@ namespace Mimou
 		STRING,
 		STRING_VEC,
 		OBJ_REF,
-		OBJ_MAP,
+		GAME_OBJ_REF_MAP,
 		COMP_SET,
 		VEC3,
 	};
 
 	class MEClass
 	{
-		using InstantiateFn = std::function<MEObject* ()>;
+		using InstantiateFn = std::function<Ref<MEObject>()>;
+		using InstantiateFnPtr = std::function<MEObject* ()>;
 	public:
 		MEClass() = delete;
-		MEClass(const std::string& ClassName, InstantiateFn InstFn);
+		MEClass(const std::string& ClassName, InstantiateFn InstFn, InstantiateFnPtr InstFnPtr);
 
-		template<typename ClassName>
-		ClassName* Instantiate()
+		Ref<MEObject> Instantiate()
 		{
-			return static_cast<ClassName>(m_InstFn());
+			return m_InstFn();
+		}
+
+		MEObject* InstantiatePtr()
+		{
+			return m_InstFnPtr();
 		}
 
 		void RegisterProperty(const std::string& PropName, MEProperty* Prop);
@@ -44,6 +49,7 @@ namespace Mimou
 		std::string m_ClassName;
 
 		InstantiateFn m_InstFn;
+		InstantiateFnPtr m_InstFnPtr;
 
 		std::map<std::string, MEProperty*> m_Properties;
 	};
@@ -59,6 +65,13 @@ namespace Mimou
 		{
 			char* Dest = (char*)Obj + m_Offset;
 			return *(T*)Dest;
+		}
+
+		template<typename T>
+		void SetValue(const void* Obj, const T& Value)
+		{
+			char* Dest = (char*)Obj + m_Offset;
+			*(T*)Dest = Value;
 		}
 
 		std::string GetString(const void* Obj);
@@ -98,6 +111,6 @@ static std::string StaticClass() { return #ClassName; } \
 virtual ::Mimou::MEClass* GetClass() { return MEClassManager::GetInstance()->GetClass(#ClassName); } \
 virtual bool IsA(const std::string& Class) { return #ClassName == Class; }
 
-#define IMPLEMENT_ME_CLASS(ClassName) ::Mimou::MEClass* MEClass##ClassName = new ::Mimou::MEClass(#ClassName, []() { return new ClassName(); });
+#define IMPLEMENT_ME_CLASS(ClassName) ::Mimou::MEClass* MEClass##ClassName = new ::Mimou::MEClass(#ClassName, []() { return CreateRef<ClassName>(); }, []() { return new ClassName(); });
 
 #define ME_PROPERTY(PropName, PropType) const ::Mimou::MEProperty __##PropName = ::Mimou::MEProperty((::Mimou::MEObject*)this, #PropName, &this->PropName, PropType);

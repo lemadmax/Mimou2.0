@@ -5,6 +5,39 @@
 
 #include "yaml-cpp/yaml.h"
 
+#include "SceneSerializer.cpp"
+
+namespace YAML
+{
+	template<>
+	struct convert<std::vector<std::string>>
+	{
+		static Node encode(const std::vector<std::string>& rhs)
+		{
+			Node node;
+			for (int i = 0; i < rhs.size(); i++)
+			{
+				node.push_back(rhs[i]);
+			}
+			return node;
+		}
+
+		static bool decode(const Node& node, std::vector<std::string>& rhs)
+		{
+			if (!node.IsSequence())
+			{
+				return false;
+			}
+
+			for (int i = 0; i < node.size(); i++)
+			{
+				rhs[i] = node[i].as<std::string>();
+			}
+			return true;
+		}
+	};
+}
+
 namespace Mimou
 {
 	//YAML::Emitter& operator << (YAML::Emitter& Out, const glm::vec3& v)
@@ -67,7 +100,7 @@ namespace Mimou
 				SerializeObject_yaml(Out, Value.get());
 				break;
 			}
-			case MEPropType::OBJ_MAP:
+			case MEPropType::GAME_OBJ_REF_MAP:
 			{
 				std::map<uint32_t, Ref<GameObject>> Value = Property->GetValue<std::map<uint32_t, Ref<GameObject>>>(Obj);
 				Out << YAML::Value << YAML::BeginMap;
@@ -106,16 +139,133 @@ namespace Mimou
 
 		Out << YAML::EndMap;
 	}
+	MEObject* DeserializeObjectPtr_yaml(YAML::Node& Data);
+	Ref<MEObject> DeserializeObject_yaml(YAML::Node& Data);
 
-	MEObject* DeserializeObject_yaml(const std::string& ClassName, const std::string& AssetPath)
+	template<typename T>
+	Ref<T> DeserializeObjectRef_yaml(YAML::Node& Data)
 	{
-		
-		return nullptr;
+		Ref<MEObject> ObjRef = DeserializeObject_yaml(Data);
+		//return CreateRef<T>(static_cast<T*>(ObjPtr));
+		return std::static_pointer_cast<T>(ObjRef);
 	}
 
-	MEObject* MESerializer::LoadObject(const std::string& ClassName, const std::string& AssetPath)
+	void DeserializeObject_yaml_inner(YAML::Node& Data, MEObject* Out)
 	{
-		MEObject* Out = DeserializeObject_yaml(ClassName, AssetPath);
+		MEClass* Class = Out->GetClass();
+		std::map<std::string, MEProperty*> Properties = Class->GetProperties();
+		for (auto Pair : Properties)
+		{
+			std::string PropName = Pair.first;
+			MEProperty* Property = Pair.second;
+			switch (Property->m_PropType)
+			{
+			case MEPropType::BOOL:
+			{
+				bool Value = Data[PropName];
+				Property->SetValue<bool>(Out, Value);
+				break;
+			}
+			case MEPropType::STRING:
+			{
+				std::string Value = Data[PropName].as<std::string>();
+				Property->SetValue<std::string>(Out, Value);
+				break;
+			}
+			case MEPropType::STRING_VEC:
+			{
+				std::vector<std::string> Value = Data[PropName].as<std::vector<std::string>>();
+				Property->SetValue<std::vector<std::string>>(Out, Value);
+				break;
+			}
+			case MEPropType::INT:
+			{
+				int Value = Data[PropName].as<int>();
+				Property->SetValue<int>(Out, Value);
+				break;
+			}
+			case MEPropType::FLOAT:
+			{
+				float Value = Data[PropName].as<float>();
+				Property->SetValue<float>(Out, Value);
+				break;
+			}
+			case MEPropType::OBJ_REF:
+			{
+				YAML::Node ObjNode = Data[PropName];
+				Ref<MEObject> ObjRef = DeserializeObject_yaml(ObjNode);
+				Property->SetValue<Ref<MEObject>>(Out, ObjRef);
+				break;
+			}
+			case MEPropType::GAME_OBJ_REF_MAP:
+			{
+				// Handle Scene and GameObject specially
+				YAML::Node MapNode = Data[PropName];
+				for (YAML::const_iterator it = MapNode.begin(); it != MapNode.end(); ++it)
+				{
+					YAML::Node ObjNode = it->second;
+					Ref<GameObject> ObjRef = DeserializeObjectRef_yaml<GameObject>(ObjNode);
+					if (Out->IsA(Scene::StaticClass()))
+					{
+						Scene::AddGameObject(static_cast<Scene*>(Out), ObjRef);
+					}
+				}
+				break;
+			}
+			case MEPropType::COMP_SET:
+			{
+				YAML::Node SetNode = Data[PropName];
+				std::set<MEObject*> Value;
+				for (int i = 0; i < SetNode.size(); i++)
+				{
+					YAML::Node ObjNode = SetNode[i];
+					MEObject* ObjPtr = DeserializeObjectPtr_yaml(ObjNode);
+					Value.insert(ObjPtr);
+				}
+				Property->SetValue<std::set<MEObject*>>(Out, Value);
+				break;
+			}
+			case MEPropType::VEC3:
+			{
+				glm::vec3 Value = Data[PropName].as<glm::vec3>();
+				Property->SetValue<glm::vec3>(Out, Value);
+				break;
+			}
+			default:
+			{
+
+				break;
+			}
+			}
+		}
+	}
+
+	MEObject* DeserializeObjectPtr_yaml(YAML::Node& Data)
+	{
+		std::string ClassName = Data["ClassName"].as<std::string>();
+		MEClass* Class = MEClassManager::GetInstance()->GetClass(ClassName);
+		MEObject* Out = Class->InstantiatePtr();
+		DeserializeObject_yaml_inner(Data, Out);
+		return Out;
+	}
+
+	Ref<MEObject> DeserializeObject_yaml(YAML::Node& Data)
+	{
+		std::string ClassName = Data["ClassName"].as<std::string>();
+		MEClass* Class = MEClassManager::GetInstance()->GetClass(ClassName);
+		Ref<MEObject> Out = Class->Instantiate();
+		DeserializeObject_yaml_inner(Data, Out.get());
+		return Out;
+	}
+
+	Ref<MEObject> MESerializer::LoadObject(const std::string& ClassName, const std::string& AssetPath)
+	{
+		YAML::Node RawData = YAML::LoadFile(AssetPath);
+		if (RawData["ClassName"].as<std::string>() != ClassName)
+		{
+			return nullptr;
+		}
+		Ref<MEObject> Out = DeserializeObject_yaml(RawData);
 		return Out;
 	}
 

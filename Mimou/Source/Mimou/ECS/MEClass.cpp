@@ -5,7 +5,7 @@
 
 namespace Mimou
 {
-	MEClass::MEClass(const std::string& ClassName, InstantiateFn InstFn) : m_ClassName(ClassName), m_InstFn(InstFn)
+	MEClass::MEClass(const std::string& ClassName, InstantiateFn InstFn, InstantiateFnPtr InstFnPtr) : m_ClassName(ClassName), m_InstFn(InstFn), m_InstFnPtr(InstFnPtr)
 	{
 		MEClassManager::GetInstance()->RegisterMEClass(this);
 	}
@@ -54,7 +54,7 @@ namespace Mimou
 
 	std::map<uint32_t, Ref<GameObject>> MEProperty::GetObjMap(const void* Obj)
 	{
-		if (m_PropType != MEPropType::OBJ_MAP)
+		if (m_PropType != MEPropType::GAME_OBJ_REF_MAP)
 		{
 			return std::map<uint32_t, Ref<GameObject>>();
 		}

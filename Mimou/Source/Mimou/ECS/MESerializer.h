@@ -7,7 +7,7 @@ namespace Mimou
 	class MESerializer
 	{
 	public:
-		static MEObject* LoadObject(const std::string& ClassName, const std::string& AssetPath);
+		static Ref<MEObject> LoadObject(const std::string& ClassName, const std::string& AssetPath);
 		static void SaveObject(MEObject* Obj, const std::string& AssetPath);
 	};
 }

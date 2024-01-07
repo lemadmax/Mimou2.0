@@ -35,13 +35,15 @@ namespace Mimou
 		static bool DestroyGameObject(const Ref<Scene>& Scene, Ref<GameObject> GameObject);
 		static bool DestroyAllGameObjects(const Ref<Scene>& Scene);
 
+		static bool AddGameObject(Scene* Owner, Ref<GameObject> GB);
+
 		void RenderScene();
 
 	public:
 		ME_PROPERTY(m_SceneName, MEPropType::STRING)
 		std::string m_SceneName = "Default Scene";
 
-		ME_PROPERTY(GameObjects, MEPropType::OBJ_MAP)
+		ME_PROPERTY(GameObjects, MEPropType::GAME_OBJ_REF_MAP)
 		std::map<uint32_t, Ref<GameObject>> GameObjects;
 		
 	private:

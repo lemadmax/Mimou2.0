@@ -12,7 +12,7 @@ namespace Mimou
 	IMPLEMENT_ME_CLASS(LightComponent)
 
 	GameObject::GameObject(const Ref<Scene>& OwnedScene, const std::string& Name, Ref<GameObject> Parent)
-		: m_Scene(OwnedScene), m_Parent(Parent)
+		: m_Scene(OwnedScene.get()), m_Parent(Parent)
 	{
 		m_EntityID = OwnedScene->m_Registry.create();
 		TransformComponent& Transform = AddComponent<TransformComponent>();
@@ -41,6 +41,20 @@ namespace Mimou
 		m_Scene->m_Registry.destroy(m_EntityID);
 		m_EntityID = (entt::entity)0;
 		return true;
+	}
+
+	void GameObject::AttachToScene(Scene* Target)
+	{
+		m_Scene = Target;
+		m_EntityID = m_Scene->m_Registry.create();
+		std::set<MEObject*> OldComponents = Components;
+		Components.clear();
+		for (auto Comp : OldComponents)
+		{
+			AddComponentGeneric(Comp);
+			// Dangerous
+			delete Comp;
+		}
 	}
 
 	void GameObject::AddChild(Ref<GameObject> Child)
@@ -84,6 +98,21 @@ namespace Mimou
 	{
 
 		return glm::vec3();
+	}
+
+	MEObject* GameObject::AddComponentGeneric(MEObject* CompObj)
+	{
+		if (CompObj->IsA(TagComponent::StaticClass()))
+		{
+			TagComponent& NewComp = AddComponent<TagComponent>(*(TagComponent*)CompObj);
+			return &NewComp;
+		}
+		else if (CompObj->IsA(TransformComponent::StaticClass()))
+		{
+			TransformComponent& NewComp = AddComponent<TransformComponent>(*(TransformComponent*)CompObj);
+			return &NewComp;
+		}
+		return nullptr;
 	}
 
 }

@@ -16,10 +16,10 @@ namespace Mimou
 	template<typename ClassType>
 	Ref<ClassType> LoadObject(const std::string& AssetPath)
 	{
-		MEObject* Obj = MESerializer::LoadObject(ClassType::StaticClass(), AssetPath);
+		Ref<MEObject> Obj = MESerializer::LoadObject(ClassType::StaticClass(), AssetPath);
 		if (Obj)
 		{
-			Ref<ClassType> Out = CreateRef<ClassType>((ClassType*)Obj);
+			Ref<ClassType> Out = std::static_pointer_cast<ClassType>(Obj);
 			return Out;
 		}
 		return nullptr;

@@ -118,7 +118,7 @@ namespace Mimou
 
 	Ref<GameObject> SceneHierarchyPanel::GetSelectedObject()
 	{
-		if (SelectedObject && SelectedObject->GetOwnedScene() != m_Scene)
+		if (SelectedObject && SelectedObject->GetOwnedScene() != m_Scene.get())
 		{
 			SelectedObject = nullptr;
 		}
