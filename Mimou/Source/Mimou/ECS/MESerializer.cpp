@@ -31,7 +31,7 @@ namespace YAML
 
 			for (int i = 0; i < node.size(); i++)
 			{
-				rhs[i] = node[i].as<std::string>();
+				rhs.push_back(node[i].as<std::string>());
 			}
 			return true;
 		}

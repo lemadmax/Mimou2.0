@@ -287,12 +287,11 @@ namespace Mimou
 				//}
 				if (ImGui::MenuItem("Open"))
 				{
-					//Ref<MEObject> Loaded = LoadObject<Scene>("Assets/Scene/NewDemo.mimou");
-					//if (Loaded)
-					//{
-					//	Ref<Scene> LoadedScene = std::dynamic_pointer_cast<Scene>(Loaded);
-					//	m_ActiveScene = LoadedScene;
-					//}
+					Ref<Scene> Loaded = LoadObject<Scene>("Assets/Scene/Demo.mimou");
+					if (Loaded)
+					{
+						m_ActiveScene = Loaded;
+					}
 				}
 				if (ImGui::MenuItem("Save"))
 				{
@@ -453,7 +452,8 @@ namespace Mimou
 		std::string FileName = FileDialog::MEGetSaveFileName("Mimou File (*.mimou)\0*.mimou\0");
 		if (!FileName.empty())
 		{
-			SceneSerializer::Get()->SerializeScene(m_ActiveScene, FileName);
+			//SceneSerializer::Get()->SerializeScene(m_ActiveScene, FileName);
+			SaveObject<Scene>(m_ActiveScene.get(), FileName);
 		}
 	}
 

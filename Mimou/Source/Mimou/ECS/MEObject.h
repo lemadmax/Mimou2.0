@@ -7,10 +7,32 @@ namespace Mimou
 	class MEObject
 	{
 	public:
-		MEObject() = default;
+		MEObject();
 
-		virtual MEClass* GetClass() = 0;
-		virtual bool IsA(const std::string& Class) = 0;
+		static std::string StaticClass() { return "MEObject"; }
+
+		virtual MEClass* GetClass() { return MEClassManager::GetInstance()->GetClass("MEObject"); };
+		virtual bool IsA(const std::string& Class) { return Class == "MEObject"; };
+
+	private:
+		std::string m_ObjectName;
+	};
+
+	class MEObjectManager
+	{
+	private:
+		MEObjectManager();
+		~MEObjectManager();
+
+	public:
+		static MEObjectManager* GetInstance()
+		{
+			static MEObjectManager s_Instance;
+			return &s_Instance;
+		}
+
+	private:
+		std::map<std::string, Ref<MEObject>> MEObjects;
 	};
 
 	template<typename ClassType>
