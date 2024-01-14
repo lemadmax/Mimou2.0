@@ -253,7 +253,7 @@ namespace Mimou
 	{
 		std::string ClassName = Data["ClassName"].as<std::string>();
 		MEClass* Class = MEClassManager::GetInstance()->GetClass(ClassName);
-		Ref<MEObject> Out = Class->Instantiate();
+		Ref<MEObject> Out = NewObjectByClass(Class);
 		DeserializeObject_yaml_inner(Data, Out.get());
 		return Out;
 	}
