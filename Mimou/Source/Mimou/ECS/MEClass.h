@@ -21,6 +21,13 @@ namespace Mimou
 		VEC3,
 	};
 
+	struct MEProperty
+	{
+		uint32_t m_Offset;
+		std::string m_PropName;
+		MEPropType m_PropType;
+	};
+
 	class MEClass
 	{
 		using InstantiateFn = std::function<Ref<MEObject>()>;
@@ -39,11 +46,40 @@ namespace Mimou
 			return m_InstFnPtr();
 		}
 
-		void RegisterProperty(const std::string& PropName, MEProperty* Prop);
+		void RegisterProperty(const std::string& PropName, MEProperty Prop);
 
 		inline std::string GetName() const { return m_ClassName; }
 
-		inline std::map<std::string, MEProperty*> GetProperties() const { return m_Properties; }
+		inline std::map<std::string, MEProperty> GetProperties() const { return m_Properties; }
+
+		bool HasProperty(const std::string& PropName)
+		{
+			return (m_Properties.contains(PropName));
+		}
+
+		template<typename T>
+		T GetValue(const void* Obj, const std::string& PropName)
+		{
+			if (!m_Properties.contains(PropName))
+			{
+				return T();
+			}
+			MEProperty Prop = m_Properties[PropName];
+			char* Dest = (char*)Obj + Prop.m_Offset;
+			return *(T*)Dest;
+		}
+
+		template<typename T>
+		void SetValue(const void* Obj, const std::string& PropName, const T& Value)
+		{
+			if (!m_Properties.contains(PropName))
+			{
+				return;
+			}
+			MEProperty Prop = m_Properties[PropName];
+			char* Dest = (char*)Obj + Prop.m_Offset;
+			*(T*)Dest = Value;
+		}
 
 	private:
 		std::string m_ClassName;
@@ -51,37 +87,14 @@ namespace Mimou
 		InstantiateFn m_InstFn;
 		InstantiateFnPtr m_InstFnPtr;
 
-		std::map<std::string, MEProperty*> m_Properties;
+		std::map<std::string, MEProperty> m_Properties;
 	};
 
-	class MEProperty
+	class MEPropertyCreator
 	{
 	public:
-		MEProperty() = delete;
-		MEProperty(MEObject* ObjPtr, const std::string& PropName, void* PropPtr, MEPropType PropType);
-
-		template<typename T>
-		T GetValue(const void* Obj)
-		{
-			char* Dest = (char*)Obj + m_Offset;
-			return *(T*)Dest;
-		}
-
-		template<typename T>
-		void SetValue(const void* Obj, const T& Value)
-		{
-			char* Dest = (char*)Obj + m_Offset;
-			*(T*)Dest = Value;
-		}
-
-		std::string GetString(const void* Obj);
-		int GetInt(const void* Obj);
-		std::map<uint32_t, Ref<GameObject>> GetObjMap(const void* Obj);
-
-	public:
-		uint32_t m_Offset;
-		std::string m_PropName;
-		MEPropType m_PropType;
+		MEPropertyCreator() = delete;
+		MEPropertyCreator(MEObject* ObjPtr, const std::string& PropName, void* PropPtr, MEPropType PropType);
 	};
 
 	class MEClassManager
@@ -113,4 +126,4 @@ virtual bool IsA(const std::string& Class) { return #ClassName == Class; }
 
 #define IMPLEMENT_ME_CLASS(ClassName) ::Mimou::MEClass* MEClass##ClassName = new ::Mimou::MEClass(#ClassName, []() { return CreateRef<ClassName>(); }, []() { return new ClassName(); });
 
-#define ME_PROPERTY(PropName, PropType) const ::Mimou::MEProperty __##PropName = ::Mimou::MEProperty((::Mimou::MEObject*)this, #PropName, &this->PropName, PropType);
+#define ME_PROPERTY(PropName, PropType) const ::Mimou::MEPropertyCreator __Creator##PropName = ::Mimou::MEPropertyCreator((::Mimou::MEObject*)this, #PropName, &this->PropName, PropType);

@@ -56,53 +56,53 @@ namespace Mimou
 		Out << YAML::BeginMap;
 
 		Out << YAML::Key << "ClassName" << YAML::Value << ClassName;
-		std::map<std::string, MEProperty*> Properties = Class->GetProperties();
+		std::map<std::string, MEProperty> Properties = Class->GetProperties();
 		for (auto Pair : Properties)
 		{
 			Out << YAML::Key << Pair.first;
-			MEProperty* Property = Pair.second;
-			switch (Property->m_PropType)
+			MEProperty Property = Pair.second;
+			switch (Property.m_PropType)
 			{
 			case MEPropType::BOOL:
 			{
-				bool Value = Property->GetValue<bool>(Obj);
+				bool Value = Class->GetValue<bool>(Obj, Property.m_PropName);
 				Out << YAML::Value << Value;
 				break;
 			}
 			case MEPropType::STRING:
 			{
-				std::string Value = Property->GetValue<std::string>(Obj);
+				std::string Value = Class->GetValue<std::string>(Obj, Property.m_PropName);
 				Out << YAML::Value << Value;
 				break;
 			}
 			case MEPropType::STRING_VEC:
 			{
-				std::vector<std::string> Value = Property->GetValue<std::vector<std::string>>(Obj);
+				std::vector<std::string> Value = Class->GetValue<std::vector<std::string>>(Obj, Property.m_PropName);
 				Out << YAML::Value << Value;
 				break;
 			}
 			case MEPropType::INT:
 			{
-				int Value = Property->GetValue<int>(Obj);
+				int Value = Class->GetValue<int>(Obj, Property.m_PropName);
 				Out << YAML::Value << Value;
 				break;
 			}
 			case MEPropType::FLOAT:
 			{
-				float Value = Property->GetValue<float>(Obj);
+				float Value = Class->GetValue<float>(Obj, Property.m_PropName);
 				Out << YAML::Value << YAML::Flow << Value;
 				break;
 			}
 			case MEPropType::OBJ_REF:
 			{
-				Ref<MEObject> Value = Property->GetValue<Ref<MEObject>>(Obj);
+				Ref<MEObject> Value = Class->GetValue<Ref<MEObject>>(Obj, Property.m_PropName);
 				Out << YAML::Value;
 				SerializeObject_yaml(Out, Value.get());
 				break;
 			}
 			case MEPropType::GAME_OBJ_REF_MAP:
 			{
-				std::map<uint32_t, Ref<GameObject>> Value = Property->GetValue<std::map<uint32_t, Ref<GameObject>>>(Obj);
+				std::map<uint32_t, Ref<GameObject>> Value = Class->GetValue<std::map<uint32_t, Ref<GameObject>>>(Obj, Property.m_PropName);
 				Out << YAML::Value << YAML::BeginMap;
 				for (auto Pair : Value)
 				{
@@ -114,7 +114,7 @@ namespace Mimou
 			}
 			case MEPropType::COMP_SET:
 			{
-				std::set<MEObject*> Value = Property->GetValue<std::set<MEObject*>>(Obj);
+				std::set<MEObject*> Value = Class->GetValue<std::set<MEObject*>>(Obj, Property.m_PropName);
 				Out << YAML::Value << YAML::BeginSeq;
 				for (MEObject* Comp : Value)
 				{
@@ -125,7 +125,7 @@ namespace Mimou
 			}
 			case MEPropType::VEC3:
 			{
-				glm::vec3 Value = Property->GetValue<glm::vec3>(Obj);
+				glm::vec3 Value = Class->GetValue<glm::vec3>(Obj, Property.m_PropName);
 				Out << YAML::Value << Value;
 				break;
 			}
@@ -153,48 +153,48 @@ namespace Mimou
 	void DeserializeObject_yaml_inner(YAML::Node& Data, MEObject* Out)
 	{
 		MEClass* Class = Out->GetClass();
-		std::map<std::string, MEProperty*> Properties = Class->GetProperties();
+		std::map<std::string, MEProperty> Properties = Class->GetProperties();
 		for (auto Pair : Properties)
 		{
 			std::string PropName = Pair.first;
-			MEProperty* Property = Pair.second;
-			switch (Property->m_PropType)
+			MEProperty Property = Pair.second;
+			switch (Property.m_PropType)
 			{
 			case MEPropType::BOOL:
 			{
 				bool Value = Data[PropName];
-				Property->SetValue<bool>(Out, Value);
+				Class->SetValue<bool>(Out, Property.m_PropName, Value);
 				break;
 			}
 			case MEPropType::STRING:
 			{
 				std::string Value = Data[PropName].as<std::string>();
-				Property->SetValue<std::string>(Out, Value);
+				Class->SetValue<std::string>(Out, Property.m_PropName, Value);
 				break;
 			}
 			case MEPropType::STRING_VEC:
 			{
 				std::vector<std::string> Value = Data[PropName].as<std::vector<std::string>>();
-				Property->SetValue<std::vector<std::string>>(Out, Value);
+				Class->SetValue<std::vector<std::string>>(Out, Property.m_PropName, Value);
 				break;
 			}
 			case MEPropType::INT:
 			{
 				int Value = Data[PropName].as<int>();
-				Property->SetValue<int>(Out, Value);
+				Class->SetValue<int>(Out, Property.m_PropName, Value);
 				break;
 			}
 			case MEPropType::FLOAT:
 			{
 				float Value = Data[PropName].as<float>();
-				Property->SetValue<float>(Out, Value);
+				Class->SetValue<float>(Out, Property.m_PropName, Value);
 				break;
 			}
 			case MEPropType::OBJ_REF:
 			{
 				YAML::Node ObjNode = Data[PropName];
 				Ref<MEObject> ObjRef = DeserializeObject_yaml(ObjNode);
-				Property->SetValue<Ref<MEObject>>(Out, ObjRef);
+				Class->SetValue<Ref<MEObject>>(Out, Property.m_PropName, ObjRef);
 				break;
 			}
 			case MEPropType::GAME_OBJ_REF_MAP:
@@ -222,13 +222,13 @@ namespace Mimou
 					MEObject* ObjPtr = DeserializeObjectPtr_yaml(ObjNode);
 					Value.insert(ObjPtr);
 				}
-				Property->SetValue<std::set<MEObject*>>(Out, Value);
+				Class->SetValue<std::set<MEObject*>>(Out, Property.m_PropName, Value);
 				break;
 			}
 			case MEPropType::VEC3:
 			{
 				glm::vec3 Value = Data[PropName].as<glm::vec3>();
-				Property->SetValue<glm::vec3>(Out, Value);
+				Class->SetValue<glm::vec3>(Out, Property.m_PropName, Value);
 				break;
 			}
 			default:

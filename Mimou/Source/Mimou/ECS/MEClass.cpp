@@ -10,8 +10,9 @@ namespace Mimou
 		MEClassManager::GetInstance()->RegisterMEClass(this);
 	}
 
-	void MEClass::RegisterProperty(const std::string& PropName, MEProperty* Prop)
+	void MEClass::RegisterProperty(const std::string& PropName, MEProperty Prop)
 	{
+
 		m_Properties.insert({ PropName, Prop });
 	}
 
@@ -26,39 +27,12 @@ namespace Mimou
 	}
 
 
-	MEProperty::MEProperty(MEObject* ObjPtr, const std::string& PropName, void* PropPtr, MEPropType PropType)
-		: m_PropName(PropName), m_PropType(PropType)
+	MEPropertyCreator::MEPropertyCreator(MEObject* ObjPtr, const std::string& PropName, void* PropPtr, MEPropType PropType)
 	{
 		MEClass* Class = ObjPtr->GetClass();
-		m_Offset = (char*)PropPtr - (char*)ObjPtr;
-		Class->RegisterProperty(PropName, this);
-	}
-
-	std::string MEProperty::GetString(const void* Obj)
-	{
-		if (m_PropType != MEPropType::STRING)
-			return std::string();
-		char* Dest = (char*)Obj + m_Offset;
-		return *(std::string*)Dest;
-	}
-
-	int MEProperty::GetInt(const void* Obj)
-	{
-		if (m_PropType != MEPropType::INT)
+		if (!Class->HasProperty(PropName))
 		{
-			return 0;
+			Class->RegisterProperty(PropName, { (uint32_t)((char*)PropPtr - (char*)ObjPtr), PropName, PropType });
 		}
-		char* Dest = (char*)Obj + m_Offset;
-		return *(int*)Dest;
-	}
-
-	std::map<uint32_t, Ref<GameObject>> MEProperty::GetObjMap(const void* Obj)
-	{
-		if (m_PropType != MEPropType::GAME_OBJ_REF_MAP)
-		{
-			return std::map<uint32_t, Ref<GameObject>>();
-		}
-		char* Dest = (char*)Obj + m_Offset;
-		return *(std::map<uint32_t, Ref<GameObject>>*)(Dest);
 	}
 }

@@ -4,7 +4,7 @@ GameObjects:
     ClassName: GameObject
     Components:
       - ClassName: TransformComponent
-        Rotation: [0, -4.08400011, -0.634000003]
+        Rotation: [0, -2.29399991, 0]
         Scale: [1, 1, 1]
         Translation: [0, 0, 0]
       - ClassName: TagComponent
@@ -23,9 +23,9 @@ GameObjects:
         Scale: [1, 1, 1]
         Translation: [0, 0, 0]
       - ClassName: TagComponent
-        Tag: Sphere
+        Tag: Cube
       - ClassName: StaticMeshComponent
-        AssetName: Sphere
+        AssetName: Cube
         MaterialSlots:
           - DefaultMat
     m_EntityID: 1
@@ -35,7 +35,7 @@ GameObjects:
       - ClassName: TransformComponent
         Rotation: [0, 0, 0]
         Scale: [1, 1, 1]
-        Translation: [0, 0, 0]
+        Translation: [0, 1, 5]
       - ClassName: TagComponent
         Tag: Camera
       - ClassName: CameraComponent
@@ -52,13 +52,23 @@ GameObjects:
     Components:
       - ClassName: TransformComponent
         Rotation: [0, 0, 0]
-        Scale: [10, 0.305999994, 10]
-        Translation: [0, -1.34099996, 0]
+        Scale: [1, 1, 1]
+        Translation: [0, 2, 0]
       - ClassName: TagComponent
-        Tag: plane
+        Tag: Sphere
       - ClassName: StaticMeshComponent
-        AssetName: Cube
+        AssetName: Sphere
         MaterialSlots:
           - DefaultMat
     m_EntityID: 3
+  4:
+    ClassName: GameObject
+    Components:
+      - ClassName: TransformComponent
+        Rotation: [0, 0, 0]
+        Scale: [1, 1, 1]
+        Translation: [0, 0, 0]
+      - ClassName: TagComponent
+        Tag: Game Object
+    m_EntityID: 4
 m_SceneName: Empty
