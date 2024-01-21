@@ -49,19 +49,19 @@ namespace Mimou
 
 		glm::mat4 GetTransform() const
 		{
-			glm::mat4 RotationMat = glm::toMat4(glm::quat(Rotation));
+			glm::mat4 RotationMat = glm::toMat4(glm::quat(glm::radians(Rotation)));
 
 			return glm::translate(glm::mat4(1.0f), Translation) * RotationMat * glm::scale(glm::mat4(1.0f), Scale);
 		}
 
 		glm::quat Quat() const
 		{
-			return glm::quat(Rotation);
+			return glm::quat(glm::radians(Rotation));
 		}
 
 		glm::vec3 GetDirection() const
 		{
-			glm::vec3 Direction = glm::normalize(glm::quat(Rotation) * glm::vec3(0.0f, 0.0f, 1.0f));
+			glm::vec3 Direction = glm::normalize(glm::quat(glm::radians(Rotation)) * glm::vec3(0.0f, 0.0f, 1.0f));
 			return Direction;
 		}
 	};

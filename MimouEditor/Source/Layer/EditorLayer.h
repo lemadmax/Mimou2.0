@@ -35,6 +35,7 @@ namespace Mimou
 		void ShowPanel(PanelType Type, const std::string& PanelName);
 
 		void ShowGizmo();
+		void ShowGrid();
 
 	private:
 		void NewScene();
@@ -69,6 +70,9 @@ namespace Mimou
 		// UI Panels
 		std::map<PanelType, Ref<Panel>> ActivePanels;
 		std::map<PanelType, Ref<Panel>> CachedPanels;
+
+		ImGuizmo::OPERATION m_GizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+		ImGuizmo::MODE m_GizmoMode = ImGuizmo::MODE::LOCAL;
 
 	private:
 		// temporary variables

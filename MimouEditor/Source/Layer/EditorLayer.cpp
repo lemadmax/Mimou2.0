@@ -198,6 +198,19 @@ namespace Mimou
 		EditorGridVA->Bind();
 		RenderCommand::DrawIndexed(EditorGridVA);
 
+		if (Input::IsKeyPressed(Key::T))
+		{
+			m_GizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+		}
+		else if (Input::IsKeyPressed(Key::R))
+		{
+			m_GizmoOperation = ImGuizmo::OPERATION::ROTATE;
+		}
+		else if (Input::IsKeyPressed(Key::E))
+		{
+			m_GizmoOperation = ImGuizmo::OPERATION::SCALE;
+		}
+
 		m_FrameBuffer->UnBind();
 	}
 
@@ -384,6 +397,7 @@ namespace Mimou
 		m_IsViewportHovered = ImGui::IsWindowHovered();
 
 		Application::GetInstance()->GetImGuiLayer()->BlockEvents(!m_IsViewportHovered);
+		//TODO: Enable/Disable for each panel
 		Input::EnableInput(m_IsViewportHovered);
 
 		ImVec2 ViewportPanelSize = ImGui::GetContentRegionAvail();
@@ -393,6 +407,7 @@ namespace Mimou
 
 		//ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 		ShowGizmo();
+		//ShowGrid();
 
 		ImGui::End();
 		ImGui::PopStyleVar();
@@ -457,19 +472,38 @@ namespace Mimou
 			glm::mat4 ProjMtx = EditorCamera.GetProjection();
 			if (!CameraGB)
 			{
-				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::WORLD, glm::value_ptr(TransMtx));
-				if (ImGuizmo::IsUsing())
-				{
-
-				}
+				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), m_GizmoOperation, m_GizmoMode, glm::value_ptr(TransMtx));
 			}
 			if (CameraGB && CameraGB->HasComponent<TransformComponent>())
 			{
 				ViewMtx = glm::inverse(CameraGB->GetComponent<TransformComponent>().GetTransform());
 				ProjMtx = std::dynamic_pointer_cast<SceneCamera>(CameraGB)->GetProjection();
-				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::WORLD, glm::value_ptr(TransMtx));
+				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), m_GizmoOperation, m_GizmoMode, glm::value_ptr(TransMtx));
+			}
+			glm::vec3 Translation = TC->Translation;
+			glm::vec3 Rot = TC->Rotation;
+			glm::vec3 Scale = TC->Scale;
+			if (ImGuizmo::IsUsing())
+			{
+				ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(TransMtx), glm::value_ptr(Translation), glm::value_ptr(Rot), glm::value_ptr(Scale));
+				TC->Translation = Translation;
+				TC->Scale = Scale;
+				TC->Rotation = Rot;
 			}
 		}
+	}
+
+	void EditorLayer::ShowGrid()
+	{
+		glm::mat4 ViewMtx = EditorCamera.GetViewMatrix();
+		glm::mat4 ProjMtx = EditorCamera.GetProjection();
+		Ref<GameObject> PrimaryCamera = m_ActiveScene->GetPrimiaryCamera();
+		if (PrimaryCamera && PrimaryCamera->HasComponent<TransformComponent>())
+		{
+			ViewMtx = glm::inverse(PrimaryCamera->GetComponent<TransformComponent>().GetTransform());
+			ProjMtx = std::dynamic_pointer_cast<Camera>(PrimaryCamera)->GetProjection();
+		}
+		ImGuizmo::DrawGrid(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), glm::value_ptr(glm::mat4(1.0f)), 100.0f);
 	}
 
 	void EditorLayer::NewScene()

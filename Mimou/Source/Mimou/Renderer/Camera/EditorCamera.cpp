@@ -51,7 +51,7 @@ namespace Mimou
 		{
 			Position -= ActualMoveSpeed * Ts.GetSecond() * CameraForward;
 		}
-		if (Input::IsMouseButtonPressed(Mouse::LeftButton))
+		if (Input::IsMouseButtonPressed(Mouse::RightButton))
 		{
 			std::pair<float, float> CurMousePosition = Input::GetMousePosition();
 			if (!bIsMouseDragging)
