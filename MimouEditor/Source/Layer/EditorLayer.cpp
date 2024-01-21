@@ -458,6 +458,16 @@ namespace Mimou
 			if (!CameraGB)
 			{
 				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::WORLD, glm::value_ptr(TransMtx));
+				if (ImGuizmo::IsUsing())
+				{
+
+				}
+			}
+			if (CameraGB && CameraGB->HasComponent<TransformComponent>())
+			{
+				ViewMtx = glm::inverse(CameraGB->GetComponent<TransformComponent>().GetTransform());
+				ProjMtx = std::dynamic_pointer_cast<SceneCamera>(CameraGB)->GetProjection();
+				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::WORLD, glm::value_ptr(TransMtx));
 			}
 		}
 	}
