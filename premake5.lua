@@ -15,6 +15,7 @@ IncludeDir["Glad"] = "Mimou/Vendors/Glad/include"
 IncludeDir["GLFW"] = "Mimou/Vendors/GLFW/include"
 IncludeDir["ImGUI"] = "Mimou/Vendors/ImGUI"
 IncludeDir["stb_image"] = "Mimou/Vendors/stb_image"
+IncludeDir["ImGuizmo"] = "Mimou/Vendors/ImGuizmo"
 IncludeDir["EnTT"] = "Mimou/Vendors/EnTT/single_include"
 IncludeDir["YAML"] = "Mimou/Vendors/yaml-cpp/include"
 
@@ -42,7 +43,9 @@ project "Mimou"
 		"%{prj.name}/Source/**.hpp",
 		"%{prj.name}/Source/**.c",
 		"%{prj.name}/Vendors/stb_image/**.h",
-		"%{prj.name}/Vendors/stb_image/**.cpp"
+		"%{prj.name}/Vendors/stb_image/**.cpp",
+		"%{prj.name}/Vendors/ImGuizmo/*.h",
+		"%{prj.name}/Vendors/ImGuizmo/*.cpp"
 	}
 
 	defines {
@@ -57,6 +60,7 @@ project "Mimou"
 		"%{IncludeDir.ImGUI}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.EnTT}",
 		"%{IncludeDir.YAML}",
 	}
@@ -68,6 +72,9 @@ project "Mimou"
 		"opengl32.lib",
 		"YAML",
 	}
+
+	filter "files:**/ImGuizmo/*.cpp"
+    	flags { "NoPCH" }
 
 	filter "system:windows"
 		systemversion "latest"
@@ -81,28 +88,28 @@ project "Mimou"
 		-- 	("{COPY} %{cfg.buildtarget.relpath} ../Sandbox/Binaries/" .. outputdir)
 		-- }
 
-		filter "configurations:DevEditor"
-			defines {
-				"ME_WITH_EDITOR",
-				"ME_BUILD_DEBUG",
-			}
-			buildoptions "/MDd"
-			symbols "on"
+	filter "configurations:DevEditor"
+		defines {
+			"ME_WITH_EDITOR",
+			"ME_BUILD_DEBUG",
+		}
+		buildoptions "/MDd"
+		symbols "on"
 
-		filter "configurations:Debug"
-			defines "ME_BUILD_DEBUG"
-			buildoptions "/MDd"
-			symbols "on"
+	filter "configurations:Debug"
+		defines "ME_BUILD_DEBUG"
+		buildoptions "/MDd"
+		symbols "on"
 
-		filter "configurations:Release"
-			defines "ME_BUILD_RELEASE"
-			buildoptions "/MD"
-			symbols "on"
+	filter "configurations:Release"
+		defines "ME_BUILD_RELEASE"
+		buildoptions "/MD"
+		symbols "on"
 
-		filter "configurations:Dist"
-			defines "ME_BUILD_DIST"
-			buildoptions "/MD"
-			symbols "on"
+	filter "configurations:Dist"
+		defines "ME_BUILD_DIST"
+		buildoptions "/MD"
+		symbols "on"
 
 			
 project "Sandbox"
@@ -196,6 +203,7 @@ project "MimouEditor"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.EnTT}",
 		"%{IncludeDir.YAML}",
 	}

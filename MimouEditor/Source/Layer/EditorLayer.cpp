@@ -1,5 +1,6 @@
 #include "EditorLayer.h"
 
+#include "Panel/SceneHierarchyPanel.h"
 
 namespace Mimou
 {
@@ -391,6 +392,8 @@ namespace Mimou
 		//ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetDepthStencilAttachTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
 		//ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+		ShowGizmo();
+
 		ImGui::End();
 		ImGui::PopStyleVar();
 	}
@@ -422,6 +425,40 @@ namespace Mimou
 		{
 			Ref<Panel> NewPanel = Panel::CreatePanel(Type, PanelName);
 			ActivePanels.emplace(std::pair<PanelType, Ref<Panel>>(Type, NewPanel));
+		}
+	}
+
+	void EditorLayer::ShowGizmo()
+	{
+		Ref<SceneHierarchyPanel> SceneHierPanel = std::static_pointer_cast<SceneHierarchyPanel>(GetPanel(PanelType::SceneHierarchyPanel));
+		if (!SceneHierPanel)
+		{
+			return;
+		}
+		Ref<GameObject> GB = SceneHierPanel->GetSelectedObject();
+		if (!GB)
+		{
+			return;
+		}
+
+		ImGuizmo::SetID((uint32_t)GB->GetEntityID());
+		ImGuizmo::SetDrawlist();
+
+		TransformComponent* TC = GB->TryGetComponent<TransformComponent>();
+		if (TC)
+		{
+			float TitleHeight = (float)ImGui::GetWindowHeight() - m_ViewportSize.y;
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y + TitleHeight, m_ViewportSize.x, m_ViewportSize.y);
+
+			Ref<GameObject> CameraGB = m_ActiveScene->GetPrimiaryCamera();
+
+			glm::mat4 TransMtx = TC->GetTransform();
+			glm::mat4 ViewMtx = EditorCamera.GetViewMatrix();
+			glm::mat4 ProjMtx = EditorCamera.GetProjection();
+			if (!CameraGB)
+			{
+				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::WORLD, glm::value_ptr(TransMtx));
+			}
 		}
 	}
 

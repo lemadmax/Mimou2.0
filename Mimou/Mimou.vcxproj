@@ -96,7 +96,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_WITH_EDITOR;ME_BUILD_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\EnTT\single_include;Vendors\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\ImGuizmo;Vendors\EnTT\single_include;Vendors\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -118,7 +118,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\EnTT\single_include;Vendors\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\ImGuizmo;Vendors\EnTT\single_include;Vendors\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -140,7 +140,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\EnTT\single_include;Vendors\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\ImGuizmo;Vendors\EnTT\single_include;Vendors\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -162,7 +162,7 @@
       <PrecompiledHeaderFile>mepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ME_PLATFORM_WINDOWS;ME_BUILD_DLL;ME_BUILD_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\EnTT\single_include;Vendors\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;Vendors\spdlog\include;Vendors\GLM;Vendors\GLFW\include;Vendors\ImGUI;Vendors\Glad\include;Vendors\stb_image;Vendors\ImGuizmo;Vendors\EnTT\single_include;Vendors\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -238,6 +238,12 @@
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsInput.h" />
     <ClInclude Include="Source\Mimou\Window\Windows\WindowsWindow.h" />
     <ClInclude Include="Source\mepch.h" />
+    <ClInclude Include="Vendors\ImGuizmo\GraphEditor.h" />
+    <ClInclude Include="Vendors\ImGuizmo\ImCurveEdit.h" />
+    <ClInclude Include="Vendors\ImGuizmo\ImGradient.h" />
+    <ClInclude Include="Vendors\ImGuizmo\ImGuizmo.h" />
+    <ClInclude Include="Vendors\ImGuizmo\ImSequencer.h" />
+    <ClInclude Include="Vendors\ImGuizmo\ImZoomSlider.h" />
     <ClInclude Include="Vendors\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +293,21 @@
     <ClCompile Include="Source\Mimou\Window\Windows\WindowsWindow.cpp" />
     <ClCompile Include="Source\mepch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\GraphEditor.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\ImCurveEdit.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\ImGradient.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\ImGuizmo.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\ImSequencer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendors\stb_image\stb_image.cpp" />
   </ItemGroup>

@@ -34,6 +34,8 @@ namespace Mimou
 
 		void ShowPanel(PanelType Type, const std::string& PanelName);
 
+		void ShowGizmo();
+
 	private:
 		void NewScene();
 		void OpenScene();

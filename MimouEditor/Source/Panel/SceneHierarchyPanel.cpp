@@ -53,11 +53,13 @@ namespace Mimou
 		if (bDestroyAll)
 		{
 			Scene::DestroyAllGameObjects(m_Scene);
+			SelectedObject = nullptr;
 		}
 		else
 		{
 			for (Ref<GameObject> Object : PendingDestroy)
 			{
+				if (Object == SelectedObject) SelectedObject = nullptr;
 				Scene::DestroyGameObject(m_Scene, Object);
 			}
 		}

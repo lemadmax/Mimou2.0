@@ -32,6 +32,7 @@
 #include "Mimou/Utils/FileUtils/FileHelper.h"
 
 #include "imgui.h"
+#include "ImGuizmo.h"
 
 
 using namespace Mimou;

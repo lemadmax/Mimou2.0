@@ -64,6 +64,9 @@
     <Filter Include="Vendors">
       <UniqueIdentifier>{665268D3-D231-E76E-DB49-724547A84DD0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Vendors\ImGuizmo">
+      <UniqueIdentifier>{86D7635D-72D0-82AF-9B02-6834875A62BB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Vendors\stb_image">
       <UniqueIdentifier>{80BA2187-ECD0-1F1D-3548-AB3EA19DF0A4}</UniqueIdentifier>
     </Filter>
@@ -86,6 +89,15 @@
     </ClInclude>
     <ClInclude Include="Source\Mimou\ECS\Entity\GameObject.h">
       <Filter>Source\Mimou\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\MEClass.h">
+      <Filter>Source\Mimou\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\MEObject.h">
+      <Filter>Source\Mimou\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mimou\ECS\MESerializer.h">
+      <Filter>Source\Mimou\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mimou\ECS\MimouObject.h">
       <Filter>Source\Mimou\ECS</Filter>
@@ -237,12 +249,27 @@
     <ClInclude Include="Source\mepch.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Vendors\ImGuizmo\GraphEditor.h">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendors\ImGuizmo\ImCurveEdit.h">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendors\ImGuizmo\ImGradient.h">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendors\ImGuizmo\ImGuizmo.h">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendors\ImGuizmo\ImSequencer.h">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendors\ImGuizmo\ImZoomSlider.h">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClInclude>
     <ClInclude Include="Vendors\stb_image\stb_image.h">
       <Filter>Vendors\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mimou\ECS\MEClass.h" />
-    <ClInclude Include="Source\Mimou\ECS\MEObject.h" />
-    <ClInclude Include="Source\Mimou\ECS\MESerializer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mimou\Application.cpp">
@@ -253,6 +280,15 @@
     </ClCompile>
     <ClCompile Include="Source\Mimou\ECS\Entity\GameObject.cpp">
       <Filter>Source\Mimou\ECS\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\MEClass.cpp">
+      <Filter>Source\Mimou\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\MEObject.cpp">
+      <Filter>Source\Mimou\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mimou\ECS\MESerializer.cpp">
+      <Filter>Source\Mimou\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mimou\ECS\MimouObject.cpp">
       <Filter>Source\Mimou\ECS</Filter>
@@ -371,11 +407,23 @@
     <ClCompile Include="Source\mepch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\GraphEditor.cpp">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\ImCurveEdit.cpp">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\ImGradient.cpp">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\ImGuizmo.cpp">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendors\ImGuizmo\ImSequencer.cpp">
+      <Filter>Vendors\ImGuizmo</Filter>
+    </ClCompile>
     <ClCompile Include="Vendors\stb_image\stb_image.cpp">
       <Filter>Vendors\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mimou\ECS\MEObject.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\MEClass.cpp" />
-    <ClCompile Include="Source\Mimou\ECS\MESerializer.cpp" />
   </ItemGroup>
 </Project>
