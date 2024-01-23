@@ -198,17 +198,29 @@ namespace Mimou
 		EditorGridVA->Bind();
 		RenderCommand::DrawIndexed(EditorGridVA);
 
+		if (Input::IsKeyPressed(Key::LeftControl))
+		{
+			bIsSnapping = true;
+		}
+		else
+		{
+			bIsSnapping = false;
+		}
+
 		if (Input::IsKeyPressed(Key::T))
 		{
 			m_GizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+			Snap[0] = Snap[1] = Snap[2] = 0.5f;
 		}
 		else if (Input::IsKeyPressed(Key::R))
 		{
 			m_GizmoOperation = ImGuizmo::OPERATION::ROTATE;
+			Snap[0] = Snap[1] = Snap[2] = 45.f;
 		}
 		else if (Input::IsKeyPressed(Key::E))
 		{
 			m_GizmoOperation = ImGuizmo::OPERATION::SCALE;
+			Snap[0] = Snap[1] = Snap[2] = 0.5f;
 		}
 
 		m_FrameBuffer->UnBind();
@@ -472,13 +484,13 @@ namespace Mimou
 			glm::mat4 ProjMtx = EditorCamera.GetProjection();
 			if (!CameraGB)
 			{
-				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), m_GizmoOperation, m_GizmoMode, glm::value_ptr(TransMtx));
+				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), m_GizmoOperation, m_GizmoMode, glm::value_ptr(TransMtx), NULL, bIsSnapping ? &Snap[0] : NULL, NULL, NULL);
 			}
 			if (CameraGB && CameraGB->HasComponent<TransformComponent>())
 			{
 				ViewMtx = glm::inverse(CameraGB->GetComponent<TransformComponent>().GetTransform());
 				ProjMtx = std::dynamic_pointer_cast<SceneCamera>(CameraGB)->GetProjection();
-				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), m_GizmoOperation, m_GizmoMode, glm::value_ptr(TransMtx));
+				ImGuizmo::Manipulate(glm::value_ptr(ViewMtx), glm::value_ptr(ProjMtx), m_GizmoOperation, m_GizmoMode, glm::value_ptr(TransMtx), NULL, bIsSnapping ? &Snap[0] : NULL, NULL, NULL);
 			}
 			glm::vec3 Translation = TC->Translation;
 			glm::vec3 Rot = TC->Rotation;

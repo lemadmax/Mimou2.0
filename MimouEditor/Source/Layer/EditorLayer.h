@@ -73,6 +73,8 @@ namespace Mimou
 
 		ImGuizmo::OPERATION m_GizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
 		ImGuizmo::MODE m_GizmoMode = ImGuizmo::MODE::LOCAL;
+		bool bIsSnapping = false;
+		float Snap[3] = { 0.5f, 0.5f, 0.5f };
 
 	private:
 		// temporary variables
