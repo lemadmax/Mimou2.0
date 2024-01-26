@@ -98,7 +98,8 @@ namespace Mimou
 	{
 		uint32_t Width = Application::GetInstance()->GetWindow().GetWidth();
 		uint32_t Height = Application::GetInstance()->GetWindow().GetHeight();
-		m_FrameBuffer = FrameBuffer::Create({ Width , Height });
+		m_FrameBuffer = FrameBuffer::Create({ Width , Height, FBFormat::RGBA });
+		m_FrameBuffer->Add({ Width, Height, FBFormat::INT });
 
 		//m_ActiveScene = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Demo.mimou");
 		m_ActiveScene = CreateRef<Scene>("Empty");
@@ -163,7 +164,8 @@ namespace Mimou
 			}
 		}
 		m_FrameBuffer->Bind();
-		m_FrameBuffer->OnUpdate(m_ViewportSize.x, m_ViewportSize.y);
+		m_FrameBuffer->OnUpdate(0, m_ViewportSize.x, m_ViewportSize.y);
+		m_FrameBuffer->OnUpdate(1, m_ViewportSize.x, m_ViewportSize.y);
 		RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 		RenderCommand::Clear();
 
@@ -273,6 +275,22 @@ namespace Mimou
 		ShowViewport();
 		//ShowSettingPanel();
 
+
+		if (m_ShowDepthPanel)
+		{
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+			ImGui::SetNextWindowSize(ImVec2(m_ViewportSize.x, m_ViewportSize.y));
+			if (ImGui::Begin("Depth buffer", &m_ShowDepthPanel, ImGuiWindowFlags_NoResize))
+			{
+				ImVec2 ViewportPanelSize = ImGui::GetContentRegionAvail();
+				//ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetColorAttachmentTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+				ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetDepthStencilAttachTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+
+				ImGui::End();
+			}
+			ImGui::PopStyleVar();
+		}
+
 		for (auto Panels : ActivePanels)
 		{
 			Panels.second->OnImGUIUpdate();
@@ -381,6 +399,10 @@ namespace Mimou
 			//	{
 			//		IM_ASSERT(0);
 			//	}
+				if (ImGui::MenuItem("Depth buffer"))
+				{
+					m_ShowDepthPanel = true;
+				}
 				if (ImGui::MenuItem("Checked", NULL, true)) {}
 				ImGui::Separator();
 				if (ImGui::MenuItem("Quit", "Alt+F4")) { Application::GetInstance()->Close(); }
@@ -420,6 +442,21 @@ namespace Mimou
 		//ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 		ShowGizmo();
 		//ShowGrid();
+
+		if (ImGui::IsMousePosValid())
+		{
+			ImVec2 MousePos = ImGui::GetMousePos();
+			ImVec2 WindowPos = ImGui::GetWindowPos();
+			ImVec2 WindowSize = ImGui::GetWindowSize();
+			float TitleHeigth = WindowSize.y - m_ViewportSize.y;
+			
+			ImVec2 MouseInViewport = ImVec2(MousePos.x - WindowPos.x, m_ViewportSize.y - (MousePos.y - WindowPos.y - TitleHeigth));
+			
+			if (Input::IsMouseButtonPressed(Mouse::LeftButton))
+			{
+				ME_ENGINE_LOG("Mouse Pos ({}, {})", MouseInViewport.x, MouseInViewport.y);
+			}
+		}
 
 		ImGui::End();
 		ImGui::PopStyleVar();

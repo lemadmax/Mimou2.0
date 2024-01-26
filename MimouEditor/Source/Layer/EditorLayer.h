@@ -76,6 +76,8 @@ namespace Mimou
 		bool bIsSnapping = false;
 		float Snap[3] = { 0.5f, 0.5f, 0.5f };
 
+		bool m_ShowDepthPanel = false;
+
 	private:
 		// temporary variables
 		float TmpColor[3];
