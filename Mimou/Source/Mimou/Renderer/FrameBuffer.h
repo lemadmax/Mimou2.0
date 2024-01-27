@@ -2,6 +2,8 @@
 
 #include "Mimou/Core.h"
 
+#include "glm/glm.hpp"
+
 namespace Mimou
 {
 	enum class FBFormat
@@ -39,6 +41,7 @@ namespace Mimou
 		virtual int ReadPixelInt(int Idx, uint32_t x, uint32_t y) = 0;
 
 		virtual void ClearAttachmentInt(int Idx, int Value) = 0;
+		virtual void ClearAttachmentColor(int Idx, glm::vec4 Value) = 0;
 
 		static Ref<FrameBuffer> Create(const FrameBufferSpecification& Spec);
 

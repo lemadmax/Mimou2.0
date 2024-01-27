@@ -77,6 +77,6 @@ void main()
         }
     }
     FragColor = vec4(Radiance, u_Transparency);
-    Color2 = vec4(0.9, 0.2, 0.3, 1.0);
+    Color2 = vec4(0.3, 0.2, 0.3, 1.0);
     EntityID = 15;
 }

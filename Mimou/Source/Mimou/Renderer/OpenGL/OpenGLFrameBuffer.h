@@ -23,6 +23,7 @@ namespace Mimou
 
 		virtual int ReadPixelInt(int Idx, uint32_t x, uint32_t y) override;
 		virtual void ClearAttachmentInt(int Idx, int Value) override;
+		virtual void ClearAttachmentColor(int Idx, glm::vec4 Value) override;
 
 	private:
 		void Invalidate();

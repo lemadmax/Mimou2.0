@@ -155,10 +155,13 @@ namespace Mimou
 		glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, glm::value_ptr(Data));
 		ME_ENGINE_LOG("Pixel Color: ({},{},{},{})", Data.x, Data.y, Data.z, Data.w);
 
-		glReadBuffer(GL_COLOR_ATTACHMENT1);
-		int IntData;
-		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &IntData);
-		ME_ENGINE_LOG("Pixel Entity: {}", IntData);
+		glNamedFramebufferReadBuffer(m_RendererID, GL_COLOR_ATTACHMENT1);
+		glm::vec4 Data1;
+		glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, glm::value_ptr(Data1));
+		ME_ENGINE_LOG("Pixel Color2: ({},{},{},{})", Data1.x, Data1.y, Data1.z, Data1.w);
+		//int IntData;
+		//glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &IntData);
+		//ME_ENGINE_LOG("Pixel Entity: {}", IntData);
 
 		return 0;
 	}
@@ -166,6 +169,11 @@ namespace Mimou
 	void OpenGLFrameBuffer::ClearAttachmentInt(int Idx, int Value)
 	{
 		glClearTexImage(m_ColorAttachments[1], 0, GL_RED_INTEGER, GL_INT, &Value);
+	}
+
+	void OpenGLFrameBuffer::ClearAttachmentColor(int Idx, glm::vec4 Value)
+	{
+		glClearTexImage(m_ColorAttachments[Idx], 0, GL_RGBA, GL_UNSIGNED_BYTE, glm::value_ptr(Value));
 	}
 
 	void OpenGLFrameBuffer::Invalidate()

@@ -170,6 +170,7 @@ namespace Mimou
 		RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 		RenderCommand::Clear();
 		//m_FrameBuffer->ClearAttachmentInt(1, -1);
+		m_FrameBuffer->ClearAttachmentColor(1, glm::vec4(0.2f, 0.2f, 0.2f, 1));
 
 		uTime += Ts;
 
