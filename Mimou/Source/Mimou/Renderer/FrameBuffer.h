@@ -38,6 +38,8 @@ namespace Mimou
 		virtual void Add(const FrameBufferSpecification& Spec) = 0;
 		virtual int ReadPixelInt(int Idx, uint32_t x, uint32_t y) = 0;
 
+		virtual void ClearAttachmentInt(int Idx, int Value) = 0;
+
 		static Ref<FrameBuffer> Create(const FrameBufferSpecification& Spec);
 
 

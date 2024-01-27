@@ -33,6 +33,8 @@ void main()
 #define MAX_LIGHTS 128
 
 layout(location = 0) out vec4 FragColor;
+layout(location = 1) out vec4 Color2;
+layout(location = 2) out int EntityID;
 
 struct SceneLight
 {
@@ -75,4 +77,6 @@ void main()
         }
     }
     FragColor = vec4(Radiance, u_Transparency);
+    Color2 = vec4(0.9, 0.2, 0.3, 1.0);
+    EntityID = 15;
 }

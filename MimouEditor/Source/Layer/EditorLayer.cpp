@@ -99,6 +99,7 @@ namespace Mimou
 		uint32_t Width = Application::GetInstance()->GetWindow().GetWidth();
 		uint32_t Height = Application::GetInstance()->GetWindow().GetHeight();
 		m_FrameBuffer = FrameBuffer::Create({ Width , Height, FBFormat::RGBA });
+		m_FrameBuffer->Add({ Width, Height, FBFormat::RGBA });
 		m_FrameBuffer->Add({ Width, Height, FBFormat::INT });
 
 		//m_ActiveScene = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Demo.mimou");
@@ -168,6 +169,7 @@ namespace Mimou
 		m_FrameBuffer->OnUpdate(1, m_ViewportSize.x, m_ViewportSize.y);
 		RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 		RenderCommand::Clear();
+		//m_FrameBuffer->ClearAttachmentInt(1, -1);
 
 		uTime += Ts;
 
@@ -436,7 +438,7 @@ namespace Mimou
 
 		ImVec2 ViewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
-		ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetColorAttachmentTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetColorAttachmentTexIDByIdx(1), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 		//ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetDepthStencilAttachTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
 		//ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
@@ -454,7 +456,9 @@ namespace Mimou
 			
 			if (Input::IsMouseButtonPressed(Mouse::LeftButton))
 			{
-				ME_ENGINE_LOG("Mouse Pos ({}, {})", MouseInViewport.x, MouseInViewport.y);
+				int EntityID = m_FrameBuffer->ReadPixelInt(1, MouseInViewport.x, MouseInViewport.y);
+				ME_ENGINE_LOG("Mouse Pos ({}, {}); EntityID: {}", MouseInViewport.x, MouseInViewport.y, EntityID);
+
 			}
 		}
 

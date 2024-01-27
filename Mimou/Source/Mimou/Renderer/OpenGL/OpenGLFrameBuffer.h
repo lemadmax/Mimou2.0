@@ -22,6 +22,7 @@ namespace Mimou
 		virtual void Resize(uint32_t Width, uint32_t Height) override;
 
 		virtual int ReadPixelInt(int Idx, uint32_t x, uint32_t y) override;
+		virtual void ClearAttachmentInt(int Idx, int Value) override;
 
 	private:
 		void Invalidate();

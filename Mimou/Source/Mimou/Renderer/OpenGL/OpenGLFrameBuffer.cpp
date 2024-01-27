@@ -4,6 +4,7 @@
 
 #include "glad/glad.h"
 #include "glm/glm.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Mimou
 {
@@ -15,7 +16,7 @@ namespace Mimou
 		{
 			ColorCompsFormat = GL_R32I;
 			PixelDataFormat = GL_RED_INTEGER;
-			DataType = GL_BYTE;
+			DataType = GL_UNSIGNED_BYTE;
 			break;
 		}
 		case FBFormat::RGBA:
@@ -37,15 +38,6 @@ namespace Mimou
 			ME_ENGINE_ASSERT(false, "FBFormat not supported");
 			break;
 		}
-		}
-	}
-
-	static GLenum ColorAttachment(int Idx)
-	{
-		switch (Idx)
-		{
-		case 0: return GL_COLOR_ATTACHMENT0;
-		case 1: return GL_COLOR_ATTACHMENT1;
 		}
 	}
 
@@ -72,7 +64,7 @@ namespace Mimou
 		GLTextureFormat(Spec.Format, InternalFormat, PixelFormat, DataType);
 		uint32_t Texture = CreateTexture(Spec.Width, Spec.Height, InternalFormat, PixelFormat, DataType);
 
-		glFramebufferTexture2D(GL_FRAMEBUFFER, ColorAttachment(Idx), GL_TEXTURE_2D, Texture, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + Idx, GL_TEXTURE_2D, Texture, 0);
 		return Texture;
 	}
 
@@ -130,8 +122,7 @@ namespace Mimou
 	void OpenGLFrameBuffer::Add(const FrameBufferSpecification& Spec)
 	{
 		m_Specs.emplace_back(Spec);
-		uint32_t ColorAttachment = CreateColorAttachment(m_ColorAttachments.size(), Spec);
-		m_ColorAttachments.push_back(ColorAttachment);
+		Invalidate();
 	}
 
 	void OpenGLFrameBuffer::OnUpdate(int Idx, uint32_t Width, uint32_t Height)
@@ -157,9 +148,24 @@ namespace Mimou
 
 	int OpenGLFrameBuffer::ReadPixelInt(int Idx, uint32_t x, uint32_t y)
 	{
-		uint32_t Texture = m_ColorAttachments[Idx];
+		//glReadBuffer(GL_COLOR_ATTACHMENT1);
+		//glNamedFramebufferReadBuffer(m_RendererID, GL_COLOR_ATTACHMENT0);
+
+		glm::vec4 Data;
+		glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, glm::value_ptr(Data));
+		ME_ENGINE_LOG("Pixel Color: ({},{},{},{})", Data.x, Data.y, Data.z, Data.w);
+
+		glReadBuffer(GL_COLOR_ATTACHMENT1);
+		int IntData;
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &IntData);
+		ME_ENGINE_LOG("Pixel Entity: {}", IntData);
 
 		return 0;
+	}
+
+	void OpenGLFrameBuffer::ClearAttachmentInt(int Idx, int Value)
+	{
+		glClearTexImage(m_ColorAttachments[1], 0, GL_RED_INTEGER, GL_INT, &Value);
 	}
 
 	void OpenGLFrameBuffer::Invalidate()
@@ -177,6 +183,13 @@ namespace Mimou
 			uint32_t ColorAttachment = CreateColorAttachment(i, FBSpec);
 			m_ColorAttachments.push_back(ColorAttachment);
 		}
+
+		if (m_Specs.size() > 1)
+		{
+			GLenum Buffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
+			glDrawBuffers(m_ColorAttachments.size(), Buffers);
+		}
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void OpenGLFrameBuffer::ResizeInternal(int Idx, uint32_t Width, uint32_t Height)
@@ -191,12 +204,8 @@ namespace Mimou
 	void OpenGLFrameBuffer::Delete()
 	{
 		glDeleteFramebuffers(1, &m_RendererID);
-		for (uint32_t TexID : m_ColorAttachments)
-		{
-			glDeleteTextures(1, &TexID);
-		}
+		glDeleteTextures(m_ColorAttachments.size(), m_ColorAttachments.data());
 		glDeleteTextures(1, &m_DepthStencilAttachTex);
 		m_ColorAttachments.clear();
-		//glDeleteTextures(m_ColorAttachments.size(), m_ColorAttachments.data());
 	}
 }
