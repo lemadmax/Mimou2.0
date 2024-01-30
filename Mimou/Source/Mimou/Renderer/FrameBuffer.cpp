@@ -24,4 +24,9 @@ namespace Mimou
 		ME_ENGINE_ASSERT(false, "Failed to create renderer API");
 		return nullptr;
 	}
+
+	void FrameBuffer::Add(const FBAttachmentSpecification& Spec)
+	{
+		m_Spec.Attachments.emplace_back(Spec);
+	}
 }

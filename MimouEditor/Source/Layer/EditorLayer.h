@@ -65,6 +65,7 @@ namespace Mimou
 		bool m_IsViewportFocused;
 		bool m_IsViewportHovered;
 		glm::vec2 m_ViewportSize;
+		glm::vec2 ViewportOffset;
 		Ref<Texture> m_TestTexture;
 
 		// UI Panels

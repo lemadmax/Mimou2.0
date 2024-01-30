@@ -16,9 +16,7 @@ namespace Mimou
 		virtual uint32_t GetColorAttachmentTexIDByIdx(uint32_t Idx) const override;
 		virtual uint32_t GetDepthStencilAttachTexID() const override;
 
-		virtual void Add(const FrameBufferSpecification& Spec) override;
-
-		virtual void OnUpdate(int Idx, uint32_t Width, uint32_t Height) override;
+		virtual void OnUpdate(uint32_t Width, uint32_t Height) override;
 		virtual void Resize(uint32_t Width, uint32_t Height) override;
 
 		virtual int ReadPixelInt(int Idx, uint32_t x, uint32_t y) override;
@@ -28,7 +26,7 @@ namespace Mimou
 	private:
 		void Invalidate();
 
-		void ResizeInternal(int Idx, uint32_t Width, uint32_t Height);
+		void ResizeInternal(uint32_t Width, uint32_t Height);
 
 		
 

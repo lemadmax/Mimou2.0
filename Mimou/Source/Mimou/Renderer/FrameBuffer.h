@@ -16,10 +16,21 @@ namespace Mimou
 
 	};
 
+	struct FBAttachmentSpecification
+	{
+		FBFormat Format;
+	};
+
 	struct FrameBufferSpecification
 	{
 		uint32_t Width, Height;
-		FBFormat Format;
+		std::vector<FBAttachmentSpecification> Attachments;
+
+		//FrameBufferSpecification(uint32_t InWidth, uint32_t InHeight, std::initializer_list<FBAttachmentSpecification> Initializer)
+		//	: Width(InWidth), Height(InHeight)
+		//{
+
+		//}
 	};
 
 	class FrameBuffer
@@ -34,10 +45,9 @@ namespace Mimou
 		virtual uint32_t GetColorAttachmentTexIDByIdx(uint32_t Idx) const = 0;
 		virtual uint32_t GetDepthStencilAttachTexID() const = 0;
 
-		virtual void OnUpdate(int Idx, uint32_t Width, uint32_t Height) = 0;
+		virtual void OnUpdate(uint32_t Width, uint32_t Height) = 0;
 		virtual void Resize(uint32_t Width, uint32_t Height) = 0;
 
-		virtual void Add(const FrameBufferSpecification& Spec) = 0;
 		virtual int ReadPixelInt(int Idx, uint32_t x, uint32_t y) = 0;
 
 		virtual void ClearAttachmentInt(int Idx, int Value) = 0;
@@ -45,8 +55,9 @@ namespace Mimou
 
 		static Ref<FrameBuffer> Create(const FrameBufferSpecification& Spec);
 
+		void Add(const FBAttachmentSpecification& Spec);
 
 	protected:
-		std::vector<FrameBufferSpecification> m_Specs;
+		FrameBufferSpecification m_Spec;
 	};
 }

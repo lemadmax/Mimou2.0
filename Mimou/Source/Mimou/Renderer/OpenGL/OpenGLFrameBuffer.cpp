@@ -41,50 +41,44 @@ namespace Mimou
 		}
 	}
 
-	static uint32_t CreateTexture(uint32_t Width, uint32_t Height, GLint InternalFormat, GLenum Format, GLenum Type)
+	static void AttachTextureColor(int Idx, uint32_t TextureID, uint32_t Width, uint32_t Height, GLint InternalFormat, GLenum Format, GLenum Type)
 	{
-		uint32_t Texture;
-
-		glGenTextures(1, &Texture);
-		glBindTexture(GL_TEXTURE_2D, Texture);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, Width, Height, 0, Format, Type, NULL);
+		glBindTexture(GL_TEXTURE_2D, TextureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, Width, Height, 0, Format, Type, nullptr);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		return Texture;
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + Idx, GL_TEXTURE_2D, TextureID, 0);
 	}
 
-	static uint32_t CreateColorAttachment(int Idx, const FrameBufferSpecification& Spec)
+	static void AttachTextureDepth(uint32_t TextureID, uint32_t Width, uint32_t Height)
 	{
-		GLint InternalFormat;
-		GLenum PixelFormat;
-		GLenum DataType;
-		GLTextureFormat(Spec.Format, InternalFormat, PixelFormat, DataType);
-		uint32_t Texture = CreateTexture(Spec.Width, Spec.Height, InternalFormat, PixelFormat, DataType);
+		glBindTexture(GL_TEXTURE_2D, TextureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, Width, Height, 0, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, nullptr);
 
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + Idx, GL_TEXTURE_2D, Texture, 0);
-		return Texture;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, TextureID, 0);
 	}
 
-	static uint32_t CreateDepthStencilAttachment(uint32_t Width, uint32_t Height)
+	static void CreateTextures(uint32_t number, uint32_t Width, uint32_t Height, GLuint* OutTextures)
 	{
-		GLint InternalFormat;
-		GLenum PixelFormat;
-		GLenum DataType;
-		GLTextureFormat(FBFormat::DEPTH_STENCIL, InternalFormat, PixelFormat, DataType);
-		uint32_t Texture = CreateTexture(Width, Height, InternalFormat, PixelFormat, DataType);
-
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, Texture, 0);
-		return Texture;
+		glCreateTextures(GL_TEXTURE_2D, number, OutTextures);
 	}
 
 	OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBufferSpecification& Spec)
 	{
-		m_Specs.emplace_back(Spec);
+		m_Spec = Spec;
 		Invalidate();
-		m_DepthStencilAttachTex = CreateDepthStencilAttachment(Spec.Width, Spec.Height);
 	}
 
 	OpenGLFrameBuffer::~OpenGLFrameBuffer()
@@ -95,7 +89,7 @@ namespace Mimou
 	void OpenGLFrameBuffer::Bind() const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
-		glViewport(0, 0, m_Specs[0].Width, m_Specs[0].Height);
+		glViewport(0, 0, m_Spec.Width, m_Spec.Height);
 	}
 
 	void OpenGLFrameBuffer::UnBind() const
@@ -119,61 +113,63 @@ namespace Mimou
 		return m_DepthStencilAttachTex;
 	}
 
-	void OpenGLFrameBuffer::Add(const FrameBufferSpecification& Spec)
+	void OpenGLFrameBuffer::OnUpdate(uint32_t Width, uint32_t Height)
 	{
-		m_Specs.emplace_back(Spec);
-		Invalidate();
-	}
-
-	void OpenGLFrameBuffer::OnUpdate(int Idx, uint32_t Width, uint32_t Height)
-	{
-		if (Width > 0 && Height > 0 && m_Specs[Idx].Width != Width && m_Specs[Idx].Height != Height)
-		{
-			ResizeInternal(Idx, Width, Height);
-		}
-		if (Idx == 0)
-		{
-			glDeleteTextures(1, &m_DepthStencilAttachTex);
-			m_DepthStencilAttachTex = CreateDepthStencilAttachment(m_Specs[0].Width, m_Specs[0].Height);
+		if (Width > 0 && Height > 0 && (m_Spec.Width != Width || m_Spec.Height != Height))
+		{			
+			ResizeInternal(Width, Height);
 		}
 	}
 
 	void OpenGLFrameBuffer::Resize(uint32_t Width, uint32_t Height)
 	{
-		for (int i = 0; i < m_Specs.size(); i++)
-		{
-			ResizeInternal(i, Width, Height);
-		}
+		ResizeInternal(Width, Height);
 	}
 
 	int OpenGLFrameBuffer::ReadPixelInt(int Idx, uint32_t x, uint32_t y)
 	{
+		//glNamedFramebufferReadBuffer(m_RendererID, GL_COLOR_ATTACHMENT1);
+
+		//glm::vec4 Data;
+		//float Data[4] = {};
+		//glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, Data);
+		//ME_ENGINE_LOG("Pixel Color: ({},{},{},{})", Data[0], Data[1], Data[2], Data[3]);
+
+		//glNamedFramebufferReadBuffer(m_RendererID, GL_COLOR_ATTACHMENT2);
+		//glm::vec4 Data1;
+		//glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, glm::value_ptr(Data1));
+		//ME_ENGINE_LOG("Pixel Color2: ({},{},{},{})", Data1.x, Data1.y, Data1.z, Data1.w);
 		//glReadBuffer(GL_COLOR_ATTACHMENT1);
-		//glNamedFramebufferReadBuffer(m_RendererID, GL_COLOR_ATTACHMENT0);
 
-		glm::vec4 Data;
-		glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, glm::value_ptr(Data));
-		ME_ENGINE_LOG("Pixel Color: ({},{},{},{})", Data.x, Data.y, Data.z, Data.w);
-
-		glNamedFramebufferReadBuffer(m_RendererID, GL_COLOR_ATTACHMENT1);
-		glm::vec4 Data1;
-		glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, glm::value_ptr(Data1));
-		ME_ENGINE_LOG("Pixel Color2: ({},{},{},{})", Data1.x, Data1.y, Data1.z, Data1.w);
-		//int IntData;
-		//glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &IntData);
+		//int IntData = -1;
+		//glReadPixels(x, y, 1, 1, GL_RED, GL_INT, &IntData);
 		//ME_ENGINE_LOG("Pixel Entity: {}", IntData);
+		int EntityIdx = y * m_Spec.Width + x;
+		if (EntityIdx >= m_Spec.Height * m_Spec.Width) return -2;
 
-		return 0;
+		int* IDImage = new int[m_Spec.Height * m_Spec.Width];
+		glGetTextureImage(m_ColorAttachments[Idx], 0, GL_RED_INTEGER, GL_INT, m_Spec.Height * m_Spec.Width * 4, IDImage);
+		//ME_ENGINE_LOG("Entity Pixel: ({})", IDImage[EntityIdx]);
+
+		//float* Image = new float[m_Spec.Height * m_Spec.Width * 4];
+		//glGetTextureImage(m_ColorAttachments[1], 0, GL_RGBA, GL_FLOAT, m_Spec.Height * m_Spec.Width * 4 * 4, Image);
+		//int idx = y * m_Spec.Width * 4 + x * 4;
+		//ME_ENGINE_LOG("Image Pixel: ({},{},{},{})", Image[idx], Image[idx+1], Image[idx+2], Image[idx+3]);
+		int Out = IDImage[EntityIdx];
+		delete[] IDImage;
+		//delete Image;
+		return Out;
 	}
 
 	void OpenGLFrameBuffer::ClearAttachmentInt(int Idx, int Value)
 	{
-		glClearTexImage(m_ColorAttachments[1], 0, GL_RED_INTEGER, GL_INT, &Value);
+		glClearTexImage(m_ColorAttachments[Idx], 0, GL_RED_INTEGER, GL_INT, &Value);
 	}
 
 	void OpenGLFrameBuffer::ClearAttachmentColor(int Idx, glm::vec4 Value)
 	{
-		glClearTexImage(m_ColorAttachments[Idx], 0, GL_RGBA, GL_UNSIGNED_BYTE, glm::value_ptr(Value));
+		glm::u8vec4 ClearColor(Value.r * 255, Value.g * 255, Value.b * 255, Value.a * 255);
+		glClearTexImage(m_ColorAttachments[Idx], 0, GL_RGBA, GL_UNSIGNED_BYTE, glm::value_ptr(ClearColor));
 	}
 
 	void OpenGLFrameBuffer::Invalidate()
@@ -182,17 +178,24 @@ namespace Mimou
 		{
 			Delete();
 		}
-		glGenFramebuffers(1, &m_RendererID);
+		glCreateFramebuffers(1, &m_RendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 
-		for (int i = 0; i < m_Specs.size(); i++)
+		m_ColorAttachments.resize(m_Spec.Attachments.size());
+		CreateTextures(m_ColorAttachments.size(), m_Spec.Width, m_Spec.Height, m_ColorAttachments.data());
+		for (int i = 0; i < m_Spec.Attachments.size(); i++)
 		{
-			FrameBufferSpecification FBSpec = m_Specs[i];
-			uint32_t ColorAttachment = CreateColorAttachment(i, FBSpec);
-			m_ColorAttachments.push_back(ColorAttachment);
+			FBAttachmentSpecification FBSpec = m_Spec.Attachments[i];
+			GLint InternalFormat;
+			GLenum PixelFormat;
+			GLenum DataType;
+			GLTextureFormat(FBSpec.Format, InternalFormat, PixelFormat, DataType);
+			AttachTextureColor(i, m_ColorAttachments[i], m_Spec.Width, m_Spec.Height, InternalFormat, PixelFormat, DataType);
 		}
+		CreateTextures(1, m_Spec.Width, m_Spec.Height, &m_DepthStencilAttachTex);
+		AttachTextureDepth(m_DepthStencilAttachTex, m_Spec.Width, m_Spec.Height);
 
-		if (m_Specs.size() > 1)
+		if (m_ColorAttachments.size() > 1)
 		{
 			GLenum Buffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
 			glDrawBuffers(m_ColorAttachments.size(), Buffers);
@@ -200,13 +203,11 @@ namespace Mimou
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	void OpenGLFrameBuffer::ResizeInternal(int Idx, uint32_t Width, uint32_t Height)
+	void OpenGLFrameBuffer::ResizeInternal(uint32_t Width, uint32_t Height)
 	{
-		m_Specs[Idx].Width = Width;
-		m_Specs[Idx].Height = Height;
-		uint32_t TextureID = m_ColorAttachments[Idx];
-		glDeleteTextures(1, &TextureID);
-		m_ColorAttachments[Idx] = CreateColorAttachment(Idx, m_Specs[Idx]);
+		m_Spec.Width = Width;
+		m_Spec.Height = Height;
+		Invalidate();
 	}
 
 	void OpenGLFrameBuffer::Delete()
@@ -214,6 +215,8 @@ namespace Mimou
 		glDeleteFramebuffers(1, &m_RendererID);
 		glDeleteTextures(m_ColorAttachments.size(), m_ColorAttachments.data());
 		glDeleteTextures(1, &m_DepthStencilAttachTex);
+		
 		m_ColorAttachments.clear();
+		m_DepthStencilAttachTex = 0;
 	}
 }

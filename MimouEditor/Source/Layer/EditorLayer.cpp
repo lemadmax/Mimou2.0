@@ -98,9 +98,7 @@ namespace Mimou
 	{
 		uint32_t Width = Application::GetInstance()->GetWindow().GetWidth();
 		uint32_t Height = Application::GetInstance()->GetWindow().GetHeight();
-		m_FrameBuffer = FrameBuffer::Create({ Width , Height, FBFormat::RGBA });
-		m_FrameBuffer->Add({ Width, Height, FBFormat::RGBA });
-		m_FrameBuffer->Add({ Width, Height, FBFormat::INT });
+		m_FrameBuffer = FrameBuffer::Create({ Width , Height, { { FBFormat::RGBA }, { FBFormat::RGBA }, { FBFormat::INT } } });
 
 		//m_ActiveScene = SceneSerializer::Get()->DeserializeScene("Assets/Scene/Demo.mimou");
 		m_ActiveScene = CreateRef<Scene>("Empty");
@@ -164,18 +162,54 @@ namespace Mimou
 				EditorCamera.SetAspect(AspectRatio);
 			}
 		}
+		m_FrameBuffer->OnUpdate(m_ViewportSize.x, m_ViewportSize.y);
 		m_FrameBuffer->Bind();
-		m_FrameBuffer->OnUpdate(0, m_ViewportSize.x, m_ViewportSize.y);
-		m_FrameBuffer->OnUpdate(1, m_ViewportSize.x, m_ViewportSize.y);
 		RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 		RenderCommand::Clear();
-		//m_FrameBuffer->ClearAttachmentInt(1, -1);
-		m_FrameBuffer->ClearAttachmentColor(1, glm::vec4(0.2f, 0.2f, 0.2f, 1));
+		m_FrameBuffer->ClearAttachmentInt(2, -1);
+		m_FrameBuffer->ClearAttachmentColor(0, glm::vec4(0.2f, 0.2f, 0.2f, 1));
 
 		uTime += Ts;
 
 		m_ActiveScene->OnUpdateEditor(Ts, EditorCamera);
 
+		if (Input::IsKeyPressed(Key::LeftControl))
+		{
+			bIsSnapping = true;
+		}
+		else
+		{
+			bIsSnapping = false;
+		}
+
+		if (Input::IsKeyPressed(Key::T))
+		{
+			m_GizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+			Snap[0] = Snap[1] = Snap[2] = 0.5f;
+		}
+		else if (Input::IsKeyPressed(Key::R))
+		{
+			m_GizmoOperation = ImGuizmo::OPERATION::ROTATE;
+			Snap[0] = Snap[1] = Snap[2] = 45.f;
+		}
+		else if (Input::IsKeyPressed(Key::E))
+		{
+			m_GizmoOperation = ImGuizmo::OPERATION::SCALE;
+			Snap[0] = Snap[1] = Snap[2] = 0.5f;
+		}
+
+		if (Input::IsMouseButtonPressed(Mouse::LeftButton))
+		{
+			ImVec2 MousePos = ImGui::GetMousePos();
+
+			ImVec2 MouseInViewport = ImVec2(MousePos.x - ViewportOffset.x, m_ViewportSize.y - (MousePos.y - ViewportOffset.y));
+
+			int EntityID = m_FrameBuffer->ReadPixelInt(2, MouseInViewport.x, MouseInViewport.y);
+			ME_ENGINE_LOG("Mouse Pos ({}, {}); EntityID: {}", MouseInViewport.x, MouseInViewport.y, EntityID);
+
+		}
+
+		// Draw grid after mouse selection so that the grid cannot be selected
 		EditorGridShader->Bind();
 		Ref<GameObject> PrimaryCameraGB = m_ActiveScene->GetPrimiaryCamera();
 		if (PrimaryCameraGB)
@@ -202,31 +236,6 @@ namespace Mimou
 
 		EditorGridVA->Bind();
 		RenderCommand::DrawIndexed(EditorGridVA);
-
-		if (Input::IsKeyPressed(Key::LeftControl))
-		{
-			bIsSnapping = true;
-		}
-		else
-		{
-			bIsSnapping = false;
-		}
-
-		if (Input::IsKeyPressed(Key::T))
-		{
-			m_GizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
-			Snap[0] = Snap[1] = Snap[2] = 0.5f;
-		}
-		else if (Input::IsKeyPressed(Key::R))
-		{
-			m_GizmoOperation = ImGuizmo::OPERATION::ROTATE;
-			Snap[0] = Snap[1] = Snap[2] = 45.f;
-		}
-		else if (Input::IsKeyPressed(Key::E))
-		{
-			m_GizmoOperation = ImGuizmo::OPERATION::SCALE;
-			Snap[0] = Snap[1] = Snap[2] = 0.5f;
-		}
 
 		m_FrameBuffer->UnBind();
 	}
@@ -439,28 +448,19 @@ namespace Mimou
 
 		ImVec2 ViewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { ViewportPanelSize.x, ViewportPanelSize.y };
-		ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetColorAttachmentTexIDByIdx(1), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetColorAttachmentTexIDByIdx(0), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 		//ImGui::Image((void*)(intptr_t)m_FrameBuffer->GetDepthStencilAttachTexID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
 		//ImGui::Image((void*)(intptr_t)m_TestTexture->GetRendererID(), ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 		ShowGizmo();
 		//ShowGrid();
+		ImVec2 ContentOffset = ImGui::GetWindowContentRegionMin();
+		ImVec2 WindowPos = ImGui::GetWindowPos();
+		ViewportOffset = glm::vec2(WindowPos.x + ContentOffset.x, WindowPos.y + ContentOffset.y);
 
 		if (ImGui::IsMousePosValid())
 		{
-			ImVec2 MousePos = ImGui::GetMousePos();
-			ImVec2 WindowPos = ImGui::GetWindowPos();
-			ImVec2 WindowSize = ImGui::GetWindowSize();
-			float TitleHeigth = WindowSize.y - m_ViewportSize.y;
 			
-			ImVec2 MouseInViewport = ImVec2(MousePos.x - WindowPos.x, m_ViewportSize.y - (MousePos.y - WindowPos.y - TitleHeigth));
-			
-			if (Input::IsMouseButtonPressed(Mouse::LeftButton))
-			{
-				int EntityID = m_FrameBuffer->ReadPixelInt(1, MouseInViewport.x, MouseInViewport.y);
-				ME_ENGINE_LOG("Mouse Pos ({}, {}); EntityID: {}", MouseInViewport.x, MouseInViewport.y, EntityID);
-
-			}
 		}
 
 		ImGui::End();
